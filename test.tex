@@ -1,0 +1,54 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\title{\textbf{Tex Template}}
+\author{Matz Radloff}
+
+
+\begin{document}
+
+\maketitle
+\date{}
+
+\section{Test Section one}
+\subsection{Subsection one}
+\subsubsection{wow}
+\paragraph{roflcopter}
+Test
+
+\section{Math stuff}
+
+    \begin{align}
+    f(x) &= x^2\\
+    f'(x) &= 2x+c\\
+    F(X) &= \int f(x)dx\\
+    F(x) &= \frac{1}{3}x^3
+    \end{align}
+
+    \begin{lstlisting}[language={Python},caption=Python test]
+        from test import rofl
+
+        def func(*argc, **argv):
+            for i in argc:
+            print(i)
+
+        func('rofl', 123, 'copter')
+    \end{lstlisting}
+
+    \begin{align}
+    \left[
+    \begin{matrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    \end{matrix}
+    \right]
+    \end{align}
+
+\end{document}

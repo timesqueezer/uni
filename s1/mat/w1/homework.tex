@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\title{\textbf{Mathe Hausaufgaben zum 27. und 28. Oktober 2016}}
+\author{Matz Radloff}
+
+
+\begin{document}
+\pagenumbering{gobble}
+  \maketitle
+  \date{}
+  \tableofcontents
+  \newpage
+  \pagenumbering{arabic}
+\section{}
+
+\begin{align}
+A &:= \{n \in \mathbb{N} : n > 3\}\\
+B &:= \{n \in \mathbb{N} : n = 14k, k \in \mathbb{N}\}\\
+C &:= \{n \in \mathbb{N} : n > 5, \mbox{ist durch 7 teilbar und n ist gerade}\}
+\end{align}
+
+% a
+\subsection[(a)]{(a) $A \subseteq B$}
+
+Bedingung: $\forall a \in A : a \in B$
+
+\begin{align}
+a_{1} &= k+3, k \in \mathbb{N}\\
+b_{1} &= 14l, l \in \mathbb{N}
+\end{align}
+
+kleinstmögliches $k$ einsetzen, $a_{1} = b_{1}$ setzen
+
+\begin{align}
+l &= \frac{2}{7}
+\end{align}
+
+Folglich ist die Aussage $A \subseteq B$ widerlegt, da $l$ keine natürliche Zahl ist. Es gibt also ein Element in A, dass nicht in B liegt.
+
+% b
+\subsection[(b)]{(b) $B \subseteq A$}
+
+Bedingung: $\forall b \in B : b \in A$
+
+\begin{align}
+b_{1} &= 14l, l \in \mathbb{N}\\
+a_{1} &= k+3, k \in \mathbb{N}
+\end{align}
+
+Induktionsbeweis:
+
+\begin{align}
+l &= 1, b_{1} = a_{1}\\
+k &= 11 \surd\\
+l &= n+1\\
+14n+1 &= k+3\\
+k &= 14n-2
+\end{align}
+
+
+\end{document}
