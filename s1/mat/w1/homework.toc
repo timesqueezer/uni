@@ -1,4 +1,0 @@
-\select@language {ngerman}
-\contentsline {section}{\numberline {1}}{1}{section.1}
-\contentsline {subsection}{\numberline {1.1}(a)}{1}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}(b)}{1}{subsection.1.2}
