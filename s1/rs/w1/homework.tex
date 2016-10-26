@@ -70,15 +70,15 @@ Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des 
 \subsubsection{(a)} % 1.4 (a)
 
 $f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)\\$
-$\rightarrow (6 + 5 + 4 + 3 + 2) * \unit[5]{ns} + (5 * \unit[1]{ns}) = \unit[105]{ns}\\$
+$\rightarrow (6 + 5 + 4 + 3 + 2) \cdot \unit[5]{ns} + (5 \cdot \unit[1]{ns}) = \unit[105]{ns}\\$
 
 Ohne Horner-Schema würde bei naiver Herangehensweise die Berechnung des Polynoms 105ns dauern.
 Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
 Laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können\cite{wiki:1}.
-Nach der Methode wären es $(9*\unit[5]{ns} + \unit[5]{ns}) = \unit[50]{ns}$ für die Multiplikationen.\\
+Nach der Methode wären es $(9\cdot\unit[5]{ns} + \unit[5]{ns}) = \unit[50]{ns}$ für die Multiplikationen.\\
 
 Mit Horner-Schema, bei dem das Ausklammern einzelner $x$ ausgenutzt wurd, erhält man insgesamt:\\
-$y = f + x (e + x ( d + x ( c + x ( b + a * x ))))$
+$y = f + x (e + x ( d + x ( c + x ( b + a \cdot x ))))$
 $\rightarrow \unit[30]{ns}$
 
 \newpage
@@ -87,7 +87,7 @@ $\rightarrow \unit[30]{ns}$
 
 \paragraph{Gegeben:}
 \begin{equation}
-y = (x2+2*x+1)^{11}
+y = (x^{2}+2\cdot x+1)^{11}
 \end{equation}
 
 \paragraph{Rechnung:}
@@ -99,12 +99,12 @@ b &= (x+1)
 \end{align}
 $\rightarrow$ Eine Addition
 \begin{align}
-c &= (b)^2=(x+1)*(x+1)
+c &= (b)^2=(x+1)\cdot(x+1)
 \end{align}
 $\rightarrow$ Eine Multiplikation und nur eine Addition, da b nur einmal ausgerechnet werden muss\\
 \begin{align}
 y &= d=(c)^{11}\\
-t &= 12*5ns + 1*1ns = \unit[61]{ns}
+t &= 12\cdot 5ns + 1 \cdot 1ns = \unit[61]{ns}
 \end{align}
 
 \paragraph{Antwort:}
@@ -118,11 +118,11 @@ Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
 \paragraph{Rechnung:}
 
 \begin{align}
-\unitfrac[5]{MB}{s}*60 &= \unitfrac[300]{MB}{min}\\
-\unitfrac[30]{MB}{min}*60 &= \unitfrac[18.000]{MB}{h}\\
-\unitfrac[18.000]{MB}{h}*24 &=  \unitfrac[432.000]{MB}{d}\\
-\unitfrac[432.000]{MB}{d}*365 &= \unitfrac[157.680.000]{MB}{a}\\
-\unitfrac[157.680.000]{MB}{a}*80 &= \unitfrac[12.614.400.000]{MB}{Leben(80 Jahre)}
+\unitfrac[5]{MB}{s}\cdot60 &= \unitfrac[300]{MB}{min}\\
+\unitfrac[30]{MB}{min}\cdot60 &= \unitfrac[18.000]{MB}{h}\\
+\unitfrac[18.000]{MB}{h}\cdot24 &=  \unitfrac[432.000]{MB}{d}\\
+\unitfrac[432.000]{MB}{d}\cdot365 &= \unitfrac[157.680.000]{MB}{a}\\
+\unitfrac[157.680.000]{MB}{a}\cdot80 &= \unitfrac[12.614.400.000]{MB}{Leben(80 Jahre)}
 \end{align}
 
 \paragraph{Antwort:}
@@ -152,8 +152,8 @@ Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
     $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
 
 \begin{align}
-    f(t) &= \unit[4]{TiB}*1,38^{t}\\
-    \unit[4]{TiB} * 1,38^{t} &= \unit[11472,73]{TiB}\\
+    f(t) &= \unit[4]{TiB}\cdot1,38^{t}\\
+    \unit[4]{TiB} \cdot 1,38^{t} &= \unit[11472,73]{TiB}\\
     t &= \log_{1,38}(\frac{\unit[11472,73]{TiB}}{\unit[4]{TiB}})\\
       &= \log_{1,38}(2868,1825)\\
       &= 24,72
@@ -177,8 +177,8 @@ Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist 
 \paragraph{Rechnung:}
     $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
 \begin{align}
-    f(t) &= \unit[128]{GiB}*1,5^{t}\\
-    \unit[128]{GiB}*1,5^{t} &= \unit[11748075,5]{GiB}\\
+    f(t) &= \unit[128]{GiB}\cdot1,5^{t}\\
+    \unit[128]{GiB}\cdot1,5^{t} &= \unit[11748075,5]{GiB}\\
     t &= log1,5(\frac{\unit[11748075,5]{GiB}}{\unit[128]{GiB}})\\
       &= log1,5(91781,83984)\\
        &= 28,18\\
@@ -198,7 +198,7 @@ Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist 
 
 \paragraph{Rechnung:}
 \begin{align}
-    \unit[140]{MB}*x &= \unit[12.614.400.000]{MB}\\
+    \unit[140]{MB}\cdotx &= \unit[12.614.400.000]{MB}\\
     x &= \frac{\unit[12.614.400.000]{MB}}{\unit[140]{MB}}\\
     x &= 90.102.857,14
 \end{align}
