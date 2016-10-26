@@ -1,0 +1,213 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{hyperref}
+%\usepackage{fullpage}
+
+\title{\textbf{Rechnerstrukturen Hausaufgaben zum 26. Oktober 2016}}
+\author{Matz Radloff}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Matz Radloff - Mathe I\_Inf}
+\cfoot{\thepage}
+
+
+\begin{document}
+\pagenumbering{gobble}
+  \maketitle
+  \date{}
+  \tableofcontents
+  \newpage
+  \pagenumbering{arabic}
+
+\section{} % 1
+
+\subsection{} % 1.1
+
+\subsubsection{(a) Interpreter} % 1.1 (a)
+Ein Interpreter übersetzt einzelne Befehle einer höheren Programmiersprache in eine Befehlsfolge, die direkt auf einer niedrigeren Spracheebene ausgeführt wird. Z.B. könnte ein Interpreter Anweisungung einer Sprache L1 sequentiell nach L0 übersetzen, sodass diese direkt ausgeführt werden können.
+
+\subsubsection{(b) Compiler} % 1.1 (b)
+Ein Compiler übersetzt auch Befehle einer höheren in Befehlsfolgen einer niedrigeren Sprache. Allerdings wird dabei ein neues Programm erzeugt, das erst nach dem Generieren ausgeführt werden kann.
+
+\subsubsection{(c) Virtuelle Maschine} % 1.1 (c)
+Auf der untersten Sprachebene L0 können Anweisungen direkt durch elektronische Schaltungen ausgeführt werden. Um einem Interpreter zu simulieren, dass auch höhersprachige Befehle ausgeführt werden können (um eine direkte Übersetzung von z.B. L5 zu L0 zu vermeiden) kann eine virtuelle Maschine eingesetzt werden, da diese die Rechenarchitektur simuliert.
+Dadurch können neue, komplexere und besser verständliche Sprachen eingesetzt werden, die jeweils eine Abstraktionseben darstellen. So ist es möglich, auch ohne Verständnis der untersten Schichten, in höheren Sprachen zu programmieren. Der größte Nachteil ist dabei, dass eine virtuelle Maschine meistens langsamer ist, als es eine echte. Auch die unterste Maschine M0 kann eine virtuelle Maschine sein (z.B. Betriebssystem-Virtualisierung). Soft- und Hardware sind in diesem Fall äquivalent anzusehen.
+
+
+\subsection{} % 1.2
+\begin{align}
+k_{0} &= k\\
+k_{1} &= nk\\
+k_{2} &= n^{2}k\\
+k_{3} &= n^{3}k
+\end{align}
+\mbox{Für den allgemeinen Fall erhält man:}
+\begin{align}
+k_{i} &= n^{i}k
+\end{align}
+
+
+\subsection{} % 1.3
+Die Vorteile dieses Konzepts liegen in der Dynamik und Flexibilität des Computers. Programme müssen diesem nicht getrennt von anderen Daten zugeführt werden. Durch die rein logische Trennung vereinfacht sich der Aufbau stark. Da sich Programme dadurch auch selbst verändern können, ist es mögliche diese sehr schnell und wenig speicherbedürftig zu entwickeln.
+
+Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des von-Neumann Rechners noch nicht ersichtlich waren. So könnte eine Schadsoftware sich selbst oder andere Programme umschreiben und diese so unbrauchbar machen bzw. deren Funktionalität verändern. Um zu gewährleisten, dass bösartige Programme Daten nicht manipulieren, auslesen oder anderweitig Schaden anrichten, muss eine Kontrollebene die Ausführung sowie Zugriffe auf die korrekten Speicherbereiche der Programme kontrollieren (Betriebssystem). Trotz dieser Gegenmaßnahmen schafft es Software immer wieder Sicherheitslücken zu finden und aktiv auszunutzen.
+
+
+\subsection{} % 1.4
+
+\subsubsection{(a)} % 1.4 (a)
+
+$f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)$
+$\rightarrow (6 + 5 + 4 + 3 + 2) * 5ns + (5 * 1ns) = 105ns$
+
+Ohne Horner-Schema würde die Berechnung des Polynoms 105ns dauern.
+
+Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
+laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können. \cite{wiki:1}
+Nach der Methode wären es $(9*5 + 5) = 50ns$
+Theoretisch ist beides richtig, vielleicht beide Ergebnisse angeben + erläutern?
+
+
+Mit Horner-Schema:
+$y = f + x (e + x ( d + x ( c + x ( b + a * x ))))$
+$\rightarrow 30ns$
+
+
+\subsubsection{(b)} % 1.4 (b)
+Gegeben:
+\begin{equation}
+y = (x2+2*x+1)^{11}
+\end{equation}
+
+Rechnung:
+
+\begin{equation}
+(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)
+\end{equation}
+$a = 10$ Multiplikationen der Klammern $\rightarrow 10*5ns$
+
+$b = (2+1)*5ns+(1+1)*1ns = 17ns$
+pro Klammer drei Multiplikationen und zwei Additionen $x2+2*x+1$
+
+Ausführungszeit: $a+b = 50ns+17ns = 67ns$
+
+Es werden 13 Multiplikationen benötigt und die Ausführungszeit beträgt 67ns.
+
+\begin{align}
+a &= (x^2+2x+1)=(x+1)^2\\
+b &= (x+1)         1 Addition\\
+c &= (b)^2=(x+1)*(x+1)         1 Multiplikation? nur 1 Addition, da b nur einmal ausgerechnet werden muss\\
+y &= d=(c)11\\
+d: 1 Addition, 12 Multiplikationen \rightarrow 61ns
+\end{align}
+Darf man das so rechnen? :X
+
+
+\subsection{} % 1.5
+Gegeben ist eine mittlere Datenrate von 5 MB/sec.
+
+
+\subsubsection{(a)} % 1.5 (a)
+Rechnung:
+
+\begin{align}
+5MB/Sek*60 &= 300MB/Min\\
+30MB/Min*60 &= 18.000MB/Std\\
+18.000MB/Std* 24 &=  432.000MB/Tag\\
+432.000MB/Tag *365 &= 157.680.000MB/Jahr\\
+157.680.000MB/Jahr*80 &= 12.614.400.000MB/Leben(80 Jahre)\\
+\end{align}
+
+Antwort:
+Pro Tag werden 432.000 (430 GB) abgespeichert.
+Pro Jahr werden 157.680.000MB (157,68 TB) abgespeichert.
+Pro Leben werden 12.614.400.000MB (12614,4TB) abgespeichert.
+
+
+\subsubsection{(b)} % 1.5 (b)
+Gegeben:
+\begin{itemize}
+    \item Kapazität Anfang 2016 = 4TiB
+    \item Kapazitätzuwachs von 38\% pro Jahr
+\end{itemize}
+
+Gesucht:
+\begin{itemize}
+    \item Kapazität im Jahr $t = 12.614.400.000MB \approx 11472,73TiB$
+\end{itemize}
+
+Rechnung:
+    t = Zeit in Jahren
+    f(t) = Kapazität im Jahr t
+
+\begin{align}
+    f(t) &= 4TiB*1,38^{t}\\
+    4TiB * 1,38t &= 11472,73TiB\\
+    t &= log1,38(11472,73TiB/4TiB)\\
+      &= log1,38(2868,1825)\\
+      &= 24,72
+\end{align}
+
+\paragraph{Antwort:}
+Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist die Kapazität einer typischen Festplatte, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+
+
+\subsubsection{(c)} % 1.5 (c)
+
+\paragraph{Gegeben:}
+    Kapazität Anfang 2016 = 128GiB
+    Kapazitätzuwachs = 50\% pro Jahr
+
+\paragraph{Gesucht:}
+    Kapazität im Jahr $t = 12.614.400.000MB \approx 11748075,5 GiB$
+
+\paragraph{Rechnung:}
+    t = Zeit in Jahren
+    f(t) = Kapazität im Jahr t
+\begin{align}
+    f(t) &= 128GiB*1,5t\\
+    128GiB*1,5t &= 11748075,5 GiB\\
+    t &= log1,5(11748075,5 GiB/128GiB)\\
+      &= log1,5(91781,83984)\\
+       = 28,18\\
+\end{align}
+
+\paragraph{Antwort:}
+    Nach ca. 28 Jahren, also 2044 (bzw. Anfang 2045) ist die Kapazität einer typischen SD-Card, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+
+
+\subsubsection{(d)} % 1.5 (d)
+
+\paragraph{Gegeben:}
+    Magnetband Kapazität: 140MB
+
+\paragraph{Gesucht:}
+    Anzahl der Magnetbänder, um 12.614.400.000MB zu speichern.
+
+\paragraph{Rechnung:}
+\begin{align}
+    140MB*x &= 12.614.400.000MB
+    x &= 12.614.400.000MB/140MB
+    x &= 90.102.857,14
+\end{align}
+
+\paragraph{Antwort:}
+    Man bräuchte 90.102.858 Magnetbänder, um eine Datenmenge von 12.614.400.000MB zu speichern.
+
+
+\newpage
+
+\bibliography{wiki}
+\bibliographystyle{ieeetr}
+
+\end{document}
