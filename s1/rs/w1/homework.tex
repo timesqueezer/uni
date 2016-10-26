@@ -10,14 +10,16 @@
 \usepackage{fancyhdr}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage[]{units}
 %\usepackage{fullpage}
 
 \title{\textbf{Rechnerstrukturen Hausaufgaben zum 26. Oktober 2016}}
-\author{Matz Radloff}
+\author{Ali Ebrahimi Pourasad, Moritz Lahann, Matz Radloff}
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{Matz Radloff - Mathe I\_Inf}
+\lfoot{Ali Ebrahimi Pourasad(6948107),\\ Moritz Lahann(6948050),\\ Matz Radloff(6946325)}
+\lhead{[RS_GR1_12]}
 \cfoot{\thepage}
 
 
@@ -67,94 +69,102 @@ Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des 
 
 \subsubsection{(a)} % 1.4 (a)
 
-$f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)$
-$\rightarrow (6 + 5 + 4 + 3 + 2) * 5ns + (5 * 1ns) = 105ns$
+$f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)\\$
+$\rightarrow (6 + 5 + 4 + 3 + 2) * 5ns + (5 * 1ns) = 105ns\\$
 
 Ohne Horner-Schema würde die Berechnung des Polynoms 105ns dauern.
 
 Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
-laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können. \cite{wiki:1}
-Nach der Methode wären es $(9*5 + 5) = 50ns$
-Theoretisch ist beides richtig, vielleicht beide Ergebnisse angeben + erläutern?
+Laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können\cite{wiki:1}.
+Nach der Methode wären es $(4*5 + 5) = 25ns$ für die Multiplikationen.\\
 
-
-Mit Horner-Schema:
+Mit Horner-Schema erhält man also insgesamt:\\
 $y = f + x (e + x ( d + x ( c + x ( b + a * x ))))$
 $\rightarrow 30ns$
 
 
 \subsubsection{(b)} % 1.4 (b)
-Gegeben:
+
+\paragraph{Gegeben:}
 \begin{equation}
 y = (x2+2*x+1)^{11}
 \end{equation}
 
-Rechnung:
+\paragraph{Rechnung:}
+$(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)$
 
-\begin{equation}
-(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)
-\end{equation}
 $a = 10$ Multiplikationen der Klammern $\rightarrow 10*5ns$
 
 $b = (2+1)*5ns+(1+1)*1ns = 17ns$
-pro Klammer drei Multiplikationen und zwei Additionen $x2+2*x+1$
+
+Pro Klammer drei Multiplikationen und zwei Additionen $x2+2*x+1$
 
 Ausführungszeit: $a+b = 50ns+17ns = 67ns$
 
+\paragraph{}
 Es werden 13 Multiplikationen benötigt und die Ausführungszeit beträgt 67ns.
 
 \begin{align}
 a &= (x^2+2x+1)=(x+1)^2\\
-b &= (x+1)         1 Addition\\
-c &= (b)^2=(x+1)*(x+1)         1 Multiplikation? nur 1 Addition, da b nur einmal ausgerechnet werden muss\\
-y &= d=(c)11\\
-d: 1 Addition, 12 Multiplikationen \rightarrow 61ns
+b &= (x+1)
 \end{align}
-Darf man das so rechnen? :X
-
+$\rightarrow$ Eine Addition
+\begin{align}
+c &= (b)^2=(x+1)*(x+1)
+\end{align}
+$\rightarrow$ Eine Multiplikation und nur eine Addition, da b nur einmal ausgerechnet werden muss\\
+\begin{align}
+y &= d=(c)11\\
+\end{align}
+1 Addition, 12 Multiplikationen $\rightarrow$ 61ns
 
 \subsection{} % 1.5
-Gegeben ist eine mittlere Datenrate von 5 MB/sec.
+Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
 
 
 \subsubsection{(a)} % 1.5 (a)
-Rechnung:
+\paragraph{Rechnung:}
 
 \begin{align}
-5MB/Sek*60 &= 300MB/Min\\
-30MB/Min*60 &= 18.000MB/Std\\
-18.000MB/Std* 24 &=  432.000MB/Tag\\
-432.000MB/Tag *365 &= 157.680.000MB/Jahr\\
-157.680.000MB/Jahr*80 &= 12.614.400.000MB/Leben(80 Jahre)\\
+\unitfrac[5]{MB}{s}*60 &= \unitfrac[300]{MB}{min}\\
+\unitfrac[30]{MB}{min}*60 &= \unitfrac[18.000]{MB}{h}\\
+\unitfrac[18.000]{MB}{h}*24 &=  \unitfrac[432.000]{MB}{d}\\
+\unitfrac[432.000]{MB}{d}*365 &= \unitfrac[157.680.000]{MB}{a}\\
+\unitfrac[157.680.000]{MB}{a}*80 &= \unitfrac[12.614.400.000]{MB}{Leben(80 Jahre)}
 \end{align}
 
-Antwort:
-Pro Tag werden 432.000 (430 GB) abgespeichert.
-Pro Jahr werden 157.680.000MB (157,68 TB) abgespeichert.
-Pro Leben werden 12.614.400.000MB (12614,4TB) abgespeichert.
+\paragraph{Antwort:}
+\begin{itemize}
+  \item Pro Tag werden \unit[432.000]{MB} (\unit[430]{GB}) abgespeichert.
+  \item Pro Jahr werden \unit[157.680.000]{MB} (\unit[157,68]{TB}) abgespeichert.
+  \item Pro Leben werden \unit[12.614.400.000]{MB} (\unit[12614,4]{TB}) abgespeichert.
+\end{itemize}
 
 
 \subsubsection{(b)} % 1.5 (b)
-Gegeben:
+\paragraph{Gegeben:}
+
 \begin{itemize}
-    \item Kapazität Anfang 2016 = 4TiB
-    \item Kapazitätzuwachs von 38\% pro Jahr
+    \item Kapazität Anfang $2016 = \unit[4]{TiB}$
+    \item Kapazitätzuwachs von $38\%$ pro Jahr
 \end{itemize}
 
-Gesucht:
+\paragraph{Gesucht:}
+
 \begin{itemize}
-    \item Kapazität im Jahr $t = 12.614.400.000MB \approx 11472,73TiB$
+    \item Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11472,73]{TiB}$
 \end{itemize}
 
-Rechnung:
+\paragraph{Rechnung:}
+
     t = Zeit in Jahren
     f(t) = Kapazität im Jahr t
 
 \begin{align}
-    f(t) &= 4TiB*1,38^{t}\\
-    4TiB * 1,38t &= 11472,73TiB\\
-    t &= log1,38(11472,73TiB/4TiB)\\
-      &= log1,38(2868,1825)\\
+    f(t) &= \unit[4]{TiB}*1,38^{t}\\
+    \unit[4]{TiB} * 1,38^{t} &= \unit[11472,73]{TiB}\\
+    t &= \log_{1,38}(\frac{\unit[11472,73]{TiB}}{\unit[4]{TiB}})\\
+      &= \log_{1,38}(2868,1825)\\
       &= 24,72
 \end{align}
 
@@ -165,21 +175,23 @@ Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist 
 \subsubsection{(c)} % 1.5 (c)
 
 \paragraph{Gegeben:}
-    Kapazität Anfang 2016 = 128GiB
-    Kapazitätzuwachs = 50\% pro Jahr
+\begin{itemize}
+    \item Kapazität Anfang 2016 = \unit[128]{GiB}\\
+    \item Kapazitätzuwachs = 50\% pro Jahr
+\end{itemize}
 
 \paragraph{Gesucht:}
-    Kapazität im Jahr $t = 12.614.400.000MB \approx 11748075,5 GiB$
+    Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11748075,5]{GiB}$
 
 \paragraph{Rechnung:}
     t = Zeit in Jahren
     f(t) = Kapazität im Jahr t
 \begin{align}
-    f(t) &= 128GiB*1,5t\\
-    128GiB*1,5t &= 11748075,5 GiB\\
-    t &= log1,5(11748075,5 GiB/128GiB)\\
+    f(t) &= \unit[128]{GiB}*1,5^{t}\\
+    \unit[128]{GiB}*1,5^{t} &= \unit[11748075,5]{GiB}\\
+    t &= log1,5(\frac{\unit[11748075,5]{GiB}}{\unit[128]{GiB}})\\
       &= log1,5(91781,83984)\\
-       = 28,18\\
+       &= 28,18\\
 \end{align}
 
 \paragraph{Antwort:}
@@ -189,20 +201,20 @@ Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist 
 \subsubsection{(d)} % 1.5 (d)
 
 \paragraph{Gegeben:}
-    Magnetband Kapazität: 140MB
+    Magnetband Kapazität: \unit[140]{MB}
 
 \paragraph{Gesucht:}
-    Anzahl der Magnetbänder, um 12.614.400.000MB zu speichern.
+    Anzahl der Magnetbänder, um \unit[12.614.400.000]{MB} zu speichern.
 
 \paragraph{Rechnung:}
 \begin{align}
-    140MB*x &= 12.614.400.000MB
-    x &= 12.614.400.000MB/140MB
+    \unit[140]{MB}*x &= \unit[12.614.400.000]{MB}\\
+    x &= \frac{\unit[12.614.400.000]{MB}}{\unit[140]{MB}}\\
     x &= 90.102.857,14
 \end{align}
 
 \paragraph{Antwort:}
-    Man bräuchte 90.102.858 Magnetbänder, um eine Datenmenge von 12.614.400.000MB zu speichern.
+    Man bräuchte 90.102.858 Magnetbänder, um eine Datenmenge von \unit[12.614.400.000]{MB} zu speichern.
 
 
 \newpage
