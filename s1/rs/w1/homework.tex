@@ -81,6 +81,7 @@ Mit Horner-Schema, bei dem das Ausklammern einzelner $x$ ausgenutzt wurd, erhäl
 $y = f + x (e + x ( d + x ( c + x ( b + a * x ))))$
 $\rightarrow \unit[30]{ns}$
 
+\newpage
 
 \subsubsection{(b)} % 1.4 (b)
 
@@ -90,19 +91,8 @@ y = (x2+2*x+1)^{11}
 \end{equation}
 
 \paragraph{Rechnung:}
-$(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)*(x2+2*x+1)$
 
-$a = 10$ Multiplikationen der Klammern $\rightarrow 10*5ns$
-
-$b = (2+1)*5ns+(1+1)*1ns = 17ns$
-
-Pro Klammer drei Multiplikationen und zwei Additionen $x2+2*x+1$
-
-Ausführungszeit: $a+b = 50ns+17ns = 67ns$
-
-\paragraph{}
-Es werden 13 Multiplikationen benötigt und die Ausführungszeit beträgt 67ns.
-
+Vereinfachung mit Ausnutzung der 1. binomischen Formel:
 \begin{align}
 a &= (x^2+2x+1)=(x+1)^2\\
 b &= (x+1)
@@ -114,8 +104,11 @@ c &= (b)^2=(x+1)*(x+1)
 $\rightarrow$ Eine Multiplikation und nur eine Addition, da b nur einmal ausgerechnet werden muss\\
 \begin{align}
 y &= d=(c)11\\
+t &= 12*5ns + 1*1ns = \unit[61]{ns}
 \end{align}
-1 Addition, 12 Multiplikationen $\rightarrow$ 61ns
+
+\paragraph{Antwort:}
+Eine Addition und 12 Multiplikationen benötigen eine Rechenzeit von $\unit[61]{ns}$.
 
 \subsection{} % 1.5
 Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
