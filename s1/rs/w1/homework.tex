@@ -70,17 +70,16 @@ Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des 
 \subsubsection{(a)} % 1.4 (a)
 
 $f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)\\$
-$\rightarrow (6 + 5 + 4 + 3 + 2) * 5ns + (5 * 1ns) = 105ns\\$
+$\rightarrow (6 + 5 + 4 + 3 + 2) * \unit[5]{ns} + (5 * \unit[1]{ns}) = \unit[105]{ns}\\$
 
-Ohne Horner-Schema würde die Berechnung des Polynoms 105ns dauern.
-
+Ohne Horner-Schema würde bei naiver Herangehensweise die Berechnung des Polynoms 105ns dauern.
 Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
 Laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können\cite{wiki:1}.
-Nach der Methode wären es $(4*5 + 5) = 25ns$ für die Multiplikationen.\\
+Nach der Methode wären es $(9*\unit[5]{ns} + \unit[5]{ns}) = \unit[50]{ns}$ für die Multiplikationen.\\
 
-Mit Horner-Schema erhält man also insgesamt:\\
+Mit Horner-Schema, bei dem das Ausklammern einzelner $x$ ausgenutzt wurd, erhält man insgesamt:\\
 $y = f + x (e + x ( d + x ( c + x ( b + a * x ))))$
-$\rightarrow 30ns$
+$\rightarrow \unit[30]{ns}$
 
 
 \subsubsection{(b)} % 1.4 (b)
@@ -214,7 +213,7 @@ Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist 
 \end{align}
 
 \paragraph{Antwort:}
-    Man bräuchte 90.102.858 Magnetbänder, um eine Datenmenge von \unit[12.614.400.000]{MB} zu speichern.
+    Man bräuchte $90.102.858$ Magnetbänder, um eine Datenmenge von $\unit[12.614.400.000]{MB}$ zu speichern.
 
 
 \newpage
