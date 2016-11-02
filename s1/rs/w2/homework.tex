@@ -47,50 +47,54 @@
 \subsubsection{2.1 (a)}
 \paragraph{Gegeben:}
 \begin{itemize}
-  \item i5, Haswell Chipgröße: $A_C = \unit[177]{mm^2} = \unit[1,77]{cm^2}$
+  \item Core i5 (Haswell), Chipgröße: $A_C = \unit[177]{mm^2} = \unit[1,77]{cm^2}$
   \item elektrische Herdplatte Leistung: $P = \unit[2]{KW} = \unit[2000]{W}$
   \item Durchmesser von Platte: $d = \unit[15]{cm}$
 \end{itemize}
 
 \paragraph{Rechnung:}
-\paragraph{}i5 Leistungsdichte:
-\begin{equation}
-\frac{P}{A} = \frac{\unit[80]{W}}{\unit[1,77]{cm^2}} = \unitfrac[45,2]{W}{cm^2}
-\end{equation}
+\paragraph{}Leistungsdichte:
+\begin{equation*}
+\frac{P}{A_C} = \frac{\unit[80]{W}}{\unit[1,77]{cm^2}} = \unitfrac[45,2]{W}{cm^2}
+\end{equation*}
 
 \paragraph{}Fläche einer Herdplatte:
-\begin{equation}
+\begin{equation*}
 A_H = \pi\cdot(\frac{d}{2})^2 =  \pi\cdot\unit[56.25]{cm^2} = \unit[176,71]{cm^2}
-\end{equation}
+\end{equation*}
 
 \paragraph{}Leistungsdichte einer Herdplatte:
-\begin{equation}
+\begin{equation*}
 \frac{P}{A} = \frac{\unit[2000]{W}}{\unit[176,71]{cm^2}} = \unitfrac[11,32]{W}{cm^2}
-\end{equation}
+\end{equation*}
 
+Durch die sehr kleine Fläche des Prozessors hat dieser eine über viermal so große Leistungsdichte wie die der Herdplatte.
 
+\newpage
 \subsubsection{2.1 (b)}
 \paragraph{Gegeben:}
-Spannung: $U = \unit[3.7]{V}$
-Ladung: $Q = \unit[3000]{mAh}$
-Zeit: $t = \unit[3]{h}$
+\begin{align*}
+Spannung: U = \unit[3.7]{V}\\
+Ladung: Q = \unit[3000]{mAh}\\
+Zeit: t = \unit[3]{h}
+\end{align*}
 
 \paragraph{Rechnung:}
 Um die Leistung $P = U \cdot I$ zu berechnen wird $I = Q/t$ substituiert:
 
-\begin{equation}
+\begin{equation*}
 P = U\cdot\frac{Q}{t} = \unit[3.7]{V} \cdot \unit[1]{A} = \unit[3.7]{W}
-\end{equation}
+\end{equation*}
 
-Da die CPU die Hälfte der elektrischen Energie verbraucht ergibt sich:
+Da die CPU die Hälfte der elektrischen Energie benötigt ergibt sich:
 
-\begin{align}
+\begin{align*}
 P_{CPU} = P/2 &= \unit[1.85]{W}\\
 A_{Mobile-CPU} = \unit[16]{mm^2} &= \unit[0.16]{cm^2}
-\end{align}
+\end{align*}
 
 
-Leistungsdichte: $P/A = \frac{\unit[1.85]{W}}{\unit[0.016]{cm^2}} = \unitfrac[11.5625]{W}{cm^2}$
+Leistungsdichte: $P/A = \frac{\unit[1.85]{W}}{\unit[0.16]{cm^2}} = \unitfrac[11.5625]{W}{cm^2}$
 
 \subsection{2.1 (c)}
 
@@ -98,26 +102,23 @@ Leistungsdichte: $P/A = \frac{\unit[1.85]{W}}{\unit[0.016]{cm^2}} = \unitfrac[11
 Über die Anzahl der Operationen pro Sekunde $n_1$ (Desktop-CPU), $n_2$ (Mobile-CPU), bzw. der daraus foldenden Zeiten pro Operation $t_1, t_2$, lässt sich die benötigte Energie pro Operation mit $E = Pt$ errechnen.
 
 \paragraph{Desktop}
-\begin{align}
-n_1 &= \unit[3.2]{GHz} \cdot \unit[5]{Ops.} = \frac{1,6 \cdot \unit[10^10]{Ops.}}{\unit{s}}\\
+\begin{align*}
+n_1 &= \unit[3.2]{GHz} \cdot \unit[5]{Ops.} = \frac{1,6 \cdot \unit[10^{10}]{Ops.}}{\unit{s}}\\
 t_1 &= 1/n_1\\
 E_1 &= Pt_1 = \unit[80]{W} \cdot (\unitfrac[\frac{1}{1.6^{10}}]{Ops.}{s}))\\
-&= \unit[5^{-9}]{Ws} = \unitfrac[5000]{nJ}{Op}\\
-\end{align}
+&= \unit[5^{-9}]{Ws} = \unit[5]{nJ}\\
+\end{align*}
 
 \paragraph{Mobile}
-\begin{align}
+\begin{align*}
 n_2 &= \unitfrac[10^9]{Op}{s}\\
 t_2 &= 1/n_2\\
-E_2 &= Pt_2 = \unit[1.85]{W} \cdot \unitfrac[10^{-9}]{Ops}{s} = \unitfrac[1850]{nJ}{Op}
-\end{align}
+E_2 &= Pt_2 = \unit[1.85]{W} \cdot \unitfrac[10^{-9}]{Ops}{s} = \unit[1.85]{nJ}
+\end{align*}
 
-%Für den Energieverbrauch pro Rechenoperation ergeben sich $\unit[5000]{nJ}$ für die Desktop-CPU und $\unit[1850]{nJ}$ für die Mobile-CPU.
+Für den Energieverbrauch pro Rechenoperation ergeben sich $\unit[5]{nJ}$ für die Desktop-CPU und $\unit[1.85]{nJ}$ für die Mobile-CPU.
 
-%Zu Smart Dust: 
-%- Energieverbrauch steigt proportional zur Taktrate StrongArm1100 hat 133MHz bzw. 190MHz (http://datasheets.chipdb.org/Intel/STRONG/SA1100.HTM) vs 3.2GHz
-%- speziell für eine Aufgabe entwickelt --> effizienter, weniger Leistung benötigt vs. PC: schneller Allrounder
-%-
+Die Differenz zum in der Vorlesung angegebenen Wert von $\unitfrac[1]{nJ}{Op}$ des StrongArm1100 lässt dadurch erklären, dass dieser zum einen mit seiner 32-bit RISC Architektur und nur einem Kern effektiv weniger Transistoren schaltet, als eine Desktop-CPU. Vor allem im direkten Vergleich zu einem Core i5 (Haswell) zeigt sich, dass letzterer mit 1.5 Mrd. Transistoren fast 1000-mal so viele besitzt, wie der StrongArm mit 2.5 Mio.. Außerdem taktet er nur mit $\unit[133]{MHz}$ bzw. $\unit[190]{MHz}$, was zu einem deutlich niedrigeren Energieverbrauch führt, da sich dieser proportional zur Taktfrequenz verhält\cite{wiki:1} \cite{intel:1}.
 
 \subsection{2.2}
 \paragraph{Gegeben:}
@@ -126,53 +127,55 @@ $= 202256200000000$ cent
 
 \subsubsection{2.2 (a)}
 \paragraph{Rechnung:}
+$x :=$ Benötigte Stellen in Binär\\
 
-$x :=$ Benötigte Stellen in Binär
+Gesucht ist der 2er-Logarithmus der nächsthöheren 2er-Potenz.
 
-\begin{align}
+\begin{align*}
 2^x &>= c, x \in N\\
 x &>= log_2(c)\\
 x &>= 47.52 \rightarrow x = 48
-\end{align}
+\end{align*}
 
 \paragraph{}
 Für die Darstellung werden 48 bzw 49 bits, falls die Schulden als negative Zahl gespeichert werden sollen, benötigt.
 
 \subsubsection{2.2 (b)}
 \paragraph{Rechnung:}
-$x := Stellen im Zahlensystem zur Basis 5$
+$x := $ Stellen im Zahlensystem zur Basis $5$
 
-\begin{align}
+\begin{align*}
 x &\geq log_5(c)\\
 x &\geq 20.47 \rightarrow x = 21
-\end{align}
+\end{align*}
 
+\newpage
 \subsection{2.3}
 
 \subsubsection{2.3 (a)}
-$Z = (42)_10$
+$Z = (42)_{10}$
 
 \paragraph{Dualdarstellung:}
 \begin{align*}
-Z = (42)10\\
-42: 2 = 21 Rest &\rightarrow 0\\
-21: 2 = 10 Rest &\rightarrow 1\\
-10:2 = 5 Rest &\rightarrow 0\\
-5 : 2 = 2 Rest &\rightarrow 1\\
-2 : 2 = 1 Rest &\rightarrow 0\\
-1 : 2 = 0 Rest &\rightarrow 1 \uparrow Leserichtung
+Z = (42)_{10}\\
+42: 2 = 21 \mbox{ Rest} &\rightarrow 0\\
+21: 2 = 10 \mbox{ Rest} &\rightarrow 1\\
+10:2 = 5 \mbox{ Rest} &\rightarrow 0\\
+5 : 2 = 2 \mbox{ Rest} &\rightarrow 1\\
+2 : 2 = 1 \mbox{ Rest} &\rightarrow 0\\
+1 : 2 = 0 \mbox{ Rest} &\rightarrow 1 \uparrow Leserichtung
 \end{align*}
 $Z = (42)_{10} = (101010)_2$
 
 \paragraph{Oktaldarstellung:}
 \begin{align*}
 Z &= (101010)_2\\
-010 &= 02\\
-101 &= 05
+(010)_2 &= 02\\
+(101)_2 &= 05
 \end{align*}
 (Grupierungen von jeweils 3 Bits)
 
-$Z = (42)_10= = (52)_8$
+$Z = (42)_{10} = (52)_8$
 
 \paragraph{Hexadezimaldarstellung:}
 \begin{align*}
@@ -184,7 +187,8 @@ Z &= (101010)_2\\
 
 $Z = (42)_{10} = (2A)_{16}$
 
-\subsubsection{2.2 (b)}
+\newpage
+\subsubsection{2.3 (b)}
 
 $Z = (1969)_{10}$
 
@@ -222,25 +226,26 @@ $Z = (11110110001)_2:$
 
 \begin{align*}
 (0001)_2 = 1_{16}\\
-(1011)_2 = B_{16}\\
+(1011)_2 = \mathtt{B}_{16}\\
 ((0)111)_2= 7_{16}
 \end{align*}
 (Grupierungen von jewels 4 Bits)
 
-$Z = (1969)_{10} = (7B1)_{16}$
+$Z = (1969)_{10} = (\mathtt{7B1})_{16}$
 
-\subsubsection{2.2 (c)}
+\newpage
+\subsubsection{2.3 (c)}
 $Z = (5,5625)_{10}$
 
 \paragraph{Dualdarstellung:}
-$5,0)10$:
+$(5,0)_{10}$:
 \begin{align*}
-5 : 2 = 2 Rest &\rightarrow 1\\
-2 : 2 = 1 Rest &\rightarrow 0\\
-1 : 2 = 0 Rest &\rightarrow 1 \uparrow \mbox{Leserichtung}
+5 : 2 = 2 \mbox{ Rest} &\rightarrow 1\\
+2 : 2 = 1 \mbox{ Rest} &\rightarrow 0\\
+1 : 2 = 0 \mbox{ Rest} &\rightarrow 1 \uparrow \mbox{Leserichtung}
 \end{align*}
 
-$(5)_{10} = (101)_2$
+$(5)_{10} = (101)_2$\\
 
 $(0,5625)_{10}$:
 \begin{align*}
@@ -250,20 +255,20 @@ $(0,5625)_{10}$:
 2 \cdot 0,5 = 1,0 &\rightarrow 1
 \end{align*}
 
-$(0,5625)_{10} =(0,1001)_2$
-
+$(0,5625)_{10} = (0,1001)_2$\\
 
 $Z = (5,5625)_{10} = (101,1001)_2$
 
 \paragraph{Oktaldarstellung:}
 $Z = (101,0)_2$:
-\begin{equation*}
-(101)_2 = 05
-\end{equation*}
+
+\begin{align*}
+(101)_2 &= 05
+\end{align*}
 
 $Z = (0,1001)_2$:
 \begin{align*}
-(100_") &= 4
+(100_") &= 4\\
 (1(00))_2 &= 4
 \end{align*}
 (Grupierungen von jeweils 3 Bits)
@@ -283,9 +288,10 @@ $Z = (0,1001)_2$:
 
 (Grupierungen von jewels 4 Bits)
 
-$Z =(5,9)_{16}$
+$Z =(\mathtt{5,9})_{16}$
 
-\subsubsection{2.2 (d)}
+
+\subsubsection{2.3 (d)}
 $Z = (375,375)_{10}$
 
 \paragraph{Dualdarstellung:}
@@ -303,7 +309,7 @@ $Z = (375,0)_{10}:$
 1 : 2 = 0 Rest &\rightarrow 1 \uparrow \mbox{Leserichtung}
 \end{align*}
 
-$(375,0)_{10}= (101110111)_2$
+$(375,0)_{10}= (101110111)_2$\\
 
 $(0,375)_{10}$:
 \begin{align*}
@@ -317,7 +323,7 @@ $(0,375)_{10} = (0,011)_{2}$
 $Z = (101110111,011)_2$
 
 \paragraph{Oktaldarstellung:}
-$Z_1 = (101110111,0)2$:
+$Z_1 = (101110111,0)_2$:
 \begin{align*}
 (111)_2 &= 07\\
 (110)_2 &= 06\\
@@ -338,7 +344,7 @@ $Z = (101110111,0)_2$:
 \begin{align*}
 (0111)_2 &= \mathtt{7}\\
 (0111)_2 &= \mathtt{7}\\
-((000)1)_2 = \mathtt{1}
+((000)1)_2 &= \mathtt{1}
 \end{align*}
 
 $Z = (0,011)_2$:
@@ -348,7 +354,7 @@ $Z = (0,011)_2$:
 
 (Grupierungen von jewels 4 Bits)
 
-$Z = (177,6)_{16}$
+$Z = (\mathtt{177,6})_{16}$
 
 \subsection{2.4}
 
@@ -373,7 +379,7 @@ $Z = (177,6)_{16}$
 
 \newpage
 
-\bibliography{wiki}
+\bibliography{cites}
 \bibliographystyle{ieeetr}
 
 \end{document}
