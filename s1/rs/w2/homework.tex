@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{fancyhdr}
+\usepackage{eurosym}
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage[]{units}
@@ -90,238 +91,285 @@ A_{Mobile-CPU} = \unit[16]{mm^2} &= \unit[0.16]{cm^2}
 
 
 Leistungsdichte: $P/A = \frac{\unit[1.85]{W}}{\unit[0.016]{cm^2}} = \unitfrac[11.5625]{W}{cm^2}$
-\iffalse
-c)
-n_{Desktop-CPU} = 3.2GHz * 5 (Operationen) = 1,6 * 10^10 Operationen / s
-t_1 (Zeit pro Operation) = 1/n_{Desktop-CPU}
-E = Pt = 80W * (1 / 1.6E10 Operationen/s)) = 5E-9 Ws = 5000 nJ / Operation
 
-n_{Mobile_CPU} = 1G Operationen / s = 10^9 Operationen / s
-t_2 = 1/n_{Mobile-CPU}
-E = Pt = 1.85W * (10E-9 Operations / s) = 1850 nJ / Operation
+\subsection{2.1 (c)}
 
-kannst du die rechnung nochmal erklären/aufschlüsseln? Ich blick da nicht durch
+\paragraph{}
+Über die Anzahl der Operationen pro Sekunde $n_1$ (Desktop-CPU), $n_2$ (Mobile-CPU), bzw. der daraus foldenden Zeiten pro Operation $t_1, t_2$, lässt sich die benötigte Energie pro Operation mit $E = Pt$ errechnen.
 
-Weiß jemand was zur zweiten Teilfrage? Ich geh sonst morgen nochmal die Folien der Vorlesung durch.
+\paragraph{Desktop}
+\begin{align}
+n_1 &= \unit[3.2]{GHz} \cdot \unit[5]{Ops.} = \frac{1,6 \cdot \unit[10^10]{Ops.}}{\unit{s}}\\
+t_1 &= 1/n_1\\
+E_1 &= Pt_1 = \unit[80]{W} \cdot (\unitfrac[\frac{1}{1.6^{10}}]{Ops.}{s}))\\
+&= \unit[5^{-9}]{Ws} = \unitfrac[5000]{nJ}{Op}\\
+\end{align}
 
-Zu Smart Dust: 
-- Energieverbrauch steigt proportional zur Taktrate StrongArm1100 hat 133MHz bzw. 190MHz (http://datasheets.chipdb.org/Intel/STRONG/SA1100.HTM) vs 3.2GHz
-- speziell für eine Aufgabe entwickelt --> effizienter, weniger Leistung benötigt vs. PC: schneller Allrounder
--
+\paragraph{Mobile}
+\begin{align}
+n_2 &= \unitfrac[10^9]{Op}{s}\\
+t_2 &= 1/n_2\\
+E_2 &= Pt_2 = \unit[1.85]{W} \cdot \unitfrac[10^{-9}]{Ops}{s} = \unitfrac[1850]{nJ}{Op}
+\end{align}
 
-2.2
+%Für den Energieverbrauch pro Rechenoperation ergeben sich $\unit[5000]{nJ}$ für die Desktop-CPU und $\unit[1850]{nJ}$ für die Mobile-CPU.
 
- Geg: 2022,562 MIlliarden € = c =  2022562000000€ = 202256200000000 cent
-a)
-x := Benötigte Stellen in Binär
+%Zu Smart Dust: 
+%- Energieverbrauch steigt proportional zur Taktrate StrongArm1100 hat 133MHz bzw. 190MHz (http://datasheets.chipdb.org/Intel/STRONG/SA1100.HTM) vs 3.2GHz
+%- speziell für eine Aufgabe entwickelt --> effizienter, weniger Leistung benötigt vs. PC: schneller Allrounder
+%-
 
-2^x >= c, x \in N
-x >= log_2(c)
-x >= 40.87932 -> x = 41  ist nicht auf den cent genau!
-log_2(202256200000000cent)=47,5 --> 48 stellen
-48 ist richtig
-b)
-x := Stellen im Zahlensystem zur Basis 5
-x >= log_5(c)
-x >= 17.60576 -> x = 18 nicht auf den cent genau
-cent: 21 Stellen
-21 ist richitg
+\subsection{2.2}
+\paragraph{Gegeben:}
+$2022,562$ Mrd. \euro: $c = 2022562000000$ \euro\\
+$= 202256200000000$ cent
 
-oh, ja hab ich nicht bedacht, ich kann ja sonst beides reinschreiben
+\subsubsection{2.2 (a)}
+\paragraph{Rechnung:}
 
-2.3
+$x :=$ Benötigte Stellen in Binär
 
-a)
+\begin{align}
+2^x &>= c, x \in N\\
+x &>= log_2(c)\\
+x &>= 47.52 \rightarrow x = 48
+\end{align}
 
-Z = (42)10
+\paragraph{}
+Für die Darstellung werden 48 bzw 49 bits, falls die Schulden als negative Zahl gespeichert werden sollen, benötigt.
 
-Dualdarstellung:
-    
-Z = (42)10:
-42: 2 = 21 Rest    0     20
-21: 2 = 10 Rest    1
-10:2 = 5 Rest       0
-5 : 2 = 2 Rest       1 
-2 : 2 = 1 Rest        0
-1 : 2 = 0 Rest        1    25 ↑ Leserichtung
+\subsubsection{2.2 (b)}
+\paragraph{Rechnung:}
+$x := Stellen im Zahlensystem zur Basis 5$
 
-Z = (42)10=  (101010)2
+\begin{align}
+x &\geq log_5(c)\\
+x &\geq 20.47 \rightarrow x = 21
+\end{align}
 
-Oktaldarstellung:
-Z= (101010)2 :
-010 =  2
-101=5
+\subsection{2.3}
+
+\subsubsection{2.3 (a)}
+$Z = (42)_10$
+
+\paragraph{Dualdarstellung:}
+\begin{align*}
+Z = (42)10\\
+42: 2 = 21 Rest &\rightarrow 0\\
+21: 2 = 10 Rest &\rightarrow 1\\
+10:2 = 5 Rest &\rightarrow 0\\
+5 : 2 = 2 Rest &\rightarrow 1\\
+2 : 2 = 1 Rest &\rightarrow 0\\
+1 : 2 = 0 Rest &\rightarrow 1 \uparrow Leserichtung
+\end{align*}
+$Z = (42)_{10} = (101010)_2$
+
+\paragraph{Oktaldarstellung:}
+\begin{align*}
+Z &= (101010)_2\\
+010 &= 02\\
+101 &= 05
+\end{align*}
 (Grupierungen von jeweils 3 Bits)
 
-Z = (42)10=  (101010)2 = (52)8
+$Z = (42)_10= = (52)_8$
 
-Hexadezimaldarstellung:
-Z= (101010)2:
-1010= A
-(00)10=2
+\paragraph{Hexadezimaldarstellung:}
+\begin{align*}
+Z &= (101010)_2\\
+(1010)_2 &= \mathtt{A}_{16}\\
+(10)_2 &= 2_{16}
+\end{align*}
 (Grupierungen von jewels 4 Bits)
 
-Z = (42)10=  (101010)2 = (52)8 = (2A)16
+$Z = (42)_{10} = (2A)_{16}$
 
-b)
+\subsubsection{2.2 (b)}
 
-Z = (1969)10
+$Z = (1969)_{10}$
 
-Dualdarstellung:
-Z = (1969)10:
-1969: 2 = 984 Rest    1     20
-984: 2 = 492 Rest      0
-492:2 = 246 Rest       0
-246 : 2 = 123 Rest     0
-123 : 2 = 61 Rest       1
-61:2 = 30 Rest            1
-30:2= 15 Rest             0
-15 :2 = 7 Rest              1
-7 :2 = 3 Rest               1
-3:2 = 1 Rest                1 
-1 : 2 = 0 Rest               1         210 ↑ Leserichtung
+\paragraph{Dualdarstellung:}
+\begin{align*}
+1969 : 2 = 984, \mbox{Rest} &\rightarrow 1\\
+984 : 2 = 492, \mbox{Rest} &\rightarrow 0\\
+492 : 2 = 246, \mbox{Rest} &\rightarrow 0\\
+246 : 2 = 123, \mbox{Rest} &\rightarrow 0\\
+123 : 2 = 61, \mbox{Rest} &\rightarrow 1\\
+61 : 2 = 30, \mbox{Rest} &\rightarrow 1\\
+30 : 2= 15, \mbox{Rest} &\rightarrow 0\\
+15 : 2 = 7, \mbox{Rest} &\rightarrow 1\\
+7 : 2 = 3, \mbox{Rest} &\rightarrow 1\\
+3 : 2 = 1, \mbox{Rest} &\rightarrow 1\\
+1 : 2 = 0, \mbox{Rest} &\rightarrow 1 \uparrow Leserichtung
+\end{align*}
 
-Z = (1969)10=  (11110110001)2
+$Z = (1969)_{10} =  (11110110001)_2$
 
-Oktaldarstellung:
-Z=  (11110110001)2:
-001= 1
-110=6
-110= 6
-(0)11=3
-
-(Grupierungen von jeweils 3 Bits)
-Z = (1969)10=  (11110110001)2 = (3661)8
-
-Hexadezimaldarstellung:
-Z=(11110110001)2:
-0001=1
-1011=B
-(0)111= 7
-
-(Grupierungen von jewels 4 Bits)
-Z = (1969)10=  (11110110001)2 = (3661)8 = (7B1)16
-
-c)
-Z= (5,5625)10
-
-Dualdarstellung:
-Z = (5,0)10:
-5 : 2 = 2 Rest       1 
-2 : 2 = 1 Rest        0
-1 : 2 = 0 Rest        1    23 ↑ Leserichtung
-
-(5)10= (101)2
-
-(0,5625)10:
-2 * 0,5625 = 1,125→ 1     2-1↓ Leserichtung
-2 * 0,125 = 0,25 → 0
-2 * 0,25 = 0,5 → 0
-2 * 0,5 = 1,0 → 1
-
-(0,5625)10 =(0,1001)2
-
-
-Z = (5,5625)10=  (101,1001)2
-
-Oktaldarstellung:
-Z=  (101,0)2:
-101= 5
-
-Z=  (0,1001)2:
-100=4
-1(00)= 4
-
+\paragraph{Oktaldarstellung:}
+$Z = (11110110001)_2$
+\begin{align*}
+(001)_2 &= 01\\
+(110)_2 &= 06\\
+(110)_2 &= 06\\
+((0)11)_2 &= 03
+\end{align*}
 (Grupierungen von jeweils 3 Bits)
 
-Z = (5,5625)10=  (101,1001)2 = (5,44)8
+$Z = (1969)_{10} = (3661)_{8}$
 
-Hexadezimaldarstellung:
-Z=(101,0)2:
-(0)101= 5
+\paragraph{Hexadezimaldarstellung:}
+$Z = (11110110001)_2:$
 
-Z=(0,1001)2:
-1001=9
-
+\begin{align*}
+(0001)_2 = 1_{16}\\
+(1011)_2 = B_{16}\\
+((0)111)_2= 7_{16}
+\end{align*}
 (Grupierungen von jewels 4 Bits)
-Z = (5,5625)10=  (101,1001)2 = (5,44)8 = (5,9)16
 
-d)
-Z = (375,375)10
+$Z = (1969)_{10} = (7B1)_{16}$
+
+\subsubsection{2.2 (c)}
+$Z = (5,5625)_{10}$
+
+\paragraph{Dualdarstellung:}
+$5,0)10$:
+\begin{align*}
+5 : 2 = 2 Rest &\rightarrow 1\\
+2 : 2 = 1 Rest &\rightarrow 0\\
+1 : 2 = 0 Rest &\rightarrow 1 \uparrow \mbox{Leserichtung}
+\end{align*}
+
+$(5)_{10} = (101)_2$
+
+$(0,5625)_{10}$:
+\begin{align*}
+2 \cdot 0,5625 = 1,125 &\rightarrow 1 \downarrow \mbox{Leserichtung}\\
+2 \cdot 0,125 = 0,25 &\rightarrow 0\\
+2 \cdot 0,25 = 0,5 &\rightarrow 0\\
+2 \cdot 0,5 = 1,0 &\rightarrow 1
+\end{align*}
+
+$(0,5625)_{10} =(0,1001)_2$
 
 
-Dualdarstellung:
-Z = (375,0)10:
-375 : 2 = 187 Rest       1   20
-187 : 2 = 93 Rest        1
-93 : 2 = 46 Rest           1
-46 : 2 = 23 Rest           0
-23 : 2 = 11 Rest           1
-11 : 2 = 5 Rest              1
-5 : 2 = 2 Rest                1
-2: 2 = 1  Rest                 0        
-1 : 2 = 0 Rest                 1    29 ↑ Leserichtung
+$Z = (5,5625)_{10} = (101,1001)_2$
 
-(375,0)10= (101110111)2
+\paragraph{Oktaldarstellung:}
+$Z = (101,0)_2$:
+\begin{equation*}
+(101)_2 = 05
+\end{equation*}
 
-(0,375)10:
-2 * 0,375 = 0,75→ 0     2-1↓ Leserichtung
-2 * 0,75= 1,5 → 1
-2 * 0,5 = 1,0 → 1
-
-(0,375)10 =(0,011)2
-
-
-Z = (375,375)10=  (101110111,011)2
-
-Oktaldarstellung:
-Z=  (101110111,0)2:
-111=7
-110=6
-101= 5
-
-Z=  (0,011)2:
-011= 3
-
+$Z = (0,1001)_2$:
+\begin{align*}
+(100_") &= 4
+(1(00))_2 &= 4
+\end{align*}
 (Grupierungen von jeweils 3 Bits)
 
-Z = (375,375)10=  (101110111,011)2 = (567,3)8
+$Z = (5,44)_8$
 
-Hexadezimaldarstellung:
+\paragraph{Hexadezimaldarstellung:}
+$Z = (101,0)_2$:
+\begin{equation*}
+((0)101)_2 = \mathtt{5}
+\end{equation*}
 
-Z=  (101110111,0)2 :
-
-0111=7
-0111=7
-(000)1=1
-
-
-Z=  (0,011)2 :
-011(0)= 6
-
+$Z = (0,1001)_2$:
+\begin{equation*}
+(1001)_2 = \mathtt{9}
+\end{equation*}
 
 (Grupierungen von jewels 4 Bits)
-Z = (375,375)10=  (101110111,011)2 = (567,3)8 = ( 177,6)16
 
-2.4a)
- a)
-1*2^3 + 1*2^2 + 1*2^1 + 0*2^0 + 1*2^-1 + 0*2^-1 + 0*2^-2 + 1*2^-3
-1*2^3 + 1*2^2 + 1*2^1 + 0*2^0 + 1*2^-1 + 0*2^-2 + 0*2^-3 + 1*2^-4 ist richtig. du hast zwei mal die 1
+$Z =(5,9)_{16}$
 
-es sind 14,5625.
-oh wow da war ich wohl etwas voreilig.
+\subsubsection{2.2 (d)}
+$Z = (375,375)_{10}$
 
- b)
-0-Koeffizienten weggelassen
-1*2^4 + 1*2^2 + 1*2^0 + 1*2^-1 + 1*2^-2 + 1*2^-4 + 1*2^-5
-= 21.84375 ist richtig.
+\paragraph{Dualdarstellung:}
+$Z = (375,0)_{10}:$
 
-2.5
+\begin{align*}
+375 : 2 = 187 Rest &\rightarrow 1\\
+187 : 2 = 93 Rest &\rightarrow 1\\
+93 : 2 = 46 Rest &\rightarrow 1\\
+46 : 2 = 23 Rest &\rightarrow 0\\
+23 : 2 = 11 Rest &\rightarrow 1\\
+11 : 2 = 5 Rest &\rightarrow 1\\
+5 : 2 = 2 Rest &\rightarrow 1\\
+2: 2 = 1  Rest &\rightarrow 0\\
+1 : 2 = 0 Rest &\rightarrow 1 \uparrow \mbox{Leserichtung}
+\end{align*}
 
-(9A,C)_16 = 9*16^1 + 10*16^0 + 12*16^-1 = 154.75
-stimmt
+$(375,0)_{10}= (101110111)_2$
 
-\fi
+$(0,375)_{10}$:
+\begin{align*}
+2 \cdot 0,375 = 0,75 &\rightarrow 0 \downarrow \mbox{Leserichtung}\\
+2 \cdot 0,75= 1,5 &\rightarrow 1\\
+2 \cdot 0,5 = 1,0 &\rightarrow 1
+\end{align*}
+
+$(0,375)_{10} = (0,011)_{2}$
+
+$Z = (101110111,011)_2$
+
+\paragraph{Oktaldarstellung:}
+$Z_1 = (101110111,0)2$:
+\begin{align*}
+(111)_2 &= 07\\
+(110)_2 &= 06\\
+(101)_2 &= 05
+\end{align*}
+
+$Z_2 = (0,011)_2$:
+\begin{equation*}
+011 = 3
+\end{equation*}
+(Grupierungen von jeweils 3 Bits)
+
+$Z = (567,3)_8$
+
+\paragraph{Hexadezimaldarstellung:}
+
+$Z = (101110111,0)_2$:
+\begin{align*}
+(0111)_2 &= \mathtt{7}\\
+(0111)_2 &= \mathtt{7}\\
+((000)1)_2 = \mathtt{1}
+\end{align*}
+
+$Z = (0,011)_2$:
+\begin{equation*}
+(011(0))_2 = 6
+\end{equation*}
+
+(Grupierungen von jewels 4 Bits)
+
+$Z = (177,6)_{16}$
+
+\subsection{2.4}
+
+\subsubsection{2.4 (a) 1110,1001}
+\begin{align*}
+1\cdot2^3 + 1\cdot2^2 + 1\cdot2^1 + 0\cdot2^0 + 1\cdot2^{-1} + 0\cdot2^{-2} + 0\cdot2^{-3} + 1\cdot2^{-4}\\
+= 14,5625
+\end{align*}
+
+\subsubsection{2.4 (b) 10101,11011}
+0-Koeffizienten wurden hier weggelassen
+\begin{align*}
+1\cdot2^4 + 1\cdot2^2 + 1\cdot2^0 + 1\cdot2^{-1} + 1\cdot2^{-2} + 1\cdot2^{-4} + 1\cdot2^{-5}\\
+= 21.84375
+\end{align*}
+
+
+\subsection{2.5}
+\begin{equation*}
+\mathtt{9A,C}_{16} = 9\cdot16^1 + 10\cdot16^0 + 12\cdot16^{-1} = 154.75
+\end{equation*}
 
 \newpage
 
