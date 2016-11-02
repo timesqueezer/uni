@@ -31,181 +31,297 @@
   \newpage
   \pagenumbering{arabic}
 
-\section{} % 1
+\section{2} % 2
 
-\subsection{} % 1.1
-
-\subsubsection{(a) Interpreter} % 1.1 (a)
-Ein Interpreter übersetzt einzelne Befehle einer höheren Programmiersprache in eine Befehlsfolge, die direkt auf einer niedrigeren Spracheebene ausgeführt wird. Z.B. könnte ein Interpreter Anweisungung einer Sprache L1 sequentiell nach L0 übersetzen, sodass diese direkt ausgeführt werden können.
-
-\subsubsection{(b) Compiler} % 1.1 (b)
-Ein Compiler übersetzt auch Befehle einer höheren in Befehlsfolgen einer niedrigeren Sprache. Allerdings wird dabei ein neues Programm erzeugt, das erst nach dem Generieren ausgeführt werden kann.
-
-\subsubsection{(c) Virtuelle Maschine} % 1.1 (c)
-Auf der untersten Sprachebene L0 können Anweisungen direkt durch elektronische Schaltungen ausgeführt werden. Um einem Interpreter zu simulieren, dass auch höhersprachige Befehle ausgeführt werden können (um eine direkte Übersetzung von z.B. L5 zu L0 zu vermeiden) kann eine virtuelle Maschine eingesetzt werden, da diese die Rechenarchitektur simuliert.
-Dadurch können neue, komplexere und besser verständliche Sprachen eingesetzt werden, die jeweils eine Abstraktionseben darstellen. So ist es möglich, auch ohne Verständnis der untersten Schichten, in höheren Sprachen zu programmieren. Der größte Nachteil ist dabei, dass eine virtuelle Maschine meistens langsamer ist, als es eine echte. Auch die unterste Maschine M0 kann eine virtuelle Maschine sein (z.B. Betriebssystem-Virtualisierung). Soft- und Hardware sind in diesem Fall äquivalent anzusehen.
-
-
-\subsection{} % 1.2
-\begin{align}
-k_{0} &= k\\
-k_{1} &= nk\\
-k_{2} &= n^{2}k\\
-k_{3} &= n^{3}k
-\end{align}
-\mbox{Für den allgemeinen Fall erhält man:}
-\begin{align}
-k_{i} &= n^{i}k
-\end{align}
-
-
-\subsection{} % 1.3
-Die Vorteile dieses Konzepts liegen in der Dynamik und Flexibilität des Computers. Programme müssen diesem nicht getrennt von anderen Daten zugeführt werden. Durch die rein logische Trennung vereinfacht sich der Aufbau stark. Da sich Programme dadurch auch selbst verändern können, ist es mögliche diese sehr schnell und wenig speicherbedürftig zu entwickeln.
-
-Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des von-Neumann Rechners noch nicht ersichtlich waren. So könnte eine Schadsoftware sich selbst oder andere Programme umschreiben und diese so unbrauchbar machen bzw. deren Funktionalität verändern. Um zu gewährleisten, dass bösartige Programme Daten nicht manipulieren, auslesen oder anderweitig Schaden anrichten, muss eine Kontrollebene die Ausführung sowie Zugriffe auf die korrekten Speicherbereiche der Programme kontrollieren (Betriebssystem). Trotz dieser Gegenmaßnahmen schafft es Software immer wieder Sicherheitslücken zu finden und aktiv auszunutzen.
-
-
-\subsection{} % 1.4
-
-\subsubsection{(a)} % 1.4 (a)
-
-$f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)\\$
-$\rightarrow (6 + 5 + 4 + 3 + 2) \cdot \unit[5]{ns} + (5 \cdot \unit[1]{ns}) = \unit[105]{ns}\\$
-
-Ohne Horner-Schema würde bei naiver Herangehensweise die Berechnung des Polynoms 105ns dauern.
-Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
-Laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können\cite{wiki:1}.
-Nach der Methode wären es $(9\cdot\unit[5]{ns} + \unit[5]{ns}) = \unit[50]{ns}$ für die Multiplikationen.\\
-
-Mit Horner-Schema, bei dem das Ausklammern einzelner $x$ ausgenutzt wurd, erhält man insgesamt:\\
-$y = f + x (e + x ( d + x ( c + x ( b + a \cdot x ))))$
-$\rightarrow \unit[30]{ns}$
-
-\newpage
-
-\subsubsection{(b)} % 1.4 (b)
+\subsection{2.1} % 2.1
 
 \paragraph{Gegeben:}
+\begin{itemize}
+  \item Takt: 3,2GHz
+  \item Max. 5 Oparationen parallel
+  \item Leistungsverbrauch: 80W
+\end{itemize}
+
+
+\subsubsection{2.1 (a)}
+\paragraph{Gegeben:}
+\begin{itemize}
+  \item i5, Haswell Chipgröße: $A_C = \unit[177]{mm^2} = \unit[1,77]{cm^2}$
+  \item elektrische Herdplatte Leistung: $P = \unit[2]{KW} = \unit[2000]{W}$
+  \item Durchmesser von Platte: $d = \unit[15]{cm}$
+\end{itemize}
+
+\paragraph{Rechnung:}
+\paragraph{}i5 Leistungsdichte:
 \begin{equation}
-y = (x^{2}+2\cdot x+1)^{11}
+\frac{P}{A} = \frac{\unit[80]{W}}{\unit[1,77]{cm^2}} = \unitfrac[45,2]{W}{cm^2}
 \end{equation}
 
-\paragraph{Rechnung:}
+\paragraph{}Fläche einer Herdplatte:
+\begin{equation}
+A_H = \pi\cdot(\frac{d}{2})^2 =  \pi\cdot\unit[56.25]{cm^2} = \unit[176,71]{cm^2}
+\end{equation}
 
-Vereinfachung mit Ausnutzung der 1. binomischen Formel:
-\begin{align}
-a &= (x^2+2x+1)=(x+1)^2\\
-b &= (x+1)
-\end{align}
-$\rightarrow$ Eine Addition
-\begin{align}
-c &= (b)^2=(x+1)\cdot(x+1)
-\end{align}
-$\rightarrow$ Eine Multiplikation und nur eine Addition, da b nur einmal ausgerechnet werden muss\\
-\begin{align}
-y &= d=(c)^{11}\\
-t &= 12\cdot 5ns + 1 \cdot 1ns = \unit[61]{ns}
-\end{align}
-
-\paragraph{Antwort:}
-Eine Addition und 12 Multiplikationen benötigen eine Rechenzeit von $\unit[61]{ns}$.
-
-\subsection{} % 1.5
-Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
+\paragraph{}Leistungsdichte einer Herdplatte:
+\begin{equation}
+\frac{P}{A} = \frac{\unit[2000]{W}}{\unit[176,71]{cm^2}} = \unitfrac[11,32]{W}{cm^2}
+\end{equation}
 
 
-\subsubsection{(a)} % 1.5 (a)
-\paragraph{Rechnung:}
-
-\begin{align}
-\unitfrac[5]{MB}{s}\cdot60 &= \unitfrac[300]{MB}{min}\\
-\unitfrac[30]{MB}{min}\cdot60 &= \unitfrac[18.000]{MB}{h}\\
-\unitfrac[18.000]{MB}{h}\cdot24 &=  \unitfrac[432.000]{MB}{d}\\
-\unitfrac[432.000]{MB}{d}\cdot365 &= \unitfrac[157.680.000]{MB}{a}\\
-\unitfrac[157.680.000]{MB}{a}\cdot80 &= \unitfrac[12.614.400.000]{MB}{Leben(80 Jahre)}
-\end{align}
-
-\paragraph{Antwort:}
-\begin{itemize}
-  \item Pro Tag werden \unit[432.000]{MB} (\unit[430]{GB}) abgespeichert.
-  \item Pro Jahr werden \unit[157.680.000]{MB} (\unit[157,68]{TB}) abgespeichert.
-  \item Pro Leben werden \unit[12.614.400.000]{MB} (\unit[12614,4]{TB}) abgespeichert.
-\end{itemize}
-
-
-\subsubsection{(b)} % 1.5 (b)
+\subsubsection{2.1 (b)}
 \paragraph{Gegeben:}
-
-\begin{itemize}
-    \item Kapazität Anfang $2016 = \unit[4]{TiB}$
-    \item Kapazitätzuwachs von $38\%$ pro Jahr
-\end{itemize}
-
-\paragraph{Gesucht:}
-
-\begin{itemize}
-    \item Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11472,73]{TiB}$
-\end{itemize}
+Spannung: $U = \unit[3.7]{V}$
+Ladung: $Q = \unit[3000]{mAh}$
+Zeit: $t = \unit[3]{h}$
 
 \paragraph{Rechnung:}
+Um die Leistung $P = U \cdot I$ zu berechnen wird $I = Q/t$ substituiert:
 
-    $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
+\begin{equation}
+P = U\cdot\frac{Q}{t} = \unit[3.7]{V} \cdot \unit[1]{A} = \unit[3.7]{W}
+\end{equation}
+
+Da die CPU die Hälfte der elektrischen Energie verbraucht ergibt sich:
 
 \begin{align}
-    f(t) &= \unit[4]{TiB}\cdot1,38^{t}\\
-    \unit[4]{TiB} \cdot 1,38^{t} &= \unit[11472,73]{TiB}\\
-    t &= \log_{1,38}(\frac{\unit[11472,73]{TiB}}{\unit[4]{TiB}})\\
-      &= \log_{1,38}(2868,1825)\\
-      &= 24,72
+P_{CPU} = P/2 &= \unit[1.85]{W}\\
+A_{Mobile-CPU} = \unit[16]{mm^2} &= \unit[0.16]{cm^2}
 \end{align}
 
-\paragraph{Antwort:}
-Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist die Kapazität einer typischen Festplatte, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+
+Leistungsdichte: $P/A = \frac{\unit[1.85]{W}}{\unit[0.016]{cm^2}} = \unitfrac[11.5625]{W}{cm^2}$
+\iffalse
+c)
+n_{Desktop-CPU} = 3.2GHz * 5 (Operationen) = 1,6 * 10^10 Operationen / s
+t_1 (Zeit pro Operation) = 1/n_{Desktop-CPU}
+E = Pt = 80W * (1 / 1.6E10 Operationen/s)) = 5E-9 Ws = 5000 nJ / Operation
+
+n_{Mobile_CPU} = 1G Operationen / s = 10^9 Operationen / s
+t_2 = 1/n_{Mobile-CPU}
+E = Pt = 1.85W * (10E-9 Operations / s) = 1850 nJ / Operation
+
+kannst du die rechnung nochmal erklären/aufschlüsseln? Ich blick da nicht durch
+
+Weiß jemand was zur zweiten Teilfrage? Ich geh sonst morgen nochmal die Folien der Vorlesung durch.
+
+Zu Smart Dust: 
+- Energieverbrauch steigt proportional zur Taktrate StrongArm1100 hat 133MHz bzw. 190MHz (http://datasheets.chipdb.org/Intel/STRONG/SA1100.HTM) vs 3.2GHz
+- speziell für eine Aufgabe entwickelt --> effizienter, weniger Leistung benötigt vs. PC: schneller Allrounder
+-
+
+2.2
+
+ Geg: 2022,562 MIlliarden € = c =  2022562000000€ = 202256200000000 cent
+a)
+x := Benötigte Stellen in Binär
+
+2^x >= c, x \in N
+x >= log_2(c)
+x >= 40.87932 -> x = 41  ist nicht auf den cent genau!
+log_2(202256200000000cent)=47,5 --> 48 stellen
+48 ist richtig
+b)
+x := Stellen im Zahlensystem zur Basis 5
+x >= log_5(c)
+x >= 17.60576 -> x = 18 nicht auf den cent genau
+cent: 21 Stellen
+21 ist richitg
+
+oh, ja hab ich nicht bedacht, ich kann ja sonst beides reinschreiben
+
+2.3
+
+a)
+
+Z = (42)10
+
+Dualdarstellung:
+    
+Z = (42)10:
+42: 2 = 21 Rest    0     20
+21: 2 = 10 Rest    1
+10:2 = 5 Rest       0
+5 : 2 = 2 Rest       1 
+2 : 2 = 1 Rest        0
+1 : 2 = 0 Rest        1    25 ↑ Leserichtung
+
+Z = (42)10=  (101010)2
+
+Oktaldarstellung:
+Z= (101010)2 :
+010 =  2
+101=5
+(Grupierungen von jeweils 3 Bits)
+
+Z = (42)10=  (101010)2 = (52)8
+
+Hexadezimaldarstellung:
+Z= (101010)2:
+1010= A
+(00)10=2
+(Grupierungen von jewels 4 Bits)
+
+Z = (42)10=  (101010)2 = (52)8 = (2A)16
+
+b)
+
+Z = (1969)10
+
+Dualdarstellung:
+Z = (1969)10:
+1969: 2 = 984 Rest    1     20
+984: 2 = 492 Rest      0
+492:2 = 246 Rest       0
+246 : 2 = 123 Rest     0
+123 : 2 = 61 Rest       1
+61:2 = 30 Rest            1
+30:2= 15 Rest             0
+15 :2 = 7 Rest              1
+7 :2 = 3 Rest               1
+3:2 = 1 Rest                1 
+1 : 2 = 0 Rest               1         210 ↑ Leserichtung
+
+Z = (1969)10=  (11110110001)2
+
+Oktaldarstellung:
+Z=  (11110110001)2:
+001= 1
+110=6
+110= 6
+(0)11=3
+
+(Grupierungen von jeweils 3 Bits)
+Z = (1969)10=  (11110110001)2 = (3661)8
+
+Hexadezimaldarstellung:
+Z=(11110110001)2:
+0001=1
+1011=B
+(0)111= 7
+
+(Grupierungen von jewels 4 Bits)
+Z = (1969)10=  (11110110001)2 = (3661)8 = (7B1)16
+
+c)
+Z= (5,5625)10
+
+Dualdarstellung:
+Z = (5,0)10:
+5 : 2 = 2 Rest       1 
+2 : 2 = 1 Rest        0
+1 : 2 = 0 Rest        1    23 ↑ Leserichtung
+
+(5)10= (101)2
+
+(0,5625)10:
+2 * 0,5625 = 1,125→ 1     2-1↓ Leserichtung
+2 * 0,125 = 0,25 → 0
+2 * 0,25 = 0,5 → 0
+2 * 0,5 = 1,0 → 1
+
+(0,5625)10 =(0,1001)2
 
 
-\subsubsection{(c)} % 1.5 (c)
+Z = (5,5625)10=  (101,1001)2
 
-\paragraph{Gegeben:}
-\begin{itemize}
-    \item Kapazität Anfang 2016 = \unit[128]{GiB}\\
-    \item Kapazitätzuwachs = 50\% pro Jahr
-\end{itemize}
+Oktaldarstellung:
+Z=  (101,0)2:
+101= 5
 
-\paragraph{Gesucht:}
-    Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11748075,5]{GiB}$
+Z=  (0,1001)2:
+100=4
+1(00)= 4
 
-\paragraph{Rechnung:}
-    $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
-\begin{align}
-    f(t) &= \unit[128]{GiB}\cdot1,5^{t}\\
-    \unit[128]{GiB}\cdot1,5^{t} &= \unit[11748075,5]{GiB}\\
-    t &= log1,5(\frac{\unit[11748075,5]{GiB}}{\unit[128]{GiB}})\\
-      &= log1,5(91781,83984)\\
-       &= 28,18\\
-\end{align}
+(Grupierungen von jeweils 3 Bits)
 
-\paragraph{Antwort:}
-    Nach ca. 28 Jahren, also 2044 (bzw. Anfang 2045) ist die Kapazität einer typischen SD-Card, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+Z = (5,5625)10=  (101,1001)2 = (5,44)8
+
+Hexadezimaldarstellung:
+Z=(101,0)2:
+(0)101= 5
+
+Z=(0,1001)2:
+1001=9
+
+(Grupierungen von jewels 4 Bits)
+Z = (5,5625)10=  (101,1001)2 = (5,44)8 = (5,9)16
+
+d)
+Z = (375,375)10
 
 
-\subsubsection{(d)} % 1.5 (d)
+Dualdarstellung:
+Z = (375,0)10:
+375 : 2 = 187 Rest       1   20
+187 : 2 = 93 Rest        1
+93 : 2 = 46 Rest           1
+46 : 2 = 23 Rest           0
+23 : 2 = 11 Rest           1
+11 : 2 = 5 Rest              1
+5 : 2 = 2 Rest                1
+2: 2 = 1  Rest                 0        
+1 : 2 = 0 Rest                 1    29 ↑ Leserichtung
 
-\paragraph{Gegeben:}
-    Magnetband Kapazität: \unit[140]{MB}
+(375,0)10= (101110111)2
 
-\paragraph{Gesucht:}
-    Anzahl der Magnetbänder, um \unit[12.614.400.000]{MB} zu speichern.
+(0,375)10:
+2 * 0,375 = 0,75→ 0     2-1↓ Leserichtung
+2 * 0,75= 1,5 → 1
+2 * 0,5 = 1,0 → 1
 
-\paragraph{Rechnung:}
-\begin{align}
-    \unit[140]{MB}\cdotx &= \unit[12.614.400.000]{MB}\\
-    x &= \frac{\unit[12.614.400.000]{MB}}{\unit[140]{MB}}\\
-    x &= 90.102.857,14
-\end{align}
+(0,375)10 =(0,011)2
 
-\paragraph{Antwort:}
-    Man bräuchte $90.102.858$ Magnetbänder, um eine Datenmenge von $\unit[12.614.400.000]{MB}$ zu speichern.
 
+Z = (375,375)10=  (101110111,011)2
+
+Oktaldarstellung:
+Z=  (101110111,0)2:
+111=7
+110=6
+101= 5
+
+Z=  (0,011)2:
+011= 3
+
+(Grupierungen von jeweils 3 Bits)
+
+Z = (375,375)10=  (101110111,011)2 = (567,3)8
+
+Hexadezimaldarstellung:
+
+Z=  (101110111,0)2 :
+
+0111=7
+0111=7
+(000)1=1
+
+
+Z=  (0,011)2 :
+011(0)= 6
+
+
+(Grupierungen von jewels 4 Bits)
+Z = (375,375)10=  (101110111,011)2 = (567,3)8 = ( 177,6)16
+
+2.4a)
+ a)
+1*2^3 + 1*2^2 + 1*2^1 + 0*2^0 + 1*2^-1 + 0*2^-1 + 0*2^-2 + 1*2^-3
+1*2^3 + 1*2^2 + 1*2^1 + 0*2^0 + 1*2^-1 + 0*2^-2 + 0*2^-3 + 1*2^-4 ist richtig. du hast zwei mal die 1
+
+es sind 14,5625.
+oh wow da war ich wohl etwas voreilig.
+
+ b)
+0-Koeffizienten weggelassen
+1*2^4 + 1*2^2 + 1*2^0 + 1*2^-1 + 1*2^-2 + 1*2^-4 + 1*2^-5
+= 21.84375 ist richtig.
+
+2.5
+
+(9A,C)_16 = 9*16^1 + 10*16^0 + 12*16^-1 = 154.75
+stimmt
+
+\fi
 
 \newpage
 
