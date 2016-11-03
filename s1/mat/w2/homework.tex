@@ -2,6 +2,8 @@
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{hyperref}
@@ -28,5 +30,101 @@
   \pagenumbering{arabic}
 
 \section{}
+
+\subsection{(a)}
+$A = \{1,2,3\}, B = \{a,b\}$
+
+\subsubsection{i.}
+Es gibt keine injektive Funktion $f : A \rightarrow B$, da $B$ weniger Elemente als $A$ enthält.
+
+\subsubsection{ii.}
+Ja, es gibt mehrere surjektive Funktionen $g : A \rightarrow B$, die nicht injektiv sind, z.B.:
+
+\begin{table}[!th]
+\begin{tabular}{|c|c|}
+\hline
+$x$ & $g(x)$\\
+\hline
+1 & a \\
+2 & a \\
+3 & b \\
+\hline
+\end{tabular}
+\caption{Wertetabelle für g}
+\label{ex:table}
+\end{table}
+
+\subsubsection{iii.}
+Da es keine injektive Funktion gibt, die $A$ auf $B$ abbildet, existiert folglich auch keine Bijektion.
+
+
+\subsection{(b)}
+$A = \{1,2,3\}, B = \{a,b,c\}$
+
+\subsubsection{i.}
+Es gibt zwar eine injektive Funktion $f : A \rightarrow B$, welche allerdings auch surjektiv ist, da $B$ genauso viele Elemente wie $A$ enthält.
+
+\subsubsection{ii.}
+Es gibt keine surjektive Funktion $g : A \rightarrow B$, die nicht auch gleichzeitig injektiv ist, da sonst nicht allen Elementen aus $A$ ein Bildwert zugeordnet würde.
+
+\newpage
+\subsubsection{iii.}
+Ja, es gibt folgende Bijektion:
+
+\begin{table}[!th]
+\begin{tabular}{|c|c|}
+\hline
+$x$ & $h(x)$\\
+\hline
+1 & a \\
+2 & b \\
+3 & c \\
+\hline
+\end{tabular}
+\caption{Wertetabelle für g}
+\label{ex:table}
+\end{table}
+
+
+\subsection{(c)}
+$A = \{1,2,3\}, B = \{a,b,c,d\}$
+
+\subsubsection{i.}
+Ja, es gibt folgende injektive Funktion, welche nicht surjektiv ist:
+
+\begin{table}[!th]
+\begin{tabular}{|c|c|}
+\hline
+$x$ & $f(x)$\\
+\hline
+1 & a \\
+2 & b \\
+3 & c \\
+\hline
+\end{tabular}
+\caption{Wertetabelle für g}
+\label{ex:table}
+\end{table}
+
+\subsubsection{ii.}
+Es gibt keine surjektive Funktion $g : A \rightarrow B$, weil $B$ mehr Elemente als $A$ enthält und bei Abbildung auf alle Elemente aus $B$, $g$ keine Funktion mehr wäre, da ein Elemente aus $A$ auf zwei aus $B$ abbilden müsste.
+
+\subsubsection{iii.}
+Da es keine surjektive Funktion gibt, existiert auch keine Bijektion.
+
+
+% 2
+\section{}
+
+\subsection{(a)}
+$f : \mathbb{Z} \rightarrow \mathbb{Z}; n \rightarrow -3n$
+
+\paragraph{Injektivität}
+$f(x_1) = f(x_2) \rightarrow -3x_1 = -3x_2 \rightarrow x_1 = x_2 \checkmark$
+
+\paragraph{Surjektivität}
+$x \in \mathbb{Z}; f(x) = y \rightarrow y = -3x \rightarrow x = -\frac{y}{3} \lightning$
+Es liegt keine Surjektivität vor, da z.B. für $y = 2$ kein Urbild existiert.
+
 
 \end{document}
