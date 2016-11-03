@@ -124,7 +124,109 @@ $f(x_1) = f(x_2) \rightarrow -3x_1 = -3x_2 \rightarrow x_1 = x_2 \checkmark$
 
 \paragraph{Surjektivität}
 $x \in \mathbb{Z}; f(x) = y \rightarrow y = -3x \rightarrow x = -\frac{y}{3} \lightning$
-Es liegt keine Surjektivität vor, da z.B. für $y = 2$ kein Urbild existiert.
+Es liegt keine Surjektivität vor, da z.B. für $y = 2$ kein Urbild in $\mathbb{Z}$ existiert.
+
+Die Funktion $f$ ist nicht bijektiv, da keine Surjektivität vorliegt.
+
+\subsection{(b)}
+$g : \mathbb{Z} \rightarrow \mathbb{Z}; n \rightarrow -2n+3$
+
+\paragraph{Injektivität}
+$g(x_1) = g(x_2) \rightarrow -2x_1+3 = -2x_2+3 \checkmark$
+
+\paragraph{Surjektivität}
+$g(x) = y \rightarrow y = -2x+3 \rightarrow x = \frac{3}{2}y \lightning$
+Es liegt keine Surjektivität vor, da z.B. für $y = 2$ kein Urbild in $\mathbb{Z}$ existiert.
+
+Folglich ist $g$ auch nicht bijektiv.
 
 
+\subsection{(c)}
+$h : \mathbb{Z} \rightarrow \mathbb{Z}; n \rightarrow n^2-3$
+
+\paragraph{Injektivität}
+$h(x_1) = h(x_2) \rightarrow x_1^2-3 = x_2^2-3 \rightarrow \pm x_1 = \pm _x2 \lightning$
+$h$ ist nicht injektiv, da z.B. $f(x_1) = f(-x_2) gilt.$
+
+\paragraph{Surjektivität}
+$h(x) = y \rightarrow y = x^2-3 \rightarrow x = \sqrt{y+3} \lightning$
+$h$ ist auch nicht surjektiv, da z.B. für $y=2$ kein Urbild existiert ($\sqrt{5} \notin \mathbb{Z}$).
+
+$h$ ist also auch nicht bijektiv.
+
+
+% 3
+\section{}
+
+\subsection{(a)}
+$f : \mathbb{Z} \rightarrow \mathbb{Z} \times \mathbb{Z}; m \rightarrow (m^2-3, (m-2)^2)$
+
+\paragraph{Injektivität}
+\begin{align*}
+f(x_1) &= f(x_2)\\
+x_1^2-3 &= x_2^2-3 \rightarrow \pm x_1 = \pm x_2 \lightning
+\end{align*}
+Da schon für das erste Element die Injektivität nicht gilt, ist $f$ auch insgesamt nicht injektiv.
+
+\paragraph{Surjektivität}
+\begin{align*}
+f(x) = (y_1,y_2)\\
+y_1 = x_1^2-3 \rightarrow x_1 = \sqrt{y_1-3} \lightning\\
+\end{align*}
+$f$ ist nicht surjektiv und damit insgesamt auch nicht bijektiv.
+
+
+\subsection{(b)}
+
+$g: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{Z}; (n,m) \rightarrow -m-n^2$
+
+\paragraph{Injektivität}
+\begin{align*}
+g(x_1, z_1) &= g(x_2, z_2)\\
+-x_1-z_1^2 &= -x_2-z_2^2
+\end{align*}
+Annahme: $x_1 = x_2$
+\begin{align*}
+\pm z_1 &= \pm z_2 \lightning
+\end{align*}
+$\rightarrow$ Nicht injektiv.
+
+\paragraph{Surjektivität}
+\begin{align*}
+g(x, z) &= y\\
+-x-z^2 &= y\\
+\end{align*}
+
+\begin{align}
+x &= z^2-y\\
+z &= \sqrt{x-y}\\
+z &= \sqrt{z^2-2y}\\
+z^2 &= x^2-2y \lightning
+\end{align}
+
+$g$ ist nicht surjektiv und folglich auch nicht bijektiv.
+
+
+\subsection{(c)}
+$h: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{Z} \times \mathbb{Z}; (m,n) \rightarrow (m-n, m+n)$
+
+
+% 4
+\section{}
+Für alle $n \in \mathbb{N}$ soll gelten:
+\begin{equation*}
+\sum_{i=1}^{n} (2i-1) = n^2
+\end{equation*}
+
+Induktionsstart: $n=1$
+\begin{equation*}
+(2-1) = 1^2 \rightarrow 1 = 1 \checkmark
+\end{equation*}
+
+Induktionsschritt:
+\begin{align*}
+\sum_{i=1}^{n+1} (2i-1) = (n+1)^2\\
+\sum_{i=1}^{n} (2i-1) + (2(n+1)-1) = (n+1)^2\\
+n^2 + 2n + 1 = n^2 + 2n + 1 \checkmark
+\end{align*}
 \end{document}
