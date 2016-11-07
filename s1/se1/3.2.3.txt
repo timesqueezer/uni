@@ -1,0 +1,7 @@
+Die Kompilierung schlägt durchs Fehlen des Semikolons in Zeile 26 fehl. Ohne dieses wäre der Ausdruck erst mit dem Semikolon in Zeile 27 beendet, sodass Zeile 26 und 27 zusammengenommen syntaktisch keinen Sinn mehr ergeben. Der Compiler zeigt dadurch die Meldung "';' expected"
+
+
+String strasse; Eine Variablendeklaration reserviert Speicherplatz für eine Variable vom Typ String. 
+Hierbei wird sie noch nicht initialisiert. Ihr wurde also noch kein Wert zu gewiesen und kann noch nicht benutzt werden.
+
+Ein formaler parameter ist eine im Methodenkopf deklarierte, generische Variable, die im Methodenrumpf zur Verfügung steht. Sobald sie mit konkreten Werten für die Parameter aufgerufen wird, nennt man sie aktuelle Parameter.

@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ zeichneSimpel()
+comment0.text=\r\n\ Zeichnet\ das\ Haus\ mit\ einer\ gelben\ Wand.\r\n
+comment1.params=wandfarbe
+comment1.target=void\ zeichneStrukturiert(java.lang.String)
+comment1.text=\r\n\ Zeichnet\ das\ Haus\ mit\ einer\ Wandfarbe,\ die\ der\ Anwender\ bestimmt.\r\n\ \r\n\ @param\ wandfarbe\ die\ Farbe\ der\ Wand,\ z.B.\ "gelb"\ oder\ "gruen"\r\n
+comment2.params=
+comment2.target=void\ zeichneSonne()
+comment3.params=farbe
+comment3.target=void\ zeichneWand(java.lang.String)
+numComments=4
