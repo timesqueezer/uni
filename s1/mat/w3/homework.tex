@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+%\usepackage{fullpage}
+
+\title{\textbf{Mathe Hausaufgaben zum 10. und 11. November 2016}}
+\author{Matz Radloff(6946325)}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Matz Radloff(6946325) - Mathe I\_Inf}
+\cfoot{\thepage}
+
+
+\begin{document}
+\pagenumbering{gobble}
+  \maketitle
+  \date{}
+  \tableofcontents
+  \newpage
+  \pagenumbering{arabic}
+
+\section{}
+
+Für $n \in \mathbb{N}$ soll gelten:
+
+\begin{equation*}
+    A(n): 1 \cdot 2^1 + 2 \cdot 2^2 + 3 \cdot 2^3 + ... + n \cdot 2^n = (n-1) \cdot 2^{n+1} + 2
+\end{equation*}
+
+\subsection*{(a)} Formulierung der Gleichung $A(n)$ mit Hilfe des Summenzeichens:
+
+\begin{equation*}
+    \sum_{i=1}^{n}{i \cdot 2^i}
+\end{equation*}
+
+\subsection*{(b)} Prüfung, ob $A(n)$ für $n = 1, 2, 3$ richtig ist:
+
+\begin{align*}
+    A(1) &: 1 \cdot 2^1 = (1-1) \cdot 2^{1+1}+2 \Rightarrow 2 = 2 \tag*{\checkmark}\\
+    A(2) &: 1 \cdot 2^1 + 2 \cdot 2^2 = (2-1) \cdot 2^{2+1}+2 \Rightarrow 10 = 10 \tag*{\checkmark}\\
+    A(3) &: 1 \cdot 2^1 + 2 \cdot 2^2 + 3 \cdot 2^3 = (3-1) \cdot 2^{3+1}+2 \Rightarrow 34 = 34 \tag*{\checkmark}
+\end{align*}
+
+\subsection*{(c)} Beweis durch vollständige Induktion:
+
+\paragraph{Induktionsanfang:}
+Dass $A(1)$ gilt, wurde in (b) gezeigt.
+
+\paragraph{Induktionsschritt:}
+Es soll bewiesen werden, dass $A(n+1)$ unter Annahme, dass A(n) stimmt, gilt.
+
+\begin{align*}
+    \sum_{i=1}^{n+1}{i \cdot 2^i} &= (n+1-1) \cdot 2^{n+1+1}+2\\
+    \sum_{i=1}^{n}{i \cdot 2^i} + (n+1) \cdot 2^{n+1} &= n \cdot 2^{n+2} + 2\\
+    (n-1) \cdot 2^{n+1}+2 + (n+1) \cdot 2^{n+1} &= n \cdot 2^{n+2} + 2\\
+    2n \cdot 2^{n+1} + 2 &= n \cdot 2^{n+2} + 2\\
+    n \cdot 2^{n+2} +2 &= n \cdot 2^{n+2} + 2 \tag*{\checkmark}
+\end{align*}
+
+% 2
+\section{} Für $n \in \mathbb{N}$ soll folgende Aussage gelten:
+
+\begin{equation*}
+    B(n): \sum_{i=1}^{n}{(2i-1)} = n^2
+\end{equation*}
+
+\subsection*{(a)} Prüfung, ob $B(n)$ für $n = 1, 2, 3$ gilt:
+
+\begin{align*}
+    B(1) &: (2 \cdot 1 - 1) = 1^2 \Rightarrow 1 = 1 \tag*{\checkmark}
+    B(2) &: (2 \cdot 1 - 1) + (2 \cdot 2 - 1) = 2^2 \Rightarrow 4 = 4 \tag*{\checkmark}
+    B(3) &: (2 \cdot 1 - 1) + (2 \cdot 2 - 1) + (2 \cdot 3 - 1) = 3^2 \Rightarrow 9 = 9 \tag*{\checkmark}
+\end{align*}
+
+\subsection*{(b)} Formulierung ohne das Summenzeichen:
+
+$1+3+5+...+(2n-1) = n^2$
+
+Die Summe der ersten $n$ ungeraden Zahlen lässt sich auch durch $n^2$ berechnen.
+
+\subsection*{(c)} Beweis durch vollständige Induktion:
+
+\paragraph{Induktionsanfang:}
+Dass $B(1)$ gilt, wurde in (a) gezeigt.
+
+\paragraph{Induktionsschritt:}
+Es soll bewiesen werden, dass $B(n+1)$ unter Annahme, dass B(n) stimmt, gilt.
+
+\begin{align*}
+    \sum_{i=1}^{n+1}{(2i-1)} &= (n+1)^2\\
+    \sum_{i=1}^{n}{(2i-1)} + (2 \cdot (n+1) - 1) &= (n+1)^2\\
+    n^2 + 2n +1 &= (n+1)^2\\
+    (n+1)^2 &= (n+1)^2 \tag*{\checkmark}
+\end{align*}
+
+% 3
+\section{}
+\end{document}
