@@ -1,0 +1,279 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{spreadtab}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[]{units}
+%\usepackage{fullpage}
+
+\title{\textbf{Rechnerstrukturen Hausaufgaben zum 09. November 2016}}
+\author{Ali Ebrahimi Pourasad, Moritz Lahann, Matz Radloff}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lfoot{Ali Ebrahimi Pourasad(6948107)\\ Moritz Lahann(6948050)\\ Matz Radloff(6946325)}
+\lhead{[RS\_GR1\_12]}
+\cfoot{\thepage}
+
+
+\begin{document}
+  \maketitle
+  \date{}
+  Gruppe: [RS\_GR1\_12]
+
+\section*{3.1} % 1
+\label {sec:3.1}
+
+\subsection*{(a) 00001101}
+\begin{itemize}
+  \item Ganze Zahlen: 13
+  \item Betrag und Vorzeichen: 13
+  \item Exzess-127 Kodierung: $13-127 = -114$
+  \item Einerkomplement: 13
+  \item Zweierkomplement: 13
+ \end{itemize}
+
+\subsection*{(b) 01100111}
+\begin{itemize}
+  \item Ganze Zahlen: 103
+  \item Betrag und Vorzeichen: 103
+  \item Exzess-127 Kodierung: $103-127 = -24$
+  \item Einerkomplement: 103
+  \item Zweierkomplement: 103
+ \end{itemize}
+
+\subsection*{(c) 10000101}
+\begin{itemize}
+  \item Ganze Zahlen: 133
+  \item Betrag und Vorzeichen: -5
+  \item Exzess-127 Kodierung: $133-127 = 6$
+  \item Einerkomplement: $10000101 \rightarrow 11111010 = -122$
+  \item Zweierkomplement: $10000101 \rightarrow 11111011 = -123$
+ \end{itemize}
+
+\subsection*{(d) 11111001}
+\begin{itemize}
+  \item Ganze Zahlen: 249
+  \item Betrag und Vorzeichen: -121
+  \item Exzess-127 Kodierung: $249-127 = 126$
+  \item Einerkomplement: $11111001 \rightarrow 10000110 = -6$
+  \item Zweierkomplement: $11111001 \rightarrow 10000111 = -7$
+ \end{itemize}
+
+
+\section*{3.2} % 1
+\label {sec:3.2}
+
+\subsection*{(a) $(56)_{10}$}
+\begin{align*}
+    56:2 &= 28 \rightarrow \mbox{R}0 \\
+    28:2 &= 14 \rightarrow \mbox{R}0 \\
+    14:2 &= 7  \rightarrow \mbox{R}0 \\
+    7:2 &= 3   \rightarrow \mbox{R}1 \\
+    3:2 &= 1   \rightarrow \mbox{R}1 \\
+    1:2 &= 0   \rightarrow \mbox{R}1 \\
+\end{align*}
+
+$(56)_{10}=(00111000)_2$
+
+\paragraph{Vorlesung:}
+\begin{itemize}
+    \item Einerkomplement: $(11000111)_2$
+    \item Zweierkomplement: $(11001000)_2$
+\end{itemize}
+
+\subsection*{(b)}
+
+Man kommt mit dem Algorithmus zu dem selben Ergebnis, da es äquivalent ist, das (b-1)-Komplement (Invertierung der Bits) von einer Zahl zu bilden und darauf 1 zu addieren, als wenn man die erste 1 stehen lässt und ab dann das Komplement bildet.
+
+\newpage
+\section*{3.3}
+\label {sec:3.3}
+
+
+$Z = (-56)_{10} = (11001000)_{K2}$ (s.3.2)
+
+\paragraph{Dualdarstellung:}
+$Z = (-56)_{10}$
+\begin{align*}
+-56: 2 = -28 \mbox{ Rest} &\rightarrow 0\\
+-28: 2 = -14 \mbox{ Rest} &\rightarrow 0\\
+-14 :2 = -7 \mbox{ Rest} &\rightarrow 0\\
+-7 : 2 = -4 \mbox{ Rest} &\rightarrow 1\\
+-4 : 2 = -2 \mbox{ Rest} &\rightarrow 0\\
+-2 : 2 = -1 \mbox{ Rest} &\rightarrow 0\\
+-1 : 2 = -1 \mbox{ Rest} &\rightarrow 1\\
+-1 : 2 = -1 \mbox{ Rest} &\rightarrow 0 \uparrow \mbox{Leserichtung}
+\end{align*}
+Ab hier Überlauf
+
+\section*{3.4}
+\label {sec:3.4}
+
+Um eine Subtraktion mit Hilfe von Komplementen durchzuführen, kann man das zu subtrahierende Element als 9-Komplement darstellen und mit der Addition von 1 in die 10-Komplement-Darstellung uberführen und schließlich zu der positiven Zahl addieren, wobei der Überlauf dann weggelassen wird, sodass eine Subtraktion stattfindet.
+
+\subsection*{(a) $1385-532$}
+
+\begin{align*}
+(0532)_{10} = (9467)_{K9} &= (9468)_{K10}\\
+1382 + 9468 &= (1)0850
+\end{align*}
+Durch Weglassen des Übertrags erhält man 850.
+
+
+\subsection*{(b) $372-687$}
+
+\begin{align*}
+(0687)_{10} = (9312)_{K9} &= (9313)_{K10}\\
+372 + 9313 = 9685 \rightarrow -315
+\end{align*}
+
+\subsection*{(c) $1385-532$}
+
+$(1385)_{10}$:
+\begin{align*}
+    1385:2 &= 692 \rightarrow \mbox{R}1 \\
+    692:2 &= 346 \rightarrow \mbox{R}0 \\
+    346:2 &= 173  \rightarrow \mbox{R}0 \\
+    173:2 &= 86   \rightarrow \mbox{R}1 \\
+    86:2 &= 43   \rightarrow \mbox{R}0 \\
+    43:2 &= 21   \rightarrow \mbox{R}1 \\
+    21:2 &= 10   \rightarrow \mbox{R}1 \\
+    10:2 &= 5   \rightarrow \mbox{R}0 \\
+    5:2 &= 2   \rightarrow \mbox{R}1 \\
+    2:2 &= 1   \rightarrow \mbox{R}0 \\
+    1:2 &= 1   \rightarrow \mbox{R}1 \uparrow \mbox{Leserichtung}
+\end{align*}
+$(1385)_{10}=(010101101001)_2$\\
+
+$(532)_{10}$:
+\begin{align*}
+    532:2 &= 266 \rightarrow \mbox{R}0 \\
+    266:2 &= 133 \rightarrow \mbox{R}0 \\
+    133:2 &= 66  \rightarrow \mbox{R}1 \\
+    66:2 &= 33   \rightarrow \mbox{R}0 \\
+    33:2 &= 16   \rightarrow \mbox{R}1 \\
+    16:2 &= 8   \rightarrow \mbox{R}0 \\
+    8:2 &= 4   \rightarrow \mbox{R}0 \\
+    4:2 &= 2   \rightarrow \mbox{R}0 \\
+    2:2 &= 1   \rightarrow \mbox{R}0 \\
+    1:2 &= 1   \rightarrow \mbox{R}1 \uparrow \mbox{Leserichtung}
+\end{align*}
+
+$(532)_{10} = (001000010100)_2 = (110111101011)_{K1} = (110111101100)_{K2}$
+
+\newpage
+\subsection*{(d) $372-687$}
+
+$(372)_{10}$:
+\begin{align*}
+    372:2 &= 186 \rightarrow \mbox{R}0 \\
+    186:2 &= 93 \rightarrow \mbox{R}0 \\
+    93:2 &= 46  \rightarrow \mbox{R}1 \\
+    46:2 &= 23   \rightarrow \mbox{R}0 \\
+    23:2 &= 11   \rightarrow \mbox{R}1 \\
+    11:2 &= 5   \rightarrow \mbox{R}1 \\
+    5:2 &= 2   \rightarrow \mbox{R}1 \\
+    2:2 &= 1   \rightarrow \mbox{R}0 \\
+    1:2 &= 1   \rightarrow \mbox{R}1 \uparrow \mbox{Leserichtung}
+\end{align*}
+
+$(372)_{10} = (000101110100)_2$\\
+
+$(687)_{10}$:
+\begin{align*}
+    687:2 &= 343 \rightarrow \mbox{R}1 \\
+    343:2 &= 171 \rightarrow \mbox{R}1 \\
+    171:2 &= 85  \rightarrow \mbox{R}1 \\
+    85:2 &= 42   \rightarrow \mbox{R}1 \\
+    42:2 &= 21   \rightarrow \mbox{R}0 \\
+    21:2 &= 10   \rightarrow \mbox{R}1 \\
+    10:2 &= 5   \rightarrow \mbox{R}0 \\
+    5:2 &= 2   \rightarrow \mbox{R}1 \\
+    2:2 &= 1   \rightarrow \mbox{R}0 \\
+    1:2 &= 1   \rightarrow \mbox{R}1 \uparrow \mbox{Leserichtung}
+\end{align*}
+
+$(687)_{10} = (001010101111)_2 = (110101010000)_{K1} = (110101010001)_{K2}$\\
+$(111011000101)_2 = (000100111010)_{K1} = (000100111011)_{K2}$ \\
+
+$Z = (000100111011)_2$:
+
+$(000100111011)_2 = 2^{0} \cdot 1 + 2^{1} \cdot 1 + 2^{3} \cdot 1 + 2^{4} \cdot 1 + 2^{5} \cdot 1 + 2^{6} \cdot 1 + 2^{8} \cdot 1 = (315)_{10}$
+
+Da kein Übertrag vorhanden war: $(-315)_10$
+
+\newpage
+\section*{3.5}
+\label{sec:3.5}
+
+
+
+\subsection*{(a)}
+\begin{equation*}
+(47,252 | 3)_{10} = 47,252 \cdot 10^3
+\end{equation*}
+
+Normalisiert:
+
+\begin{equation*}
+(4,7252 | 3+1 )_{10} = (4,7252 | 4 )_{10} = 4,7252 \cdot 10^4
+\end{equation*}
+
+\subsection*{(b)}
+\begin{equation*}
+(-10101,11 | -101)_2 = -10101,11*2^{-101}
+\end{equation*}
+
+Normalisiert:
+
+\begin{equation*}
+(-1,010111 | -101+100)_2 = (-1,010111 | -1001)_2 = -1,010111*1010^{-1001}
+\end{equation*}
+
+\subsection*{(c)}
+\begin{equation*}
+(-0,002DA | C)_{16} = -0,002DA*16^C
+\end{equation*}
+
+Normalisiert:
+
+\begin{equation*}
+(-2,DA |C-3)_{16}=(-2,DA |9)_{16}=-2,DA*A^9
+\end{equation*}
+
+\section*{3.6}
+\label{sec:3.6}
+
+\subsection*{(a) $(1011000)_2$}
+
+\begin{itemize}
+    \item Normalisiert: $1,011000 * 2^{110}$
+    \item Vorzeichen: $0$
+    \item Exponent(Exzess-127): $01111111 + 110 = 10000101 (133 - 127 = 6)$
+    \item Mantisse: $011000$ $00000000000000000000000$
+\end{itemize}
+
+$\rightarrow$ IEEE754 $(0$ $10000101$ $011000$ $00000000000000000000000)$
+
+\subsection*{(b) $(-10011011,101)_2$}
+
+\begin{itemize}
+    \item Normalisiert: $-1,0011011101 * 2^{111}$
+    \item Vorzeichen: 1
+    \item Exponent(Exzess-127): $01111111+111= 10000110(133 - 127 = 7)$
+    \item Mantisse: $011000$ $00000000000000000000000$ \\
+\end{itemize}
+
+$\rightarrow$ IEEE754 $(1$ $10000110$ $0011011101$ $0000000000000000000$
+
+
+\end{document}

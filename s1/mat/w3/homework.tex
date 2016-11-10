@@ -22,12 +22,9 @@
 
 
 \begin{document}
-\pagenumbering{gobble}
+\pagenumbering{arabic}
   \maketitle
   \date{}
-  \tableofcontents
-  \newpage
-  \pagenumbering{arabic}
 
 \section{}
 
@@ -77,15 +74,18 @@ Es soll bewiesen werden, dass $A(n+1)$ unter Annahme, dass A(n) stimmt, gilt.
 \subsection*{(a)} Prüfung, ob $B(n)$ für $n = 1, 2, 3$ gilt:
 
 \begin{align*}
-    B(1) &: (2 \cdot 1 - 1) = 1^2 \Rightarrow 1 = 1 \tag*{\checkmark}
-    B(2) &: (2 \cdot 1 - 1) + (2 \cdot 2 - 1) = 2^2 \Rightarrow 4 = 4 \tag*{\checkmark}
+    B(1) &: (2 \cdot 1 - 1) = 1^2 \Rightarrow 1 = 1 \tag*{\checkmark}\\
+    B(2) &: (2 \cdot 1 - 1) + (2 \cdot 2 - 1) = 2^2 \Rightarrow 4 = 4 \tag*{\checkmark}\\
     B(3) &: (2 \cdot 1 - 1) + (2 \cdot 2 - 1) + (2 \cdot 3 - 1) = 3^2 \Rightarrow 9 = 9 \tag*{\checkmark}
 \end{align*}
 
 \subsection*{(b)} Formulierung ohne das Summenzeichen:
 
-$1+3+5+...+(2n-1) = n^2$
+\begin{equation*}
+1+3+5+...+(2n-1) = n^2
+\end{equation*}
 
+\noindent
 Die Summe der ersten $n$ ungeraden Zahlen lässt sich auch durch $n^2$ berechnen.
 
 \subsection*{(c)} Beweis durch vollständige Induktion:
@@ -105,4 +105,68 @@ Es soll bewiesen werden, dass $B(n+1)$ unter Annahme, dass B(n) stimmt, gilt.
 
 % 3
 \section{}
-\end{document}
+
+Für alle $n \in \mathbb{N}_0$ soll gelten:
+
+\begin{equation*}
+A(n): 7^n-1 = 6k; k \in \mathbb{N}_0
+\end{equation*}
+
+Beweis durch vollständige Induktion:
+
+\paragraph{Induktionsanfang: A(1)}
+\begin{align*}
+7^1-1 &= 6k\\
+k &= 1 \tag*{\checkmark}
+\end{align*}
+
+\paragraph{Induktionsschritt: A(n+1)}
+\begin{align*}
+7^{n+1}-1 &= 6p; p \in \mathbb{N}_0\\
+7^n \cdot 7 - 1 &= 6p\\
+7^n \cdot 6 + 7^n - 1 &= 6p\\
+7^n \cdot 6 + 6k &= 6p \tag*{\checkmark}
+\end{align*}
+Da alle Elemente der letzten Gleichung durch $6$ teilbar ist, stimmt die Aussage.
+
+% 4
+\section{}
+Es ist herauszufinden, für welche natürlichen Zahlen die Ungleichung $A(n): 2^n < n!$ gilt.
+
+\paragraph{Vermutung:}
+
+\begin{align*}
+A(1): 2 &< 1 \lightning\\
+A(2): 4 &< 2 \lightning\\
+A(3): 8 &< 6 \lightning\\
+A(4): 16 &< 24 \tag*{\checkmark}
+\end{align*}
+Vermutung: $A(n)$ gilt für alle $n > 3$.
+
+\paragraph{Beweis durch vollständige Induktion:}
+
+Für den Induktionsanfang wurde gezeigt, dass $A(4)$ wahr ist.
+
+Induktionsschritt: A(n+1)
+\begin{align*}
+2^{n+1} &< (n+1)!\\
+2^n \cdot 2 &< n! \cdot n+1\\
+\mbox{nach I.A.:} 2^n \cdot 2 &< n! \cdot 2\\
+\Rightarrow n! \cdot 2 &< n! \cdot n+1\\
+\Rightarrow 2^n \cdot 2 < n! \cdot n+1 \tag*{\checkmark}
+\end{align*}
+
+% 5
+\section{}
+Damit $\thicksim$ eine Äquivalenzrelation auf der Menge $\mathcal{P}(\mathbb{N})$ sein kann, muss sie reflexiv, symmetrisch und transitiv sein.
+
+\paragraph{Reflexivität:}
+$A \rightarrow A$ ist eine bijektive Funktion. \checkmark
+
+\paragraph{Symmetrie:}
+Jede bijektive Funktion besitzt eine Umkehrfunktion, die auch bijektiv ist. Wenn $A \rightarrow B$ bijektiv ist, gibt es also auch eine bijektive Funktion $B \rightarrow A$.
+
+\paragraph{Transitivität:}
+Um die Bedingungen einer bijektiven Funktion zu erfüllen müssen Definitions- und Bildmenge gleichgroß sein. Da z.B. die Funktionen $A \rightarrow B$ und $B \rightarrow C$ beide $B$ enthalten, müssen sowohl $A$ als auch $C$ genauso groß sein wie $B$. Folglich sind auch $A$ und $C$ gleichgroß und es gibt eine Bijektion $A \rightarrow B$.
+
+\end{document}$
