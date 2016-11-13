@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+%\usepackage{fullpage}
+
+\title{\textbf{Mathe Hausaufgaben zum 17. und 18. November 2016}}
+\author{Matz Radloff(6946325), Elaha}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Matz Radloff(6946325), Elaha - Mathe I\_Inf}
+\cfoot{\thepage}
+
+\newcommand{\Myrightarrow}{\stackrel{\mathclap{\normalfont\mbox{(*)}}}{\Rightarrow}}
+
+
+\begin{document}
+\pagenumbering{arabic}
+  \maketitle
+  \date{}
+
+\section{} % 1
+
+\subsection*{(a)}
+
+\paragraph{Behauptung:}
+Ein Produkt $a \cdot b$ ganzer Zahlen ist nur dann durch $3$ teilbar, wenn mindestens einer der Faktoren durch $3$ teilbar ist.
+
+\paragraph{Widerspruchsbeweis:}
+Wir zeigen, dass das Produkt zweier, nicht durch $3$ teilbare Zahlen auch nicht durch $3$ teilbar sein kann.
+
+\begin{equation*}
+3k = a \cdot b; a,b \in \{3n+1, 3n+2\}; k,n \in \mathbb{Z}
+\end{equation*}
+
+Es ergeben sich die folgenden drei Fälle ($n, o, k \in \mathbb{Z}$):
+
+\paragraph{$a = 3n+1, b = 3o+1$}
+
+\begin{align*}
+    3k &= (3n+1) \cdot (3o+1)\\
+    3k &= 9no + 3n + 3o + 1\\
+    3k &= 3(3no + n + o) + 1 \lightning
+\end{align*}
+
+\paragraph{$a = 3n+1, b = 3o+2$}
+
+\begin{align*}
+    3k &= (3n+1) \cdot (3o+2)\\
+    3k &= 9no + 6n + 3o + 2\\
+    3k &= 3(3no + 2n + o) + 2 \lightning
+\end{align*}
+
+\paragraph{$a = 3n+2, b = 3o+2$}
+\begin{align*}
+    3k &= (3n+2) \cdot (3o+2)\\
+    3k &= 9no + 6n + 6o + 4\\
+    3k &= 3(3no + 2n + 2o) + 4 \lightning
+\end{align*}
+
+Folglich gibt es keine Kombination von nicht durch $3$ teilbaren Zahlen, deren Produkt durch $3$ teilbar ist. \checkmark
+
+\subsection*{(b)}
+Wir zeigen, dass $\sqrt{3}$ eine irrationale Zahl ist.
+
+\paragraph{Widerspruchsbeweis:}
+Wir nehmen an, $\sqrt{3}$ ließe sich als Bruch $\frac{n}{m}; n, m \in \mathbb{Z}, m \neq 0$ darstellen, der maximal gekürzt sei.
+
+Für den Beweis müssen wir vorher feststellen, ob die Wurzel einer durch $3$ teilbaren Zahl auch durch $3$ teilbar ist:
+
+\begin{align*}
+a, k &\in \mathbb{Z}\\
+a &= 3k\\
+a^2 &= 9k^2 = 3(3k^2) \tag*{\checkmark $(\ast)$}
+\end{align*}
+
+\begin{align*}
+\sqrt{3} = \frac{n}{m} &\Rightarrow n^2 = 3m^2\\
+3 \bigm| 3n^2 &\stackrel{(\ast)}{\Rightarrow} 3 \bigm| n\\
+\Rightarrow 9 \bigm| n^2 &\Rightarrow 9k = n^2, k \in \mathbb{Z}\\
+9k = 3m^2 &\Rightarrow 3k = m^2\\
+\Rightarrow 3 \bigm| m^2 &\stackrel{(\ast)}{\Rightarrow} 3 \bigm| m\\
+&\Rightarrow 3 \bigm| m, 3 \bigm| n \lightning
+\end{align*}
+
+\section{} % 2
+
+\section{} % 3
+
+\section{ggT(3213,234):} % 4
+\begin{align*}
+3213 &= 324 * 13 + 171\\
+234 &= 171 * 1 + 63\\
+171 &= 63 * 2 + 45\\
+63 &= 45 * 1 + 18\\
+45 &= 18 * 2 + 9\\
+18 &= 9 * 2 + 0\\
+\Rightarrow ggt(3213,234) &= 9
+\end{align*}
+
+\section{} % 5
+
+
+\end{document}$
