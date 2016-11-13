@@ -95,6 +95,37 @@ a^2 &= 9k^2 = 3(3k^2) \tag*{\checkmark $(\ast)$}
 \section{} % 2
 
 \section{} % 3
+Wir zeigen, dass $\sqrt{6}$ eine irrationale Zahl ist.
+
+\paragraph{Widerspruchsbeweis:}
+Wir nehmen an, $\sqrt{6}$ ließe sich als Bruch $\frac{n}{m}; n, m \in \mathbb{Z}, m \neq 0$ darstellen, der maximal gekürzt sei.
+
+\noindent Für den Beweis müssen wir vorher feststellen, ob die Wurzel einer durch $6$ teilbaren Zahl auch durch $6$ teilbar ist:
+
+\begin{align*}
+a, k &\in \mathbb{Z}\\
+a &= 6k\\
+a^2 &= 36k^2
+\end{align*}
+
+Hierbei ist durch den Faktor $36$ nicht eindeutig, dass $a^2$ auch durch $6$ teilbar ist. Durch Primfaktorzerlegung ergeben sich z.B. auch die Faktoren $9 \cdot 4$ (Ausgehend von $2^2 \cdot 3^2$). Damit die notwendige Behauptung $6 \bigm| a^2$ trotzdem gilt, teilen wir das Problem auf, indem wir benutzen, dass gilt: $2 \bigm| a \wedge 3 \bigm| a \Rightarrow 6 \bigm| a$
+Nun benutzen wir unsere Feststellung aus 1. (b) und Lemma 3.XX aus der Vorlesung, sodass folgt:
+
+\begin{align*}
+3 \bigm| a^2 &\wedge 2 \bigm| a^2\\
+3 \bigm| a &\wedge 2 \bigm| a
+\end{align*}
+
+\begin{align*}
+\sqrt{6} = \frac{n}{m} &\Rightarrow n^2 = 6m^2\\
+2 \bigm| 3n^2 \wedge 3 \bigm| 3n^2 &\Rightarrow 2 \bigm| n \wedge 3 \bigm| n\\
+\Rightarrow 6 \bigm| n &\Rightarrow 36 \bigm| n^2\\
+\Rightarrow 9k &= n^2, k \in \mathbb{Z}\\
+36k = 6m^2 &\Rightarrow 6k = m^2\\
+\Rightarrow 6 \bigm| m^2 \Rightarrow 6 \bigm| m\\
+&\Rightarrow 6 \bigm| m, 6 \bigm| n \lightning
+\end{align*}
+
 
 \section{ggT(3213,234):} % 4
 \begin{align*}
@@ -109,5 +140,43 @@ a^2 &= 9k^2 = 3(3k^2) \tag*{\checkmark $(\ast)$}
 
 \section{} % 5
 
+\subsection*{(a) Festellung, ob folgende Aussagen wahr oder falsch sind:}
+
+\subsubsection*{i. $a_1 \bigm| b_1 \wedge a_2 \bigm| b_2 \Rightarrow a_1 + a_2 \bigm| b_1 + b_2$}
+
+Damit die Teilbarkeit von $b_1$ und $b_2$ gegeben ist, müssen jeweils $c_1, c_2 \in \mathbb{Z}$ existieren, sodass gilt:
+\begin{equation*}
+b_1 = c_1 \cdot a_1 \wedge b_2 = c_2 \cdot a_2
+\end{equation*}
+
+Außerdem muss für die Teilbarkeit von $b_1 + b_2$ gelten:
+
+\begin{equation*}
+b_1 + b_2 = (a_1 + a_2) \cdot d, d \in \mathbb{Z}
+\end{equation*}
+
+Durch Umstellen erhält man:
+
+\begin{equation*}
+b_1 + b_2 = a_1e + a_2e
+\end{equation*}
+Folglich müssten, damit die Aussage gilt, $c_1$ und $c_2$ gleich sein.\\
+$\rightarrow$ Aussage stimmt nicht.
+
+\subsubsection*{ii. $a \bigm| b_1 \wedge a \bigm| b_2 \Rightarrow a \bigm| b_1 + b_2$}
+
+\begin{align*}
+b_1 &= c_1a\\
+b_2 &= c_2a\\
+b_1 + b_2 &= c_1a + c_2a = a \cdot (c_1 + c_2) \tag*{\checkmark}
+\end{align*}
+
+\subsubsection*{iii. $a \bigm| b_1 \wedge a \bigm| b_2 \Rightarrow a \bigm| b_1 - b_2$}
+
+\begin{align*}
+b_1 &= c_1a\\
+b_2 &= c_2a\\
+b_1 - b_2 &= c_1a - c_2a = a \cdot (c_1 - c_2) \tag*{\checkmark}
+\end{align*}
 
 \end{document}$
