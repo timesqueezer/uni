@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=a\ b\ c
+comment0.target=QuadratischeGleichung(double,\ double,\ double)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ QuadratischeGleichung\r\n\ \r\n\ @param\ a\ Koeffizient\ a\r\n\ @param\ b\ Koeffizient\ b\r\n\ @param\ c\ Koeffizient\ c\r\n
+comment1.params=
+comment1.target=double\ ersteNullstelle()
+comment1.text=\r\n\ Erste\ Nullstelle\r\n\ \r\n\ @return\ \ \ \ \ erste\ Nullstelle\r\n
+comment2.params=
+comment2.target=double\ zweiteNullstelle()
+comment2.text=\r\n\ Zweite\ Nullstelle\r\n\ \r\n\ @return\ \ \ \ \ zweite\ Nullstelle\r\n
+comment3.params=
+comment3.target=int\ anzahlNullstellen()
+numComments=4
