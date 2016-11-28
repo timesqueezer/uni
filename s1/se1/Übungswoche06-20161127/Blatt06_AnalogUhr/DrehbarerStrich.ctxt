@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=laenge\ zeitmesser\ sekunden
+comment0.target=DrehbarerStrich(double,\ Zeitmesser,\ double)
+comment0.text=\r\n\ Dieser\ Konstruktor\ ist\ fuer\ die\ Zeiger\ auf\ der\ Uhrenanzeige\ sinnvoll.\r\n\ \r\n\ @param\ laenge\r\n\ \ \ \ \ \ \ \ \ \ \ \ die\ Laenge\ des\ Zeigers\r\n\ @param\ zeitmesser\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Zeitmesser,\ anhand\ dessen\ der\ Winkel\ berechnet\ wird\r\n\ @param\ sekunden\r\n\ \ \ \ \ \ \ \ \ \ \ \ Wie\ vielen\ Sekunden\ entspricht\ der\ Zeiger?\r\n\ \ \ \ \ \ \ \ \ \ \ \ 1\ \=\ Sekundenzeiger,\ 60\ \=\ Minutenzeiger,\ 3600\ \=\ Stundenzeiger\r\n
+comment1.params=laenge
+comment1.target=DrehbarerStrich(double)
+comment1.text=\r\n\ Dieser\ Konstruktor\ ist\ fuer\ die\ Striche\ auf\ dem\ Ziffernblatt\ sinnvoll.\r\n\ \r\n\ @param\ laenge\r\n\ \ \ \ \ \ \ \ \ \ \ \ die\ Laenge\ des\ Strichs\r\n
+comment2.params=winkel
+comment2.target=void\ setzeWinkel(double)
+comment2.text=\r\n\ Diese\ Methode\ ist\ fuer\ die\ Striche\ auf\ dem\ Ziffernblatt\ sinnvoll.\r\n\ \r\n\ @param\ winkel\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Winkel\ in\ Grad\ (360\ Grad\ entspricht\ einer\ Umdrehung)\r\n
+comment3.params=skalierung
+comment3.target=java.awt.geom.Line2D\ berechneLinie(double)
+comment3.text=\r\n\ Berechnet\ eine\ Linie,\ die\ sich\ durch\ Drehen\ des\ Strichs\ ergibt.\ Der\r\n\ Drehwinkel\ ist\ entweder\ der\ explizit\ gesetzte\ oder\ der\ automatisch\r\n\ berechnete,\ je\ nachdem,\ mit\ welchem\ Konstruktor\ das\ Exemplar\r\n\ initialisiert\ wurde.\r\n\ \r\n\ @param\ skalierung\r\n\ \ \ \ \ \ \ \ \ \ \ \ sollte\ der\ halben\ Aufloesung\ der\ Leinwand\ entsprechen,\ um\r\n\ \ \ \ \ \ \ \ \ \ \ \ diese\ komplett\ auszunutzen\r\n\ @return\ die\ gedrehte\ und\ skalierte\ Linie\r\n
+numComments=4

@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Zeitmesser()
+comment0.text=\r\n\ Die\ Zeitmessung\ beginnt\ bei\ der\ Erzeugung.\r\n
+comment1.params=
+comment1.target=void\ notiereAktuelleZeit()
+comment1.text=\r\n\ Diese\ Methode\ sollte\ pro\ Animationsschritt\ nur\ 1x\ aufgerufen\ werden,\r\n\ damit\ alle\ Klienten\ mit\ demselben\ Wert\ arbeiten\!\r\n
+comment2.params=
+comment2.target=double\ abgelaufeneSekunden()
+comment2.text=\r\n\ Bestimmt,\ wie\ viel\ Zeit\ zwischen\ der\ Erzeugung\ des\ Zeitmessers\ und\ dem\r\n\ letzten\ Aufruf\ von\ notiereAktuelleZeit\ vergangen\ ist.\r\n\ \r\n\ @return\ die\ vergangene\ Zeit\ in\ Sekunden,\ mit\ Nanosekunden-Genauigkeit\r\n
+numComments=3
