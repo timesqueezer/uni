@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=n
+comment0.target=int\ fak(int)
+comment0.text=\r\n\ Liefert\ die\ Fakultaet\ von\ n,\ also\ das\ Produkt\ aller\ natuerlicher\ Zahlen\ bis\ n.\r\n\ Die\ Fakultaet\ von\ 0\ ist\ per\ mathematischer\ Definition\ 1.\r\n\r\n\ Beispielauswertung\:\r\n\ \r\n\ \ \ fak(4)\r\n\ ->\ 4\ *\ fak(3)\r\n\ ->\ 4\ *\ (3\ *\ fak(2))\r\n\ ->\ 4\ *\ (3\ *\ (2\ *\ fak(1)))\r\n\ ->\ 4\ *\ (3\ *\ (2\ *\ (1\ *\ fak(0))))\r\n\ ->\ 4\ *\ (3\ *\ (2\ *\ (1\ *\ 1)))\r\n\ ->\ 4\ *\ (3\ *\ (2\ *\ 1))\r\n\ ->\ 4\ *\ (3\ *\ 2)\r\n\ ->\ 4\ *\ 6\r\n\ ->\ 24\r\n
+comment1.params=s
+comment1.target=boolean\ enthaeltVokal(java.lang.String)
+comment1.text=\r\n\ Gibt\ an,\ ob\ die\ Zeichenkette\ einen\ Vokal\ enthaelt.\ Auswertungen\:\r\n\ \r\n\ enthaeltVokal("brei")\ ->\ enthaeltVokal("rei")\ ->\ enthaeltVokal("ei")\ ->\ true\r\n\ enthaeltVokal("xyz")\ ->\ enthaeltVokal("yz")\ ->\ enthaeltVokal("z")\ ->\ enthaeltVokal("")\ ->\ false\r\n
+comment2.params=c
+comment2.target=boolean\ istVokal(char)
+comment2.text=\r\n\ Pr\u00FCft\ ob\ der\ eingeben\ charakter\ ein\ Vokal\ ist.\r\n
+comment3.params=s
+comment3.target=java.lang.String\ umgedreht(java.lang.String)
+comment3.text=\r\n\ Liefert\ die\ umgedrehte\ Zeichenkette.\ Auswertung\:\r\n\ \r\n\ \ \ umgedreht("regal")\r\n\ ->\ umgedreht("egal")\ +\ 'r'\r\n\ ->\ (umgedreht("gal")\ +\ 'e')\ +\ 'r'\r\n\ ->\ ((umgedreht("al")\ +\ 'g')\ +\ 'e')\ +\ 'r'\r\n\ ->\ (((umgedreht("l")\ +\ 'a')\ +\ 'g')\ +\ 'e')\ +\ 'r'\r\n\ ->\ (((\ \ \ \ \ \ \ \ \ \ "l"\ \ +\ 'a')\ +\ 'g')\ +\ 'e')\ +\ 'r'\r\n\ ->\ ((\ \ \ \ \ \ \ \ \ \ \ "la"\ \ \ \ \ \ \ \ +\ 'g')\ +\ 'e')\ +\ 'r'\r\n\ ->\ (\ \ \ \ \ \ \ \ \ \ \ \ "lag"\ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ 'e')\ +\ 'r'\r\n\ ->\ \ \ \ \ \ \ \ \ \ \ \ \ \ "lage"\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ 'r'\r\n\ ->\ \ \ \ \ \ \ \ \ \ \ \ \ \ "lager"\r\n
+comment4.params=s
+comment4.target=boolean\ istPalindrom(java.lang.String)
+comment4.text=\r\n\ Gibt\ an,\ ob\ die\ Zeichenkette\ ein\ Palindrom\ ist.\ Auswertungen\:\r\n\ \r\n\ istPalindrom("anna")\ ->\ istPalindrom("nn")\ ->\ istPalindrom("")\ ->\ true\r\n\ istPalindrom("asta")\ ->\ istPalindrom("st")\ ->\ false\r\n\ istPalindrom("axa")\ ->\ istPalindrom("x")\ ->\ true\r\n\ istPalindrom("xyz")\ ->\ false\r\n
+comment5.params=s
+comment5.target=int\ anzahlLeerzeichen(java.lang.String)
+comment5.text=\r\n\ Berechnet\ die\ Anzahl\ Leerzeichen\ in\ der\ Zeichenketten.\ Auswertung\:\r\n\ \r\n\ anzahlLeerzeichen("a\ bc\ d")\r\n\ ->\ 0\ +\ anzahlLeerzeichen("\ bc\ d")\r\n\ ->\ 0\ +\ (1\ +\ anzahlLeerzeichen("bc\ d"))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ anzahlLeerzeichen("c\ d")))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ anzahlLeerzeichen("\ d"))))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ (1\ +\ anzahlLeerzeichen("d")))))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ (1\ +\ (0\ +\ anzahlLeerzeichen(""))))))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ (1\ +\ (0\ +\ 0)))))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ (1\ +\ 0))))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ (0\ +\ 1)))\r\n\ ->\ 0\ +\ (1\ +\ (0\ +\ 1))\r\n\ ->\ 0\ +\ (1\ +\ 1)\r\n\ ->\ 0\ +\ 2\r\n\ ->\ 2\r\n
+numComments=6

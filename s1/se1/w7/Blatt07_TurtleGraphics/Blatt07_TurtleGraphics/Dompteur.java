@@ -67,13 +67,13 @@ class Dompteur
         for (int i=0; i < anzahlEcken; ++i)
         {
             turtle.geheVor(laengeKanten);
-            turtle.drehe((double) 360.0f / anzahlEcken);
+            turtle.drehe(360.0 / anzahlEcken);
         }
     }
     
     public void zeichneVerschNEcke(int anzahlEcken, double grLaengeKanten)
     {
-        for (double i = grLaengeKanten; i >= 0; i -= 10) 
+        for (double i = grLaengeKanten; i > 0; i -= 10) 
         {
             zeichneNEck(anzahlEcken, i, 100, 100, "blau");
         }

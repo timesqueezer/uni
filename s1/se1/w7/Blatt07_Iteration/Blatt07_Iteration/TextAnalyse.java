@@ -31,7 +31,9 @@ class TextAnalyse
         int anzahlZeichen = text.length();
         
         if (anzahlZeichen == 0)
+        {
             return false;
+        }
 
         int letztePosition = anzahlZeichen - 1;
 
@@ -51,7 +53,7 @@ class TextAnalyse
      */
     public boolean istFrageKompakt(String text)
     {
-        return text.charAt(text.length() - 1) == '?';
+        return text.length() > 0 && text.charAt(text.length() - 1) == '?';
     }
     
     public int zaehleVokale(String text)
@@ -69,13 +71,17 @@ class TextAnalyse
         return vokalZaehler;
     }
     
+    /**
+     * Ermittelt, ob der übergebene Text ein Palindrom ist
+     * 
+     * @param text zu überprüfender Text
+     * @returns true, wenn text ein Palindrom ist, false, wenn nicht
+     */
     public boolean istPalindrom(String text)
     {
         text = text.toLowerCase();
 
         int laenge = text.length();
-        if (laenge % 2 != 0)
-            return false;
 
         int halbeLaenge = laenge / 2;
         for (int i=0; i < halbeLaenge; ++i)
