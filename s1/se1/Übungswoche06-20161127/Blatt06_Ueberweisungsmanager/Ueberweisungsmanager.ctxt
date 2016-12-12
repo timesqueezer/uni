@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Ueberweisungsmanager()
+comment1.params=quellKonto\ zielKonto\ betrag
+comment1.target=void\ ueberweise(Konto,\ Konto,\ int)
+numComments=2

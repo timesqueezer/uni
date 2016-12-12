@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Konto()
+comment0.text=\r\n\ Initialisiert\ ein\ neues,\ leeres\ Konto\r\n
+comment1.params=startguthaben
+comment1.target=Konto(int)
+comment1.text=\r\n\ Initialisiert\ ein\ neues\ Konto\ mit\ einem\ Startguthaben\r\n\ \r\n\ @param\ startguthaben\ das\ gewuenschte\ Startguthaben\r\n
+comment2.params=betrag
+comment2.target=void\ zahleEin(int)
+comment2.text=\r\n\ Zahlt\ einen\ Betrag\ auf\ das\ Konto\ ein\r\n\ \r\n\ @param\ betrag\ der\ einzuzahlende\ Betrag\r\n
+comment3.params=betrag
+comment3.target=void\ hebeAb(int)
+comment3.text=\r\n\ Hebt\ einen\ Betrag\ vom\ Konto\ ab\r\n\ \r\n\ @param\ betrag\ der\ abzuhebende\ Betrag\r\n
+comment4.params=
+comment4.target=int\ gibSaldo()
+comment4.text=\r\n\ Liefert\ den\ Saldo\ des\ Kontos\ zurueck\r\n\ \r\n\ @return\ der\ Saldo\ des\ Kontos\r\n
+numComments=5
