@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=x\ y
+comment0.target=boolean\ istTeilbar(int,\ int)
+comment1.params=x
+comment1.target=boolean\ istPrimzahl(int)
+comment2.params=grenze
+comment2.target=void\ schreibePrimzahlenBis(int)
+numComments=3

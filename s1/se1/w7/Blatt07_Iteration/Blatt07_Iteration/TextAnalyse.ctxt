@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=TextAnalyse()
+comment1.params=text
+comment1.target=boolean\ istFrage(java.lang.String)
+comment1.text=\r\n\ Ermittelt,\ ob\ es\ sich\ bei\ dem\ uebergebenen\ Text\ um\ eine\ Frage\r\n\ handelt.\ Eine\ Frage\ erkennt\ man\ am\ abschliessenden\ Fragezeichen.\r\n\ \r\n\ @param\ text\ der\ zu\ analysierende\ Text\r\n\ @return\ true,\ wenn\ es\ sich\ um\ eine\ Frage\ handelt,\ false\ sonst\r\n
+comment2.params=text
+comment2.target=boolean\ istFrageKompakt(java.lang.String)
+comment2.text=\r\n\ Ermittelt,\ ob\ es\ sich\ bei\ dem\ uebergebenen\ Text\ um\ eine\ Frage\r\n\ handelt.\ Eine\ Frage\ erkennt\ man\ am\ abschliessenden\ Fragezeichen.\r\n\ \r\n\ @param\ text\ der\ zu\ analysierende\ Text\r\n\ @return\ true,\ wenn\ es\ sich\ um\ eine\ Frage\ handelt,\ false\ sonst\r\n
+comment3.params=text
+comment3.target=int\ zaehleVokale(java.lang.String)
+comment4.params=text
+comment4.target=boolean\ istPalindrom(java.lang.String)
+numComments=5
