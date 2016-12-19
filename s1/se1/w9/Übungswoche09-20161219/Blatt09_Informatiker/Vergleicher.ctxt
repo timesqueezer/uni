@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.params=a\ b
+comment0.target=int\ vergleiche(Person,\ Person)
+comment0.text=\r\n\ Vergleicht\ zwei\ Personen\ miteinander\ und\ gibt\ Auskunft\ darueber,\ in\ welcher\ Beziehung\ sie\ zueinander\ stehen.\r\n\ Wenn\ die\ beiden\ Personen\ (gemessem\ am\ Vergleichskriterium)\ gleich\ sind,\ dann\ wird\ 0\ geliefert.\r\n\ Wenn\ a\ in\ einer\ geordneten\ Liste\ vor\ b\ stehen\ wuerde,\ dann\ wird\ irgendeine\ negative\ Zahl\ geliefert.\r\n\ Ansonsten\ wird\ irgendeine\ positive\ Zahl\ geliefert.\r\n
+numComments=1

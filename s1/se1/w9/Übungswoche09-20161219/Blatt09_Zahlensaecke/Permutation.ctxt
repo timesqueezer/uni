@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=groesse
+comment0.target=Permutation(int)
+comment0.text=\r\n\ @param\ groesse\ die\ Groesse\ des\ Zahlensacks\r\n
+comment1.params=
+comment1.target=int\ gibGroesse()
+comment1.text=\r\n\ @return\ die\ Groesse\ des\ Zahlensacks\r\n
+comment2.params=
+comment2.target=int\ gibAnzahl()
+comment2.text=\r\n\ @return\ die\ Anzahl\ der\ Zahlen,\ die\ sich\ momentan\ im\ Zahlensack\ befinden\r\n
+comment3.params=
+comment3.target=boolean\ istLeer()
+comment3.text=\r\n\ @return\ true,\ falls\ der\ Zahlensack\ leer\ ist\r\n
+comment4.params=
+comment4.target=void\ fuelleSack()
+comment4.text=\r\n\ Fuellt\ den\ Zahlensack\ mit\ gibGroesse()\ verschiedenen\ Zufallszahlen\r\n\ im\ halboffenen\ Intervall\ [0,\ gibGroesse)\r\n
+comment5.params=
+comment5.target=int\ entferneZahl()
+comment5.text=\r\n\ Entfernt\ eine\ Zahl\ aus\ dem\ Zahlensack\ und\ liefert\ sie\ zurueck.\r\n\ Danach\ ist\ der\ Zahlensack\ um\ ein\ Element\ kleiner.\r\n\ Ausnahme\:\ Falls\ der\ Zahlensack\ vor\ dem\ Aufruf\ leer\ ist,\r\n\ wird\ er\ zuerst\ gefuellt,\ und\ nach\ dem\ Aufruf\ ist\ gibAnzahl()\ \=\=\ gibGroesse()-1.\r\n\r\n\ @return\ eine\ zufaellige\ Zahl\ im\ halboffenen\ Intervall\ [0,\ gibGroesse)\r\n
+comment6.params=
+comment6.target=void\ leereSack()
+comment6.text=\r\n\ Verwirft\ alle\ uebrig\ gebliebenen\ Zahlen\ aus\ dem\ Zahlensack.\r\n\ istLeer()\ liefert\ anschliessend\ true\ zurueck,\ und\ gibAnzahl()\ liefert\ 0.\r\n
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment7.text=\r\n\ @return\ der\ verwendete\ Algorithmus\ sowie\ die\ Groesse\ des\ Zahlensacks\r\n
+numComments=8
