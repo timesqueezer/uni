@@ -1,0 +1,14 @@
+9.1.1
+
+normaler Pfeil: Klasse enthält ein Attribut vom Typ der Klasse, auf die gezeigt wird.
+
+dicker Pfeil: Klasse implementiert das Interface, auf das gezeigt wird
+
+9.1.2
+
+DateiVerarbeiter ist ein Interface, besitzt also nur Operationen, die erst von einer Klasse implementiert werden müssen. Diese kann dann an die start() Methode von VerzeichnisWanderer übergeben werden.
+
+9.1.3
+
+Der statische Type von _dateiVerarbeiter ist das Interface DateiVerarbeiter. Der dynamische Typ wird erst während der Laufzeit festgelegt und kann in diesem Fall entweder KurzAuflister oder LangAuflister sein.
+

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=groesse
+comment0.target=void\ vergleiche(int)
+comment0.text=\r\n\ Vergleicht\ die\ Effizienz\ verschiedener\ Implementationen\ von\ Zahlensack.\r\n\ Alle\ Zahlensaecke\ werden\ mit\ der\ gleichen\ Groesse\ erzeugt.\r\n\ \r\n\ @param\ groesse\ die\ Groesse\ der\ Zahlensaecke\r\n
+comment1.params=sack
+comment1.target=void\ vermesse(Zahlensack)
+comment1.text=\r\n\ Misst\ die\ Zeit,\ die\ fuer\ das\ Entfernen\ von\ sehr\ vielen\ Zahlen\ aus\ dem\r\n\ Zahlensack\ benoetigt\ wird.\ Das\ Ergebnis\ wird\ auf\ der\ Konsole\ ausgegeben.\r\n\ \r\n\ @param\ sack\ der\ zu\ vermessende\ Zahlensack\r\n
+numComments=2
