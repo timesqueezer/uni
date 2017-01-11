@@ -1,0 +1,49 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{spreadtab}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+
+
+
+\title{\textbf{Rechnerstrukturen Hausaufgaben zum 1. Januar 2017}}
+\author{Ali Ebrahimi Pourasad, Moritz Lahann, Matz Radloff}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\begin{document}
+  \maketitle
+  \date{}
+  Gruppe: [RS\_GR1\_12]
+\newpage
+\section*{10.1}
+
+\subsection*{(a)}
+
+Beide Automaten wären so verbunden, dass die Zustände, die jeweils vor dem Grün-Zustand des Ampel-Automaten liegen, diese aktivieren und gleichzeitig den ersten Zustand des Zählautomaten auslösen. Umgekehrt aktiviert dessen letzter Zustand wieder den Übergang vom Grün-Zustand zum nächsten Zustand des Ampel-Automaten. Hierbei kann man die Verbindung unterschiedlich umsetzten. Naheliegend wäre im Ampelautomaten ein Übergang, der eine Leitung zum Aktivieren des Zählautomaten von 0 auf 1 schaltet, und ein Übergang, der über einen Ausgang am Zähler erkennt, wann dieser fertig ist und den nächsten Zustand aktiviert.
+
+\subsection*{(b)}
+
+Wenn beide Automaten mit der Taktvorderflanke aktiviert werden, kann bei gegenseitiger Abhängigkeit ein Automat erst einen Takt später starten, nachdem der Zustand, der zu ihm überführt erreicht ist. In diesem Beispiel wäre nur der Übergang vom Zählautomaten zum Ampel-Automaten zu beachten, wenn man ihn bis $30.000$ zählen lässt. Dann müsste der Übergang schon bei 29.999 stattfinden, sodass der Ampel-Automat pünktlich beim 30.000 Takt schaltet.
+
+\subsection*{(c)}
+
+In dem Fall, dass beide Automaten unterschiedlich getaktet sind, sodass der eine mit der Taktvorderlanke und der zweite mit der Rückflanke arbeitet, muss nicht ein Takt früher ein Übergang finden. An der Vorderflanke wird der Zustand der Grünphase erreicht, sodass im gleichen Takt an der Rückflanke der Zähler aktiviert wird. Genauso endet der Zähler auf der Rückflanke des letzten Taktes und der Ampel-Automat kann direkt auf der nächsten Vorderflanke den Übergang $Z_3$ verlassen. Es wird bei beiden Übergängen jeweils ein halber Takt "gespart", sodass am Ende die korrekte Anzahl von Takten durchlaufen wurde.
+
+\subsection*{(d)}
+
+
+
+\end{document}
