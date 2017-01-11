@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=vorname\ nachname\ geburtsjahr\ maennlich
+comment0.target=Person(java.lang.String,\ java.lang.String,\ int,\ boolean)
+comment0.text=\r\n\ Initialisiert\ ein\ Person-Objekt\ mit\ den\ angegeben\ Daten.\r\n
+comment1.params=
+comment1.target=java.lang.String\ gibVorname()
+comment1.text=\r\n\ Liefert\ den\ Vornamen.\r\n
+comment2.params=
+comment2.target=java.lang.String\ gibNachname()
+comment2.text=\r\n\ Liefert\ den\ Nachnamen.\r\n
+comment3.params=
+comment3.target=int\ gibGeburtsjahr()
+comment3.text=\r\n\ Liefert\ das\ Geburtsjahr.\r\n
+comment4.params=
+comment4.target=boolean\ istMaennlich()
+comment4.text=\r\n\ Gibt\ an,\ ob\ die\ Person\ maennlich\ ist.\r\n
+comment5.params=
+comment5.target=java.lang.String\ toString()
+comment5.text=\r\n\ Liefert\ eine\ String-Darstellung\ im\ Format\r\n\ Mustermann,\ Max\ (1987,\ maennlich)\r\n
+numComments=6
