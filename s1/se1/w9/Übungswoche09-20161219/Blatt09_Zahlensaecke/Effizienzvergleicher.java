@@ -52,7 +52,7 @@ class Effizienzvergleicher
         long endTime = System.nanoTime();
 
         // Bilde die Differenz aus Stoppzeit und Startzeit
-        long difTime = endTime-startTime;
+        long difTime = endTime - startTime;
         
         // Teile die Differenz durch 1000000, um von ns nach ms umzurechnen
         double msTime = (double) difTime / 1e6;
