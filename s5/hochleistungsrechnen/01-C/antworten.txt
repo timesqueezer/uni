@@ -1,0 +1,9 @@
+**Mit which können Sie sich den Pfad einer Anwendung anzeigen lassen. Warum funktioniert das nicht für das Kommando cd**
+Weil cd ist ein buildin von bash ist.
+
+**Was fällt Ihnen bezüglich der drei Größen auf?**
+tar alleine verkleinert die Datei nicht. Bei unserem fall ist die Datei um ca. 2 kb größer geworden als der Ursprung,
+da bei tar Headerdaten und Dateiverzeichnisse zusätzlich in der Datei gespeichert werden müssen.
+
+**Ist es möglich, ein gepacktes Archiv (.tar.gz) mit einem Aufruf von tar zu erzeugen? Wie hätte dieser Aufruf lauten müssen?**
+ja, tar -czf archiv.tar.gz archiv
