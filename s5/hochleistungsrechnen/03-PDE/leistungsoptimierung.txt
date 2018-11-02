@@ -1,0 +1,24 @@
+Die Ausgabe von gprof besteht aus den 2 Teilen "Flat profile" und "Call graph", jeweils mit Erklärungen.
+
+Das "Flat profile" listet alle aufgerufenen Funktionen, sortiert nach der Zeit, die das Programm in dieser Funktion verbringt.
+Außerdem stehen Werte für
+ - den Prozentanteil der Laufzeit der Funktionen an der Gesamtzeit
+ - die Summe der Zeit der Funktion mit der Summe aller darüber stehenden Funktionen
+ - die Zeit, die nur in den Funktionen selbst verbracht wird
+ - die Anzahl der Aufrufe
+ - die Zeit pro Aufruf (exkl. und inkl. der aufrufenden Funktionen (self, total))
+zur Verfügung.
+
+Im "Call graph" gibt gprof zusätzlich pro Funktionen aufrufenden bzw. aufgerufene Funktionen mit ähnlichen Werten wie im "Flat profile".
+
+In der Ausgabe für das Programm partdiff-seq ist sind die Funktionen, in denen am meisten Zeit verbracht wird "calculate" (92.78%) und "getResiduum" (6.3%).
+Alle anderen Funktionen benötigen vernachlässigbar wenig Zeit (initMatrices 0.95%, der Rest 0%).
+Auffällig ist, dass "getResiduum" 2758256640 mal aufgerufen wird, was potentiell optimiert werden könnte.
+Im Code fällt auf, dass bei Benutzung der ersten Störfunktion FUNC_F0 in "getResiduum" nur der Parameter "star" benutzt wird. Es müssten also nicht auch alle anderen Parameter auf den Stack gelegt werden. Eine Lösung hierfür wäre die Funktion zu "inlinen", also die Berechnung ((-star) / 4.0) direkt in "calculate" durchzuführen. Dies ist allerdings eine Optimierung, die gcc mit > -O2 selbst durchführt.
+
+---------------------------------------------------------
+
+perf
+
+Reihenfolge
+star = - Matrix[m2][i][j-1] - Matrix[m2][i][j+1] - Matrix[m2][i-1][j] - Matrix[m2][i+1][j] + 4.0 * Matrix[m2][i][j];
