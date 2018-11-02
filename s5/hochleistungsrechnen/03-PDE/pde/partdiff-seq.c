@@ -231,7 +231,15 @@ calculate (struct calculation_arguments* arguments, struct calculation_results *
 			{
 				star = -Matrix[m2][i-1][j] - Matrix[m2][i][j-1] - Matrix[m2][i][j+1] - Matrix[m2][i+1][j] + 4.0 * Matrix[m2][i][j];
 
+				/*if (options->inf_func == FUNC_F0)
+				{
+					residuum = ((-star) / 4.0);
+				} else {
+					residuum = getResiduum(arguments, options, i, j, star);
+				}*/
+
 				residuum = getResiduum(arguments, options, i, j, star);
+
 				korrektur = residuum;
 				residuum = (residuum < 0) ? -residuum : residuum;
 				maxresiduum = (residuum < maxresiduum) ? maxresiduum : residuum;
