@@ -1,0 +1,5 @@
+#!/bin/bash
+
+host=$(hostname)
+time=$(date +%T.%N)
+echo $host : $time
