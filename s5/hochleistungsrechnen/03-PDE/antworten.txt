@@ -60,9 +60,8 @@ Aufgabe1:
 ------------------------------------------------------------Aufgabe2:
 
 **Frage: Was fällt Ihnen auf? Versuchen Sie Ihre Beobachtung zu erklären!
-_job_script.out ueberschreibt sich bei jedem aufruf.
-Die Reihenfolge der Zeitstempeln stimmt mit der Reihenfolge der Ausgabe nicht ueberein. Die Aufrufe von timescript werden auf den unterschiedlichen Knoten zu unterschiedlichen Zeitpunkten gestartet, der Schreibzugriff der Knoten passiert aber nicht in der gleichen Reihenfolge, so sind die Zeitpunkte nicht zwingend Chronologisch.
+job_script.out überschreibt sich bei jedem aufruf.
+Die Reihenfolge der Zeitstempeln stimmt mit der Reihenfolge der Ausgabe nicht überein. Die Aufrufe von timescript werden auf den unterschiedlichen Knoten zu unterschiedlichen Zeitpunkten gestartet, der Schreibzugriff der Knoten passiert aber nicht in der gleichen Reihenfolge, so sind die Zeitpunkte nicht zwingend chronologisch.
 
 **Frage: Könnte man die Datei timescript.out auch innerhalb des Scriptes timescript erzeugen? Falls ja: Wie? Falls nein: Warum nicht?
-
-_Ja, man könnte mit dem Operator ">>" die Ausgabe in einer Datei schreiben. In diesem fall wird der Output zeitlich sortiert ausgegeben. Aber Problem ist dann, man kann nicht kontrollieren wann welcher Knoten in die Datei schreibt. 
+Ja, man könnte mit dem Operator ">>" die Ausgabe in einer Datei schreiben. In diesem fall wird der Output zeitlich sortiert ausgegeben. Ein Problem ist dann, dass man nicht kontrollieren kann, wann welcher Knoten in die Datei schreibt.

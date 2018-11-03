@@ -7,3 +7,4 @@
 #SBATCH -o timescript.out
 
 srun timescript
+echo fertig > job_script.out
