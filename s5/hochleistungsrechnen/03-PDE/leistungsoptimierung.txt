@@ -18,7 +18,70 @@ Im Code fällt auf, dass bei Benutzung der ersten Störfunktion FUNC_F0 in "getR
 
 ---------------------------------------------------------
 
-perf
+perf stats
 
-Reihenfolge
-star = - Matrix[m2][i][j-1] - Matrix[m2][i][j+1] - Matrix[m2][i-1][j] - Matrix[m2][i+1][j] + 4.0 * Matrix[m2][i][j];
+Ausgabe auf dem Cluster:
+
+     118348.527523      task-clock (msec)         #    0.998 CPUs utilized
+             1,383      context-switches          #    0.012 K/sec
+                 1      cpu-migrations            #    0.000 K/sec
+             1,117      page-faults               #    0.009 K/sec
+                 0      cycles                    #    0.000 GHz
+   300,450,897,706      stalled-cycles-frontend   #    0.00% frontend cycles idle
+   263,515,549,811      stalled-cycles-backend    #    0.00% backend  cycles idle
+   100,939,421,739      instructions
+                                                  #    2.98  stalled cycles per insn
+     6,934,150,887      branches                  #   58.591 M/sec
+         6,716,721      branch-misses             #    0.10% of all branches
+
+     118.569689864 seconds time elapsed
+
+Dieses Programm analysiert folgende auf die CPU bezogenen Werte:
+
+ - task-clock: Laufzeit in ms
+ - context-switches: Zahl der Kontextwechsel
+ - cpu-migrations: Zahl der CPU-Wechsel
+ - page-faults: Seitenzugriffsfehler
+ - cycles: Anzahl der CPU-Zyklen.
+ - stalled-cycles-{backend,frontend}: Anzahl der nicht genutzten (idle) CPU-Zyklen
+ - branches/branch-misses: Anzahl der konditionellen Sprünge im Code bzw. falsch vorhergesagte Sprünge
+
+Für die Optimierung sind vor allem die relativ hohen Werte der context-switches und page-faults interessant, die auf eine schlechte Zugriffreihenfolge hinweisen.
+
+---------------------------------------------------------
+
+Laufzeit ohne Optimierung:
+40.33s user
+0.02s system
+99% cpu
+40.593 total
+
+Optimierungen:
+
+
+Wir verwenden die Compiler-Flag -O3:
+8.52s user
+0.00s system
+99% cpu
+8.565 total
+Verbesserung: 4.73x
+
+In calculate() wird ab Zeile 227 über alle Reihen und innerhalb der Schleife über alle Zeilen der Matrix iteriert.
+So wie die Matrix angelegt wurde, liegen allerdings die Einträge einer Reihe nebeneinander. So entstehen viele cache-misses.
+Durch Vertauschung der Reihenfolge der Schleifen erreichen wir:
+5.30s user
+0.01s system
+99% cpu
+5.341 total
+Verbesserung: 1.6x
+
+In Zeile 232 findet auch ein nicht-linearer Speicherzugriff statt. Die Elemente j-1, j, j+1 von Matrix[m2][i] liegen hintereinander im Speicher.
+Durch Änderung der Reihenfolge zu
+star = -Matrix[m2][i-1][j] - Matrix[m2][i][j-1] + 4.0 * Matrix[m2][i][j] - Matrix[m2][i][j+1] - Matrix[m2][i+1][j];
+erreichen wir allerdings die selbe Laufzeit, da der Compiler diese Optimierung schon vornimmt.
+
+In Zeile 236 findet eine überflüssige Zuweisung der Variable korrektur statt. Man könnte die Variable residuum selbst in der folgenden Zeile verwenden. Dies wird allerdings auch durch den Compiler optimiert.
+
+In Zeile 191 werden Werte berechnet, die unabhängig von den Parametern der Funktion sind (PI*h, h*h). Diese könnten vorab berechnet werden. Da diese Störfunktion allerdings nicht für die Aufgabe benutzt wird, wirkt sich diese Optimierung nicht aus.
+
+Verbesserung gesamt: 7.6x

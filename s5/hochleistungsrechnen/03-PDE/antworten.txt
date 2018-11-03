@@ -21,8 +21,8 @@ Aufgabe1:
  - $ squeue
 
 7. Machen Sie sich mit dem Befehl sview vertraut. Beschreiben Sie die wichtigsten Vorteile gegenueber dem vorigen Punkt.
- - zwar funktionierte sview nicht auf dem Cluster, aber hier die Antwort:
  - sview bietet eine breitere Übersicht durch seine grafische Benutzeroberfläche. Es ermöglicht mehr Informationen zu den Jobs zu bekommen.
+ - sview erleichtert das Job-Management, da es mehrere Kommandos vereint und ist weniger fehleranfällig, weil z.B. das manuelle Eingeben von Job-IDs entfällt.
 
 8. Gibt es eine Möglichkeit, einen bereits abgeschickten Job zu löschen (bevor oder während er läuft)? Wenn ja, wie?
  - Ja, $ scancel <JOBID>
@@ -64,4 +64,4 @@ job_script.out überschreibt sich bei jedem aufruf.
 Die Reihenfolge der Zeitstempeln stimmt mit der Reihenfolge der Ausgabe nicht überein. Die Aufrufe von timescript werden auf den unterschiedlichen Knoten zu unterschiedlichen Zeitpunkten gestartet, der Schreibzugriff der Knoten passiert aber nicht in der gleichen Reihenfolge, so sind die Zeitpunkte nicht zwingend chronologisch.
 
 **Frage: Könnte man die Datei timescript.out auch innerhalb des Scriptes timescript erzeugen? Falls ja: Wie? Falls nein: Warum nicht?
-Ja, man könnte mit dem Operator ">>" die Ausgabe in einer Datei schreiben. In diesem fall wird der Output zeitlich sortiert ausgegeben. Ein Problem ist dann, dass man nicht kontrollieren kann, wann welcher Knoten in die Datei schreibt.
+Nein, dies ist nicht möglich, da das Script timescript nur auf den nodes, nicht auf dem master läuft und somit keinen Zugriff auf die Ausgabedatei hat.
