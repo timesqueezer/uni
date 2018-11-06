@@ -85,3 +85,5 @@ In Zeile 236 findet eine überflüssige Zuweisung der Variable korrektur statt. 
 In Zeile 191 werden Werte berechnet, die unabhängig von den Parametern der Funktion sind (PI*h, h*h). Diese könnten vorab berechnet werden. Da diese Störfunktion allerdings nicht für die Aufgabe benutzt wird, wirkt sich diese Optimierung nicht aus.
 
 Verbesserung gesamt: 7.6x
+
+Auf dem Cluster erreichen wir sogar eine Verbesserung von: 148s/15.13s = 9.78
