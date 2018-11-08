@@ -1,0 +1,3 @@
+#!/bin/bash
+
+OMP_NUM_THREADS=$1 ./partdiff 1 2 $2 2 2 512
