@@ -223,8 +223,9 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 
 		maxresiduum = 0;
 
-		/* over all rows */
+		// run for loop in parallel on all available threads
 		#pragma omp parallel for
+		/* over all rows */
 		for (i = 1; i < N; i++)
 		{
 			double fpisin_i = 0.0;
