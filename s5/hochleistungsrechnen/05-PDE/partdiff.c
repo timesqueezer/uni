@@ -54,23 +54,21 @@ struct calculation_results
 struct timeval start_time;       /* time when program started                      */
 struct timeval comp_time;        /* time when calculation completed                */
 
-
-/* pthread array */
-pthread_t *threads;
-pthread_attr_t attr;
-
+/* thread data struct */
 struct thread_data {
 	int thread_id;
-	struct calculation_arguments* arguments;
 	struct options* options;
+	struct calculation_arguments* arguments;
 	double maxresiduum;
 	int m1;
 	int m2;
 	double pih;
 	double fpisin;
+	uint64_t  N;
+	uint64_t  start_row;
+	uint64_t  end_row;
+	int term_iteration;
 };
-
-struct thread_data **thread_data_array;
 
 /* ************************************************************************ */
 /* initVariables: Initializes some global variables                         */
@@ -86,17 +84,6 @@ initVariables (struct calculation_arguments* arguments, struct calculation_resul
 	results->m = 0;
 	results->stat_iteration = 0;
 	results->stat_precision = 0;
-
-	// threads = (pthread_t*) allocateMemory(sizeof(pthread_t) * options->number);
-	threads = malloc(options->number * sizeof(pthread_t*));
-	thread_data_array = malloc(options->number * sizeof(struct thread_data*));
-	for (uint64_t i = 0; i < options->number; i++)
-	{
-		thread_data_array[i] = malloc(sizeof(struct thread_data));
-	}
-	/* Initialize and set thread detached attribute */
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 }
 
 /* ************************************************************************ */
@@ -104,7 +91,7 @@ initVariables (struct calculation_arguments* arguments, struct calculation_resul
 /* ************************************************************************ */
 static
 void
-freeMatrices (struct calculation_arguments* arguments, struct options const* options)
+freeMatrices (struct calculation_arguments* arguments)
 {
 	uint64_t i;
 
@@ -115,13 +102,6 @@ freeMatrices (struct calculation_arguments* arguments, struct options const* opt
 
 	free(arguments->Matrix);
 	free(arguments->M);
-
-	for (i = 0; i < options->number; i++) {
-		free(thread_data_array[i]);
-	}
-
-	free(thread_data_array);
-	free(threads);
 }
 
 /* ************************************************************************ */
@@ -216,11 +196,14 @@ void *calculate_rows(void *threadargs) {
 	struct thread_data *this_thread_data;
 	this_thread_data = (struct thread_data *) threadargs;
 
-	printf("Starting thread %d\n", this_thread_data->thread_id);
 
-	int start, end;
+	int start_row = this_thread_data->start_row;
+	int end_row = this_thread_data->end_row;
 
-	int const N = this_thread_data->arguments->N;
+	// printf("Starting thread %d, start: %d, end: %d\n", this_thread_data->thread_id, start_row, end_row);
+
+	// create local variables for readability
+	const int N = this_thread_data->N;
 	struct options const* options = this_thread_data->options;
 	struct calculation_arguments const* arguments = this_thread_data->arguments;
 	int m1 = this_thread_data->m1;
@@ -228,13 +211,8 @@ void *calculate_rows(void *threadargs) {
 	double fpisin = this_thread_data->fpisin;
 	double pih = this_thread_data->pih;
 
-	// calculate start- / end-row
-	int rows_per_thread = N / this_thread_data->options->number;
-	start = 1 + (this_thread_data->thread_id * rows_per_thread);
-	end = start + rows_per_thread;
-	printf("Start: %d, End: %d\n", start, end);
 
-	int term_iteration = options->term_iteration;
+	int term_iteration = this_thread_data->term_iteration;
 
 	int i, j;
 	double star;                                /* four times center value minus 4 neigh.b values */
@@ -245,7 +223,7 @@ void *calculate_rows(void *threadargs) {
 	double** Matrix_In  = arguments->Matrix[m2];
 
 	/* over all rows */
-	for (i = start; i < N; i++)
+	for (i = start_row; i <= end_row; i++)
 	{
 		double fpisin_i = 0.0;
 
@@ -292,7 +270,7 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 	// double residuum;                            /* residuum of current iteration */
 	double maxresiduum;                         /* maximum residuum value of a slave in iteration */
 
-	// int const N = arguments->N;
+	int const N = arguments->N;
 	double const h = arguments->h;
 
 	double pih = 0.0;
@@ -303,6 +281,19 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 	uint64_t t;
 	int rc; // thread return code
 	void *status; // thread return status
+
+	/* Initialize and set thread detached attribute */
+	pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+    uint64_t num_threads = options->number;
+    pthread_t threads[num_threads];
+
+    // caluclate rows per thread
+	double number_of_rows_per_thread = N / num_threads;
+
+	struct thread_data* thread_data_array = malloc(num_threads * sizeof(struct thread_data));
 
 	/* initialize m1 and m2 depending on algorithm */
 	if (options->method == METH_JACOBI)
@@ -322,6 +313,32 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 		fpisin = 0.25 * TWO_PI_SQUARE * h * h;
 	}
 
+	uint64_t start_row = 1;
+	uint64_t end_row = N - 1;
+
+	// Initialize thread_data
+	for (t = 0; t < num_threads; t++)
+	{
+		thread_data_array[t].thread_id = t;
+		thread_data_array[t].options = (struct options*) options;
+		thread_data_array[t].arguments = (struct calculation_arguments*) arguments;
+		thread_data_array[t].fpisin = fpisin;
+		thread_data_array[t].pih = pih;
+		thread_data_array[t].N = N;
+		thread_data_array[t].maxresiduum = 0.0;
+
+		thread_data_array[t].start_row = start_row;
+		thread_data_array[t].end_row = floor((t + 1) * number_of_rows_per_thread);
+
+		// set start_row for next thread
+		start_row = thread_data_array[t].end_row + 1;
+
+		// set last row for last thread
+		if (thread_data_array[t].end_row > end_row) {
+			thread_data_array[t].end_row = end_row;
+		}
+	}
+
 	while (term_iteration > 0)
 	{
 		/*double** Matrix_Out = arguments->Matrix[m1];
@@ -329,17 +346,13 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 
 		maxresiduum = 0;
 
-		for (t = 0; t < options->number; t++)
+		for (t = 0; t < num_threads; t++)
 		{
-			thread_data_array[t]->thread_id = t;
-			thread_data_array[t]->m1 = m1;
-			thread_data_array[t]->m2 = m2;
-			thread_data_array[t]->fpisin = fpisin;
-			thread_data_array[t]->pih = pih;
-			thread_data_array[t]->options = options;
-			thread_data_array[t]->arguments = arguments;
+			thread_data_array[t].term_iteration = term_iteration;
+			thread_data_array[t].m1 = m1;
+			thread_data_array[t].m2 = m2;
 
-			printf("Main: creating thread %ld\n", t);
+			// printf("Main: creating thread %ld\n", t);
 			rc = pthread_create(&threads[t], &attr, calculate_rows, (void*) &thread_data_array[t]);
 			if (rc)
 			{
@@ -358,14 +371,15 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 				printf("ERROR; return code from pthread_join() is %d\n", rc);
 				exit(-1);
 			}
-			printf("Main: completed join with thread %ld.\n", t);
+			// printf("Main: completed join with thread %ld.\n", t);
 		}
 
+		// get biggest maxresiduum from all threads
 		for(t = 0; t < options->number; t++)
 		{
-			if (thread_data_array[t]->maxresiduum > maxresiduum)
+			if (thread_data_array[t].maxresiduum > maxresiduum)
 			{
-				maxresiduum = thread_data_array[t]->maxresiduum;
+				maxresiduum = thread_data_array[t].maxresiduum;
 			}
 		}
 
@@ -392,6 +406,8 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 	}
 
 	results->m = m2;
+
+	free(thread_data_array);
 }
 
 /* ************************************************************************ */
@@ -507,7 +523,7 @@ main (int argc, char** argv)
 	displayStatistics(&arguments, &results, &options);
 	DisplayMatrix(&arguments, &results, &options);
 
-	freeMatrices(&arguments, &options);
+	freeMatrices(&arguments);
 
 	return 0;
 }
