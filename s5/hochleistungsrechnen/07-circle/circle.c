@@ -41,6 +41,7 @@ circle (int* buf, int n, int next_rank, int prev_rank)
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
+	free(buf);
 	return tmp_buf;
 }
 
