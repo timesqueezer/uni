@@ -11,7 +11,7 @@ init (int N)
 	// TODO
 	int* buf = malloc(sizeof(int) * N);
 
-	srand(time(NULL));
+	srand(time(NULL) + clock() + rand()); // Using only seconds to seed RNG results in identical buffers across processes most of the time
 
 	for (int i = 0; i < N; i++)
 	{
@@ -25,7 +25,7 @@ init (int N)
 int*
 circle (int* buf, int n, int next_rank, int prev_rank, int first_item_value)
 {
-	int* tmp_buf;
+	int* tmp_buf = malloc(sizeof(int) * n);
 	MPI_Status status;
 	MPI_Request req;
 	while (buf[0] != first_item_value)
@@ -43,6 +43,7 @@ circle (int* buf, int n, int next_rank, int prev_rank, int first_item_value)
 	// tmp_buf[0] = -1;
 	MPI_Send(tmp_buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
 
+	free(tmp_buf);
 	return buf;
 }
 
@@ -86,6 +87,7 @@ main (int argc, char** argv)
 		N_per_proc += N - (N_per_proc * nprocs);
 	}
 
+	// printf("rank %d initializing %d items\n", rank, N_per_proc);
 	buf = init(N_per_proc);
 	int first_item_value;
 
@@ -101,21 +103,23 @@ main (int argc, char** argv)
 	// wait until both are synced
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	printf("\nBEFORE\n");
+	printf("\nBEFORE[%d]\n", rank);
 
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < N_per_proc; i++)
 	{
 		printf("rank %d: %d\n", rank, buf[i]);
 	}
 
 	circle(buf, N_per_proc, next_rank, prev_rank, first_item_value);
 
-	printf("\nAFTER\n");
+	printf("\nAFTER[%d]\n", rank);
 
-	for (int j = 0; j < N; j++)
+	for (int j = 0; j < N_per_proc; j++)
 	{
 		printf("rank %d: %d\n", rank, buf[j]);
 	}
+
+	free(buf);
 
 	return EXIT_SUCCESS;
 }
