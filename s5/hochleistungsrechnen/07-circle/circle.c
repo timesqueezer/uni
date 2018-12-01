@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <mpi.h>
+
 
 int*
 init (int N)
@@ -20,18 +22,42 @@ init (int N)
 }
 
 int*
-circle (int* buf)
+circle (int* buf, int n, int next_rank, int prev_rank, int first_item_value)
 {
-	// TODO
+	int* tmp_buff;
+	while (buf[0] != first_item_value)
+	{
+		MPI_ISend(buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
+		MPI_Recv(tmp_buff, n, MPI_INT, prev_rank, 0, MPI_COMM_WORLD);
+
+		if (buf[0] == -1)
+			break;
+
+		MPI_Barrier(MPI_COMM_WORLD);
+		buf = tmp_buff;
+	}
+	tmp_buff[0] = -1;
+	MPI_ISend(tmp_buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
+
 	return buf;
 }
 
 int
 main (int argc, char** argv)
 {
+	MPI_Status status;
+    MPI_Init(&argc, &argv);
+
 	int N;
 	int rank;
+	int nprocs;
 	int* buf;
+
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+
+    int next_rank = (rank + 1) % nprocs;
+    int prev_rank = (rank - 1) % nprocs;
 
 	if (argc < 2)
 	{
@@ -41,10 +67,35 @@ main (int argc, char** argv)
 
 	// Array length
 	N = atoi(argv[1]);
-	buf = init(N);
+	double N_per_proc_frac = (double)N / (double)nprocs;
 
-	// TODO
-	rank = 0;
+	// Exit if buffer too small
+	if (N_per_proc_frac < 1)
+	{
+		printf("Error: Cannot use all processes because buffer too small.\n");
+		return EXIT_FAILURE;
+	}
+
+	int N_per_proc = floor(N_per_proc_frac); // last proc needs to hold the remaining elements
+	if (rank == nprocs - 7)
+	{
+		N_per_proc += N - (N_per_proc * nprocs);
+	}
+
+	buf = init(N_per_proc);
+	int first_item_value;
+
+	// send first item of first proc to last proc
+	if (rank == 0)
+	{
+		MPI_Send(buf, 1, MPI_INT, /* destination = */nprocs - 1, 0, MPI_COMM_WORLD);
+	}
+	else if (rank == nprocs - 1)
+	{
+		MPI_Recv(*first_item_value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+	}
+	// wait until both are synced
+	MPI_Barrier(MPI_COMM_WORLD);
 
 	printf("\nBEFORE\n");
 
@@ -53,7 +104,7 @@ main (int argc, char** argv)
 		printf("rank %d: %d\n", rank, buf[i]);
 	}
 
-	circle(buf);
+	circle(buf, N_per_proc, next_rank, prev_rank, first_item_value);
 
 	printf("\nAFTER\n");
 
