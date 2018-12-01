@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 #include <mpi.h>
 
@@ -24,20 +25,23 @@ init (int N)
 int*
 circle (int* buf, int n, int next_rank, int prev_rank, int first_item_value)
 {
-	int* tmp_buff;
+	int* tmp_buf;
+	MPI_Status status;
+	MPI_Request req;
 	while (buf[0] != first_item_value)
 	{
-		MPI_ISend(buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
-		MPI_Recv(tmp_buff, n, MPI_INT, prev_rank, 0, MPI_COMM_WORLD);
+		MPI_Isend(buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD, &req);
+		MPI_Recv(tmp_buf, n, MPI_INT, prev_rank, 0, MPI_COMM_WORLD, &status);
 
-		if (buf[0] == -1)
+		if (tmp_buf[0] == -1)
 			break;
 
+		MPI_Wait(&req, &status);
 		MPI_Barrier(MPI_COMM_WORLD);
-		buf = tmp_buff;
+		buf = tmp_buf;
 	}
-	tmp_buff[0] = -1;
-	MPI_ISend(tmp_buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
+	// tmp_buf[0] = -1;
+	MPI_Send(tmp_buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
 
 	return buf;
 }
@@ -92,7 +96,7 @@ main (int argc, char** argv)
 	}
 	else if (rank == nprocs - 1)
 	{
-		MPI_Recv(*first_item_value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+		MPI_Recv(&first_item_value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
 	}
 	// wait until both are synced
 	MPI_Barrier(MPI_COMM_WORLD);
