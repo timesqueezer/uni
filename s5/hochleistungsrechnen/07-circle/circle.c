@@ -6,45 +6,42 @@
 
 
 int*
-init (int N)
+init (int N, int should_add_remainder, int remainder)
 {
-	// TODO
 	int* buf = malloc(sizeof(int) * N);
 
 	srand(time(NULL) + clock() + rand()); // Using only seconds to seed RNG results in identical buffers across processes most of the time
 
 	for (int i = 0; i < N; i++)
 	{
-		// Do not modify "% 25"
-		buf[i] = rand() % 25;
+		// Set not used items to -1
+		if (should_add_remainder)
+		{
+			if (i >= N - remainder)
+				buf[i] = -1;
+			else
+				buf[i] = rand() % 25;
+		}
+		else
+		{
+			buf[i] = rand() % 25;
+		}
 	}
 
 	return buf;
 }
 
 int*
-circle (int* buf, int n, int next_rank, int prev_rank, int first_item_value)
+circle (int* buf, int n, int next_rank, int prev_rank)
 {
 	int* tmp_buf = malloc(sizeof(int) * n);
-	MPI_Status status;
-	MPI_Request req;
-	while (buf[0] != first_item_value)
-	{
-		MPI_Isend(buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD, &req);
-		MPI_Recv(tmp_buf, n, MPI_INT, prev_rank, 0, MPI_COMM_WORLD, &status);
+	// MPI_Request req;
+	MPI_Send(buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
+	MPI_Recv(tmp_buf, n, MPI_INT, prev_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-		if (tmp_buf[0] == -1)
-			break;
+	MPI_Barrier(MPI_COMM_WORLD);
 
-		MPI_Wait(&req, &status);
-		MPI_Barrier(MPI_COMM_WORLD);
-		buf = tmp_buf;
-	}
-	// tmp_buf[0] = -1;
-	MPI_Send(tmp_buf, n, MPI_INT, next_rank, 0, MPI_COMM_WORLD);
-
-	free(tmp_buf);
-	return buf;
+	return tmp_buf;
 }
 
 int
@@ -81,14 +78,13 @@ main (int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
-	int N_per_proc = floor(N_per_proc_frac); // last proc needs to hold the remaining elements
-	if (rank == nprocs - 7)
-	{
-		N_per_proc += N - (N_per_proc * nprocs);
-	}
+	// last proc has maybe some "empty" items indicated by value -1
+	// when N % nprocs != 0, e.g. 2 procs and N = 5
+	int remainder = N % nprocs;
+	int N_per_proc = floor(N_per_proc_frac) + remainder;
 
 	// printf("rank %d initializing %d items\n", rank, N_per_proc);
-	buf = init(N_per_proc);
+	buf = init(N_per_proc, rank == nprocs - 1 ? 1 : 0, remainder);
 	int first_item_value;
 
 	// send first item of first proc to last proc
@@ -103,23 +99,92 @@ main (int argc, char** argv)
 	// wait until both are synced
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	printf("\nBEFORE[%d]\n", rank);
 
-	for (int i = 0; i < N_per_proc; i++)
+	if (rank == 0)
 	{
-		printf("rank %d: %d\n", rank, buf[i]);
+		printf("\nBEFORE\n");
+
+		int* buf_other = malloc(sizeof(int) * N_per_proc);
+		for (int i = 0; i < N_per_proc; i++)
+		{
+			if (buf[i] != -1)
+				printf("rank %d: %d\n", rank, buf[i]);
+		}
+		for (int r = 1; r < nprocs; r++)
+		{
+			MPI_Recv(buf_other, N_per_proc, MPI_INT, r, 0, MPI_COMM_WORLD, &status);
+			for (int i = 0; i < N_per_proc; i++)
+			{
+				if (buf_other[i] != -1)
+					printf("rank %d: %d\n", r, buf_other[i]);
+			}
+		}
+		free(buf_other);
+	}
+	else
+	{
+		MPI_Send(buf, N_per_proc, MPI_INT, 0, 0, MPI_COMM_WORLD);
 	}
 
-	circle(buf, N_per_proc, next_rank, prev_rank, first_item_value);
-
-	printf("\nAFTER[%d]\n", rank);
-
-	for (int j = 0; j < N_per_proc; j++)
+	int abort = 0;
+	while(1)
 	{
-		printf("rank %d: %d\n", rank, buf[j]);
+		if (rank == nprocs - 1)
+		{
+			if (buf[0] == first_item_value)
+			{
+				abort = 1;
+				MPI_Bcast(&abort, 1, MPI_INT, nprocs - 1, MPI_COMM_WORLD);
+			}
+			else
+			{
+				abort = 0;
+				MPI_Bcast(&abort, 1, MPI_INT, nprocs - 1, MPI_COMM_WORLD);
+			}
+		}
+		else
+		{
+			MPI_Bcast(&abort, 1, MPI_INT, nprocs - 1, MPI_COMM_WORLD);
+		}
+
+		if (abort == 1)
+		{
+			break;
+		}
+
+		buf = circle(buf, N_per_proc, next_rank, prev_rank);
+	}
+
+
+	if (rank == 0)
+	{
+		printf("\nAFTER\n");
+
+		int* buf_other = malloc(sizeof(int) * N_per_proc);
+		for (int i = 0; i < N_per_proc; i++)
+		{
+			if (buf[i] != -1)
+				printf("rank %d: %d\n", rank, buf[i]);
+		}
+		for (int r = 1; r < nprocs; r++)
+		{
+			MPI_Recv(buf_other, N_per_proc, MPI_INT, r, 0, MPI_COMM_WORLD, &status);
+			for (int i = 0; i < N_per_proc; i++)
+			{
+				if (buf_other[i] != -1)
+					printf("rank %d: %d\n", r, buf_other[i]);
+			}
+		}
+		free(buf_other);
+	}
+	else
+	{
+		MPI_Send(buf, N_per_proc, MPI_INT, 0, 0, MPI_COMM_WORLD);
 	}
 
 	free(buf);
+
+	MPI_Finalize();
 
 	return EXIT_SUCCESS;
 }
