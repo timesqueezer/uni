@@ -231,6 +231,9 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 	double const h = arguments->h;
 	int const nproc = arguments->nproc;
 	int const rank = arguments->rank;
+	int global_i = 0;
+
+	MPI_Status status;
 
 	double pih = 0.0;
 	double fpisin = 0.0;
@@ -255,7 +258,6 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 		fpisin = 0.25 * TWO_PI_SQUARE * h * h;
 	}
 
-	int global_i = 0;
 
 	while (term_iteration > 0)
 	{
@@ -300,14 +302,14 @@ calculate (struct calculation_arguments const* arguments, struct calculation_res
 		{
 			MPI_Sendrecv(Matrix_Out[1], N_global + 1, MPI_DOUBLE, rank - 1, rank,
 						 Matrix_Out[0], N_global + 1, MPI_DOUBLE, rank - 1, rank - 1,
-						 MPI_COMM_WORLD, NULL);
+						 MPI_COMM_WORLD, &status);
 		}
 
 		if(rank != nproc - 1)
 		{
 			MPI_Sendrecv(Matrix_Out[N - 1], N_global + 1, MPI_DOUBLE, rank + 1, rank,
 						 Matrix_Out[N],     N_global + 1, MPI_DOUBLE, rank + 1, rank + 1,
-						 MPI_COMM_WORLD, NULL);
+						 MPI_COMM_WORLD, &status);
 		}
 
 		results->stat_iteration++;
