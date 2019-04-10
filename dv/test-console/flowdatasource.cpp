@@ -14,6 +14,10 @@ FlowDataSource::~FlowDataSource()
 
 void FlowDataSource::createData(int n_size, int time)
 {
+    if (cartesianDataGrid==nullptr) {
+        delete[] cartesianDataGrid;
+    }
+
     size = n_size;
     cartesianDataGrid = new float[size * size * size * 3];
 

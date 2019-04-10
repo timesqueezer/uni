@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+%\usepackage{fullpage}
+
+\title{\textbf{Mathe Hausaufgaben zum 13. Januar 2017}}
+\author{Elaha Khaleqi(6947801), Matz Radloff(6946325)}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Elaha Khaleqi(6947801), Matz Radloff(6946325) - Mathe I\_Inf}
+\cfoot{\thepage}
+
+\newcommand{\Myrightarrow}{\stackrel{\mathclap{\normalfont\mbox{(*)}}}{\Rightarrow}}
+
+
+\begin{document}
+\pagenumbering{arabic}
+  \maketitle
+  \date{}
+
+\section*{4.}
+Nachricht: 5
+Öffentlicher Schlüssel: $(11, 247)$
+Privater Schlüssel: $(59, 247)$
+
+\begin{align*}
+M &= 5\\
+5^{11} &= 48828125 = 197684 \cdot 247 + 177\\
+\Rightarrow C &= 177 \equiv 5^{11} (\mbox{mod } 247)\\
+\end{align*}
+
+Die verschlüsselte Nachricht lautet $C = 177$.
+Entschlüsselung zur Probe:
+
+\begin{align*}
+177^{59} &= 4.2699492701451408226820636128889... \cdot 10^{132}\\
+&= 1.7287244008684780658631836489429... \cdot 10^{130} \cdot 247 + 5\\
+\Rightarrow M' &= M = 5
+\end{align*}
+
+\section*{5.}
+
+\subsection*{(a)}
+
+\begin{align*}
+p &= 7, q = 11, N = 77\\
+\varphi(N) &= (p - 1)(q - 1) = 60\\
+e &= 13\\
+d &= \frac{r \cdot \varphi(N) + 1}{e}\\
+\end{align*}
+Für ein großes $r = 4615384297$ ergibt sich $d = 999999931$.
+
+Der private Schlüssel lautet also $(999999931, 60)$ und der öffentliche öffentliche $(13, 60)$.
+Die Zahlen wurden so gewählt, damit Nachrichten schnell verschlüsselt werden können, aber beim Entschlüsseln von einem möglichen Angreifer, $d$ nicht durch einfaches Ausprobieren erraten werden kann (In praktischen Anwendungsfällen sollten die Zahlen natürlich trotzdem deutlich größer gewählt werden).
+
+\subsection*{(b)}
+
+
+\end{document}

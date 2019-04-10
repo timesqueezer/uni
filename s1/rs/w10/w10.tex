@@ -1,0 +1,63 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{spreadtab}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+
+
+
+\title{\textbf{Rechnerstrukturen Hausaufgaben zum 1. Januar 2017}}
+\author{Ali Ebrahimi Pourasad, Moritz Lahann, Matz Radloff}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\begin{document}
+  \maketitle
+  \date{}
+  Gruppe: [RS\_GR1\_12]
+\newpage
+\section*{10.1}
+
+\subsection*{(a)}
+
+Beide Automaten wären so verbunden, dass die Zustände des Ampel-Automaten den jeweils ersten Zustand des Zählautomaten auslösen. Umgekehrt aktiviert dessen letzter Zustand wieder den nächsten Zustand des Ampel-Automaten. Hierbei kann man die Verbindung unterschiedlich umsetzten. Naheliegend wäre alle Folgezustände des Ampelautomaten mit Zuständen der Zähler zu ersetzen und umgekehrt.
+
+\subsection*{(b)}
+
+Wenn beide Automaten mit der Taktvorderflanke aktiviert werden, kann bei gegenseitiger Abhängigkeit ein Automat erst einen Takt später starten, nachdem der Zustand, der zu ihm überführt erreicht ist. In diesem Beispiel wäre nur der Übergang vom Zählautomaten zum Ampel-Automaten zu beachten, wenn man ihn bis $30.000$ zählen lässt. Dann müsste der Übergang schon bei 29.999 stattfinden, sodass der Ampel-Automat pünktlich beim 30.000 Takt schaltet.
+
+\subsection*{(c)}
+
+In dem Fall, dass beide Automaten unterschiedlich getaktet sind, sodass der eine mit der Taktvorderlanke und der zweite mit der Rückflanke arbeitet, muss nicht ein Takt früher ein Übergang finden. An der Vorderflanke wird der Zustand der Grünphase erreicht, sodass im gleichen Takt an der Rückflanke der Zähler aktiviert wird. Genauso endet der Zähler auf der Rückflanke des letzten Taktes und der Ampel-Automat kann direkt auf der nächsten Vorderflanke den Übergang $Z_3$ verlassen. Es wird bei beiden Übergängen jeweils ein halber Takt "gespart", sodass am Ende die korrekte Anzahl von Takten durchlaufen wurde.
+
+\subsection*{(d)}
+
+Zustände des Ampel-Automaten: $(z_1, z_2)$
+Ansteuerung der verschiedenen Zähler über: $(c_1, c_2$
+
+\begin{center}
+\begin{tabular}{l c c | c c | c c c}
+ & $z_1$ & $z_0$ & $c_1^+$ & $c_2^+$ & rt & ge & gr\\
+ \hline
+rot      & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+rot-gelb & 0 & 1 & 0 & 1 & 1 & 1 & 0\\
+grün     & 1 & 0 & 1 & 0 & 0 & 0 & 1\\
+gelb     & 1 & 1 & 1 & 1 & 0 & 1 & 0
+\end{tabular}
+\end{center}
+
+\includegraphics[width=90mm]{1d.jpg}
+
+\end{document}

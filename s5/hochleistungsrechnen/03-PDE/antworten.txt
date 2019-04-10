@@ -1,0 +1,67 @@
+Aufgabe1:
+1. Was bedeutet der Begriff Batch Queuing?
+ - Ein Stapel von Programmen, wobei es auch ein Stapel von nur einer Instanz sein kann, der zu einem Job zusammengefasst wird und ausgefuehrt werden kann.
+
+2. Welche Aufgaben hat ein Batch-Queuing-System?
+ - Ist zuständig fuer die Aufteilung der Ressourcen wie z.B. Zeit fuer die aufgetragenen Jobs.
+
+3. Nennen Sie drei Beispiele fuer Batch-Queuing-Systeme.
+ - Moab Cluster suite
+ - OpenLava
+ - Simple Linux Utility for Resource Management (SLURM)
+
+4. Welches Batch-Queuing-System wird auf dem Cluster verwendet?
+ - SLURM
+
+5. Machen Sie sich mit der Manpage von sbatch vertraut. Beschreiben Sie die Funktionsweise des Kommandos.
+ - $ sbatch: Submitet batch Skripte an SLURM
+ - Das Skript kann per Pfad referenziert werden: $ sbatch [options] script [args...]
+
+6. Wie lassen sich die aktuellen Jobs und deren Status anzeigen?
+ - $ squeue
+
+7. Machen Sie sich mit dem Befehl sview vertraut. Beschreiben Sie die wichtigsten Vorteile gegenueber dem vorigen Punkt.
+ - sview bietet eine breitere Übersicht durch seine grafische Benutzeroberfläche. Es ermöglicht mehr Informationen zu den Jobs zu bekommen.
+ - sview erleichtert das Job-Management, da es mehrere Kommandos vereint und ist weniger fehleranfällig, weil z.B. das manuelle Eingeben von Job-IDs entfällt.
+
+8. Gibt es eine Möglichkeit, einen bereits abgeschickten Job zu löschen (bevor oder während er läuft)? Wenn ja, wie?
+ - Ja, $ scancel <JOBID>
+
+9.Können auf dem Cluster mehrere Nutzer oder Jobs gleichzeitig denselben Knoten benutzen?
+ - Ja, das ist möglich
+
+10. Finden Sie heraus wie Sie sich den detaillierten Status eines Jobs ausgeben lassen können.
+ - $ scontrol show job <JOBID>
+
+11. Welche Scheduling-Verfahren sind bei dem auf dem Cluster benutzten System möglich? Welches wird benutzt? Erläutern Sie jedes der Verfahren kurz.
+ - sched/builtin und sched/backfill
+ - Backfill Scheduling schaut sich alle Jobs an. Die ausstehenden Jobs werden nach Priorität sortiert. Wenn ein ausstehender Job die beabsichtliche Startzeit anderer höher priorisierten Jobs beeinträchtigen, dann wird er nicht ausgeführt.
+ - Builtin Scheduling: alle Jobs werden strikt nach Priorität ausgeführt, was die Ausnutzung des System beeinflussen. Man muss die Zeit des Jobs angeben.
+
+12.Finden Sie heraus, wie Sie einen einzelnen Knoten allokieren können. Allokieren Sie einen konkreten Knoten (z. B. west7 , bauen Sie eine Verbindung zu diesem Knoten auf und führen sie hostname darauf aus.
+ - $ salloc -p west -w west7
+   Grandted job allocation 95874
+ - $ ssh west7
+
+ - $ hostname
+   west7
+
+13. Wie hoch ist das Timeout auf dem Cluster, bis alle Knoten wieder freigegeben werden?
+ - 6 Stunden
+
+14. Wie können Sie die Priorität Ihrer Jobs nachschauen? Können Sie diese verändern oder beeinflussen?
+ - um die Priorität nachzuschauen: $ scontrol show job <JOBID>
+ - verändern oder beeinfussen: $ scontrol update jobid=<JOBID> Priority=<NEW PRIORITY>
+
+15. Welche unterschiedlichen Partitionen sind auf dem Cluster eingerichtet? Wie kann die zu benutzende Partition geändert werden?
+ - sinfo zeigt: abu, amd, magny, nephalem, west
+ - partition switchen: srun -p <partition> executable
+
+------------------------------------------------------------Aufgabe2:
+
+**Frage: Was fällt Ihnen auf? Versuchen Sie Ihre Beobachtung zu erklären!
+job_script.out überschreibt sich bei jedem aufruf.
+Die Reihenfolge der Zeitstempeln stimmt mit der Reihenfolge der Ausgabe nicht überein. Die Aufrufe von timescript werden auf den unterschiedlichen Knoten zu unterschiedlichen Zeitpunkten gestartet, der Schreibzugriff der Knoten passiert aber nicht in der gleichen Reihenfolge, so sind die Zeitpunkte nicht zwingend chronologisch.
+
+**Frage: Könnte man die Datei timescript.out auch innerhalb des Scriptes timescript erzeugen? Falls ja: Wie? Falls nein: Warum nicht?
+Nein, dies ist nicht möglich, da das Script timescript nur auf den nodes, nicht auf dem master läuft und somit keinen Zugriff auf die Ausgabedatei hat.

@@ -1,0 +1,12 @@
+Die Bearbeitungszeit bitte in ganzen Stunden angeben (aufrunden).
+In den restlichen Zeilen jeweils ein X in der zutreffenden Spalte setzen.
+
+Bearbeitungszeit:  5
+Schwierigkeit:     [ ] zu leicht         [x] genau richtig     [ ] zu schwer
+Lehrreich:         [ ] wenig             [x] etwas             [ ] sehr
+Verständlichkeit:  [ ] großteils unklar  [ ] teilweise unklar  [x] verständlich
+
+Kommentar:
+Was würden Sie ansonsten gerne zum letzten Blatt sagen?
+Ich (Daniel) kenne mich mit C nicht aus. Hätte nicht gedacht, dass ich gleich in C programmieren soll. 
+Es hat zwar ganz gut geklappt, aber ich vermute bei den kommenden Übungen kann es sehr schwer werden.
