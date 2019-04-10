@@ -1,0 +1,18 @@
+hades.symbols.BboxRectangle  0 0 6000 3000
+hades.symbols.Rectangle  0 0 6000 3000
+hades.symbols.PortLabel 5850 1950 3 nq
+hades.symbols.PortSymbol 6000 1800 nq
+hades.symbols.PortLabel 5850 1350 3 q
+hades.symbols.PortSymbol 6000 1200 q
+hades.symbols.PortLabel 5850 750 3 cout
+hades.symbols.PortSymbol 6000 600 cout
+hades.symbols.PortLabel 150 2550 nreset
+hades.symbols.PortSymbol 0 2400 nreset
+hades.symbols.PortLabel 150 1950 clk
+hades.symbols.PortSymbol 0 1800 clk
+hades.symbols.PortLabel 150 1350 nclear
+hades.symbols.PortSymbol 0 1200 nclear
+hades.symbols.PortLabel 150 750 cin
+hades.symbols.PortSymbol 0 600 cin
+hades.symbols.InstanceLabel 150 2850 i0
+hades.symbols.ClassLabel 150 450 SyncCounter1

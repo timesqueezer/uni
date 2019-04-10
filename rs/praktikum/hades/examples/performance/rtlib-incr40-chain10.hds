@@ -1,0 +1,36 @@
+# hades.models.Design file
+#  
+[name] IncrementerChain
+[components]
+hades.models.rtlib.arith.Incr i5 9600 -6600 @N 1001 40 0000000000000000000000010101000101101010_B 1.0E-8
+hades.models.rtlib.arith.Incr i4 9600 -4200 @N 1001 40 0000000000000000000000010101000101101011_B 1.0E-8
+hades.models.rtlib.arith.Incr i3 9600 -1800 @N 1001 40 0000000000000000000000010101000101101100_B 1.0E-8
+hades.models.rtlib.arith.Incr i2 9600 600 @N 1001 40 0000000000000000000000010101000101101101_B 1.0E-8
+hades.models.rtlib.muxes.Mux21 i1 9600 -21600 @N 1001 40 0000000000000000000000010101000101100100_B 1.0E-8
+hades.models.io.PowerOnReset i0 6000 -20400 @N 1001 0.0050 0.0050
+hades.models.gates.InvSmall i13 6600 -21000 @N 1001 5.0E-9
+hades.models.rtlib.io.Constant i12 9000 -25800 @N 1001 40 0000000000000000000000000000000000000000_B 1.0E-8
+hades.models.rtlib.arith.Incr i11 9600 -18600 @N 1001 40 0000000000000000000000010101000101100101_B 1.0E-8
+hades.models.rtlib.arith.Incr i10 9600 -16200 @N 1001 40 0000000000000000000000010101000101100110_B 1.0E-8
+hades.models.rtlib.arith.Incr i9 9600 3000 @N 1001 40 0000000000000000000000010101000101101110_B 1.0E-8
+hades.models.rtlib.arith.Incr i8 9600 -13800 @N 1001 40 0000000000000000000000010101000101100111_B 1.0E-8
+hades.models.rtlib.arith.Incr i7 9600 -11400 @N 1001 40 0000000000000000000000010101000101101000_B 1.0E-8
+hades.models.rtlib.arith.Incr i6 9600 -9000 @N 1001 40 0000000000000000000000010101000101101001_B 1.0E-8
+[end components]
+[signals]
+hades.signals.SignalStdLogicVector n9 40 2 i12 Y i1 A1 1 2 10800 -24000 10800 -21600 0 
+hades.signals.SignalStdLogicVector n8 40 2 i8 Y i7 A 1 2 11400 -11400 11400 -12000 0 
+hades.signals.SignalStdLogicVector n7 40 2 i7 Y i6 A 1 2 11400 -9000 11400 -9600 0 
+hades.signals.SignalStdLogicVector n6 40 2 i1 Y i11 A 1 2 11400 -18600 11400 -19800 0 
+hades.signals.SignalStdLogicVector n5 40 2 i6 Y i5 A 1 2 11400 -6600 11400 -7200 0 
+hades.signals.SignalStdLogicVector n3 40 2 i5 Y i4 A 1 2 11400 -4200 11400 -4800 0 
+hades.signals.SignalStdLogicVector n2 40 2 i4 Y i3 A 1 2 11400 -1800 11400 -2400 0 
+hades.signals.SignalStdLogicVector n1 40 2 i3 Y i2 A 1 2 11400 600 11400 0 0 
+hades.signals.SignalStdLogicVector n0 40 2 i2 Y i9 A 1 2 11400 2400 11400 3000 0 
+hades.signals.SignalStdLogicVector n4_0 40 2 i9 Y i1 A0 7 2 12000 -22800 12000 -21600 2 12000 -22800 16800 -22800 2 11400 8400 16800 8400 2 16800 8400 16800 -15600 2 16800 -15600 16800 -22800 2 11400 8400 11400 7200 2 11400 7200 11400 4800 0 
+hades.signals.SignalStdLogic1164 n13 2 i0 nreset i13 A 1 2 6600 -20400 6000 -20400 0 
+hades.signals.SignalStdLogicVector n12 40 2 i10 Y i8 A 1 2 11400 -14400 11400 -13800 0 
+hades.signals.SignalStdLogicVector n11 40 2 i11 Y i10 A 1 2 11400 -16800 11400 -16200 0 
+hades.signals.SignalStdLogic1164 n10 2 i13 Y i1 S 1 2 8400 -20400 9600 -20400 0 
+[end signals]
+[end]

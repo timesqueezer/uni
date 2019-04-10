@@ -1,0 +1,34 @@
+# hades.models.Design file
+#  
+[name] unnamed
+[components]
+hades.models.io.Opin i1 12600 4200 1001
+hades.models.io.HexDisplay i0 14400 7200 1001
+hades.models.Design Addierer 5400 3600 1001 /hades/examples/cla4/addierer.hds
+hades.models.io.HexSwitch i11 0 2400 1001
+hades.models.Design Addierer3 5400 13200 1001 /hades/examples/cla4/addierer.hds
+hades.models.Design Addierer2 5400 10200 1001 /hades/examples/cla4/addierer.hds
+hades.models.Design Addierer1 5400 7200 1001 /hades/examples/cla4/addierer.hds
+hades.models.io.HexSwitch i9 0 8400 1001
+hades.models.io.Ipin i8 2400 15000 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i9 Y1 Addierer2 y 1 2 3000 10200 5400 11400 0 
+hades.signals.SignalStdLogic1164 n8 2 i9 Y0 Addierer3 y 1 2 3000 10800 5400 14400 0 
+hades.signals.SignalStdLogic1164 n7 2 Addierer3 z i0 A0 1 2 11400 14400 14400 10200 0 
+hades.signals.SignalStdLogic1164 n6 2 Addierer2 z i0 A1 1 2 11400 11400 14400 9600 0 
+hades.signals.SignalStdLogic1164 n5 2 Addierer1 z i0 A2 1 2 11400 8400 14400 9000 0 
+hades.signals.SignalStdLogic1164 n4 2 Addierer z i0 A3 1 2 11400 4800 14400 8400 0 
+hades.signals.SignalStdLogic1164 n3 2 Addierer1 ue_out Addierer ue_in 1 2 11400 7800 5400 5400 0 
+hades.signals.SignalStdLogic1164 n2 2 Addierer2 ue_out Addierer1 ue_in 1 2 11400 10800 5400 9000 0 
+hades.signals.SignalStdLogic1164 n1 2 Addierer3 ue_out Addierer2 ue_in 1 2 5400 12000 11400 13800 0 
+hades.signals.SignalStdLogic1164 n0 2 i8 Y Addierer3 ue_in 1 2 2400 15000 5400 15000 0 
+hades.signals.SignalStdLogic1164 n16 2 Addierer ue_out i1 A 1 2 11400 4200 12600 4200 0 
+hades.signals.SignalStdLogic1164 n15 2 i11 Y3 Addierer x 1 2 3000 3000 5400 4200 0 
+hades.signals.SignalStdLogic1164 n14 2 i11 Y2 Addierer1 x 1 2 3000 3600 5400 7800 0 
+hades.signals.SignalStdLogic1164 n13 2 i11 Y1 Addierer2 x 1 2 3000 4200 5400 10800 0 
+hades.signals.SignalStdLogic1164 n12 2 i11 Y0 Addierer3 x 1 2 3000 4800 5400 13800 0 
+hades.signals.SignalStdLogic1164 n11 2 i9 Y3 Addierer y 1 2 3000 9000 5400 4800 0 
+hades.signals.SignalStdLogic1164 n10 2 i9 Y2 Addierer1 y 1 2 3000 9600 5400 8400 0 
+[end signals]
+[end]

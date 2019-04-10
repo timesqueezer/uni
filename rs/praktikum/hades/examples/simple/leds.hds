@@ -1,0 +1,14 @@
+# hades.models.Design file
+#  
+[name] colored_LEDs
+[components]
+hades.models.io.LED yellow 12000 9600 1001 2
+hades.models.io.LED green 12000 8400 1001 1
+hades.models.io.Ipin P0 7200 10800 1001 
+hades.models.io.LED red 12000 7200 1001 0
+hades.models.io.LED blue 12000 10800 1001 3
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n0 5 P0 Y yellow A blue A green A red A 4 4 7200 10800 10800 10800 10800 9600 12000 9600 2 10800 10800 12000 10800 3 10800 9600 10800 8400 12000 8400 3 10800 8400 10800 7200 12000 7200 3 10800 10800 10800 9600 10800 8400 
+[end signals]
+[end]

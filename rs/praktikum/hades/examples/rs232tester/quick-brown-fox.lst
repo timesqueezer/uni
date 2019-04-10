@@ -1,0 +1,578 @@
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001     TITLE           "Quick-Brown-Fox: RS232 Tester: Half-Duplex"
+                    00002     SUBTITLE        "based on Microchip AN510 and AN555"
+                    00003 
+                    00004     Processor       16C84
+                    00005     Radix           DEC
+                    00006     EXPAND
+                    00007     include         "p16c84.inc"
+                    00001         LIST
+                    00002 ; P16C84.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
+                    00134         LIST
+                    00008 
+                    00009 ;
+                    00010 ; 
+                    00011 ; A simple RS232 protocol tester that sends out a (fixed) sequence of 
+                    00012 ; ASCII/Latin-1 chars to the _TXPin of the Pic at selectable baud rate.
+                    00013 ; At 4MHz input clock, baud rates up to 38.400 are possible.
+                    00014 ; Select the desired baud rate with pins PB2..0, and 1 or 2 stop bits with PB3.
+                    00015 ;
+                    00016 ; Also a demonstration for the Pic16C84/Pic16F84 microprocessor and VT52/VT100
+                    00017 ; simulation models in the HADES simulation environment, see the HADES homepage
+                    00018 ; at http://tech-www.informatik.uni-hamburg.de/applets/hades/
+                    00019 ; 
+                    00020 ; (C) 1999, F.N.Hendrich, hendrich@informatik.uni-hamburg.de
+                    00021 ; based on AN510 and AN555 by Arizona Microchip
+                    00022 ; 
+                    00023 ; 03.09.99 - minor documentation cleanups
+                    00024 ;
+                    00025 
+                    00026 
+  00000000          00027 _ResetVector  set 0x00
+  00000004          00028 _IntVector  set 0x04
+  00000060          00029 _CharTable      set     0x60
+                    00030 
+  00000005          00031 _TXPort   equ   PORTA
+  00000004          00032 _TXPin          equ     4   ; the RS232 output pin
+  00000020          00033 _TXReg    equ 0x20    ; the RS232 transmit register
+  00000021          00034 _DelayConst equ 0x21    ; delay constant for selected baud rate
+  00000022          00035 _DelayCntr  equ 0x22    ; delay counter reg 
+  00000023          00036 _CharPtr  equ 0x23    ; index into the output char array
+  00000024          00037 _BitCount equ 0x24    ; count tx bits 
+                    00038 
+                    00039 ;
+                    00040 ; some predefined constants for the usual baud rates at 4MHz input clock.
+                    00041 ; Use the following formula to calculate constants for other baud rates 
+                    00042 ; (see AN510):
+                    00043 ; _delayBaud  equ   xx   ; where 13+3*xx = _ClkOut / BaudRate
+                    00044 ;                        ; that is,   xx = ((_ClkOut / BaudRate - 13) / 3) 
+                    00045 ;
+                    00046 ; The following values are for _ClkIn = 40000000;
+                    00047 ;
+                    00048 
+  003D0900          00049 _ClkIn        equ 4000000
+  000F4240          00050 _ClkOut       set (_ClkIn >> 2)
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  2
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00051 
+  00000452          00052 _delay00300   set ( ((_ClkOut /   300) -13) / 3)
+  00000227          00053 _delay00600   set ( ((_ClkOut /   600) -13) / 3)
+  00000111          00054 _delay01200   set ( ((_ClkOut /  1200) -13) / 3)
+  00000086          00055 _delay02400   set ( ((_ClkOut /  2400) -13) / 3)
+  00000041          00056 _delay04800   set ( ((_ClkOut /  4800) -13) / 3)
+  0000001E          00057 _delay09600   set ( ((_ClkOut /  9600) -13) / 3)
+  0000000D          00058 _delay19200   set ( ((_ClkOut / 19200) -13) / 3)
+                    00059 
+                    00060 ; too imprecise due to rounding, try to set manually:
+                    00061 ;_delay38400   set ( ((_ClkOut / 38400) -13) / 3)
+                    00062 
+  00000003          00063 _delay38400 set 3
+                    00064 
+  00000008          00065 _DataBits       set     8               ; 8 bit data
+  00000001          00066 _StopBits       set     1               ; 1 stop bit
+                    00067 
+                    00068                                         ; parity is NOT enabled by default,
+                    00069                                         ; change _txmit routine if necessary
+                    00070 
+                    00071 
+                    00072 
+                    00073 
+                    00074 ;*****************************************************************************
+                    00075 ;*****************************************************************************
+                    00076 ;*****************************************************************************
+                    00077 ;
+                    00078 ; code starts here
+                    00079 ;
+                    00080 
+0000                00081   ORG     _ResetVector
+0000 2805           00082   goto    Start
+                    00083 
+                    00084 
+                    00085 ;
+                    00086 ; we should NEVER arrive here, because interrupts (and WD-timer) should 
+                    00087 ; be disabled...
+                    00088 ;
+                    00089 
+0004                00090   ORG     _IntVector
+0004 280A           00091         goto    Interrupt
+                    00092                                         
+                    00093 
+                    00094 
+0005                00095 Start:
+0005 3000           00096   movlw 0x00
+0006 088B           00097   movf  INTCON,1    ; disable all interrupts
+                    00098 
+0007 2014           00099   call    InitPorts
+0008 2021           00100   call    TransmitCharLoop  ; this never returns...
+0009 2805           00101   goto  Start
+                    00102 
+                    00103 
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  3
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00104 
+000A                00105 Interrupt:
+000A 280A           00106   goto  Interrupt
+                    00107 
+                    00108 
+                    00109 ;
+                    00110 ; BaudDelayTable:
+                    00111 ; return the delay constants for the baud rates 300, 600, 1200, 2400, 4800,
+                    00112 ; 9600, 19200, 31250, 38400, ...
+                    00113 ;
+000B                00114 BaudDelayTable:
+000B 0782           00115   addwf    PCL,F
+Warning[202]: Argument out of range.  Least significant bits used.
+000C 3452           00116   retlw _delay00300
+Warning[202]: Argument out of range.  Least significant bits used.
+000D 3427           00117   retlw _delay00600
+Warning[202]: Argument out of range.  Least significant bits used.
+000E 3411           00118   retlw _delay01200
+000F 3486           00119   retlw _delay02400
+0010 3441           00120   retlw _delay04800
+0011 341E           00121   retlw _delay09600
+0012 340D           00122   retlw _delay19200
+0013 3403           00123   retlw _delay38400
+                    00124 
+                    00125   
+                    00126 
+                    00127 ;  
+                    00128 ; InitPorts:
+                    00129 ; initialize the _TXPin pin as output and all other ports of the Pic controller
+                    00130 ; as inputs. Also, we set the _TXPin to the high state (RS232 inactive).
+                    00131 ;
+                    00132             
+0014                00133 InitPorts:
+0014 1683           00134   bsf STATUS, RP0 ; access port direction regs
+0015 30FF           00135   movlw 0xFF
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0016 0085           00136   movwf TRISA   ; both ports input
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0017 0086           00137   movwf TRISB
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0018 1205           00138   bcf TRISA, _TXPin ; but _TXPin is output
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0019 1005           00139   bcf TRISA, 0  ; debugging: enable Pin A0 as trigger output
+001A 1283           00140   bcf STATUS, RP0 ; access data regs 
+001B 0008           00141   return
+                    00142 
+                    00143 
+                    00144 
+                    00145 
+                    00146 
+                    00147 ;
+                    00148 ; GetDesiredBaudRate:
+                    00149 ; read the input pins portb<2:0> and decode the selected baud rate
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  4
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00150 ; from 300 to 38400 bauds. The delay constant corresponding to the
+                    00151 ; baud rate is put into the _DelayConst register.
+                    00152 ; Set Portb<3> to 0 for 1 stop bits, to 1 for 2 stop bits.
+                    00153 ;
+001C                00154 GetDesiredBaudRate:
+001C 0806           00155   movf  PORTB,0   ; move PORTB to W
+001D 3907           00156   andlw 0x07    ; mask lower three bits
+001E 200B           00157   call  BaudDelayTable
+001F 00A1           00158   movwf _DelayConst
+0020 0008           00159   return
+                    00160 
+                    00161 
+                    00162 
+                    00163 ;
+                    00164 ; TransmitCharLoop:
+                    00165 ; assuming that all baud rate constants and the serial port is initialized,
+                    00166 ; this method enters an infinite loop that samples the baud rate selector
+                    00167 ; inputs, then transmits the (fixed) output chars sequences at the selected
+                    00168 ; baud rate.
+                    00169 ;
+                    00170 ;
+0021                00171 TransmitCharLoop:
+                    00172 
+0021 201C           00173   call  GetDesiredBaudRate  ; read and decode baud rate
+                    00174 
+0022 3000           00175   movlw 0
+0023 00A3           00176   movwf _CharPtr    ; initialize String index pointer
+                    00177 
+0024                00178 SendNextChar:
+0024 201C           00179   call  GetDesiredBaudRate
+                    00180 
+0025 0AA3           00181   incf  _CharPtr,F    ; increment String index pointer
+0026 0823           00182   movf  _CharPtr,W    ; and move pointer to W
+0027 2060           00183   call  QuickBrownFoxTable  ; puts the next String char into W
+                    00184 
+0028 3E00           00185   addlw 0     ; add 0 to W (to set the zero flag)
+0029 1903           00186   btfsc STATUS,Z    ; check ZERO flag
+002A 2821           00187   goto  TransmitCharLoop  ; if ZERO, next outer iteration 
+                    00188 
+002B 202D           00189   call  SendOneChar   ; not ZERO, send the one char in W
+002C 2824           00190         goto    SendNextChar
+                    00191 
+                    00192 
+                    00193 
+                    00194 ;
+                    00195 ; SendOneChar:
+                    00196 ; the actual RS232 transmission routine, half-duplex, no-flow-control.
+                    00197 ; See AN510 for an explanation
+                    00198 ;
+002D                00199 SendOneChar:
+002D 00A0           00200   movwf _TXReg      ; move W (char to send) to _TXReg
+                    00201 
+002E 1405           00202   bsf PORTA,0     ; debug sync impulse on port A0
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  5
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+002F 1005           00203   bcf PORTA,0
+                    00204 
+0030 3008           00205   movlw 0x08
+0031 00A4           00206   movwf _BitCount   ; send 8 bits
+                    00207 
+0032 1205           00208   bcf _TXPort,_TXPin    ; set _TXPin for start bit
+                    00209 
+0033 0000           00210   nop
+0034 0000           00211   nop
+0035 0000           00212   nop
+0036 0000           00213   nop
+0037 204E           00214   call  BitDelay
+                    00215 
+0038                00216 SendNextBit:
+0038 1003           00217   bcf     STATUS,C
+0039 0CA0           00218   rrf     _TXReg,1    ; rotate TXReg
+                    00219 
+003A 1803           00220   btfsc   STATUS,C
+003B 283F           00221   goto  _setTX
+                    00222 
+003C                00223 _clearTX:
+003C 0000           00224   nop       ; to get equal set/clear times
+003D 1205           00225   bcf _TXPort,_TXPin
+003E 2841           00226   goto  _readyTX
+                    00227 
+003F                00228 _setTX:
+003F 1605           00229   bsf _TXPort,_TXPin
+0040 2841           00230   goto  _readyTX
+                    00231   
+0041                00232 _readyTX:
+0041 204E           00233   call    BitDelay    
+0042 0BA4           00234   decfsz  _BitCount,1   ; decrement bit counter (8..0)
+0043 2838           00235   goto    SendNextBit
+                    00236 
+0044 0000           00237   nop
+0045 0000           00238   nop
+0046 0000           00239   nop
+0047 0000           00240   nop
+0048 0000           00241   nop
+                    00242 
+0049 1605           00243   bsf     _TXPort,_TXPin    ; send stop bit
+004A 204E           00244   call    BitDelay    ; always 1 stop bit
+                    00245 
+004B 1986           00246   btfsc PORTB,3     ; send second stop bit?
+004C 204E           00247   call  BitDelay    ; yes
+                    00248 
+004D 0008           00249   return
+                    00250 
+                    00251 
+                    00252 
+004E                00253 BitDelay:
+004E 0821           00254   movf  _DelayConst,0   ; move baud delay constant to W
+004F 00A2           00255   movwf _DelayCntr    ; initialize delay counter
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  6
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00256 
+0050                00257 DelayLoop:
+0050 0BA2           00258   decfsz  _DelayCntr,1    ; decrement delay counter
+0051 2850           00259   goto  DelayLoop
+0052 0008           00260   return
+                    00261 
+                    00262 
+                    00263 ;
+                    00264 ; the array with the fixed transmission String.
+                    00265 ; Currently, we use the standard English and German demo strings,
+                    00266 ; "the quick brown fox jumps over the lazy dog"
+                    00267 ; "Victor jagt zw÷lf Boxk„mpfer ’ber den grožen Sylter Deich"
+                    00268 ;
+                    00269 ; If you know of other demo strings, please drop me an e-mail (see file header)
+                    00270 ;
+                    00271 
+                    00272 
+                    00273 
+0060                00274          org _CharTable
+                    00275 
+0060                00276 QuickBrownFoxTable:
+0060 0782           00277         addwf PCL,F
+0061 3420           00278         retlw ' ' 
+0062 3454           00279         retlw 'T'
+0063 3468           00280         retlw 'h'
+0064 3465           00281         retlw 'e'
+0065 3420           00282         retlw ' '
+0066 3471           00283         retlw 'q'
+0067 3475           00284         retlw 'u'
+0068 3469           00285         retlw 'i'
+0069 3463           00286         retlw 'c'
+006A 346B           00287         retlw 'k'
+006B 3420           00288         retlw ' '
+006C 3462           00289         retlw 'b'
+006D 3472           00290         retlw 'r'
+006E 346F           00291         retlw 'o'
+006F 3477           00292         retlw 'w'
+0070 346E           00293         retlw 'n'
+0071 3420           00294         retlw ' '
+0072 3466           00295         retlw 'f'
+0073 346F           00296         retlw 'o'
+0074 3478           00297         retlw 'x'
+0075 3420           00298         retlw ' '
+0076 346A           00299         retlw 'j'
+0077 3475           00300         retlw 'u'
+0078 346D           00301         retlw 'm'
+0079 3470           00302         retlw 'p'
+007A 3473           00303         retlw 's'
+007B 3420           00304         retlw ' '
+007C 346F           00305         retlw 'o'
+007D 3476           00306         retlw 'v'
+007E 3465           00307         retlw 'e'
+007F 3472           00308         retlw 'r'
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  7
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0080 3420           00309         retlw ' '
+0081 3474           00310         retlw 't'
+0082 3468           00311         retlw 'h'
+0083 3465           00312         retlw 'e'
+0084 3420           00313         retlw ' '
+0085 346C           00314         retlw 'l'
+0086 3461           00315         retlw 'a'
+0087 347A           00316         retlw 'z'
+0088 3479           00317         retlw 'y'
+0089 3420           00318         retlw ' '
+008A 3464           00319         retlw 'd'
+008B 346F           00320         retlw 'o'
+008C 3467           00321         retlw 'g'
+008D 342E           00322         retlw '.'
+008E 3420           00323         retlw ' '
+                    00324 
+                    00325 
+008F                00326 SyltTable:
+                    00327 ;        addwf PCL,F
+008F 3456           00328         retlw 'V'
+0090 3469           00329         retlw 'i'
+0091 3463           00330         retlw 'c'
+0092 3474           00331         retlw 't'
+0093 346F           00332         retlw 'o'
+0094 3472           00333         retlw 'r'
+0095 3420           00334         retlw ' '
+0096 346A           00335         retlw 'j'
+0097 3461           00336         retlw 'a'
+0098 3467           00337         retlw 'g'
+0099 3474           00338         retlw 't'
+009A 3420           00339         retlw ' '
+009B 347A           00340         retlw 'z'
+009C 3477           00341         retlw 'w'
+009D 34F6           00342         retlw 0xf6  ; ö
+009E 346C           00343         retlw 'l'
+009F 3466           00344         retlw 'f'
+00A0 3420           00345         retlw ' '
+00A1 3442           00346         retlw 'B'
+00A2 346F           00347         retlw 'o' 
+00A3 3478           00348         retlw 'x' 
+00A4 346B           00349         retlw 'k' 
+00A5 34E4           00350         retlw 0xe4  ; ä 
+00A6 346D           00351         retlw 'm' 
+00A7 3470           00352         retlw 'p' 
+00A8 3466           00353         retlw 'f' 
+00A9 3465           00354         retlw 'e' 
+00AA 3472           00355         retlw 'r' 
+00AB 3420           00356         retlw ' ' 
+00AC 34FC           00357         retlw 0xfc   ; ü
+00AD 3462           00358         retlw 'b'
+00AE 3465           00359         retlw 'e'
+00AF 3472           00360         retlw 'r'
+00B0 3420           00361         retlw ' ' 
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  8
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00B1 3464           00362         retlw 'd'
+00B2 3465           00363         retlw 'e'
+00B3 346E           00364         retlw 'n'
+00B4 3420           00365         retlw ' ' 
+00B5 3467           00366         retlw 'g'
+00B6 3472           00367         retlw 'r'
+00B7 346F           00368         retlw 'o'
+00B8 34DF           00369         retlw 0xdf   ; ß
+00B9 3465           00370         retlw 'e'
+00BA 346E           00371         retlw 'n' 
+00BB 3420           00372         retlw ' '
+00BC 3453           00373         retlw 'S'
+00BD 3479           00374         retlw 'y' 
+00BE 346C           00375         retlw 'l' 
+00BF 3474           00376         retlw 't' 
+00C0 3465           00377         retlw 'e'
+00C1 3472           00378         retlw 'r' 
+00C2 3420           00379         retlw ' '
+00C3 3444           00380         retlw 'D'
+00C4 3465           00381         retlw 'e'
+00C5 3469           00382         retlw 'i'
+00C6 3463           00383         retlw 'c'
+00C7 3468           00384         retlw 'h' 
+00C8 342E           00385         retlw '.'
+00C9 3420           00386         retlw ' ' 
+00CA 3400           00387         retlw 0
+                    00388 
+                    00389 
+                    00390   END
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE  9
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BaudDelayTable                    0000000B
+BitDelay                          0000004E
+C                                 00000000
+DC                                00000001
+DelayLoop                         00000050
+EEADR                             00000009
+EECON1                            00000088
+EECON2                            00000089
+EEDATA                            00000008
+EEIE                              00000006
+EEIF                              00000004
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+GetDesiredBaudRate                0000001C
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+InitPorts                         00000014
+Interrupt                         0000000A
+NOT_PD                            00000003
+NOT_RBPU                          00000007
+NOT_TO                            00000004
+OPTION_REG                        00000081
+PCL                               00000002
+PCLATH                            0000000A
+PORTA                             00000005
+PORTB                             00000006
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+QuickBrownFoxTable                00000060
+RBIE                              00000003
+RBIF                              00000000
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+STATUS                            00000003
+SendNextBit                       00000038
+SendNextChar                      00000024
+SendOneChar                       0000002D
+Start                             00000005
+SyltTable                         0000008F
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+TMR0                              00000001
+TRISA                             00000085
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE 10
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISB                             00000086
+TransmitCharLoop                  00000021
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_BitCount                         00000024
+_CP_OFF                           00003FFF
+_CP_ON                            00003FEF
+_CharPtr                          00000023
+_CharTable                        00000060
+_ClkIn                            003D0900
+_ClkOut                           000F4240
+_DataBits                         00000008
+_DelayCntr                        00000022
+_DelayConst                       00000021
+_HS_OSC                           00003FFE
+_IntVector                        00000004
+_LP_OSC                           00003FFC
+_PWRTE_OFF                        00003FF7
+_PWRTE_ON                         00003FFF
+_RC_OSC                           00003FFF
+_ResetVector                      00000000
+_StopBits                         00000001
+_TXPin                            00000004
+_TXPort                           00000005
+_TXReg                            00000020
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FFD
+__16C84                           00000001
+_clearTX                          0000003C
+_delay00300                       00000452
+_delay00600                       00000227
+_delay01200                       00000111
+_delay02400                       00000086
+_delay04800                       00000041
+_delay09600                       0000001E
+_delay19200                       0000000D
+_delay38400                       00000003
+_readyTX                          00000041
+_setTX                            0000003F
+MPASM 01.50 Released              FOX.ASM   9-3-1999  10:47:52         PAGE 11
+Quick-Brown-Fox: RS232 Tester: Half-Duplex
+based on Microchip AN510 and AN555
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : X---XXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXX------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXX----- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   187
+Program Memory Words Free:   837
+
+
+Errors   :     0
+Warnings :     3 reported,     0 suppressed
+Messages :     4 reported,     0 suppressed
+
+

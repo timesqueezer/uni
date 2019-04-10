@@ -1,0 +1,47 @@
+# hades.models.Design file
+#  
+[name] Lektion_3
+[components]
+hades.models.ruge.DelayNode i5 4800 19200 @N 1001 0.3
+hades.models.ruge.DelayNode i4 0 19200 @N 1001 0.3
+hades.models.ruge.DelayNode i3 0 12000 @N 1001 0.3
+hades.models.ruge.DelayNode i2 0 6000 @N 1001 0.3
+hades.models.ruge.DelayNode i1 0 0 @N 1001 0.3
+hades.models.ruge.Register Z 10800 13200 @N 1001 0 0.5
+hades.models.ruge.Register Y 7200 13200 @N 1001 0 0.5
+hades.models.ruge.Register X 3600 13200 @N 1001 0 0.5
+hades.models.ruge.Mux MUX 7200 6000 @N 1001 0.6
+hades.models.ruge.DelayNode i13 4800 8400 @N 1001 0.3
+hades.models.ruge.Constant C 10800 19200 @N 1001 0
+hades.models.ruge.DelayNode i12 6000 0 @N 1001 0.3
+hades.models.ruge.DelayNode i11 8400 19200 @N 1001 0.3
+hades.models.io.Ipin i10 15600 9000 @X 1001 U
+hades.models.ruge.Adder ADD 3600 1200 @N 1001 0.6
+hades.models.io.Ipin i9 10800 16800 @N 1001 U
+hades.models.io.Ipin i8 7200 16800 @N 1001 U
+hades.models.io.Ipin i7 3600 16800 @N 1001 U
+hades.models.io.Ipin i6 16800 15900 @X 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 4 i6 Y X CLK Z CLK Y CLK 6 2 5400 15600 5400 15900 2 5400 15900 9000 15900 2 9000 15900 12600 15900 2 12600 15900 12600 15600 2 9000 15900 9000 15600 2 12600 15900 16800 15900 2 9000 15900 12600 15900 
+hades.signals.SignalStdLogic1164 n8 2 i7 Y X ENA 2 2 3600 16800 4200 16800 2 4200 16800 4200 15600 0 
+hades.signals.SignalStdLogic1164 n7 2 i8 Y Y ENA 2 2 7200 16800 7800 16800 2 7800 16800 7800 15600 0 
+hades.signals.SignalStdLogic1164 n6 2 i9 Y Z ENA 2 2 10800 16800 11400 16800 2 11400 16800 11400 15600 0 
+hades.models.ruge.IntegerSignal n5 2 i12 C ADD SUM 1 2 6000 150 6000 1200 0 
+hades.models.ruge.IntegerSignal n4 2 MUX Y ADD B 3 2 9600 6000 9600 4800 2 9600 4800 7200 4800 2 7200 4800 7200 3600 0 
+hades.models.ruge.IntegerSignal n3 2 i13 A ADD A 1 2 4800 3600 4800 8250 0 
+hades.models.ruge.IntegerSignal n2 2 Z Q MUX A0 3 2 10800 8400 10800 12000 2 10800 12000 12000 12000 2 12000 12000 12000 13200 0 
+hades.models.ruge.IntegerSignal n1 2 Y Q MUX A1 1 2 8400 13200 8400 8400 0 
+hades.models.ruge.IntegerSignal n0 2 C Y Z D 1 2 12000 19200 12000 15600 0 
+hades.models.ruge.IntegerSignal n19 2 i13 C X Q 1 2 4800 8550 4800 13200 0 
+hades.models.ruge.IntegerSignal n18 2 i11 A Y D 1 2 8400 19050 8400 15600 0 
+hades.models.ruge.IntegerSignal n17 2 i5 D i11 B 1 2 4950 19200 8250 19200 0 
+hades.models.ruge.IntegerSignal n16 2 i5 A X D 1 2 4800 19050 4800 15600 0 
+hades.models.ruge.IntegerSignal n15 2 i4 D i5 B 1 2 150 19200 4650 19200 0 
+hades.models.ruge.IntegerSignal n14 2 i3 C i4 A 1 2 0 12150 0 19050 0 
+hades.models.ruge.IntegerSignal n13 2 i3 A i2 C 1 2 0 11850 0 6150 0 
+hades.models.ruge.IntegerSignal n12 2 i1 C i2 A 1 2 0 150 0 5850 0 
+hades.models.ruge.IntegerSignal n11 2 i12 B i1 D 1 2 5850 0 150 0 0 
+hades.signals.SignalStdLogic1164 n10 2 i10 Y MUX S 2 2 15600 9000 11400 9000 2 11400 8400 11400 9000 0 
+[end signals]
+[end]

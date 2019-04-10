@@ -1,0 +1,27 @@
+# hades.models.Design file
+#  
+[name] Nightrider
+[components]
+hades.models.io.LED LED7 21600 8400 @N 1001 0
+hades.models.io.LED LED6 21600 9600 @N 1001 0
+hades.models.io.LED LED5 21600 10800 @N 1001 0
+hades.models.io.LED LED4 21600 12000 @N 1001 0
+hades.models.io.LED LED3 21600 13200 @N 1001 0
+hades.models.io.LED LED2 21600 14400 @N 1001 0
+hades.models.io.LED LED1 21600 15600 @N 1001 0
+hades.models.io.LED LED0 21600 16800 @N 1001 0
+hades.models.io.PowerOnReset reset 4800 3000 @N 1001 5.0E-4 5.0E-4
+hades.models.pic.FastPic16F84 cpu 12000 6600 @N 1001 1.0E-6 /hades/examples/pic16c84/walk.hex
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 cpu B0 LED0 A 3 2 12000 10200 9000 10200 2 9000 10200 9000 16800 2 9000 16800 21600 16800 0 
+hades.signals.SignalStdLogic1164 n8 2 cpu B1 LED1 A 3 2 21600 15600 9600 15600 2 9600 15600 9600 10800 2 9600 10800 12000 10800 0 
+hades.signals.SignalStdLogic1164 n7 2 cpu B2 LED2 A 3 2 12000 11400 10200 11400 2 10200 11400 10200 14400 2 10200 14400 21600 14400 0 
+hades.signals.SignalStdLogic1164 n6 2 cpu B3 LED3 A 3 2 12000 12000 10800 12000 2 10800 12000 10800 13200 2 10800 13200 21600 13200 0 
+hades.signals.SignalStdLogic1164 n5 2 cpu B5 LED5 A 3 2 15000 11400 21000 11400 2 21000 11400 21000 10800 2 21000 10800 21600 10800 0 
+hades.signals.SignalStdLogic1164 n4 2 cpu B4 LED4 A 1 2 21600 12000 15000 12000 0 
+hades.signals.SignalStdLogic1164 n3 2 cpu B6 LED6 A 4 2 19200 10800 15000 10800 2 19200 10800 20400 10800 2 20400 10800 20400 9600 2 20400 9600 21600 9600 0 
+hades.signals.SignalStdLogic1164 n2 2 cpu B7 LED7 A 4 2 15000 10200 19200 10200 2 19200 10200 19800 10200 2 19800 10200 19800 8400 2 19800 8400 21600 8400 0 
+hades.signals.SignalStdLogic1164 n1 2 reset nreset cpu /MCLR 3 2 12000 9000 5400 9000 2 5400 9000 5400 3000 2 5400 3000 4800 3000 0 
+[end signals]
+[end]

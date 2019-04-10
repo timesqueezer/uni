@@ -1,0 +1,24 @@
+# hades.models.Design file
+#  
+[name] DemoDesign
+[components]
+hades.models.io.LED i5 13200 5400 1001 0
+hades.models.gates.Nand2 i4 7200 10200 1001 5.0E-9
+hades.models.gates.Xnor2 i3 7200 4200 1001 1.0E-8
+hades.models.io.Ipin i2 4800 10800 1001 
+hades.models.io.Ipin i1 4800 6000 1001 
+hades.models.io.Ipin i0 4800 4800 1001 
+hades.models.io.Ipin i8 4800 16200 1001 
+hades.models.gates.Nand2 i7 13800 10800 1001 5.0E-9
+hades.models.io.LED i6 18600 12000 1001 0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n6 2 i8 Y i7 B 1 4 4800 16200 12600 16200 12600 12600 13800 12600 0 
+hades.signals.SignalStdLogic1164 n5 3 i4 Y i4 B i7 A 2 6 10800 11400 11400 11400 11400 13800 6000 13800 6000 12000 7200 12000 2 11400 11400 13800 11400 1 11400 11400 
+hades.signals.SignalStdLogic1164 n4 2 i7 Y i6 A 1 2 17400 12000 18600 12000 0 
+hades.signals.SignalStdLogic1164 n3 2 i2 Y i4 A 1 2 4800 10800 7200 10800 0 
+hades.signals.SignalStdLogic1164 n2 2 i0 Y i3 A 1 2 4800 4800 7200 4800 0 
+hades.signals.SignalStdLogic1164 n1 2 i1 Y i3 B 1 2 4800 6000 7200 6000 0 
+hades.signals.SignalStdLogic1164 n0 2 i3 Y i5 A 1 2 10800 5400 13200 5400 0 
+[end signals]
+[end]

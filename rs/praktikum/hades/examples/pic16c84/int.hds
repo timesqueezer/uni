@@ -1,0 +1,15 @@
+# hades.models.Design file
+#  
+[name] Interrupt-Test
+[components]
+hades.models.io.ClockGen i3 4800 600 @N 1001 0.1 0.5 0.0
+hades.models.io.Ipin i2 2400 7200 @N 1001 U
+hades.models.io.Ipin i1 2400 6000 @N 1001 U
+hades.models.pic.Pic16C84 i0 4200 3600 @N 1001 /hades/examples/pic16c84/int.rom
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n2 2 i2 Y i0 B0 1 2 2400 7200 4200 7200 0 
+hades.signals.SignalStdLogic1164 n1 2 i3 clk i0 CLKIN 3 2 7200 1800 7800 1800 2 7800 1800 7800 5400 2 7800 5400 7200 5400 0 
+hades.signals.SignalStdLogic1164 n0 2 i1 Y i0 /MCLR 1 2 2400 6000 4200 6000 0 
+[end signals]
+[end]

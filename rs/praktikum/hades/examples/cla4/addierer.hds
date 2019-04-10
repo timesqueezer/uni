@@ -1,0 +1,28 @@
+# hades.models.Design file
+#  
+[name] Addierer
+[components]
+hades.models.gates.Xor2 i5 8400 11400 1001
+hades.models.gates.Xor2 i4 3600 12000 1001
+hades.models.gates.Nand3 i3 8400 6000 1001
+hades.models.gates.Nand2 i2 3600 6000 1001
+hades.models.gates.Nand2 i1 3600 8400 1001
+hades.models.gates.Nand2 i0 3600 3600 1001
+hades.models.io.Opin ue_out 13200 7200 1001
+hades.models.io.Opin z 13200 12600 1001
+hades.models.io.Ipin y 1200 12600 1001 
+hades.models.io.Ipin x 1200 11400 1001 
+hades.models.io.Ipin ue_in 1200 13800 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n8 4 ue_in Y i4 B i1 A i2 B 3 3 1200 13800 3000 13800 3600 13800 3 3000 13800 3000 9000 3600 9000 3 3000 9000 3000 7800 3600 7800 2 3000 13800 3000 9000 
+hades.signals.SignalStdLogic1164 n7 4 y Y i4 A i1 B i0 B 3 3 1200 12600 2400 12600 3600 12600 3 2400 12600 2400 10200 3600 10200 3 2400 10200 2400 5400 3600 5400 2 2400 12600 2400 10200 
+hades.signals.SignalStdLogic1164 n6 4 x Y i5 A i2 A i0 A 3 5 1200 11400 1800 11400 7800 11400 7800 12000 8400 12000 3 1800 11400 1800 6600 3600 6600 3 1800 6600 1800 4200 3600 4200 2 1800 11400 1800 6600 
+hades.signals.SignalStdLogic1164 n5 2 i3 Y ue_out A 1 2 12000 7200 13200 7200 0 
+hades.signals.SignalStdLogic1164 n4 2 i5 Y z A 1 2 12000 12600 13200 12600 0 
+hades.signals.SignalStdLogic1164 n3 2 i4 Y i5 B 1 2 7200 13200 8400 13200 0 
+hades.signals.SignalStdLogic1164 n2 2 i1 Y i3 C 1 4 7200 9600 7800 9600 7800 7800 8400 7800 0 
+hades.signals.SignalStdLogic1164 n1 2 i2 Y i3 B 1 2 7200 7200 8400 7200 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y i3 A 1 4 7200 4800 7800 4800 7800 6600 8400 6600 0 
+[end signals]
+[end]

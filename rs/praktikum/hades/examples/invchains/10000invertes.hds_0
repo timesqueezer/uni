@@ -1,0 +1,23 @@
+# hades.models.Design file
+#  
+[name] 10000inverters.hds
+[components]
+hades.models.io.Opin i1 24000 21600 @N 1001
+hades.models.io.Ipin i0 4800 7200 @N 1001 U
+hades.models.Design 1000inverters 6000 6600 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters6 9600 17400 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters5 15600 13800 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters4 8400 13800 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters3 14400 10200 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters2 7200 10200 @N 1001 /hades/examples/invchains/1000inverters.hds
+hades.models.Design 1000inverters1 13200 6600 @N 1001 /hades/examples/invchains/1000inverters.hds
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n5 2 1000inverters4 i1 1000inverters5 i0 1 2 14400 14400 15600 14400 0 
+hades.signals.SignalStdLogic1164 n4 2 1000inverters3 i1 1000inverters4 i0 5 2 20400 10800 21000 10800 2 21000 10800 21000 12000 2 21000 12000 7800 13200 2 7800 13200 7800 14400 2 7800 14400 8400 14400 0 
+hades.signals.SignalStdLogic1164 n3 2 1000inverters2 i1 1000inverters3 i0 1 2 13200 10800 14400 10800 0 
+hades.signals.SignalStdLogic1164 n2 2 1000inverters1 i1 1000inverters2 i0 5 2 19200 7200 19800 7200 2 19800 7200 19800 8400 2 19800 8400 6600 9600 2 6600 9600 6600 10800 2 6600 10800 7200 10800 0 
+hades.signals.SignalStdLogic1164 n1 2 1000inverters i1 1000inverters1 i0 1 2 12000 7200 13200 7200 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y 1000inverters i0 1 2 4800 7200 6000 7200 0 
+[end signals]
+[end]

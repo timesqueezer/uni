@@ -1,0 +1,263 @@
+MPASM 01.30.01 Intermediate    DEMO84.ASM   6-4-1996  15:08:03         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001         list p=16c84
+                    00002 ;
+                    00003 ;  This program demonstrates the PIC16C84.
+                    00004 ;  To demo the EEPROM capability of the PIC16C84, then
+                    00005 ;  a value is incrementally written and verified in all 
+                    00006 ;  64 locations of the EEPROM. If an error occurs at any location,
+                    00007 ;  then all leds on portb will blink at a 1 sec rate.
+                    00008 ;
+                    00009         #include <P16C84.INC>
+                    00001         LIST
+                    00002 ; P16C84.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
+                    00134         LIST
+                    00010 ;
+  00000010          00011 TIME      equ     0x10
+  00000020          00012 GPFLAG    equ     0x20            ;Define flag register
+  00000000          00013 EEPERROR  equ     0               ;GPFLAG,0
+                    00014 ;
+0000                00015         org     0
+0000 2810           00016         goto    Start
+                    00017 ;
+0004                00018         org     4
+0004 2855           00019         goto    ServiceRtcc
+                    00020 ;
+0010                00021         org     10
+0010                00022 Start
+0010 01A0           00023         clrf    GPFLAG          ;clr all flags
+0011 3000           00024         movlw   B'00000000'     ;make port b outputs
+0012 0086           00025         movwf   PORTB
+0013 1683           00026         bsf     STATUS, RP0
+Message[302]: Argument out of range.  Least significant bits used.
+0014 0186           00027         clrf    TRISB           ;       /
+0015 1283           00028         bcf     STATUS, RP0
+0016                00029 Next
+0016 201C           00030         call    WriteAll        ;write to all locations
+0017 2034           00031         call    CheckAll        ;verify all locations
+0018 1820           00032         btfsc   GPFLAG,EEPERROR ;no error then skip
+0019 2846           00033         goto    BlinkLeds       ;else blink leds.
+001A 0A86           00034         incf    PORTB, F        ;inc value in port b
+001B 2816           00035         goto    Next
+                    00036 ;
+001C                00037 WriteAll
+001C 0189           00038         clrf    EEADR           ;start at addr = 0
+001D 0A06           00039         incf    PORTB,W         ;read current value+1
+001E 0088           00040         movwf   EEDATA          ;ld. data reg.
+001F 1683           00041         bsf     STATUS,RP0      ;select pg 1
+Message[302]: Argument out of range.  Least significant bits used.
+0020 1508           00042         bsf     EECON1,WREN     ;enable write operation
+0021 1283           00043         bcf     STATUS,RP0      ;select pg 0
+0022                00044 WA1
+0022 202A           00045         call    WriteOne        ;write to a location
+0023 0A89           00046         incf    EEADR, F        ;inc address
+0024 1F09           00047         btfss   EEADR,6         ;all 64 done?
+0025 2822           00048         goto    WA1             ;no then do next
+MPASM 01.30.01 Intermediate    DEMO84.ASM   6-4-1996  15:08:03         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026 1683           00049         bsf     STATUS,RP0      ;pg 1
+Message[302]: Argument out of range.  Least significant bits used.
+0027 1108           00050         bcf     EECON1,WREN     ;disable write
+0028 1283           00051         bcf     STATUS,RP0      ;pg 0
+0029 0008           00052         return
+                    00053 ;
+002A                00054 WriteOne
+002A 1683           00055         bsf     STATUS,RP0      ;page 1
+002B 3055           00056         movlw   0x55            ;do write seq.
+Message[302]: Argument out of range.  Least significant bits used.
+002C 0089           00057         movwf   EECON2          ;       /
+002D 30AA           00058         movlw   0xaa            ;      / 
+Message[302]: Argument out of range.  Least significant bits used.
+002E 0089           00059         movwf   EECON2          ;     /  
+Message[302]: Argument out of range.  Least significant bits used.
+002F 1488           00060         bsf     EECON1,WR       ;initiate write
+0030                00061 WO1     
+Message[302]: Argument out of range.  Least significant bits used.
+0030 1888           00062         btfsc   EECON1,WR       ;write complete?
+0031 2830           00063         goto    WO1             ;no then keep checking
+0032 1283           00064         bcf     STATUS,RP0      ;pg 0
+0033 0008           00065         return
+                    00066 ;
+0034                00067 CheckAll
+0034 0189           00068         clrf    EEADR           ;start at addr = 0
+0035 0A06           00069         incf    PORTB,W         ;ld. data to inspect
+0036                00070 CA1
+0036 203D           00071         call    CheckOne        ;check location
+0037 1820           00072         btfsc   GPFLAG,EEPERROR ;any error?
+0038 0008           00073         return                  ;yes then quit
+0039 0A89           00074         incf    EEADR, F        ;inc address
+003A 1F09           00075         btfss   EEADR,6         ;all 64 checked?
+003B 2836           00076         goto    CA1             ;no then do next
+003C 0008           00077         return
+                    00078 ;
+003D                00079 CheckOne
+003D 1683           00080         bsf     STATUS,RP0      ;pg 1
+Message[302]: Argument out of range.  Least significant bits used.
+003E 1408           00081         bsf     EECON1,RD       ;do a read
+003F                00082 CO1
+Message[302]: Argument out of range.  Least significant bits used.
+003F 1808           00083         btfsc   EECON1,RD       ;rd done?
+0040 283F           00084         goto    CO1             ;no then loop
+0041 1283           00085         bcf     STATUS,RP0      ;pg 0
+0042 0688           00086         xorwf   EEDATA, F       ;compare?
+0043 1D03           00087         btfss   STATUS,Z        ;same then skip
+0044 1420           00088         bsf     GPFLAG,EEPERROR ;set error flag
+0045 0008           00089         return
+                    00090 ;
+0046                00091 BlinkLeds
+0046 204B           00092         call    InitRtcc
+0047 0186           00093         clrf    PORTB           ;turn off leds
+0048                00094 BL1
+MPASM 01.30.01 Intermediate    DEMO84.ASM   6-4-1996  15:08:03         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0048 205A           00095         call    SecondOver      ;wait for 1/2 second
+0049 0986           00096         comf    PORTB, F        ;toggle leds
+004A 2848           00097         goto    BL1
+                    00098 ;
+004B                00099 InitRtcc
+004B 1683           00100         bsf     STATUS, RP0
+004C 3087           00101         movlw   B'10000111'     ;rtcc inc = tcylc/256
+Message[302]: Argument out of range.  Least significant bits used.
+004D 0081           00102         movwf   OPTION_REG      ;       /
+004E 1283           00103         bcf     STATUS, RP0
+004F 0181           00104         clrf    TMR0            ;start time
+0050 30A0           00105         movlw   B'10100000'     ;enable interrupts
+0051 008B           00106         movwf   INTCON          ;       /
+0052 3008           00107         movlw   .8              ;initialize time
+0053 0090           00108         movwf   TIME
+0054 0008           00109         return
+                    00110 ;
+0055                00111 ServiceRtcc
+0055 190B           00112         btfsc   INTCON,T0IF     ;rtcc interrupt?
+0056 0390           00113         decf    TIME, F         ;yes then dec time
+0057 018B           00114         clrf    INTCON          ;clr all interrupts
+0058 168B           00115         bsf     INTCON,T0IE     ;enable RTIE
+0059 0009           00116         retfie                  ;not zero then return
+                    00117 ;
+005A                00118 SecondOver
+005A 0810           00119         movf    TIME,W          ;check if time = 0
+005B 1D03           00120         btfss   STATUS,Z        ;       /
+005C 285A           00121         goto    SecondOver      ;no then loop
+005D 3008           00122         movlw   .8              ;load for 1/2 second
+005E 0090           00123         movwf   TIME
+005F 0008           00124         return                  
+                    00125 
+                    00126         end
+MPASM 01.30.01 Intermediate    DEMO84.ASM   6-4-1996  15:08:03         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BL1                               00000048
+BlinkLeds                         00000046
+C                                 00000000
+CA1                               00000036
+CO1                               0000003F
+CheckAll                          00000034
+CheckOne                          0000003D
+DC                                00000001
+EEADR                             00000009
+EECON1                            00000088
+EECON2                            00000089
+EEDATA                            00000008
+EEIE                              00000006
+EEIF                              00000004
+EEPERROR                          00000000
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+GPFLAG                            00000020
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+InitRtcc                          0000004B
+NOT_PD                            00000003
+NOT_RBPU                          00000007
+NOT_TO                            00000004
+Next                              00000016
+OPTION_REG                        00000081
+PCL                               00000002
+PCLATH                            0000000A
+PORTA                             00000005
+PORTB                             00000006
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RBIE                              00000003
+RBIF                              00000000
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+STATUS                            00000003
+SecondOver                        0000005A
+ServiceRtcc                       00000055
+Start                             00000010
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+TIME                              00000010
+MPASM 01.30.01 Intermediate    DEMO84.ASM   6-4-1996  15:08:03         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR0                              00000001
+TRISA                             00000085
+TRISB                             00000086
+W                                 00000000
+WA1                               00000022
+WO1                               00000030
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WriteAll                          0000001C
+WriteOne                          0000002A
+Z                                 00000002
+_CP_OFF                           00003FFF
+_CP_ON                            00003FEF
+_HS_OSC                           00003FFE
+_LP_OSC                           00003FFC
+_PWRTE_OFF                        00003FF7
+_PWRTE_ON                         00003FFF
+_RC_OSC                           00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FFD
+__16C84                           00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : X---X----------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    82
+Program Memory Words Free:   942
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :    10 reported,     0 suppressed
+
+

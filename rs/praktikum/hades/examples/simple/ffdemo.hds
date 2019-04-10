@@ -1,0 +1,38 @@
+# hades.models.Design file
+#  
+[name] FlipFlop_Demo
+[components]
+hades.models.io.Opin output_4 15600 12000 1001
+hades.models.io.Ipin i5 3600 3000 1001 
+hades.models.io.Opin output_3 15600 7200 1001
+hades.models.io.Ipin i4 3600 1800 1001 
+hades.models.io.Opin output_2 15600 6000 1001
+hades.models.flipflops.Dffr i3 9600 14400 1001
+hades.models.io.Opin output_1 15600 3000 1001
+hades.models.flipflops.Dff i2 9600 11400 1001
+hades.models.io.Opin output_0 15600 1800 1001
+hades.models.flipflops.Latchr i1 9600 4200 1001
+hades.models.flipflops.Latch i0 9600 1200 1001
+hades.models.io.Opin output_7 15600 17400 1001
+hades.models.io.Ipin i8 2400 12000 1001 
+hades.models.io.Opin output_6 15600 16200 1001
+hades.models.gates.Tri i7 3000 8400 1001 5.0E-9
+hades.models.io.Opin output_5 15600 13200 1001
+hades.models.io.Ipin i6 2400 9600 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i8 Y i7 S 1 3 2400 12000 4200 12000 4200 10800 0 
+hades.signals.SignalStdLogic1164 n8 2 i6 Y i7 A 1 2 2400 9600 3000 9600 0 
+hades.signals.SignalStdLogic1164 n7 2 i0 Q output_0 A 1 2 15600 1800 13200 1800 0 
+hades.signals.SignalStdLogic1164 n6 2 i0 NQ output_1 A 1 2 13200 3000 15600 3000 0 
+hades.signals.SignalStdLogic1164 n5 2 i1 Q output_2 A 1 2 15600 6000 13200 6000 0 
+hades.signals.SignalStdLogic1164 n4 2 i1 NQ output_3 A 1 2 13200 7200 15600 7200 0 
+hades.signals.SignalStdLogic1164 n3 2 i2 Q output_4 A 1 2 15600 12000 13200 12000 0 
+hades.signals.SignalStdLogic1164 n2 2 i2 NQ output_5 A 1 2 13200 13200 15600 13200 0 
+hades.signals.SignalStdLogic1164 n1 2 i3 NQ output_7 A 1 2 15600 17400 13200 17400 0 
+hades.signals.SignalStdLogic1164 n0 2 i3 Q output_6 A 1 2 13200 16200 15600 16200 0 
+hades.signals.SignalStdLogic1164 n12 3 i7 Y i1 NR i3 NR 2 4 5400 9600 6000 9600 6000 8400 9600 8400 3 6000 9600 6000 18600 9600 18600 1 6000 9600 
+hades.signals.SignalStdLogic1164 n11 5 i4 Y i0 D i1 D i2 D i3 D 4 3 3600 1800 7800 1800 9600 1800 3 7800 1800 7800 6000 9600 6000 3 7800 6000 7800 12000 9600 12000 3 7800 12000 7800 16200 9600 16200 3 7800 1800 7800 6000 7800 12000 
+hades.signals.SignalStdLogic1164 n10 5 i5 Y i0 C i1 C i2 C i3 C 4 3 3600 3000 7200 3000 9600 3000 3 7200 3000 7200 7200 9600 7200 3 7200 7200 7200 13200 9600 13200 3 7200 13200 7200 17400 9600 17400 3 7200 3000 7200 7200 7200 13200 
+[end signals]
+[end]

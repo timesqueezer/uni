@@ -1,0 +1,31 @@
+# hades.models.Design file
+#  
+[name] CarrySave
+[components]
+hades.models.gates.Nand2 i5 13200 8400 1001
+hades.models.gates.Nand2 i4 7200 6600 1001
+hades.models.gates.Nand2 i3 19200 7200 1001
+hades.models.gates.Xor2 i2 7200 12000 1001
+hades.models.gates.Xor2 i1 13200 11400 1001
+hades.models.flipflops.Dff i0 25200 7800 1001
+hades.models.io.PulseSwitch takt 24600 9600 1001 
+hades.models.io.Opin ue_out 30000 8400 1001
+hades.models.io.LED i12 23400 7800 1001 0
+hades.models.io.Opin z 18600 12600 1001
+hades.models.io.Ipin y 4800 13800 1001 
+hades.models.io.Ipin x 4800 12600 1001 
+hades.models.io.Ipin ue_in 4800 10200 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i0 Q ue_out A 1 2 28800 8400 30000 8400 0 
+hades.signals.SignalStdLogic1164 n8 2 i1 Y z A 1 2 16800 12600 18600 12600 0 
+hades.signals.SignalStdLogic1164 n7 3 i3 Y i0 D i12 A 2 3 22800 8400 23400 8400 25200 8400 2 23400 8400 23400 7800 1 23400 8400 
+hades.signals.SignalStdLogic1164 n6 2 i5 Y i3 B 1 4 16800 9600 18000 9600 18000 9000 19200 9000 0 
+hades.signals.SignalStdLogic1164 n5 2 i4 Y i3 A 1 2 10800 7800 19200 7800 0 
+hades.signals.SignalStdLogic1164 n4 2 takt Y i0 C 1 2 24600 9600 25200 9600 0 
+hades.signals.SignalStdLogic1164 n3 3 ue_in Y i5 B i1 A 2 3 4800 10200 12600 10200 13200 10200 3 12600 10200 12600 12000 13200 12000 1 12600 10200 
+hades.signals.SignalStdLogic1164 n2 3 i2 Y i1 B i5 A 2 3 10800 13200 11400 13200 13200 13200 3 11400 13200 11400 9000 13200 9000 1 11400 13200 
+hades.signals.SignalStdLogic1164 n1 3 y Y i2 B i4 B 2 3 4800 13800 6000 13800 7200 13800 3 6000 13800 6000 8400 7200 8400 1 6000 13800 
+hades.signals.SignalStdLogic1164 n0 3 x Y i2 A i4 A 2 3 4800 12600 5400 12600 7200 12600 3 5400 12600 5400 7200 7200 7200 1 5400 12600 
+[end signals]
+[end]

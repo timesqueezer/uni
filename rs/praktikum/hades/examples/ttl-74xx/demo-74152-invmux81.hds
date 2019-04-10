@@ -1,0 +1,31 @@
+# hades.models.Design file
+#  
+[name] demo_74152_invmux81
+[components]
+hades.models.io.Ipin i5 1200 6600 @N 1001 U
+hades.models.io.Ipin i4 1200 7800 @N 1001 U
+hades.models.io.Ipin i3 1200 9000 @N 1001 U
+hades.models.io.Opin i1 2400 10200 @N 1001 5.0E-9
+hades.models.Design 74152_mux81 6600 3000 @N 1001 \u002fhades\u002fmodels\u002fttl74\u002fSN74152_pinout\u002ehds
+hades.models.io.Ipin i10 1200 600 @N 1001 U
+hades.models.io.HexSwitch HexSwitch 1200 15000 @N 1001
+hades.models.io.Ipin i9 1200 1800 @N 1001 U
+hades.models.io.Ipin i8 1200 3000 @N 1001 U
+hades.models.io.Ipin i7 1200 4200 @N 1001 U
+hades.models.io.Ipin i6 1200 5400 @N 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n8 2 i6 Y 74152_mux81 D3 1 2 6600 5400 1200 5400 0 
+hades.signals.SignalStdLogic1164 n7 2 i5 Y 74152_mux81 D2 1 2 1200 6600 6600 6600 0 
+hades.signals.SignalStdLogic1164 n6 2 i4 Y 74152_mux81 D1 1 2 6600 7800 1200 7800 0 
+hades.signals.SignalStdLogic1164 n5 2 i3 Y 74152_mux81 D0 1 2 1200 9000 6600 9000 0 
+hades.signals.SignalStdLogic1164 n4 2 HexSwitch Y2 74152_mux81 C 4 2 4200 16200 12000 16200 2 12000 16200 12000 13800 2 12000 13800 12000 11400 2 12000 11400 10200 11400 0 
+hades.signals.SignalStdLogic1164 n3 2 HexSwitch Y1 74152_mux81 B 4 2 12600 12600 12600 16800 2 12600 16800 4200 16800 2 12600 12600 12600 10200 2 12600 10200 10200 10200 0 
+hades.signals.SignalStdLogic1164 n2 2 HexSwitch Y0 74152_mux81 A 4 2 4200 17400 13200 17400 2 13200 17400 13200 11400 2 13200 11400 13200 9000 2 13200 9000 10200 9000 0 
+hades.signals.SignalStdLogic1164 n1 2 i9 Y 74152_mux81 D6 4 2 10200 6600 13200 6600 2 13200 6600 13200 1800 2 4200 1800 13200 1800 2 4200 1800 1200 1800 0 
+hades.signals.SignalStdLogic1164 n0 2 i7 Y 74152_mux81 D4 1 2 1200 4200 6600 4200 0 
+hades.signals.SignalStdLogic1164 n13 2 74152_mux81 W i1 A 1 2 6600 10200 2400 10200 0 
+hades.signals.SignalStdLogic1164 n12 2 i10 Y 74152_mux81 D7 6 2 13800 1200 4200 1200 2 4200 1200 3600 1200 2 3600 1200 3600 600 2 3600 600 1200 600 2 13800 1200 13800 7800 2 13800 7800 10200 7800 0 
+hades.signals.SignalStdLogic1164 n10 2 i8 Y 74152_mux81 D5 6 2 12600 2400 4200 2400 2 4200 2400 3600 2400 2 3600 2400 3600 3000 2 3600 3000 1200 3000 2 12600 2400 12600 5400 2 12600 5400 10200 5400 0 
+[end signals]
+[end]

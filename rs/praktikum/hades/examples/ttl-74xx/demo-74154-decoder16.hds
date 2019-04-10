@@ -1,0 +1,50 @@
+# hades.models.Design file
+#  
+[name] demo_74154_decoder_1:16
+[components]
+hades.models.io.Opin i5 10800 16800 @N 1001 5.0E-9
+hades.models.io.Opin i4 10800 15600 @N 1001 5.0E-9
+hades.models.io.Opin i3 10800 14400 @N 1001 5.0E-9
+hades.models.io.Opin i2 10800 13200 @N 1001 5.0E-9
+hades.models.io.Ipin i1 12000 12000 @X 1001 U
+hades.models.io.Ipin i0 12000 10800 @X 1001 U
+hades.models.Design 74154_decoder_1:16 4800 3600 @N 1001 \u002fhades\u002fmodels\u002fttl74\u002fSN74154_pinout\u002ehds
+hades.models.io.Opin i18 2400 4800 @X 1001 5.0E-9
+hades.models.io.Opin i17 2400 6000 @X 1001 5.0E-9
+hades.models.io.Opin i16 2400 7200 @X 1001 5.0E-9
+hades.models.io.Opin i15 2400 8400 @X 1001 5.0E-9
+hades.models.io.Opin i14 2400 9600 @X 1001 5.0E-9
+hades.models.io.Opin i13 2400 10800 @X 1001 5.0E-9
+hades.models.io.Opin i12 2400 12000 @X 1001 5.0E-9
+hades.models.io.Opin i11 2400 13200 @X 1001 5.0E-9
+hades.models.io.Opin i10 2400 14400 @X 1001 5.0E-9
+hades.models.io.HexSwitch HexSwitch 10800 -1200 @N 1001
+hades.models.io.Opin i9 2400 15600 @X 1001 5.0E-9
+hades.models.io.Opin i8 2400 16800 @X 1001 5.0E-9
+hades.models.io.Opin i6 10800 18000 @N 1001 5.0E-9
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 74154_decoder_1:16 Y14 i3 A 1 2 10800 14400 9600 14400 0 
+hades.signals.SignalStdLogic1164 n8 2 74154_decoder_1:16 Y13 i4 A 1 2 9600 15600 10800 15600 0 
+hades.signals.SignalStdLogic1164 n7 2 74154_decoder_1:16 Y12 i5 A 1 2 10800 16800 9600 16800 0 
+hades.signals.SignalStdLogic1164 n6 2 74154_decoder_1:16 Y11 i6 A 1 2 9600 18000 10800 18000 0 
+hades.signals.SignalStdLogic1164 n5 2 i1 Y 74154_decoder_1:16 G1/ 1 2 9600 12000 12000 12000 0 
+hades.signals.SignalStdLogic1164 n4 2 i0 Y 74154_decoder_1:16 G2/ 1 2 12000 10800 9600 10800 0 
+hades.signals.SignalStdLogic1164 n3 2 HexSwitch Y3 74154_decoder_1:16 D 3 2 9600 9600 17400 9600 2 17400 9600 17400 -600 2 17400 -600 13800 -600 0 
+hades.signals.SignalStdLogic1164 n2 2 HexSwitch Y2 74154_decoder_1:16 C 3 2 13800 0 16800 0 2 16800 0 16800 8400 2 16800 8400 9600 8400 0 
+hades.signals.SignalStdLogic1164 n21 2 74154_decoder_1:16 Y0 i18 A 1 2 2400 4800 4800 4800 0 
+hades.signals.SignalStdLogic1164 n1 2 HexSwitch Y1 74154_decoder_1:16 B 3 2 9600 7200 16200 7200 2 16200 7200 16200 600 2 16200 600 13800 600 0 
+hades.signals.SignalStdLogic1164 n20 2 74154_decoder_1:16 Y1 i17 A 1 2 4800 6000 2400 6000 0 
+hades.signals.SignalStdLogic1164 n0 2 HexSwitch Y0 74154_decoder_1:16 A 3 2 13800 1200 15600 1200 2 15600 1200 15600 6000 2 15600 6000 9600 6000 0 
+hades.signals.SignalStdLogic1164 n19 2 74154_decoder_1:16 Y2 i16 A 1 2 2400 7200 4800 7200 0 
+hades.signals.SignalStdLogic1164 n18 2 74154_decoder_1:16 Y3 i15 A 1 2 4800 8400 2400 8400 0 
+hades.signals.SignalStdLogic1164 n17 2 74154_decoder_1:16 Y4 i14 A 1 2 2400 9600 4800 9600 0 
+hades.signals.SignalStdLogic1164 n16 2 74154_decoder_1:16 Y5 i13 A 1 2 4800 10800 2400 10800 0 
+hades.signals.SignalStdLogic1164 n15 2 74154_decoder_1:16 Y6 i12 A 1 2 2400 12000 4800 12000 0 
+hades.signals.SignalStdLogic1164 n14 2 74154_decoder_1:16 Y7 i11 A 1 2 4800 13200 2400 13200 0 
+hades.signals.SignalStdLogic1164 n13 2 74154_decoder_1:16 Y8 i10 A 1 2 2400 14400 4800 14400 0 
+hades.signals.SignalStdLogic1164 n12 2 74154_decoder_1:16 Y9 i9 A 1 2 4800 15600 2400 15600 0 
+hades.signals.SignalStdLogic1164 n11 2 74154_decoder_1:16 Y10 i8 A 1 2 2400 16800 4800 16800 0 
+hades.signals.SignalStdLogic1164 n10 2 74154_decoder_1:16 Y15 i2 A 1 2 9600 13200 10800 13200 0 
+[end signals]
+[end]

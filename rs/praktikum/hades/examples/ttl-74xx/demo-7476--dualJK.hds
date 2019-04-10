@@ -1,0 +1,37 @@
+# hades.models.Design file
+#  
+[name] demo_SN7476_dual_JKFF
+[components]
+hades.models.io.Ipin i5 15600 33600 @N 1001 U
+hades.models.io.Ipin i4 15600 28800 @N 1001 U
+hades.models.io.Ipin i3 15600 27600 @N 1001 U
+hades.models.io.Ipin i2 15600 26400 @N 1001 U
+hades.models.io.Ipin i1 15600 25200 @N 1001 U
+hades.models.io.Ipin i0 15600 24000 @N 1001 U
+hades.models.io.Opin i13 34800 32400 @N 1001 5.0E-9
+hades.models.io.Opin i12 34800 31200 @N 1001 5.0E-9
+hades.models.io.Opin i11 34800 27600 @N 1001 5.0E-9
+hades.models.io.Opin i10 34800 26400 @N 1001 5.0E-9
+hades.models.Design SN7476_dual_JKFF1 24000 24000 @N 1001 \u002fhades\u002fmodels\u002fttl74\u002fSN7476_pinout\u002ehds
+hades.models.io.Ipin i9 15600 38400 @N 1001 U
+hades.models.io.Ipin i8 15600 37200 @N 1001 U
+hades.models.io.Ipin i7 15600 36000 @N 1001 U
+hades.models.io.Ipin i6 15600 34800 @N 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i5 Y SN7476_dual_JKFF1 2PR/ 1 2 15600 33600 24000 32400 0 
+hades.signals.SignalStdLogic1164 n8 2 SN7476_dual_JKFF1 2Q/ i13 A 1 2 34800 32400 27600 32400 0 
+hades.signals.SignalStdLogic1164 n7 2 SN7476_dual_JKFF1 2Q i12 A 1 2 27600 31200 34800 31200 0 
+hades.signals.SignalStdLogic1164 n6 2 SN7476_dual_JKFF1 1Q/ i11 A 1 2 27600 27600 34800 27600 0 
+hades.signals.SignalStdLogic1164 n5 2 SN7476_dual_JKFF1 1Q i10 A 1 2 27600 26400 34800 26400 0 
+hades.signals.SignalStdLogic1164 n4 2 i4 Y SN7476_dual_JKFF1 1CLR/ 1 2 15600 28800 24000 27600 0 
+hades.signals.SignalStdLogic1164 n3 2 i3 Y SN7476_dual_JKFF1 1K 1 2 15600 27600 27600 25200 0 
+hades.signals.SignalStdLogic1164 n2 2 i2 Y SN7476_dual_JKFF1 1CK/ 1 2 15600 26400 24000 25200 0 
+hades.signals.SignalStdLogic1164 n1 2 i1 Y SN7476_dual_JKFF1 1J 1 2 15600 25200 24000 28800 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y SN7476_dual_JKFF1 1PR/ 1 2 15600 24000 24000 26400 0 
+hades.signals.SignalStdLogic1164 n13 2 i9 Y SN7476_dual_JKFF1 2CLR/ 1 2 15600 38400 24000 33600 0 
+hades.signals.SignalStdLogic1164 n12 2 i8 Y SN7476_dual_JKFF1 2K 1 2 15600 37200 27600 30000 0 
+hades.signals.SignalStdLogic1164 n11 2 i7 Y SN7476_dual_JKFF1 2CK/ 1 2 15600 36000 24000 31200 0 
+hades.signals.SignalStdLogic1164 n10 2 i6 Y SN7476_dual_JKFF1 2J 1 2 15600 34800 27600 33600 0 
+[end signals]
+[end]

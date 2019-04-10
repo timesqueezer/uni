@@ -1,0 +1,215 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[]{units}
+%\usepackage{fullpage}
+
+\title{\textbf{Rechnerstrukturen Hausaufgaben zum 26. Oktober 2016}}
+\author{Ali Ebrahimi Pourasad, Moritz Lahann, Matz Radloff}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lfoot{Ali Ebrahimi Pourasad(6948107)\\ Moritz Lahann(6948050)\\ Matz Radloff(6946325)}
+\lhead{[RS\_GR1\_12]}
+\cfoot{\thepage}
+
+
+\begin{document}
+\pagenumbering{gobble}
+  \maketitle
+  \date{}
+  \tableofcontents
+  \newpage
+  \pagenumbering{arabic}
+
+\section{} % 1
+
+\subsection{} % 1.1
+
+\subsubsection{(a) Interpreter} % 1.1 (a)
+Ein Interpreter übersetzt einzelne Befehle einer höheren Programmiersprache in eine Befehlsfolge, die direkt auf einer niedrigeren Spracheebene ausgeführt wird. Z.B. könnte ein Interpreter Anweisungung einer Sprache L1 sequentiell nach L0 übersetzen, sodass diese direkt ausgeführt werden können.
+
+\subsubsection{(b) Compiler} % 1.1 (b)
+Ein Compiler übersetzt auch Befehle einer höheren in Befehlsfolgen einer niedrigeren Sprache. Allerdings wird dabei ein neues Programm erzeugt, das erst nach dem Generieren ausgeführt werden kann.
+
+\subsubsection{(c) Virtuelle Maschine} % 1.1 (c)
+Auf der untersten Sprachebene L0 können Anweisungen direkt durch elektronische Schaltungen ausgeführt werden. Um einem Interpreter zu simulieren, dass auch höhersprachige Befehle ausgeführt werden können (um eine direkte Übersetzung von z.B. L5 zu L0 zu vermeiden) kann eine virtuelle Maschine eingesetzt werden, da diese die Rechenarchitektur simuliert.
+Dadurch können neue, komplexere und besser verständliche Sprachen eingesetzt werden, die jeweils eine Abstraktionseben darstellen. So ist es möglich, auch ohne Verständnis der untersten Schichten, in höheren Sprachen zu programmieren. Der größte Nachteil ist dabei, dass eine virtuelle Maschine meistens langsamer ist, als es eine echte. Auch die unterste Maschine M0 kann eine virtuelle Maschine sein (z.B. Betriebssystem-Virtualisierung). Soft- und Hardware sind in diesem Fall äquivalent anzusehen.
+
+
+\subsection{} % 1.2
+\begin{align}
+k_{0} &= k\\
+k_{1} &= nk\\
+k_{2} &= n^{2}k\\
+k_{3} &= n^{3}k
+\end{align}
+\mbox{Für den allgemeinen Fall erhält man:}
+\begin{align}
+k_{i} &= n^{i}k
+\end{align}
+
+
+\subsection{} % 1.3
+Die Vorteile dieses Konzepts liegen in der Dynamik und Flexibilität des Computers. Programme müssen diesem nicht getrennt von anderen Daten zugeführt werden. Durch die rein logische Trennung vereinfacht sich der Aufbau stark. Da sich Programme dadurch auch selbst verändern können, ist es mögliche diese sehr schnell und wenig speicherbedürftig zu entwickeln.
+
+Nachteile liegen vor allem im Bereich der Sicherheit, die bei dem Aufkommen des von-Neumann Rechners noch nicht ersichtlich waren. So könnte eine Schadsoftware sich selbst oder andere Programme umschreiben und diese so unbrauchbar machen bzw. deren Funktionalität verändern. Um zu gewährleisten, dass bösartige Programme Daten nicht manipulieren, auslesen oder anderweitig Schaden anrichten, muss eine Kontrollebene die Ausführung sowie Zugriffe auf die korrekten Speicherbereiche der Programme kontrollieren (Betriebssystem). Trotz dieser Gegenmaßnahmen schafft es Software immer wieder Sicherheitslücken zu finden und aktiv auszunutzen.
+
+
+\subsection{} % 1.4
+
+\subsubsection{(a)} % 1.4 (a)
+
+$f(x) = (ax^{5} + bx^{4} + cx^{3} + dx^{2} + ex + f)\\$
+$\rightarrow (6 + 5 + 4 + 3 + 2) \cdot \unit[5]{ns} + (5 \cdot \unit[1]{ns}) = \unit[105]{ns}\\$
+
+Ohne Horner-Schema würde bei naiver Herangehensweise die Berechnung des Polynoms 105ns dauern.
+Bei der Berechnung der Potenzen $x^k, k\geq2$, kann man zuerst die niedrigen und dann die höheren Potenzen berechnen. Damit macht man sich jeweils zunutze, dass $x^{k-1}$ schon berechnet ist, wenn $x^{k}$ gebraucht wird. Für $x^{k}$ braucht man daher nur eine weitere Multiplikation und nicht deren $(k-1)$.
+Laut wikipedia sind es also nur eine Multiplikation pro Potenz, da die vorherigen aus dem Speicher ausgelesen werden können\cite{wiki:1}.
+Nach der Methode wären es $(9\cdot\unit[5]{ns} + \unit[5]{ns}) = \unit[50]{ns}$ für die Multiplikationen.\\
+
+Mit Horner-Schema, bei dem das Ausklammern einzelner $x$ ausgenutzt wurd, erhält man insgesamt:\\
+$y = f + x (e + x ( d + x ( c + x ( b + a \cdot x ))))$
+$\rightarrow \unit[30]{ns}$
+
+\newpage
+
+\subsubsection{(b)} % 1.4 (b)
+
+\paragraph{Gegeben:}
+\begin{equation}
+y = (x^{2}+2\cdot x+1)^{11}
+\end{equation}
+
+\paragraph{Rechnung:}
+
+Vereinfachung mit Ausnutzung der 1. binomischen Formel:
+\begin{align}
+a &= (x^2+2x+1)=(x+1)^2\\
+b &= (x+1)
+\end{align}
+$\rightarrow$ Eine Addition
+\begin{align}
+c &= (b)^2=(x+1)\cdot(x+1)
+\end{align}
+$\rightarrow$ Eine Multiplikation und nur eine Addition, da b nur einmal ausgerechnet werden muss\\
+\begin{align}
+y &= d=(c)^{11}\\
+t &= 12\cdot 5ns + 1 \cdot 1ns = \unit[61]{ns}
+\end{align}
+
+\paragraph{Antwort:}
+Eine Addition und 12 Multiplikationen benötigen eine Rechenzeit von $\unit[61]{ns}$.
+
+\subsection{} % 1.5
+Gegeben ist eine mittlere Datenrate von $\unitfrac[5]{MB}{s}$.
+
+
+\subsubsection{(a)} % 1.5 (a)
+\paragraph{Rechnung:}
+
+\begin{align}
+\unitfrac[5]{MB}{s}\cdot60 &= \unitfrac[300]{MB}{min}\\
+\unitfrac[30]{MB}{min}\cdot60 &= \unitfrac[18.000]{MB}{h}\\
+\unitfrac[18.000]{MB}{h}\cdot24 &=  \unitfrac[432.000]{MB}{d}\\
+\unitfrac[432.000]{MB}{d}\cdot365 &= \unitfrac[157.680.000]{MB}{a}\\
+\unitfrac[157.680.000]{MB}{a}\cdot80 &= \unitfrac[12.614.400.000]{MB}{Leben(80 Jahre)}
+\end{align}
+
+\paragraph{Antwort:}
+\begin{itemize}
+  \item Pro Tag werden \unit[432.000]{MB} (\unit[430]{GB}) abgespeichert.
+  \item Pro Jahr werden \unit[157.680.000]{MB} (\unit[157,68]{TB}) abgespeichert.
+  \item Pro Leben werden \unit[12.614.400.000]{MB} (\unit[12614,4]{TB}) abgespeichert.
+\end{itemize}
+
+
+\subsubsection{(b)} % 1.5 (b)
+\paragraph{Gegeben:}
+
+\begin{itemize}
+    \item Kapazität Anfang $2016 = \unit[4]{TiB}$
+    \item Kapazitätzuwachs von $38\%$ pro Jahr
+\end{itemize}
+
+\paragraph{Gesucht:}
+
+\begin{itemize}
+    \item Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11472,73]{TiB}$
+\end{itemize}
+
+\paragraph{Rechnung:}
+
+    $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
+
+\begin{align}
+    f(t) &= \unit[4]{TiB}\cdot1,38^{t}\\
+    \unit[4]{TiB} \cdot 1,38^{t} &= \unit[11472,73]{TiB}\\
+    t &= \log_{1,38}(\frac{\unit[11472,73]{TiB}}{\unit[4]{TiB}})\\
+      &= \log_{1,38}(2868,1825)\\
+      &= 24,72
+\end{align}
+
+\paragraph{Antwort:}
+Nach ca. $24\frac{3}{4}$ Jahren, also in 2040 (bzw. Anfang des Jahres 2041) ist die Kapazität einer typischen Festplatte, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+
+
+\subsubsection{(c)} % 1.5 (c)
+
+\paragraph{Gegeben:}
+\begin{itemize}
+    \item Kapazität Anfang 2016 = \unit[128]{GiB}\\
+    \item Kapazitätzuwachs = 50\% pro Jahr
+\end{itemize}
+
+\paragraph{Gesucht:}
+    Kapazität im Jahr $t = \unit[12.614.400.000]{MB} \approx \unit[11748075,5]{GiB}$
+
+\paragraph{Rechnung:}
+    $t$: Zeit in Jahren, $f(t)$: Kapazität im Jahr $t$
+\begin{align}
+    f(t) &= \unit[128]{GiB}\cdot1,5^{t}\\
+    \unit[128]{GiB}\cdot1,5^{t} &= \unit[11748075,5]{GiB}\\
+    t &= log1,5(\frac{\unit[11748075,5]{GiB}}{\unit[128]{GiB}})\\
+      &= log1,5(91781,83984)\\
+       &= 28,18\\
+\end{align}
+
+\paragraph{Antwort:}
+    Nach ca. 28 Jahren, also 2044 (bzw. Anfang 2045) ist die Kapazität einer typischen SD-Card, groß genug um ein ganzes Leben (80 Jahre) aufzuzeichnen.
+
+
+\subsubsection{(d)} % 1.5 (d)
+
+\paragraph{Gegeben:}
+    Magnetband Kapazität: \unit[140]{MB}
+
+\paragraph{Gesucht:}
+    Anzahl der Magnetbänder, um \unit[12.614.400.000]{MB} zu speichern.
+
+\paragraph{Rechnung:}
+\begin{align}
+    \unit[140]{MB}\cdotx &= \unit[12.614.400.000]{MB}\\
+    x &= \frac{\unit[12.614.400.000]{MB}}{\unit[140]{MB}}\\
+    x &= 90.102.857,14
+\end{align}
+
+\paragraph{Antwort:}
+    Man bräuchte $90.102.858$ Magnetbänder, um eine Datenmenge von $\unit[12.614.400.000]{MB}$ zu speichern.
+
+
+\newpage
+
+\bibliography{wiki}
+\bibliographystyle{ieeetr}
+
+\end{document}

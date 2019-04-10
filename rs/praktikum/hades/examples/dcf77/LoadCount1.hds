@@ -1,0 +1,34 @@
+# hades.models.Design file
+#  
+[name] LoadCount1
+[components]
+hades.models.io.Ipin countEnable 4800 11400 @N 1001 U
+hades.models.io.Ipin D 4800 13800 @N 1001 U
+hades.models.gates.And2 i5 13200 10500 @N 1001 1.0E-8
+hades.models.io.Ipin nclear 4800 12600 @N 1001 U
+hades.models.gates.Mux21 i3 18000 10800 @N 1001 1.0E-8
+hades.models.io.Ipin nreset 4800 18600 @N 1001 U
+hades.models.io.Ipin clk 4800 17400 @N 1001 U
+hades.models.gates.And2 i2 7200 6000 @N 1001 1.0E-8
+hades.models.io.Opin NQ 27600 15000 @N 1001 5.0E-9
+hades.models.gates.Xor2 i1 7200 9600 @N 1001 1.0E-8
+hades.models.flipflops.Dffr i0 22800 12000 @N 1001 5.0E-9 4.0E-9 3.0E-9
+hades.models.io.Opin Q 27600 13800 @N 1001 5.0E-9
+hades.models.io.Ipin loadEnable 4800 15000 @N 1001 U
+hades.models.io.Opin carry 27600 7200 @N 1001 5.0E-9
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n_loadenable 2 loadEnable Y i3 S 2 2 4800 15000 19200 15000 2 19200 15000 19200 13200 0 
+hades.signals.SignalStdLogic1164 n_dffr_q 4 i0 Q Q A i2 B i1 A 8 2 26400 13800 27000 13800 2 27000 13800 27600 13800 2 27000 13800 27000 9000 2 27000 9000 6600 9000 2 6600 9000 6600 7800 2 6600 7800 7200 7800 2 6600 9000 6600 10200 2 6600 10200 7200 10200 2 27000 13800 6600 9000 
+hades.signals.SignalStdLogic1164 n_carry 2 i2 Y carry A 1 2 10800 7200 27600 7200 0 
+hades.signals.SignalStdLogic1164 n_countenable 3 countEnable Y i1 B i2 A 4 2 4800 11400 6000 11400 2 6000 11400 7200 11400 2 6000 11400 6000 6600 2 6000 6600 7200 6600 1 6000 11400 
+hades.signals.SignalStdLogic1164 n5 2 i1 Y i5 A 3 2 13200 11100 11100 11100 2 11100 11100 11100 10800 2 11100 10800 10800 10800 0 
+hades.signals.SignalStdLogic1164 n_ddfr_nq 2 i0 NQ NQ A 1 2 26400 15000 27600 15000 0 
+hades.signals.SignalStdLogic1164 n_nclear 2 nclear Y i5 B 3 2 4800 12600 12000 12600 2 12000 12600 12000 12300 2 12000 12300 13200 12300 0 
+hades.signals.SignalStdLogic1164 n_clk 2 clk Y i0 C 3 2 4800 17400 21600 17400 2 21600 17400 21600 15000 2 21600 15000 22800 15000 0 
+hades.signals.SignalStdLogic1164 n_nreset 2 nreset Y i0 NR 3 2 4800 18600 22200 18600 2 22200 18600 22200 16200 2 22200 16200 22800 16200 0 
+hades.signals.SignalStdLogic1164 n_dffr_d 2 i3 Y i0 D 4 2 20400 12000 21600 12000 2 21600 12000 21600 13800 2 21600 13800 22500 13800 2 22500 13800 22800 13800 0 
+hades.signals.SignalStdLogic1164 n_din 2 D Y i3 A1 3 2 18000 11400 17100 12900 2 17100 12900 17100 13800 2 17100 13800 4800 13800 0 
+hades.signals.SignalStdLogic1164 n10 2 i5 Y i3 A0 1 2 16800 11700 18000 12600 0 
+[end signals]
+[end]

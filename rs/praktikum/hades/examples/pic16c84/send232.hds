@@ -1,0 +1,15 @@
+# hades.models.Design file
+#  
+[name] RS232-Send-Test
+[components]
+hades.models.io.ClockGen clk_200khz -1200 7200 @N 1001 5.0E-6 0.5 0.0
+hades.models.special.SerialTerminal vt100 12000 600 @N 1001 300 8 1 0
+hades.models.io.PowerOnReset reset 1200 3000 @N 1001 0.0050 0.0050
+hades.models.pic.Pic16C84 cpu 3000 600 @N 1001 /hades/examples/pic16c84/send232.rom
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 clk 2 clk_200khz clk cpu CLKIN 3 2 1200 8400 6600 8400 2 6600 8400 6600 2400 2 6600 2400 6000 2400 0 
+hades.signals.SignalStdLogic1164 U_300baud 2 cpu B7 vt100 RX 3 2 6000 3600 10800 3600 2 10800 3600 10800 1800 2 10800 1800 12000 1800 0 
+hades.signals.SignalStdLogic1164 reset 2 reset nreset cpu /MCLR 1 2 3000 3000 1200 3000 0 
+[end signals]
+[end]

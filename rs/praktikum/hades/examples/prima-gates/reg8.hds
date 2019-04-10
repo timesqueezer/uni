@@ -1,0 +1,52 @@
+# hades.models.Design file
+#  
+[name] REG_8
+[components]
+hades.models.flipflops.Dff i5 12000 13800 1001
+hades.models.flipflops.Dff i4 12000 10800 1001
+hades.models.flipflops.Dff i3 12000 7800 1001
+hades.models.flipflops.Dff i2 12000 4800 1001
+hades.models.io.Ipin clk 6000 27000 1001 
+hades.models.io.Ipin D7 8400 2400 1001 
+hades.models.io.Ipin D6 8400 5400 1001 
+hades.models.io.Ipin D5 8400 8400 1001 
+hades.models.io.Ipin D4 8400 11400 1001 
+hades.models.io.Ipin D3 8400 14400 1001 
+hades.models.io.Ipin D2 8400 17400 1001 
+hades.models.io.Ipin D1 8400 20400 1001 
+hades.models.io.Ipin D0 8400 23400 1001 
+hades.models.io.Opin Q7 19200 2400 1001
+hades.models.io.Opin Q6 19200 5400 1001
+hades.models.io.Opin Q5 19200 8400 1001
+hades.models.io.Opin Q4 19200 11400 1001
+hades.models.io.Opin Q3 19200 14400 1001
+hades.models.io.Opin Q2 19200 17400 1001
+hades.models.io.Opin Q1 19200 20400 1001
+hades.models.io.Opin Q0 19200 23400 1001
+hades.models.gates.Buffer i25 7200 25800 1001 1.0E-8
+hades.models.flipflops.Dff i9 12000 22800 1001
+hades.models.flipflops.Dff i8 12000 1800 1001
+hades.models.flipflops.Dff i7 12000 19800 1001
+hades.models.flipflops.Dff i6 12000 16800 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 D0 Y i9 D 1 2 12000 23400 8400 23400 0 
+hades.signals.SignalStdLogic1164 n8 2 D1 Y i7 D 1 2 8400 20400 12000 20400 0 
+hades.signals.SignalStdLogic1164 n7 2 D2 Y i6 D 1 2 12000 17400 8400 17400 0 
+hades.signals.SignalStdLogic1164 n6 2 D3 Y i5 D 1 2 8400 14400 12000 14400 0 
+hades.signals.SignalStdLogic1164 n5 2 D4 Y i4 D 1 2 12000 11400 8400 11400 0 
+hades.signals.SignalStdLogic1164 n4 2 D5 Y i3 D 1 2 8400 8400 12000 8400 0 
+hades.signals.SignalStdLogic1164 n3 2 D6 Y i2 D 1 2 12000 5400 8400 5400 0 
+hades.signals.SignalStdLogic1164 n2 2 D7 Y i8 D 1 2 8400 2400 12000 2400 0 
+hades.signals.SignalStdLogic1164 n1 9 i25 Y i9 C i7 C i6 C i5 C i4 C i3 C i2 C i8 C 8 4 9600 27000 10800 27000 10800 24600 12000 24600 3 10800 24600 10800 21600 12000 21600 3 10800 21600 10800 18600 12000 18600 3 10800 18600 10800 15600 12000 15600 3 10800 15600 10800 12600 12000 12600 3 10800 12600 10800 9600 12000 9600 3 10800 9600 10800 6600 12000 6600 3 10800 6600 10800 3600 12000 3600 7 10800 24600 10800 21600 10800 18600 10800 15600 10800 12600 10800 9600 10800 6600 
+hades.signals.SignalStdLogic1164 n0 2 clk Y i25 A 1 2 6000 27000 7200 27000 0 
+hades.signals.SignalStdLogic1164 n17 2 i8 Q Q7 A 1 2 19200 2400 15600 2400 0 
+hades.signals.SignalStdLogic1164 n16 2 i2 Q Q6 A 1 2 15600 5400 19200 5400 0 
+hades.signals.SignalStdLogic1164 n15 2 i3 Q Q5 A 1 2 19200 8400 15600 8400 0 
+hades.signals.SignalStdLogic1164 n14 2 i4 Q Q4 A 1 2 15600 11400 19200 11400 0 
+hades.signals.SignalStdLogic1164 n13 2 i5 Q Q3 A 1 2 19200 14400 15600 14400 0 
+hades.signals.SignalStdLogic1164 n12 2 i6 Q Q2 A 1 2 15600 17400 19200 17400 0 
+hades.signals.SignalStdLogic1164 n11 2 i7 Q Q1 A 1 2 19200 20400 15600 20400 0 
+hades.signals.SignalStdLogic1164 n10 2 i9 Q Q0 A 1 2 15600 23400 19200 23400 0 
+[end signals]
+[end]

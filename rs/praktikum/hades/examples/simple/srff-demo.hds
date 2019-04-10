@@ -1,0 +1,17 @@
+# hades.models.Design file
+#  
+[name] SRFF-Demo
+[components]
+hades.models.io.Ipin S 6000 4200 @N 1001 U
+hades.models.io.Ipin R 6000 5400 @N 1001 U
+hades.models.io.Opin Q 14400 4200 @N 1001 5.0E-9
+hades.models.flipflops.SrffRtlib SRFF 7200 3600 @N 1001 5.0E-9 4.0E-9 3.0E-9
+hades.models.io.Opin NQ 14400 5400 @N 1001 5.0E-9
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n3 2 S Y SRFF S 1 2 7200 4200 6000 4200 0 
+hades.signals.SignalStdLogic1164 n2 2 R Y SRFF R 1 2 7200 5400 6000 5400 0 
+hades.signals.SignalStdLogic1164 n1 2 SRFF NQ NQ A 1 2 14400 5400 10800 5400 0 
+hades.signals.SignalStdLogic1164 n0 2 SRFF Q Q A 1 2 10800 4200 14400 4200 0 
+[end signals]
+[end]

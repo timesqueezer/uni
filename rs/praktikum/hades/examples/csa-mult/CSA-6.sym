@@ -1,0 +1,39 @@
+hades.symbols.BboxRectangle  0 0 6000 12600
+hades.symbols.Polyline 11 0 0 6000 1800 6000 10800 0 12600 0 8700 600 8400 0 8100 0 4500 600 4200 0 3900 0 0 
+hades.symbols.InstanceLabel 3000 11250 2 Adder
+hades.symbols.ClassLabel 3000 450 2 CSA
+hades.symbols.PortLabel 400 2100 CIN
+hades.symbols.PortSymbol 0 3600 cin_0
+hades.symbols.PortSymbol 0 3000 cin_1
+hades.symbols.PortSymbol 0 2400 cin_2
+hades.symbols.PortSymbol 0 1800 cin_3
+hades.symbols.PortSymbol 0 1200 cin_4
+hades.symbols.PortSymbol 0  600 cin_5
+hades.symbols.PortLabel 5850 4000 3 COUT
+hades.symbols.PortSymbol 6000 5400 cout_0
+hades.symbols.PortSymbol 6000 4800 cout_1
+hades.symbols.PortSymbol 6000 4200 cout_2
+hades.symbols.PortSymbol 6000 3600 cout_3
+hades.symbols.PortSymbol 6000 3000 cout_4
+hades.symbols.PortSymbol 6000 2400 cout_5
+hades.symbols.PortLabel  5850 8800 3 SUM
+hades.symbols.PortSymbol 6000 10200 sum_0
+hades.symbols.PortSymbol 6000 9600 sum_1
+hades.symbols.PortSymbol 6000 9000 sum_2
+hades.symbols.PortSymbol 6000 8400 sum_3
+hades.symbols.PortSymbol 6000 7800 sum_4
+hades.symbols.PortSymbol 6000 7200 sum_5
+hades.symbols.PortLabel  400 6400 B
+hades.symbols.PortSymbol 0 7800 b_0
+hades.symbols.PortSymbol 0 7200 b_1
+hades.symbols.PortSymbol 0 6600 b_2
+hades.symbols.PortSymbol 0 6000 b_3
+hades.symbols.PortSymbol 0 5400 b_4
+hades.symbols.PortSymbol 0 4800 b_5
+hades.symbols.PortLabel 400 10600 A
+hades.symbols.PortSymbol 0 12000 a_0
+hades.symbols.PortSymbol 0 11400 a_1
+hades.symbols.PortSymbol 0 10800 a_2
+hades.symbols.PortSymbol 0 10200 a_3
+hades.symbols.PortSymbol 0 9600 a_4
+hades.symbols.PortSymbol 0 9000 a_5

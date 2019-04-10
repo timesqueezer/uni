@@ -1,0 +1,37 @@
+# hades.models.Design file
+#  
+[name] demo_74153_dual_mux41
+[components]
+hades.models.io.Opin i5 -1200 14400 @X 1001 5.0E-9
+hades.models.io.Opin i4 13200 15600 @N 1001 5.0E-9
+hades.models.io.Ipin i3 0 4800 @N 1001 U
+hades.models.io.Ipin i2 14400 8400 @X 1001 U
+hades.models.io.Ipin i1 0 3600 @N 1001 U
+hades.models.io.Ipin i0 1200 7200 @N 1001 U
+hades.models.Design 74153_dual_mux41 4800 6000 @N 1001 \u002fhades\u002fmodels\u002fttl74\u002fSN74153_pinout\u002ehds
+hades.models.io.Ipin i13 14400 14400 @X 1001 U
+hades.models.io.Ipin i12 14400 13200 @X 1001 U
+hades.models.io.Ipin i11 14400 12000 @X 1001 U
+hades.models.io.Ipin i10 14400 10800 @X 1001 U
+hades.models.io.Ipin i9 1200 13200 @N 1001 U
+hades.models.io.Ipin i8 1200 12000 @N 1001 U
+hades.models.io.Ipin i7 1200 10800 @N 1001 U
+hades.models.io.Ipin i6 1200 9600 @N 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i6 Y 74153_dual_mux41 1C3 1 2 4800 9600 1200 9600 0 
+hades.signals.SignalStdLogic1164 n8 2 i7 Y 74153_dual_mux41 1C2 1 2 1200 10800 4800 10800 0 
+hades.signals.SignalStdLogic1164 n7 2 i8 Y 74153_dual_mux41 1C1 1 2 4800 12000 1200 12000 0 
+hades.signals.SignalStdLogic1164 n6 2 i9 Y 74153_dual_mux41 1C0 1 2 1200 13200 4800 13200 0 
+hades.signals.SignalStdLogic1164 n5 2 74153_dual_mux41 1Y i5 A 1 2 -1200 14400 4800 14400 0 
+hades.signals.SignalStdLogic1164 n4 2 74153_dual_mux41 2Y i4 A 1 2 13200 15600 8400 15600 0 
+hades.signals.SignalStdLogic1164 n3 2 i3 Y 74153_dual_mux41 A 3 2 8400 9600 12000 9600 2 12000 9600 12000 4800 2 12000 4800 0 4800 0 
+hades.signals.SignalStdLogic1164 n2 2 i2 Y 74153_dual_mux41 2G/ 1 2 14400 8400 8400 8400 0 
+hades.signals.SignalStdLogic1164 n1 2 i1 Y 74153_dual_mux41 B 3 2 4800 8400 3600 8400 2 3600 8400 3600 3600 2 3600 3600 0 3600 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y 74153_dual_mux41 1G/ 1 2 1200 7200 4800 7200 0 
+hades.signals.SignalStdLogic1164 n13 2 i13 Y 74153_dual_mux41 2C0 1 2 14400 14400 8400 14400 0 
+hades.signals.SignalStdLogic1164 n12 2 i12 Y 74153_dual_mux41 2C1 1 2 8400 13200 14400 13200 0 
+hades.signals.SignalStdLogic1164 n11 2 i11 Y 74153_dual_mux41 2C2 1 2 14400 12000 8400 12000 0 
+hades.signals.SignalStdLogic1164 n10 2 i10 Y 74153_dual_mux41 2C3 1 2 14400 10800 8400 10800 0 
+[end signals]
+[end]

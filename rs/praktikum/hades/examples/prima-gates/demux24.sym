@@ -1,0 +1,16 @@
+hades.symbols.BboxRectangle  0 0 6000 3000
+hades.symbols.Rectangle  0 0 6000 3000
+hades.symbols.PortLabel 5850 2550 3 Y0
+hades.symbols.PortSymbol 6000 2400 Y0
+hades.symbols.PortLabel 5850 1950 3 Y1
+hades.symbols.PortSymbol 6000 1800 Y1
+hades.symbols.PortLabel 5850 1350 3 Y2
+hades.symbols.PortSymbol 6000 1200 Y2
+hades.symbols.PortLabel 5850 750 3 Y3
+hades.symbols.PortSymbol 6000 600 Y3
+hades.symbols.PortLabel 150 1350 A0
+hades.symbols.PortSymbol 0 1200 A0
+hades.symbols.PortLabel 150 750 A1
+hades.symbols.PortSymbol 0 600 A1
+hades.symbols.InstanceLabel 150 2850 i0
+hades.symbols.ClassLabel 150 450 DEMUX_2:4

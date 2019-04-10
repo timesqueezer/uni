@@ -1,0 +1,34 @@
+hades.symbols.BboxRectangle  0 0 6000 6000
+hades.symbols.Rectangle  0 0 6000 6000
+hades.symbols.PortLabel 5850 3750 3 cout0
+hades.symbols.PortSymbol 6000 3600 cout0
+hades.symbols.PortLabel 5850 3150 3 cout1
+hades.symbols.PortSymbol 6000 3000 cout1
+hades.symbols.PortLabel 5850 2550 3 cout2
+hades.symbols.PortSymbol 6000 2400 cout2
+hades.symbols.PortLabel 5850 1950 3 cout3
+hades.symbols.PortSymbol 6000 1800 cout3
+hades.symbols.PortLabel 5850 1350 3 gg
+hades.symbols.PortSymbol 6000 1200 gg
+hades.symbols.PortLabel 5850 750 3 gp
+hades.symbols.PortSymbol 6000 600 gp
+hades.symbols.PortLabel 150 5550 cin
+hades.symbols.PortSymbol 0 5400 cin
+hades.symbols.PortLabel 150 4950 p0
+hades.symbols.PortSymbol 0 4800 p0
+hades.symbols.PortLabel 150 4350 p1
+hades.symbols.PortSymbol 0 4200 p1
+hades.symbols.PortLabel 150 3750 p2
+hades.symbols.PortSymbol 0 3600 p2
+hades.symbols.PortLabel 150 3150 p3
+hades.symbols.PortSymbol 0 3000 p3
+hades.symbols.PortLabel 150 2550 g0
+hades.symbols.PortSymbol 0 2400 g0
+hades.symbols.PortLabel 150 1950 g1
+hades.symbols.PortSymbol 0 1800 g1
+hades.symbols.PortLabel 150 1350 g2
+hades.symbols.PortSymbol 0 1200 g2
+hades.symbols.PortLabel 150 750 g3
+hades.symbols.PortSymbol 0 600 g3
+hades.symbols.InstanceLabel 150 5850 i0
+hades.symbols.ClassLabel 150 450 CLA

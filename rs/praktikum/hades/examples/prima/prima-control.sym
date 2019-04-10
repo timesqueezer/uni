@@ -1,0 +1,40 @@
+hades.symbols.BboxRectangle  0 0 6000 7800
+hades.symbols.Rectangle  0 0 6000 7800
+hades.symbols.PortLabel 5850 7350 3 overflow_flag
+hades.symbols.PortSymbol 6000 7200 overflow_flag
+hades.symbols.PortLabel 5850 6750 3 enable_ram_write
+hades.symbols.PortSymbol 6000 6600 enable_ram_write
+hades.symbols.PortLabel 5850 6150 3 enable_akku
+hades.symbols.PortSymbol 6000 6000 enable_akku
+hades.symbols.PortLabel 5850 5550 3 enable_pc
+hades.symbols.PortSymbol 6000 5400 enable_pc
+hades.symbols.PortLabel 5850 4950 3 enable_areg
+hades.symbols.PortSymbol 6000 4800 enable_areg
+hades.symbols.PortLabel 5850 4350 3 enable_breg
+hades.symbols.PortSymbol 6000 4200 enable_breg
+hades.symbols.PortLabel 5850 3750 3 cycle1_command
+hades.symbols.PortSymbol 6000 3600 cycle1_command
+hades.symbols.PortLabel 5850 3150 3 cycle2_address
+hades.symbols.PortSymbol 6000 3000 cycle2_address
+hades.symbols.PortLabel 5850 2550 3 cycle3_execute
+hades.symbols.PortSymbol 6000 2400 cycle3_execute
+hades.symbols.PortLabel 5850 1950 3 select_addr_mux
+hades.symbols.PortSymbol 6000 1800 select_addr_mux
+hades.symbols.PortLabel 5850 1350 3 select_pcmux
+hades.symbols.PortSymbol 6000 1200 select_pcmux
+hades.symbols.PortLabel 5850 750 3 alu_function
+hades.symbols.PortSymbol 6000 600 alu_function
+hades.symbols.PortLabel 150 3750 alu_overflow
+hades.symbols.PortSymbol 0 3600 alu_overflow
+hades.symbols.PortLabel 150 3150 nRESET
+hades.symbols.PortSymbol 0 3000 nRESET
+hades.symbols.PortLabel 150 2550 CLK
+hades.symbols.PortSymbol 0 2400 CLK
+hades.symbols.PortLabel 150 1950 switch_in
+hades.symbols.PortSymbol 0 1800 switch_in
+hades.symbols.PortLabel 150 1350 AccuValue
+hades.symbols.PortSymbol 0 1200 AccuValue
+hades.symbols.PortLabel 150 750 Befehl
+hades.symbols.PortSymbol 0 600 Befehl
+hades.symbols.InstanceLabel 150 7650 i0
+hades.symbols.ClassLabel 150 450 prima-control

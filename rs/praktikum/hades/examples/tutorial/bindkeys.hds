@@ -1,0 +1,12 @@
+# hades.models.Design file
+#  
+[name] Bindkeys
+[components]
+hades.models.meta.ActionButton backButton 0 600 1001 /hades/examples/tutorial/figs/ButtonPrev.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/simcontrol.hds
+hades.models.meta.ActionButton nextButton 2400 600 1001 /hades/examples/tutorial/figs/ButtonNext.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/colors1164.hds
+hades.models.meta.ActionButton displayOptions 1200 600  1001 /hades/examples/tutorial/figs/ButtonHome.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/contents.hds
+hades.models.FigObject figobject 0 0 1001 /hades/examples/tutorial/figs/bindkeys.fig
+[end components]
+[signals]
+[end signals]
+[end]

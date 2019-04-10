@@ -1,0 +1,22 @@
+hades.symbols.BboxRectangle  0 0 4800 4800
+hades.symbols.ClassLabel 2100 1650 CLA 
+hades.symbols.Rectangle  0 0 4800 4800
+hades.symbols.PortSymbol 1200 0 Gin_j+1k
+hades.symbols.PortSymbol 2400 0 Pin_j+1k
+hades.symbols.PortSymbol 3600 0 cout_j+1
+hades.symbols.PortSymbol 4800 1200 Gin_ij
+hades.symbols.PortSymbol 4800 2400 Pin_ij
+hades.symbols.PortSymbol 4800 3600 cout_i
+hades.symbols.PortSymbol 1200 4800 Gout_ik
+hades.symbols.PortSymbol 2400 4800 Pout_ik
+hades.symbols.PortSymbol 3600 4800 cin_i
+hades.symbols.PortLabel 1200 450 2 G_j+1k
+hades.symbols.PortLabel 2400 450 2 P_j+1k
+hades.symbols.PortLabel 3600 450 2 c_j+1
+hades.symbols.PortLabel 1200 4550 2 G_ik
+hades.symbols.PortLabel 2400 4550 2 P_ik
+hades.symbols.PortLabel 3600 4550 2 c_i
+hades.symbols.PortLabel 4600 1300 3 G_ij
+hades.symbols.PortLabel 4600 2500 3 P_ij
+hades.symbols.PortLabel 4600 3700 3 c_i
+hades.symbols.InstanceLabel 150 4000 i0

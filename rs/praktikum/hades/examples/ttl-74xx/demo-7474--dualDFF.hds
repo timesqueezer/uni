@@ -1,0 +1,34 @@
+# hades.models.Design file
+#  
+[name] unnamed
+[components]
+hades.models.io.Ipin i9 30000 16800 @N 1001 U
+hades.models.io.Ipin i8 30000 15600 @N 1001 U
+hades.models.io.Ipin i7 30000 14400 @N 1001 U
+hades.models.io.Ipin i6 30000 13200 @N 1001 U
+hades.models.io.Opin i5 13200 18000 @N 1001 5.0E-9
+hades.models.io.Opin i4 13200 16800 @N 1001 5.0E-9
+hades.models.io.Ipin i3 16800 15600 @N 1001 U
+hades.models.Design SN7474_dual_DFF1 4800 7200 @N 1001 \u002fhades/models/ttl74\u002fSN7474\u002ehds
+hades.models.io.Ipin i2 16800 14400 @N 1001 U
+hades.models.io.Ipin i1 16800 13200 @N 1001 U
+hades.models.io.Ipin i0 16800 12000 @N 1001 U
+hades.models.Design SN7474_dual_DFF 20400 10800 @N 1001 \u002fhades/models/ttl74\u002fSN7474_pinout\u002ehds
+hades.models.io.Opin i11 30000 19200 @N 1001 5.0E-9
+hades.models.io.Opin i10 30000 18000 @N 1001 5.0E-9
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i6 Y SN7474_dual_DFF 2CLR/ 1 2 24000 13200 30000 13200 0 
+hades.signals.SignalStdLogic1164 n8 2 i7 Y SN7474_dual_DFF 2D 1 2 30000 14400 24000 14400 0 
+hades.signals.SignalStdLogic1164 n7 2 i8 Y SN7474_dual_DFF 2CK 1 2 24000 15600 30000 15600 0 
+hades.signals.SignalStdLogic1164 n6 2 i9 Y SN7474_dual_DFF 2PR/ 1 2 30000 16800 24000 16800 0 
+hades.signals.SignalStdLogic1164 n5 2 SN7474_dual_DFF 1Q/ i5 A 1 2 20400 18000 13200 18000 0 
+hades.signals.SignalStdLogic1164 n4 2 SN7474_dual_DFF 1Q i4 A 1 2 13200 16800 20400 16800 0 
+hades.signals.SignalStdLogic1164 n3 2 i3 Y SN7474_dual_DFF 1PR/ 1 2 20400 15600 16800 15600 0 
+hades.signals.SignalStdLogic1164 n2 2 i2 Y SN7474_dual_DFF 1CK 1 2 16800 14400 20400 14400 0 
+hades.signals.SignalStdLogic1164 n1 2 i1 Y SN7474_dual_DFF 1D 1 2 20400 13200 16800 13200 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y SN7474_dual_DFF 1CLR/ 1 2 16800 12000 20400 12000 0 
+hades.signals.SignalStdLogic1164 n11 2 SN7474_dual_DFF 2Q i10 A 1 2 24000 18000 30000 18000 0 
+hades.signals.SignalStdLogic1164 n10 2 SN7474_dual_DFF 2Q/ i11 A 1 2 30000 19200 24000 19200 0 
+[end signals]
+[end]

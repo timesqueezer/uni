@@ -1,0 +1,36 @@
+DANKE
+[JavaFSM V1.0]
+[MOORE]
+[Name]
+Ampel
+[Inputs 1]
+Stop,1
+[Outputs 6]
+Rot1
+Gelb1
+Gruen1
+Rot2
+Gelb2
+Gruen2
+[Zustaende 8]
+Gruen1,216,50,true,0,0,1,1,0,0
+Gelb1,278,110,false,0,1,0,1,0,0
+Rot1,278,171,false,1,0,0,1,0,0
+GelbRot2,278,232,false,1,0,0,1,1,0
+Gruen2,219,289,false,1,0,0,0,0,1
+Gelb2,157,229,false,1,0,0,0,1,0
+Rot2,157,168,false,1,0,0,1,0,0
+GelbRot1,157,109,false,1,1,0,1,0,0
+[Transitionen 10]
+Gruen1,Gelb1,*
+Gelb1,Rot1,1
+Rot1,GelbRot2,1
+GelbRot2,Gruen2,1
+Gruen2,Gruen2,Stop
+Gruen2,Gelb2,*
+Gelb2,Rot2,1
+Rot2,GelbRot1,1
+GelbRot1,Gruen1,1
+Gruen1,Gruen1,Stop
+[Kommentare 0]
+[ENDE]

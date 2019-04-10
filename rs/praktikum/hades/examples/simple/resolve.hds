@@ -1,0 +1,25 @@
+# hades.models.Design file
+#  
+[name] ResolveTest
+[components]
+hades.models.io.Ipin i5 6600 8400 1001 
+hades.models.io.Ipin i4 6600 4800 1001 
+hades.models.io.Ipin i3 6600 12000 1001 
+hades.models.io.Ipin i2 6000 10800 1001 
+hades.models.io.Ipin i1 6000 7200 1001 
+hades.models.io.Ipin i0 6000 3600 1001 
+hades.models.gates.Tri i9 9600 9600 1001 5.0E-9
+hades.models.gates.Tri i8 9600 6000 1001 5.0E-9
+hades.models.gates.Tri i7 9600 2400 1001 5.0E-9
+hades.models.io.Opin i6 19200 4800 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n6 4 i9 Y i8 Y i7 Y i6 A 10 2 14400 10800 14400 14400 1 14400 14400 2 14400 7200 14400 10800 2 14400 10800 12000 10800 2 14400 4800 14400 7200 2 14400 7200 12000 7200 2 14400 1200 14400 3600 2 14400 3600 12000 3600 2 14400 3600 14400 4800 2 14400 4800 19200 4800 4 14400 10800 14400 7200 14400 3600 14400 4800 
+hades.signals.SignalStdLogic1164 n5 2 i3 Y i9 S 1 2 6600 12000 10800 12000 0 
+hades.signals.SignalStdLogic1164 n4 2 i2 Y i9 A 1 2 6000 10800 9600 10800 0 
+hades.signals.SignalStdLogic1164 n3 2 i5 Y i8 S 1 2 10800 8400 6600 8400 0 
+hades.signals.SignalStdLogic1164 n2 2 i1 Y i8 A 1 2 6000 7200 9600 7200 0 
+hades.signals.SignalStdLogic1164 n1 2 i0 Y i7 A 1 2 9600 3600 6000 3600 0 
+hades.signals.SignalStdLogic1164 n0 2 i4 Y i7 S 1 2 6600 4800 10800 4800 0 
+[end signals]
+[end]

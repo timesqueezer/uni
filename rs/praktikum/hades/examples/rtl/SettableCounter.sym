@@ -1,0 +1,22 @@
+hades.symbols.BboxRectangle  0 0 6000 4800
+hades.symbols.Rectangle  0 0 6000 4800
+hades.symbols.PortLabel 5850 1350 3 count
+hades.symbols.PortSymbol 6000 1200 count
+hades.symbols.PortLabel 5850 750 3 carry_out
+hades.symbols.PortSymbol 6000 600 carry_out
+hades.symbols.PortLabel 150 4350 nreset
+hades.symbols.PortSymbol 0 4200 nreset
+hades.symbols.PortLabel 150 3750 clk
+hades.symbols.PortSymbol 0 3600 clk
+hades.symbols.PortLabel 150 3150 preset_enable
+hades.symbols.PortSymbol 0 3000 preset_enable
+hades.symbols.PortLabel 150 2550 preset_value
+hades.symbols.PortSymbol 0 2400 preset_value
+hades.symbols.PortLabel 150 1950 count_enable
+hades.symbols.PortSymbol 0 1800 count_enable
+hades.symbols.PortLabel 150 1350 nclear
+hades.symbols.PortSymbol 0 1200 nclear
+hades.symbols.PortLabel 150 750 limit_value
+hades.symbols.PortSymbol 0 600 limit_value
+hades.symbols.InstanceLabel 150 4650 i0
+hades.symbols.ClassLabel 150 450 SetttableCounter

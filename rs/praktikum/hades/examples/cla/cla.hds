@@ -1,0 +1,32 @@
+# hades.models.Design file
+#  
+[name] CLA
+[components]
+hades.models.complexgates.AOI21 i5 10800 12000 1001 6.0E-9
+hades.models.gates.Inv i4 18000 3600 1001 5.0E-9
+hades.models.complexgates.AOI21 i2 10800 2400 1001 6.0E-9
+hades.models.gates.And2 i0 10800 8400 1001 1.0E-8
+hades.models.io.Ipin Pin_ij 4800 3000 1001 
+hades.models.io.Ipin Pin_j+1k 4800 10200 1001 
+hades.models.io.Ipin cin_i 4800 6600 1001 
+hades.models.io.Ipin Gin_j+1k 4800 15000 1001 
+hades.models.io.Opin cout_j+1 25200 4800 1001
+hades.models.io.Opin Pout_ik 25200 9600 1001
+hades.models.io.Ipin Gin_ij 4800 4200 1001 
+hades.models.io.Opin Gout_ik 25200 14400 1001
+hades.models.io.Opin cout_i 25200 6600 1001
+hades.models.gates.Inv i6 18000 13200 1001 5.0E-9
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 Gin_j+1k Y i5 B1 1 2 4800 15000 10800 15000 0 
+hades.signals.SignalStdLogic1164 n8 2 i6 Y Gout_ik A 1 2 20400 14400 25200 14400 0 
+hades.signals.SignalStdLogic1164 n7 2 i5 Y i6 A 1 2 16200 14400 18000 14400 0 
+hades.signals.SignalStdLogic1164 n6 2 i0 Y Pout_ik A 1 2 14400 9600 25200 9600 0 
+hades.signals.SignalStdLogic1164 n5 3 Pin_j+1k Y i5 A1 i0 B 2 4 4800 10200 10200 10200 10200 12600 10800 12600 2 10200 10200 10800 10200 1 10200 10200 
+hades.signals.SignalStdLogic1164 n4 3 Gin_ij Y i2 B1 i5 A2 2 4 4800 4200 7200 4200 7200 5400 10800 5400 3 7200 5400 7200 13800 10800 13800 1 7200 5400 
+hades.signals.SignalStdLogic1164 n3 3 Pin_ij Y i2 A1 i0 A 2 3 4800 3000 6000 3000 10800 3000 3 6000 3000 6000 9000 10800 9000 1 6000 3000 
+hades.signals.SignalStdLogic1164 n2 3 cin_i Y cout_i A i2 A2 2 3 4800 6600 10200 6600 25200 6600 3 10200 6600 10200 4200 10800 4200 1 10200 6600 
+hades.signals.SignalStdLogic1164 n1 2 i4 Y cout_j+1 A 1 2 20400 4800 25200 4800 0 
+hades.signals.SignalStdLogic1164 n0 2 i2 Y i4 A 1 2 16200 4800 18000 4800 0 
+[end signals]
+[end]

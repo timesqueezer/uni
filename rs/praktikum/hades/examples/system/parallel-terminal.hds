@@ -1,0 +1,45 @@
+# hades.models.Design file
+#  
+[name] ParallelTerminalDemo
+[components]
+hades.models.io.Ipin i4 2400 6600 @N 1001 U
+hades.models.io.PulseSwitch i3 2400 8400 @N 1001 0.1
+hades.models.io.LED i2 33600 8400 @N 1001 0
+hades.models.special.ParallelTerminal i1 21600 7200 @N 1001
+hades.models.special.ParallelTerminal i0 7200 7200 @N 1001
+hades.models.io.HexDisplay HexDisplay 33600 9000 @N 1001
+hades.models.io.HexDisplay HexDisplay1 36600 11400 @N 1001
+hades.models.io.HexSwitch HexSwitch 1800 12000 @N 1001
+hades.models.io.HexSwitch HexSwitch1 -1200 9600 @N 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i1 STR i2 A 1 2 28800 8400 33600 8400 0 
+hades.signals.SignalStdLogic1164 n8 2 i0 STR i1 CLK 1 2 14400 8400 21600 8400 0 
+hades.signals.SignalStdLogic1164 n27 2 i4 Y i0 CLR 1 2 7200 7800 2400 6600 0 
+hades.signals.SignalStdLogic1164 n7 2 i0 Q6 i1 D6 1 2 21600 10800 14400 10800 0 
+hades.signals.SignalStdLogic1164 n26 2 i3 Y i0 CLK 1 2 2400 8400 7200 8400 0 
+hades.signals.SignalStdLogic1164 n6 2 i0 Q7 i1 D7 1 2 14400 10200 21600 10200 0 
+hades.signals.SignalStdLogic1164 n25 2 HexSwitch1 Y0 i0 D4 1 2 7200 12000 1800 12000 0 
+hades.signals.SignalStdLogic1164 n5 2 i0 Q5 i1 D5 1 2 21600 11400 14400 11400 0 
+hades.signals.SignalStdLogic1164 n24 2 HexSwitch1 Y1 i0 D5 1 2 1800 11400 7200 11400 0 
+hades.signals.SignalStdLogic1164 n4 2 i0 Q4 i1 D4 1 2 14400 12000 21600 12000 0 
+hades.signals.SignalStdLogic1164 n23 2 HexSwitch1 Y2 i0 D6 1 2 7200 10800 1800 10800 0 
+hades.signals.SignalStdLogic1164 n3 2 i0 Q3 i1 D3 1 2 21600 12600 14400 12600 0 
+hades.signals.SignalStdLogic1164 n22 2 HexSwitch1 Y3 i0 D7 1 2 1800 10200 7200 10200 0 
+hades.signals.SignalStdLogic1164 n2 2 i0 Q2 i1 D2 1 2 14400 13200 21600 13200 0 
+hades.signals.SignalStdLogic1164 n21 2 HexSwitch Y3 i0 D3 1 2 7200 12600 4800 12600 0 
+hades.signals.SignalStdLogic1164 n1 2 i0 Q1 i1 D1 1 2 21600 13800 14400 13800 0 
+hades.signals.SignalStdLogic1164 n20 2 HexSwitch Y2 i0 D2 1 2 4800 13200 7200 13200 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Q0 i1 D0 1 2 14400 14400 21600 14400 0 
+hades.signals.SignalStdLogic1164 n19 2 HexSwitch Y1 i0 D1 1 2 7200 13800 4800 13800 0 
+hades.signals.SignalStdLogic1164 n18 2 HexSwitch Y0 i0 D0 1 2 4800 14400 7200 14400 0 
+hades.signals.SignalStdLogic1164 n17 2 i1 Q0 HexDisplay1 A0 1 2 28800 14400 36600 14400 0 
+hades.signals.SignalStdLogic1164 n16 2 i1 Q1 HexDisplay1 A1 1 2 36600 13800 28800 13800 0 
+hades.signals.SignalStdLogic1164 n15 2 i1 Q2 HexDisplay1 A2 1 2 28800 13200 36600 13200 0 
+hades.signals.SignalStdLogic1164 n14 2 i1 Q3 HexDisplay1 A3 1 2 36600 12600 28800 12600 0 
+hades.signals.SignalStdLogic1164 n13 2 i1 Q4 HexDisplay A0 1 2 28800 12000 33600 12000 0 
+hades.signals.SignalStdLogic1164 n12 2 i1 Q5 HexDisplay A1 1 2 33600 11400 28800 11400 0 
+hades.signals.SignalStdLogic1164 n11 2 i1 Q6 HexDisplay A2 1 2 28800 10800 33600 10800 0 
+hades.signals.SignalStdLogic1164 n10 2 i1 Q7 HexDisplay A3 1 2 33600 10200 28800 10200 0 
+[end signals]
+[end]

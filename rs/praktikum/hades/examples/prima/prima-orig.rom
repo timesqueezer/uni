@@ -1,0 +1,245 @@
+7	42
+8	10
+9	100
+10	14	LDO Anfang Hauptprogramm Beispiel 6
+11	0	dummy
+12	72 ST
+	13	2	A
+14	9	LD
+15	9	k-Anfang
+16	72	ST
+17	45	k
+18	9	LD
+19	8	i-j-Anfang
+20	72	ST
+21	4	i
+22	72	ST
+23	5	j
+24	14	LDO
+25	0	dummy	
+26	72	ST
+27	3	B
+
+
+28	9	LD     Label 28
+29	2	A
+30	72 	ST
+31	248	OP1
+32	9	LD
+33	3	B
+34	72	ST
+35	249	OP2
+36	9	LD
+37	7	return-Addresse
+38	72	ST
+39	21	RET
+
+40	128	BU	unterprogramm-Aufruf
+41	200		Label 200 (Unterprogramm-Anfang)
+42	9	LD
+43	250		RES
+44	72	ST
+45	0		Tabelle (wird dynamisch veraendert)
+46	9	LD
+47	45	K
+48	10	AD1
+49	0	dummy
+50	72	ST
+51	45	K
+52	9	LD
+53	3	B
+54	10	AD1
+55	0		dummy
+56	72	ST
+57	3		B
+58	9	LD
+59	5		j
+60	12	SB1
+61	0		dummy
+62	72	ST
+63	5		j
+64	131	BZ
+65	68		Label 68
+66	128	BU
+67	28		Label 28
+68	9	LD
+69	4		i
+70	12	SB1
+71	0		dummy
+72	72	ST
+73	4		i
+74	131	BZ
+75	92		Label 92
+76	9	LD
+77	2		A
+78	10	AD1
+79	0		dummy
+80	72	ST
+81	2		A
+82	14	LDO
+83	0		dummy
+84	72	ST
+85	3		B
+86	9	LD
+87	8		i-j-Anfang
+88	72	ST
+89	5		j
+90	128	BU
+91	28		Label 28
+92	128	BU
+93	92		Label 92 - Ende Hauptprogramm Beispiel 6
+
+
+
+100	9	LD	         - Anfang Beispiel 1: c = a + b
+101	199		a
+102	0	ADD
+103	198		b
+104	72	ST
+105	197		c
+106	128	BU
+107	92	 	fertig   - Ende Beispiel 1
+
+
+108	8	NOP		 - Anfang Beispiel 2:
+109	0
+110	8	NOP
+111	0
+112	8	NOP
+113	0
+114	9	LD
+115	121
+116	0	ADD
+117	196		a
+118	72	ST
+119	121	
+120	128	BU
+121	108			- Ende Beispiel 2
+
+
+132	9	LD		- Anfang Beispiel 3:
+133	195	
+134	1	SUB
+135	194		b
+136	137	BLS
+137	142		label 1
+138	72	ST		label 2
+139	193		c
+140	128	BU
+141	92		fertig
+142	72	ST	label 1
+143	193		c
+144	14	LDO
+145	0
+146	1	SUB
+147	193		c
+148	128	BU
+149	138		label 2 - Ende Beispiel 3
+
+
+150	14	LDO		- Anfang Beispiel 5
+151	0
+152	72	ST
+153	192		s
+154	15	LD1
+155	0
+156	72	ST
+157	191		i
+158	9	LD		- label 1
+159	190		n
+160	1	SUB
+161	191		i
+162	137	BLS
+163	92		fertig
+164	9	LD
+165	189		basis (feld a)
+166	0	ADD
+167	191		i
+168	72	ST
+169	171
+170	9	LD
+171	0		a[i] dynamisch geaendert
+172	0	ADD
+173	192		s
+174	72	ST
+175	192		s
+176	9	LD
+177	191		i
+178	10	AD1
+179	0
+180	72	ST
+181	191		i
+182	128	BU
+183	158		label 1  - Ende Beispiel 5
+
+
+184	11		a[1] - Beispiel 5
+185	44		a[2]   "
+186	33		a[3]   "
+187	22		a[4]
+188	11		a[5]
+189	183		basis
+190	5		n - Beispiel 5
+191	0		i
+192	0		s
+193	0		c - Beispiel 3
+194	7		b   "
+195	5		a   "
+196	2		a - Beispiel 2
+197	0		c - Beispiel 1
+198	22		b   "
+199	77		a   "
+
+
+200	14	LD0		- Unterprogramm-Anfang, Beispiel 6
+201	0		dummy
+202	72	ST
+203	250		s
+204	9	LD
+205	248		OP1
+206	72	ST
+207	251		x
+208	9	LD
+209	249		OP2
+210	72	ST
+211	252		y
+212	9	LD
+213	254		neun
+214	72	ST
+215	253		h
+216	9	LD
+217	253		h
+218	12	SB1
+219	0		dummy
+220	131	BZ
+221	0		- hier die Return-Adresse eintragen
+222	72	ST
+223	253		h
+224	9	LD
+225	252		y Label 225
+226	193	BEV
+227	234		Label 234
+228	9	LD
+229	250		s
+230	0	ADD
+231	251		x
+232	72	ST
+233	250		s
+234	9	LD
+235	251		x
+236	0	ADD	
+237	251		x (linksshift)
+238	72	ST
+239	251		x
+240	9	LD
+241	252		y
+242	6	SR
+243	0		dummy
+244	72	ST
+245	252		y
+246	128	BU
+247	216		Label 216
+
+254	9		neun
+255	255
+

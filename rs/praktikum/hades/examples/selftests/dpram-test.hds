@@ -1,0 +1,23 @@
+# hades.models.Design file
+#  
+[name] unnamed
+[components]
+hades.models.rtlib.io.IpinVector i5 1200 5400 @N 1001 4 0111_B 1.0E-9 0
+hades.models.rtlib.io.IpinVector i4 1200 -1200 @N 1001 4 1010_B 1.0E-9 0
+hades.models.rtlib.io.OpinVector i3 9000 9000 @N 1001 16 1.0E-9 0
+hades.models.rtlib.io.OpinVector i2 6600 10200 @N 1001 16 1.0E-9 0
+hades.models.rtlib.io.IpinVector i1 1200 1200 @N 1001 16 0000000000011000_B 1.0E-9 0
+hades.models.rtlib.memory.DPRAM i0 3600 3000 @N 1001 16 16 /hades/examples/selftests/dpram-test.hex
+hades.models.io.Ipin i7 0 4200 @N 1001 U
+hades.models.io.Ipin i6 0 7200 @N 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n6 2 i6 Y i0 nWE 1 2 3600 6000 0 7200 0 
+hades.signals.SignalStdLogic1164 n5 2 i7 Y i0 nCS 1 2 0 4200 3600 4800 0 
+hades.signals.SignalStdLogicVector n4 4 2 i5 Y i0 A0 1 2 1200 5400 3600 5400 0 
+hades.signals.SignalStdLogicVector n3 4 2 i4 Y i0 A1 3 2 1200 -1200 13200 -1200 2 13200 -1200 13200 5400 2 13200 5400 10800 5400 0 
+hades.signals.SignalStdLogicVector n2 16 2 i1 Y i0 DI0 2 2 1200 1200 6000 1200 2 6000 1200 6000 3000 0 
+hades.signals.SignalStdLogicVector n1 16 2 i0 DO0 i2 A 2 2 6600 10200 6000 10200 2 6000 10200 6000 7800 0 
+hades.signals.SignalStdLogicVector n0 16 2 i0 DO1 i3 A 2 2 9000 9000 8400 9000 2 8400 9000 8400 7800 0 
+[end signals]
+[end]
