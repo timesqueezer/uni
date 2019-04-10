@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=bibliotheksdatei
+comment0.target=TitelBibliothek(java.lang.String)
+comment0.text=\r\n\ Initialisiert\ die\ TitelBibliothek\ aus\ der\ angegebenen\ Datei\r\n\ \r\n\ @param\ bibliotheksdatei\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Name\ einer\ Datei\ mit\ Titelinformationen\r\n
+comment1.params=
+comment1.target=TitelBibliothek()
+comment1.text=\r\n\ Initialisiert\ die\ TitelBibliothek\ aus\ der\ Datei\ JazzMix.txt\r\n
+comment2.params=
+comment2.target=void\ schreibeAufKonsole()
+comment2.text=\r\n\ Schreibt\ alle\ Titel\ in\ dieser\ Bibliothek\ auf\ die\ Konsole.\r\n
+comment3.params=dateiName
+comment3.target=void\ liesEin(java.lang.String)
+comment3.text=\r\n\ Liest\ Titelinformationen\ aus\ einer\ Textdatei\ ein.\ Jeder\ Titel\ steht\ in\r\n\ einer\ eigenen\ Zeile.\r\n\ \r\n\ @param\ dateiName\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Dateiname\ der\ Textdatei\r\n
+comment4.params=zeile
+comment4.target=void\ verarbeiteZeile(java.lang.String)
+numComments=5

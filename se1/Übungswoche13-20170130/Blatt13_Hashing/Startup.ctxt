@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ visualisiereHashtabelle()
+comment0.text=\r\n\ Zeigt\ die\ Hashtabelle\ eines\ Wortschatzes\ auf\ der\ Konsole\ an.\r\n
+comment1.params=
+comment1.target=void\ vergleichePerformance()
+comment1.text=\r\n\ Vergleicht\ die\ Performance\ verschiedener\ Hashfunktionen.\r\n
+comment2.params=text\ wortschatz
+comment2.target=Wortschatz\ generiereWortschatz(java.util.List,\ Wortschatz)
+comment2.text=\r\n\ Generiert\ einen\ Wortschatz\ aus\ dem\ gegebenenen\ Text.\r\n\r\n\ @param\ text\ der\ zu\ verarbeitende\ Text\r\n\ @param\ wortschatz\ in\ diesen\ Wortschatz\ wird\ eingefuegt\r\n\ @return\ wortschatz\r\n
+comment3.params=text\ wortschatz
+comment3.target=void\ vermesse(java.util.List,\ Wortschatz)
+comment3.text=\r\n\ Diese\ Methode\ misst,\ wie\ lange\ es\ dauert,\r\n\ einen\ Wortschatz\ aus\ dem\ gegebenen\ Text\ zu\ generieren.\r\n\r\n\ @param\ text\ der\ zu\ verarbeitende\ Text\r\n\ @param\ wortschatz\ in\ diesen\ Wortschatz\ wird\ eingefuegt\r\n
+numComments=4

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=wort
+comment0.target=int\ hashWert(java.lang.String)
+comment0.text=\r\n\ Bilde\ das\ gegebene\ Wort\ auf\ einen\ ganzzahligen\ Wert\ ab.\r\n
+comment1.params=
+comment1.target=java.lang.String\ gibBeschreibung()
+comment1.text=\r\n\ Liefert\ eine\ Beschreibung\ fuer\ die\ Art\ der\ Berechnung.\r\n
+numComments=2

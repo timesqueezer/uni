@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=file
+comment0.target=java.lang.String\ aus(java.io.File)
+comment0.text=\r\n\ Generiert\ aus\ dem\ Inhalt\ einer\ Datei\ einen\ Fingerabdruck.\r\n\ Genau\ wie\ bei\ Menschen\ ist\ es\ extrem\ unwahrscheinlich,\r\n\ dass\ inhaltsverschiedene\ Dateien\ denselben\ Fingerabdruck\ haben.\r\n\ \r\n\ @param\ file\ die\ einzulesende\ Datei\r\n\ @return\ der\ Fingerabdruck,\ sofern\ alles\ klappt,\ ansonsten\ der\ Dateiname\ \r\n
+comment1.params=bytes
+comment1.target=java.lang.String\ asHexString(byte[])
+comment1.text=\r\n\ Wandelt\ ein\ Byte-Array\ in\ einen\ hexadezimalen\ String\ um.\r\n\ Arrays\ sind\ Sammlungen\ fester\ Groesse,\r\n\ die\ erst\ spaeter\ in\ der\ Vorlesung\ drankommen\ werden.\r\n
+numComments=2

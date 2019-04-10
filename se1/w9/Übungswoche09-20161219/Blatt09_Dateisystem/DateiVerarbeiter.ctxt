@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.params=datei
+comment0.target=void\ verarbeite(java.io.File)
+comment0.text=\r\n\ Diese\ Methode\ wird\ vom\ VerzeichnisWanderer\ fuer\ jede\ Datei\ aufgerufen.\r\n\ Was\ konkret\ mit\ jeder\ einzelnen\ Datei\ passiert,\ legen\ die\ implementierenden\ Klassen\ fest.\r\n
+numComments=1

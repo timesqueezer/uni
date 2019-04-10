@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=gaeste\ parties
+comment0.target=int\ simuliere(int,\ int)
+comment0.text=\r\n\ Simuliere\ das\ Geburtstagsparadoxon.\r\n\ \r\n\ @param\ gaeste\r\n\ \ \ \ \ \ \ \ \ \ \ \ die\ Anzahl\ der\ Gaeste\ auf\ einer\ Party\r\n\ @param\ parties\r\n\ \ \ \ \ \ \ \ \ \ \ \ die\ Anzahl\ der\ Parties.\r\n\ \ \ \ \ \ \ \ \ \ \ \ Je\ hoeher\ dieser\ Wert,\ desto\ genauer\ das\ Messergebnis\!\r\n\ \r\n\ @return\ die\ Wahrscheinlichkeit\ einer\ Kollision\ in\ Prozent\r\n
+comment1.params=gaeste
+comment1.target=int\ simuliere(int)
+comment1.text=\r\n\ Simuliere\ das\ Geburtstagsparadoxon\ mit\ 10000\ Parties.\r\n\ \r\n\ @param\ gaeste\r\n\ \ \ \ \ \ \ \ \ \ \ \ die\ Anzahl\ der\ Gaeste\ auf\ einer\ Party\r\n\ \r\n\ @return\ die\ Wahrscheinlichkeit\ einer\ Kollision\ in\ Prozent\r\n
+comment2.params=
+comment2.target=boolean\ test()
+comment2.text=\r\n\ Testet\ die\ Implementation\ von\ MengenParty.\r\n\ @return\ true,\ falls\ der\ Test\ erfolgreich\ war\r\n
+numComments=3

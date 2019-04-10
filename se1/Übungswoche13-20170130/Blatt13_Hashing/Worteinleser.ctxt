@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=dateiName
+comment0.target=java.util.List\ dateiAlsText(java.lang.String)
+comment0.text=\r\n\ Liest\ einen\ Text\ aus\ einer\ Datei\ ein\ und\ liefert\ ihn\ als\ Liste\ von\ Woertern\ zurueck.\r\n
+comment1.params=
+comment1.target=Worteinleser()
+comment1.text=\r\n\ Initialisiert\ einen\ neuen\ Wortleser.\r\n
+comment2.params=
+comment2.target=java.util.List\ fertig()
+comment2.text=\r\n\ Gibt\ den\ bisher\ eingelesenen\ Text\ als\ Liste\ zurueck\ und\ setzt\ den\ Worteinleser\ zurueck.\r\n\ Die\ zurueckgegebene\ Liste\ ist\ damit\ unabhaengig\ vom\ internen\ Zustand\ des\ Worteinlesers.\r\n
+comment3.params=dateiName
+comment3.target=Worteinleser\ ausDatei(java.lang.String)
+comment3.text=\r\n\ Liest\ eine\ Liste\ von\ Woertern\ aus\ einer\ Textdatei\ ein.\r\n\ \r\n\ @param\ dateiName\ der\ Dateiname\ der\ einzulesenden\ Textdatei\r\n\ @return\ this\r\n
+comment4.params=zeile
+comment4.target=void\ verarbeiteZeile(java.lang.String)
+numComments=5

@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=WortschatzTest()
+comment0.text=\r\n\ Jede\ Testmethode\ arbeitet\ auf\ einem\ frisch\ erzeugten\ Exemplar.\r\n
+comment1.params=
+comment1.target=void\ testNeuerWortschatzIstLeer()
+comment1.text=\r\n\ Stellt\ sicher,\ dass\ ein\ neuer\ Wortschatz\ leer\ ist.\r\n
+comment2.params=
+comment2.target=void\ testHinzugefuegtesWortIstEnthalten()
+comment2.text=\r\n\ Stellt\ sicher,\ dass\ ein\ hinzugefuegtes\ Wort\ auch\ wirklich\ enthalten\ ist.\r\n
+comment3.params=
+comment3.target=void\ testNichtHinzugefuegtesWortIstNichtEnthalten()
+comment3.text=\r\n\ Stellt\ sicher,\ dass\ ein\ nicht\ hinzugef\u00FCgtes\ Wort\ auch\ nicht\ enthalten\ ist.\r\n
+comment4.params=
+comment4.target=void\ testDuplikateWerdenNichtHinzugefuegt()
+comment4.text=\r\n\ Stellt\ sicher,\ dass\ bei\ mehrfachem\ Hinzuf\u00FCgen\ des\ gleichen\ Wortes,\ nur\ eins\ gespeichert\ wird.\ \r\n
+numComments=5
