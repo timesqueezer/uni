@@ -26,10 +26,13 @@ void FlowDataSource::createData(int n_size, int time)
 
 float FlowDataSource::getDataValue(int iz, int iy, int ix, int ic)
 {
-    int index = iz;
+    /*int index = iz;
     index += iy * size;
     index += ix * iy * size * 3;
-    index += ic;
+    index += ic;*/
+
+    int index = iz*size*size*3 + iy*size*3 + ix*3 + ic;
+
     return cartesianDataGrid[index];
 }
 
