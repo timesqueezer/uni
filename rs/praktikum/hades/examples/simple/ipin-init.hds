@@ -1,0 +1,22 @@
+# hades.models.Design file
+#  
+[name] Ipin_init_demo
+[components]
+hades.models.io.Opin i5 12000 3600 1001
+hades.models.gates.InvSmall i4 7200 3000 1001 5.0E-9
+hades.models.io.Ipin i3 3600 10800 1001 Z
+hades.models.io.Ipin i2 3600 8400 1001 1
+hades.models.io.Ipin i1 3600 6000 1001 0
+hades.models.io.Ipin i0 3600 3600 1001 U
+hades.models.io.Opin i8 12000 10800 1001
+hades.models.io.Opin i7 12000 8400 1001
+hades.models.io.Opin i6 12000 6000 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n4 2 i1 Y i6 A 1 2 12000 6000 3600 6000 0 
+hades.signals.SignalStdLogic1164 n3 2 i2 Y i7 A 1 2 3600 8400 12000 8400 0 
+hades.signals.SignalStdLogic1164 n2 2 i3 Y i8 A 1 2 12000 10800 3600 10800 0 
+hades.signals.SignalStdLogic1164 n1 2 i0 Y i4 A 1 2 7200 3600 3600 3600 0 
+hades.signals.SignalStdLogic1164 n0 2 i4 Y i5 A 1 2 9000 3600 12000 3600 0 
+[end signals]
+[end]

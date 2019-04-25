@@ -1,0 +1,23 @@
+# hades.models.Design file
+#  
+[name] Compare23
+[components]
+hades.models.rtlib.compare.CompareEqual i5 9600 13800 @N 1001 4 Z 1.0E-8
+hades.models.rtlib.io.Constant i4 10200 10800 @N 1001 4 0010_B 1.0E-8
+hades.models.rtlib.io.Constant i3 15000 3600 @N 1001 4 0011_B 1.0E-8
+hades.models.rtlib.compare.CompareEqual i2 14400 6600 @N 1001 4 1 1.0E-8
+hades.models.gates.And2 i0 16800 15000 @N 1001 1.0E-8
+hades.models.io.Opin is_23 21600 16200 @N 1001
+hades.models.rtlib.io.IpinVector hours_10 9000 13200 @N 1001 4 0010_B 1.0E-9 0
+hades.models.rtlib.io.IpinVector hours_1 9000 6000 @N 1001 4 0011_B 1.0E-9 0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n6 2 i0 Y is_23 A 1 2 21600 16200 20400 16200 0 
+hades.signals.SignalStdLogic1164 n5 2 i5 Y i0 B 2 2 16800 16800 11400 16800 2 11400 16800 11400 15600 0 
+hades.signals.SignalStdLogic1164 n4 2 i2 Y i0 A 2 2 16200 8400 16200 15600 2 16200 15600 16800 15600 0 
+hades.signals.SignalStdLogicVector n3 4 2 hours_10 Y i5 A 2 2 10800 13800 10800 13200 2 10800 13200 9000 13200 0 
+hades.signals.SignalStdLogicVector n2 4 2 i4 Y i5 B 1 2 12000 12600 12000 13800 0 
+hades.signals.SignalStdLogicVector n1 4 2 hours_1 Y i2 A 2 2 15600 6600 15600 6000 2 15600 6000 9000 6000 0 
+hades.signals.SignalStdLogicVector n0 4 2 i3 Y i2 B 1 2 16800 5400 16800 6600 0 
+[end signals]
+[end]

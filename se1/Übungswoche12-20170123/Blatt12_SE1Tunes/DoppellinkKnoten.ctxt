@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=DoppellinkKnoten()
+comment0.text=\r\n\ Erzeuge\ einen\ neuen\ Knoten\ ohne\ Element\ und\ Verkettungsinformationen.\r\n
+comment1.params=
+comment1.target=DoppellinkKnoten\ gibNachfolger()
+comment1.text=\r\n\ Gib\ den\ nachfolgenden\ Knoten\ zurueck.\r\n\ \r\n\ @return\ den\ Nachfolgerknoten\r\n
+comment2.params=nachfolger
+comment2.target=void\ setzeNachfolger(DoppellinkKnoten)
+comment2.text=\r\n\ Setze\ den\ nachfolgenden\ Knoten.\r\n\ \r\n\ @param\ nachfolger\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Nachfolgerknoten.\r\n
+comment3.params=
+comment3.target=DoppellinkKnoten\ gibVorgaenger()
+comment3.text=\r\n\ Gib\ den\ vorherigen\ Knoten\ zurueck.\r\n\ \r\n\ @return\ den\ Vorgaenger\ dieses\ Knotens\r\n
+comment4.params=vorgaenger
+comment4.target=void\ setzeVorgaenger(DoppellinkKnoten)
+comment4.text=\r\n\ Setze\ den\ Vorgaenger\ dieses\ Knotens.\r\n\ \r\n\ @param\ vorgaenger\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ Vorgaengerknoten.\r\n
+numComments=5

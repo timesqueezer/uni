@@ -1,0 +1,70 @@
+   1              ; strcat
+   2  0000        START:
+   3  8000      	.org	0x8000
+   4  8000  0045  	.ascii	"Erster String"
+      8002  0072
+      8004  0073
+      8006  0074
+      8008  0065
+      800A  0072
+      800C  0020
+      800E  0053
+      8010  0074
+      8012  0072
+      8014  0069
+      8016  006E
+      8018  0067
+   5  801A  0000  	.defw	0
+   6  801C  005A  	.ascii	"Zweiter String"	; 0x800e
+      801E  0077
+      8020  0065
+      8022  0069
+      8024  0074
+      8026  0065
+      8028  0072
+      802A  0020
+      802C  0053
+      802E  0074
+      8030  0072
+      8032  0069
+      8034  006E
+      8036  0067
+   7  8038  0000  	.defw	0
+   8  0000      	.org 0x0000
+   9  0000  348B  	movi	R11, 8
+  10  0002  38CB  	lsli	R11, 12
+  11  0004  20BA  	mov	R10, R11
+  12  0006  35EA  	addi	R10, 0xe
+  13  0008  35EA  	addi	R10, 0xe
+  14  000A  9002  	jsr	strcat
+  15  000C  F000  	halt
+  16  000E        STRCAT:
+  17  000E  3400  	movi	R0, 0	; to find null-terminator
+  18  0010        LOOP:
+  19  0010  40A1  	ldw	R1, 0(R10)
+  20  0012  3010  	cmpe	R0, R1
+  21  0014  A004  	bt	concat
+  22  0016  352A  	addi	R10, 2
+  23  0018  8FF6  	br	loop
+  24  001A        CONCAT:
+  25  001A  40B1  	ldw	R1, 0(R11)
+  26  001C  3010  	cmpe	R0, R1
+  27  001E  A008  	bt	end
+  28  0020  50A1  	stw	R1, 0(R10)
+  29  0022  352B  	addi	R11, 2
+  30  0024  352A  	addi	R10, 2
+  31  0026  8FF2  	br	concat
+  32  0028        END:
+  33              ;	addi	R10, 2
+  34  0028  50A0  	stw	R0, 0(R10)
+  35  002A  C00F  	jmp	R15
+
+
+         Label und Equates
+         *****************
+
+CONCAT                                26   001A       24
+END                                   40   0028       32
+LOOP                                  16   0010       18
+START                                  0   0000        2
+STRCAT                                14   000E       16

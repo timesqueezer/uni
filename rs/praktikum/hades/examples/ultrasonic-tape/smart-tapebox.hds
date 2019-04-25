@@ -1,0 +1,37 @@
+# hades.models.Design file
+#  
+[name] Ultraschall-Entfernungsmesser
+[components]
+hades.models.io.PowerOnReset por 4800 8400 @N 1001 1.0E-4 1.0E-4
+hades.models.gates.Xor2 sum 33000 2400 @N 1001 1.0E-8
+hades.models.pic.SmartPic16F84 cpu 10800 6000 @N 1001 1.0E-6 /hades/examples/ultrasonic-tape/tapebox-fast.rom
+hades.models.gates.Inv delay_0.01 28200 4200 @N 1001 0.05
+hades.models.gates.Inv delay_0.033 28200 1800 @N 1001 0.033
+hades.models.special.TextLCD display_2x16 19200 13200 @N 1001 2 16
+hades.models.io.Ipin mask 3600 2400 @N 1001 0
+hades.models.gates.Inv buffer 24600 1800 @N 1001 5.0E-9
+hades.models.io.Gnd i5 16800 20400 @N 1001
+hades.models.io.Ipin not_recall 3600 5400 @N 1001 1
+hades.models.io.Ipin store 3600 4200 @N 1001 0
+hades.models.io.Ipin send 3600 1200 @N 1001 0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n17 2 delay_0.01 Y sum B 3 2 33000 4200 31200 4200 2 31200 4200 31200 5400 2 31200 5400 30600 5400 0 
+hades.signals.SignalStdLogic1164 n16 2 cpu B6 not_recall Y 4 2 13800 10200 14400 10200 2 14400 10200 14400 5400 2 14400 5400 8400 5400 2 8400 5400 3600 5400 0 
+hades.signals.SignalStdLogic1164 n15 2 cpu A2 send Y 4 2 10800 6600 7800 6600 2 7800 6600 7800 2400 2 7800 2400 7800 1200 2 7800 1200 3600 1200 0 
+hades.signals.SignalStdLogic1164 n14 2 cpu A3 store Y 3 2 10800 7200 7200 7200 2 7200 7200 7200 4200 2 7200 4200 3600 4200 0 
+hades.signals.SignalStdLogic1164 n13 2 cpu A4 mask Y 3 2 10800 7800 6600 7800 2 6600 7800 6600 2400 2 6600 2400 3600 2400 0 
+hades.signals.SignalStdLogic1164 n9 2 cpu A1 buffer A 3 2 13800 6600 24000 6600 2 24000 6600 24000 3000 2 24000 3000 24600 3000 0 
+hades.signals.SignalStdLogic1164 n12 2 sum Y cpu B7 4 2 36600 3600 37200 3600 2 37200 3600 37200 9600 2 37200 9600 34800 9600 2 34800 9600 13800 9600 0 
+hades.signals.SignalStdLogic1164 n8 2 por nreset cpu /MCLR 1 2 10800 8400 4800 8400 0 
+hades.signals.SignalStdLogic1164 n11 3 buffer Y delay_0.033 A delay_0.01 A 4 2 27600 3000 28200 3000 2 27000 3000 27600 3000 2 27600 3000 27600 5400 2 27600 5400 28200 5400 1 27600 3000 
+hades.signals.SignalStdLogic1164 n10 2 delay_0.033 Y sum A 1 2 33000 3000 30600 3000 0 
+hades.signals.SignalStdLogic1164 n6 2 i5 GND display_2x16 RW 2 2 16800 20400 16800 14400 2 16800 14400 19200 14400 0 
+hades.signals.SignalStdLogic1164 n5 2 cpu B5 display_2x16 E 3 2 19200 13800 16800 13800 2 16800 13800 16800 10800 2 16800 10800 13800 10800 0 
+hades.signals.SignalStdLogic1164 n4 2 cpu B4 display_2x16 RS 3 2 13800 11400 15600 11400 2 15600 11400 15600 15000 2 15600 15000 19200 15000 0 
+hades.signals.SignalStdLogic1164 n3 2 cpu B0 display_2x16 D4 3 2 10800 9600 6600 9600 2 6600 9600 6600 18000 2 6600 18000 19200 18000 0 
+hades.signals.SignalStdLogic1164 n2 2 display_2x16 D5 cpu B1 3 2 19200 17400 7200 17400 2 7200 17400 7200 10200 2 7200 10200 10800 10200 0 
+hades.signals.SignalStdLogic1164 n1 2 cpu B2 display_2x16 D6 3 2 10800 10800 7800 10800 2 7800 10800 7800 16800 2 7800 16800 19200 16800 0 
+hades.signals.SignalStdLogic1164 n0 2 cpu B3 display_2x16 D7 3 2 10800 11400 8400 11400 2 8400 11400 8400 16200 2 8400 16200 19200 16200 0 
+[end signals]
+[end]

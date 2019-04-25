@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=tagNummer
+comment0.target=Tag(int)
+comment0.text=\r\n\ Erstellt\ ein\ neues\ Tag-Objekt.\r\n\ \r\n\ @param\ tagNummer\ der\ Tag\ des\ Jahres\ im\ Intervall\ [0,366).\r\n\ 0\ steht\ dabei\ fuer\ den\ 1.\ Januar,\ 365\ fuer\ den\ 31.\ Dezember.\r\n
+comment1.params=object
+comment1.target=boolean\ equals(java.lang.Object)
+comment1.text=\r\n\ Zwei\ Exemplare\ dieser\ Klasse,\ die\ denselben\ Tag\ repraesentieren,\r\n\ werden\ als\ gleich\ angesehen.\r\n
+comment2.params=
+comment2.target=int\ hashCode()
+comment2.text=\r\n\ @see\ Object.hashCode()\r\n
+comment3.params=
+comment3.target=java.lang.String\ toString()
+comment3.text=\r\n\ @see\ Object.toString()\r\n
+comment4.params=
+comment4.target=Tag\ gibZufaelligenTag()
+comment4.text=\r\n\ @return\ ein\ zufaelliger\ Tag\ im\ Jahr\r\n
+numComments=5

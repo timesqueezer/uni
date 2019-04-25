@@ -1,0 +1,54 @@
+% /hades/examples/performance/README
+
+A few example designs to test (and or demonstrate) raw simulator
+performance. Other good performance tests are the PIC processor
+designs in /hades/examples/pic16c84.
+
+o inv_chain10:   
+                          A simple chain of ten inverters, driven by
+                          a clock generator. Except for the wakeup-events
+                          from the clock generator, this design will have
+                          at most on event scheduled from the inverters.
+                          Therefore, it allows to measure the raw simulation
+                          speed with a very simple StdLogic1164 component.
+
+                          Depending on the virtual machine (w/o JIT), we
+                          have seend between 10.000 and 250.000 events/sec.
+    
+                          To get performance from the Hotspot VM, you may
+                          need to stop and restart the simulation...
+
+
+o incr_chain10:     
+                          A chain of ten incrementers of 40 bits each, and
+                          some logic to initialize the circuit. The design
+                          is used to demonstrate the performance of simple
+                          operations on StdLogicVectors.
+
+o gates_and_counter:
+                          Another inverter chain with some initialization
+                          logic. This design doesn't need clock generator
+                          wakeup events and may run even faster. However,
+                          the counter component also stresses the graphics
+                          capabilities of your VM - mainly setText() calls
+                          and image bitblts.
+
+                          Play with several 'repaint frequency' settings
+                          to see how they affect simulation performance
+                          and VM stability.
+
+
+
+
+
+For comparison, hand-stopped tests with corresponding VHDL designs
+and two leading commercial VHDL simulators gave the following results
+on a Sun workstation (Ultra-1, 143MHz, 64Mbyte RAM, Solaris 2.51):
+
+events/second:                    inv_chain10  incr_chain10
+
+Synopsys VSS 1998.08:                 137.000        30.300
+
+Cadence Leapfrog sv 2.60-s021:              -         9.800
+                
+Neither Synopsys nor Leapfrog offer 'glow mode' or animation. 

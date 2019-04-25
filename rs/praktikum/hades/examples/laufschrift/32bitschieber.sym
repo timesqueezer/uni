@@ -1,0 +1,74 @@
+hades.symbols.BboxRectangle  0 0 6000 19800
+hades.symbols.Rectangle  0 0 6000 19800
+hades.symbols.PortLabel 5850 19350 3 31
+hades.symbols.PortSymbol 6000 19200 31
+hades.symbols.PortLabel 5850 18750 3 30
+hades.symbols.PortSymbol 6000 18600 30
+hades.symbols.PortLabel 5850 18150 3 29
+hades.symbols.PortSymbol 6000 18000 29
+hades.symbols.PortLabel 5850 17550 3 28
+hades.symbols.PortSymbol 6000 17400 28
+hades.symbols.PortLabel 5850 16950 3 27
+hades.symbols.PortSymbol 6000 16800 27
+hades.symbols.PortLabel 5850 16350 3 26
+hades.symbols.PortSymbol 6000 16200 26
+hades.symbols.PortLabel 5850 15750 3 25
+hades.symbols.PortSymbol 6000 15600 25
+hades.symbols.PortLabel 5850 15150 3 24
+hades.symbols.PortSymbol 6000 15000 24
+hades.symbols.PortLabel 5850 14550 3 23
+hades.symbols.PortSymbol 6000 14400 23
+hades.symbols.PortLabel 5850 13950 3 22
+hades.symbols.PortSymbol 6000 13800 22
+hades.symbols.PortLabel 5850 13350 3 21
+hades.symbols.PortSymbol 6000 13200 21
+hades.symbols.PortLabel 5850 12750 3 20
+hades.symbols.PortSymbol 6000 12600 20
+hades.symbols.PortLabel 5850 12150 3 19
+hades.symbols.PortSymbol 6000 12000 19
+hades.symbols.PortLabel 5850 11550 3 18
+hades.symbols.PortSymbol 6000 11400 18
+hades.symbols.PortLabel 5850 10950 3 17
+hades.symbols.PortSymbol 6000 10800 17
+hades.symbols.PortLabel 5850 10350 3 16
+hades.symbols.PortSymbol 6000 10200 16
+hades.symbols.PortLabel 5850 9750 3 15
+hades.symbols.PortSymbol 6000 9600 15
+hades.symbols.PortLabel 5850 9150 3 14
+hades.symbols.PortSymbol 6000 9000 14
+hades.symbols.PortLabel 5850 8550 3 13
+hades.symbols.PortSymbol 6000 8400 13
+hades.symbols.PortLabel 5850 7950 3 12
+hades.symbols.PortSymbol 6000 7800 12
+hades.symbols.PortLabel 5850 7350 3 11
+hades.symbols.PortSymbol 6000 7200 11
+hades.symbols.PortLabel 5850 6750 3 10
+hades.symbols.PortSymbol 6000 6600 10
+hades.symbols.PortLabel 5850 6150 3 09
+hades.symbols.PortSymbol 6000 6000 09
+hades.symbols.PortLabel 5850 5550 3 08
+hades.symbols.PortSymbol 6000 5400 08
+hades.symbols.PortLabel 5850 4950 3 07
+hades.symbols.PortSymbol 6000 4800 07
+hades.symbols.PortLabel 5850 4350 3 06
+hades.symbols.PortSymbol 6000 4200 06
+hades.symbols.PortLabel 5850 3750 3 05
+hades.symbols.PortSymbol 6000 3600 05
+hades.symbols.PortLabel 5850 3150 3 04
+hades.symbols.PortSymbol 6000 3000 04
+hades.symbols.PortLabel 5850 2550 3 03
+hades.symbols.PortSymbol 6000 2400 03
+hades.symbols.PortLabel 5850 1950 3 02
+hades.symbols.PortSymbol 6000 1800 02
+hades.symbols.PortLabel 5850 1350 3 01
+hades.symbols.PortSymbol 6000 1200 01
+hades.symbols.PortLabel 5850 750 3 00
+hades.symbols.PortSymbol 6000 600 00
+hades.symbols.PortLabel 150 1950 /reset
+hades.symbols.PortSymbol 0 1800 /reset
+hades.symbols.PortLabel 150 1350 clock
+hades.symbols.PortSymbol 0 1200 clock
+hades.symbols.PortLabel 150 750 in
+hades.symbols.PortSymbol 0 600 in
+hades.symbols.InstanceLabel 150 19650 i0
+hades.symbols.ClassLabel 150 450 32bitSchieber

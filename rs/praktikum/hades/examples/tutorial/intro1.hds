@@ -1,0 +1,11 @@
+# hades.models.Design file
+#  
+[name] HADES-Welcome!
+[components]
+hades.models.meta.ActionButton intro1Button 1800 13200 1001 /hades/examples/tutorial/figs/ButtonHome.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/intro1.hds
+hades.models.meta.ActionButton contentsButton 1800 14400 1001 /hades/examples/tutorial/figs/ButtonPrev.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/contents.hds
+hades.models.FigObject drawing 0 0 1001 /hades/examples/tutorial/figs/welcome.fig
+[end components]
+[signals]
+[end signals]
+[end]

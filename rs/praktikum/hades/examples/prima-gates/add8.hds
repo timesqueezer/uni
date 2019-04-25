@@ -1,0 +1,75 @@
+# hades.models.Design file
+#  
+[name] ADD_8
+[components]
+hades.models.io.Opin S7 21600 5400 1001
+hades.models.io.Opin S6 21600 9000 1001
+hades.models.io.Ipin i0 4800 34200 1001 
+hades.models.io.Opin S5 21600 12600 1001
+hades.models.io.Opin S4 21600 16200 1001
+hades.models.io.Opin S3 21600 19800 1001
+hades.models.io.Opin S2 21600 23400 1001
+hades.models.io.Opin S1 21600 27000 1001
+hades.models.io.Opin S0 21600 30600 1001
+hades.models.io.Ipin B7 4800 22800 1001 
+hades.models.io.Ipin B6 4800 24000 1001 
+hades.models.io.Ipin B5 4800 25200 1001 
+hades.models.io.Ipin B4 4800 26400 1001 
+hades.models.io.Ipin B3 4800 27600 1001 
+hades.models.io.Ipin B2 4800 28800 1001 
+hades.models.io.Ipin B1 4800 30000 1001 
+hades.models.io.Ipin B0 4800 31200 1001 
+hades.models.Design ADD8 13200 30000 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD7 13200 26400 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD6 13200 22800 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD5 13200 19200 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD4 13200 15600 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD3 13200 12000 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD2 13200 8400 1001 /hades/examples/prima/add1.hds
+hades.models.Design ADD1 13200 4800 1001 /hades/examples/prima/add1.hds
+hades.models.io.Opin cout 21600 3000 1001
+hades.models.io.Ipin A7 4800 5400 1001 
+hades.models.io.Ipin A6 4800 6600 1001 
+hades.models.io.Ipin A5 4800 7800 1001 
+hades.models.io.Ipin A4 4800 9000 1001 
+hades.models.io.Ipin A3 4800 10200 1001 
+hades.models.io.Ipin A2 4800 11400 1001 
+hades.models.io.Ipin A1 4800 12600 1001 
+hades.models.io.Ipin A0 4800 13800 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n29 2 ADD4 cout ADD3 cin 1 6 19200 16800 19800 16800 19800 15600 12600 14400 12600 13800 13200 13800 0 
+hades.signals.SignalStdLogic1164 n28 2 ADD5 cout ADD4 cin 1 6 19200 20400 19800 20400 19800 19200 12600 18000 12600 17400 13200 17400 0 
+hades.signals.SignalStdLogic1164 n9 2 A0 Y ADD8 ain 1 4 13200 30600 5400 30600 5400 13800 4800 13800 0 
+hades.signals.SignalStdLogic1164 n27 2 ADD6 cout ADD5 cin 1 6 19200 24000 19800 24000 19800 22800 12600 21600 12600 21000 13200 21000 0 
+hades.signals.SignalStdLogic1164 n8 2 A7 Y ADD1 ain 1 2 4800 5400 13200 5400 0 
+hades.signals.SignalStdLogic1164 n26 2 ADD7 cout ADD6 cin 1 6 19200 27600 19800 27600 19800 26400 12600 25200 12600 24600 13200 24600 0 
+hades.signals.SignalStdLogic1164 n7 2 B7 Y ADD1 bin 1 4 4800 22800 8400 22800 8400 6000 13200 6000 0 
+hades.signals.SignalStdLogic1164 n25 2 ADD7 sum S1 A 1 2 19200 27000 21600 27000 0 
+hades.signals.SignalStdLogic1164 n6 2 B6 Y ADD2 bin 1 4 4800 24000 9000 24000 9000 9600 13200 9600 0 
+hades.signals.SignalStdLogic1164 n24 2 ADD8 cout ADD7 cin 1 6 19200 31200 19800 31200 19800 30000 12600 28800 12600 28200 13200 28200 0 
+hades.signals.SignalStdLogic1164 n5 2 B5 Y ADD3 bin 1 4 4800 25200 9600 25200 9600 13200 13200 13200 0 
+hades.signals.SignalStdLogic1164 n23 2 ADD8 sum S0 A 1 2 19200 30600 21600 30600 0 
+hades.signals.SignalStdLogic1164 n4 2 B4 Y ADD4 bin 1 4 4800 26400 10200 26400 10200 16800 13200 16800 0 
+hades.signals.SignalStdLogic1164 n22 2 ADD6 sum S2 A 1 2 19200 23400 21600 23400 0 
+hades.signals.SignalStdLogic1164 n3 2 B3 Y ADD5 bin 1 4 4800 27600 10800 27600 10800 20400 13200 20400 0 
+hades.signals.SignalStdLogic1164 n21 2 ADD5 sum S3 A 1 2 19200 19800 21600 19800 0 
+hades.signals.SignalStdLogic1164 n2 2 B2 Y ADD6 bin 1 4 4800 28800 11400 28800 11400 24000 13200 24000 0 
+hades.signals.SignalStdLogic1164 n20 2 ADD4 sum S4 A 1 2 19200 16200 21600 16200 0 
+hades.signals.SignalStdLogic1164 n1 2 B1 Y ADD7 bin 1 4 4800 30000 12000 30000 12000 27600 13200 27600 0 
+hades.signals.SignalStdLogic1164 n0 2 B0 Y ADD8 bin 1 2 4800 31200 13200 31200 0 
+hades.signals.SignalStdLogic1164 n19 2 ADD3 sum S5 A 1 2 19200 12600 21600 12600 0 
+hades.signals.SignalStdLogic1164 n18 2 ADD2 sum S6 A 1 2 19200 9000 21600 9000 0 
+hades.signals.SignalStdLogic1164 n17 2 ADD1 sum S7 A 1 2 19200 5400 21600 5400 0 
+hades.signals.SignalStdLogic1164 n16 2 i0 Y ADD8 cin 1 4 4800 34200 12000 34200 12000 31800 13200 31800 0 
+hades.signals.SignalStdLogic1164 n15 2 A6 Y ADD2 ain 1 4 13200 9000 10200 9000 10200 6600 4800 6600 0 
+hades.signals.SignalStdLogic1164 n14 2 A5 Y ADD3 ain 1 5 13200 12600 9600 12600 9600 8400 9600 7800 4800 7800 0 
+hades.signals.SignalStdLogic1164 n13 2 A4 Y ADD4 ain 1 4 13200 16200 7800 16200 7800 9000 4800 9000 0 
+hades.signals.SignalStdLogic1164 n12 2 A3 Y ADD5 ain 1 4 4800 10200 7200 10200 7200 19800 13200 19800 0 
+hades.signals.SignalStdLogic1164 n11 2 A2 Y ADD6 ain 1 4 13200 23400 6600 23400 6600 11400 4800 11400 0 
+hades.signals.SignalStdLogic1164 n10 2 A1 Y ADD7 ain 1 4 4800 12600 6000 12600 6000 27000 13200 27000 0 
+hades.signals.SignalStdLogic1164 n32 2 ADD1 cout cout A 1 4 19200 6000 19800 6000 19800 3000 21600 3000 0 
+hades.signals.SignalStdLogic1164 n31 2 ADD2 cout ADD1 cin 1 6 19200 9600 19800 9600 19800 8400 12600 7200 12600 6600 13200 6600 0 
+hades.signals.SignalStdLogic1164 n30 2 ADD3 cout ADD2 cin 1 6 19200 13200 19800 13200 19800 12000 12600 10800 12600 10200 13200 10200 0 
+[end signals]
+[end]

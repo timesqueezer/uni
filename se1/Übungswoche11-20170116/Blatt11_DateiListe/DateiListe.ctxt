@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=DateiListe()
+comment0.text=\r\n\ Zu\ Beginn\ ist\ eine\ DateiListe\ leer.\r\n
+comment1.params=datei
+comment1.target=void\ verarbeite(java.io.File)
+comment1.text=\r\n\ Fuegt\ die\ uebergebene\ Datei\ zur\ DateiListe\ hinzu.\r\n
+comment2.params=
+comment2.target=void\ schreibeAufDieKonsole()
+comment2.text=\r\n\ Schreibt\ alle\ Eintraege\ auf\ die\ Konsole,\ zusammen\ mit\ ihrem\ Index.\ Beispiel\:\r\n\ 0.\ config.sys\r\n\ 1.\ autoexec.bat\r\n\ 2.\ command.com\r\n
+comment3.params=
+comment3.target=void\ loescheAlleEintraege()
+comment3.text=\r\n\ Loescht\ alle\ Eintraege\ aus\ der\ DateiListe.\r\n
+comment4.params=
+comment4.target=long\ gesamtLaenge()
+comment4.text=\r\n\ Liefert\ die\ Laenge\ (in\ Bytes)\ aller\ Dateien\ in\ der\ DateiListe.\r\n
+numComments=5

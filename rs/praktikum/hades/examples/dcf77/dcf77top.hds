@@ -1,0 +1,37 @@
+# hades.models.Design file
+#  
+[name] DCF77
+[components]
+hades.models.io.PowerOnReset power_on 3600 -1800 @N 1001 0.0050 0.0050
+hades.models.io.HexDisplay hours1 22200 10800 @N 1001
+hades.models.Design dcf77clock 7200 0 @N 1001 /hades/examples/dcf77/dcf77block.hds
+hades.models.dcf77.Dcf77Sender sender 1200 7200 @N 1001 18 52 57 24 9 97 4 0.0
+hades.models.io.HexDisplay hours10 16800 10800 @N 1001
+hades.models.io.HexDisplay mins10 28200 10800 @N 1001
+hades.models.io.ClockGen clk50ms_2 1200 2400 @N 1001 0.05 0.5 0.0125
+hades.models.io.HexDisplay mins1 33600 10800 @N 1001
+hades.models.io.ClockGen clk50ms_1 1200 0 @N 1001 0.05 0.5 0.0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n_hrs_2 2 dcf77clock hrs2 hours1 A1 3 2 13200 6600 20400 6600 2 20400 6600 20400 13200 2 20400 13200 22200 13200 0 
+hades.signals.SignalStdLogic1164 n_hrs_1 2 dcf77clock hrs1 hours1 A0 3 2 22200 13800 19800 13800 2 19800 13800 19800 7200 2 19800 7200 13200 7200 0 
+hades.signals.SignalStdLogic1164 n_mins_20 2 dcf77clock min20 mins10 A1 3 2 28200 13200 26400 13200 2 26400 13200 26400 4200 2 26400 4200 13200 4200 0 
+hades.signals.SignalStdLogic1164 n_mins_80 2 dcf77clock min80 mins10 A3 3 2 28200 12000 27600 12000 2 27600 12000 27600 3000 2 27600 3000 13200 3000 0 
+hades.signals.SignalStdLogic1164 n_hrs_10 2 dcf77clock hrrs10 hours10 A0 3 2 13200 9600 14400 9600 2 14400 9600 14400 13800 2 14400 13800 16800 13800 0 
+hades.signals.SignalStdLogic1164 n_hrs_40 2 dcf77clock hrs40 hours10 A2 3 2 16800 12600 15600 12600 2 15600 12600 15600 8400 2 15600 8400 13200 8400 0 
+hades.signals.SignalStdLogic1164 n_dcf 2 sender dcf77 dcf77clock dcf_in 3 2 7200 2400 6600 2400 2 6600 2400 6600 8400 2 6600 8400 4800 8400 0 
+hades.signals.SignalStdLogic1164 n_clock2 2 clk50ms_2 clk dcf77clock clock50ms_2 3 2 7200 1800 4200 1800 2 4200 1800 4200 3600 2 4200 3600 3600 3600 0 
+hades.signals.SignalStdLogic1164 n_clock1 2 clk50ms_1 clk dcf77clock clock50ms_1 1 2 3600 1200 7200 1200 0 
+hades.signals.SignalStdLogic1164 n_reset 2 power_on nreset dcf77clock nreset 3 2 3600 -1800 4200 -1800 2 4200 -1800 4200 600 2 4200 600 7200 600 0 
+hades.signals.SignalStdLogic1164 n_hrs_20 2 dcf77clock hrs20 hours10 A1 3 2 16800 13200 15000 13200 2 15000 13200 15000 9000 2 15000 9000 13200 9000 0 
+hades.signals.SignalStdLogic1164 n_mins_8 2 dcf77clock min8 mins1 A3 3 2 13200 600 33000 600 2 33000 600 33000 12000 2 33000 12000 33600 12000 0 
+hades.signals.SignalStdLogic1164 n_hrs_80 2 dcf77clock hrs80 hours10 A3 3 2 13200 7800 16200 7800 2 16200 7800 16200 12000 2 16200 12000 16800 12000 0 
+hades.signals.SignalStdLogic1164 n_mins_4 2 dcf77clock min4 mins1 A2 3 2 33600 12600 32400 12600 2 32400 12600 32400 1200 2 32400 1200 13200 1200 0 
+hades.signals.SignalStdLogic1164 n_mins_2 2 dcf77clock min2 mins1 A1 3 2 13200 1800 31800 1800 2 31800 1800 31800 13200 2 31800 13200 33600 13200 0 
+hades.signals.SignalStdLogic1164 n_mins_1 2 dcf77clock min1 mins1 A0 3 2 33600 13800 31200 13800 2 31200 13800 31200 2400 2 31200 2400 13200 2400 0 
+hades.signals.SignalStdLogic1164 n_mins_10 2 dcf77clock min10 mins10 A0 3 2 28200 13800 25800 13800 2 25800 13800 25800 4800 2 25800 4800 13200 4800 0 
+hades.signals.SignalStdLogic1164 n_mins_40 2 dcf77clock min40 mins10 A2 3 2 13200 3600 27000 3600 2 27000 3600 27000 12600 2 27000 12600 28200 12600 0 
+hades.signals.SignalStdLogic1164 n_hrs_8 2 dcf77clock hrs8 hours1 A3 3 2 22200 12000 21600 12000 2 21600 12000 21600 5400 2 21600 5400 13200 5400 0 
+hades.signals.SignalStdLogic1164 n_hrs_4 2 dcf77clock hrs4 hours1 A2 3 2 22200 12600 21000 12600 2 21000 12600 21000 6000 2 21000 6000 13200 6000 0 
+[end signals]
+[end]

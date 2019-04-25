@@ -1,0 +1,158 @@
+<HTML><HEAD>
+<TITLE>PIC De-bouncing
+</TITLE>
+</HEAD>
+<BODY>
+<H1 Align="Center">PIC De-bouncing</H1>
+<P></P>
+<P>Debouncing; What is it and what is used for? Well, if you ever looked at the current through (or the voltage across) a mechanical switch or a relay as it was changing states you would notice that the transition is not always a nice, clean step function. Often there are several changes before the switch makes its transition. In this case, the switch is said to be "bouncing". However, the same behavior can be observed in dirty switches or switches that are switching a heavy load. Some times the bouncing can be removed with mild (a good vague term) analog filtering and a comparator with hysteresis. Unfortunately this won't work for all cases. And even if it did, the extra cost in hardware may not be justifiable; especially since you can do most of the work in software.</P>
+<P>Typical debouncing routines sample the switch's state at a fairly high rate (vague term # 2). When a change in the state is detected, the routine will count anywhere from 1 to 4 to 8 to whatever samples to make sure the transition was not a glitch and that the switch has settled to its new state. If you have many switches that need to be debounced simultaneously, it gets rather unwieldy keeping track of the counters and etc. This is emperically demonstrated by the brute-force debounce routines you typically see. Here's a routine that will simultaneously debounce 8 inputs and count 4 samples before declaring a switch has changed states. There are no loops or gotos. The eight 2-bit counters are arranged as "<A HREF="http://www.interstice.com/~sdattalo/technical/software/pic/vertcnt.html">vertical counters</A>". In other words, the low order bit of the eight counters occupy one byte in RAM while the high order one another. The counters are incremented (actually decremented) using Boolean logic. Different examples of the vertical counters are available on the <A HREF="http://www.interstice.com/~sdattalo/technical/software/pic/vertcnt.html">vertical counters</A> page.</P>
+<P>A special thanks goes to <A HREF="mailto:Terje.Mathisen@hda.hydro.com">Terje Mathisen</A> whose insight led to the current version of this routine being 33% more efficient then the previous version.</P>
+<PRE>
+        list    p=16C64,t=ON,c=132,n=80,st=off
+        radix   dec
+
+
+        include "P16C64.INC"
+
+  cblock  0x20
+    cva,csa,count_A, count_B
+
+  endc
+
+
+
+        ORG     0               ;Reset Vector
+
+        GOTO    Main
+
+        ORG     4               ;Interrupt Vector
+
+
+Main
+
+        BCF     STATUS,RP0      ;Point to BANK 0
+
+
+xxx
+        MOVLW   1
+        MOVWF   csa
+
+        NOP
+        CALL    de_bounce
+        NOP
+
+
+        GOTO    xxx
+;*************************************************************
+; de_bounce
+;
+; The purpose of this routine is to debounce, i.e. digitally low pass filter
+;inputs. The algorithm handles upto 8 bits at a time. An input is considered
+;filtered if it has not changed states in the last 4 samples.
+;
+; 2-bit cyclic vertical counters count the 4 samples. As long as there is no
+;change, the counters are held in the reset state of 00b. When a change is detected
+;between the current sample and the filtered or debounced sample, the counters
+;are incremented. The counting sequence is 00,01,10,11,00... When the counters
+;roll over from 11b to 00b, the debounced state is updated. If the input changes
+;back to the filtered state while the counters are counting, then the counters
+;are re-initialized to the reset state and the filtered state is unaffected.
+;In other words, a glitch or transient input has been filtered.
+;
+; Here's the C-psuedo code:
+;
+;static unsigned clock_A,clock_B,debounced_state;
+;debounce(unsigned new_sample)
+;{
+;  unsigned delta;
+;
+;  delta = new_sample ^ debounced_state;   //Find all of the changes
+;
+;  clock_A ^= clock_B;                     //Increment the counters
+;  clock_B  = ~clock_B;
+;
+;  clock_A &amp;= delta;                       //Reset the counters if no changes
+;  clock_B &amp;= delta;                       //were detected.
+;
+;      //Preserve the state of those bits that are being filtered and simultaneously
+;      //clear the states of those bits that are already filtered.
+;  debounced_state &amp;= (clock_A | clock_B);
+;      //Re-write the bits that are already filtered.
+;  debounced_state |= (~(clock_A | clock_B) &amp; new_sample);
+;}
+;
+; The 2-bit counters are arranged "vertically". In other words 8 counters
+;are formed with 2 bytes such that the corresponding bits in the bytes are
+;paired (e.g. MSBit of each byte is paired to form one counter).
+; The counting sequence is 0,1,2,3,0,1,... And the state tables and Karnaugh
+;maps are:
+;
+;State Table:     Karnaugh Maps:
+;pres  next      B
+; SS  SS         0   1
+; AB  AB       +---+---+    +---+---+
+;--------   A 0|   | 1 |    | 1 |   |
+; 00  01       +---+---+    +---+---+
+; 01  10      1| 1 |   |    | 1 |   |
+; 10  11       +---+---+    +---+---+
+; 11  00      A+ = A ^ B     B+ = ~B
+;
+; Here's the PIC code that implements the counter:
+;       MOVF    SB,W    ;W = B
+;       XORWF   SA,F    ;A+ = A ^ B
+;       COMF    SB,F    ;B+ = ~B
+
+
+; 14 instructions
+; 15 cycles
+; Inputs:
+;   csa - The current sample
+; Outputs
+;   cva - The current value (filtered version of csa)
+;
+; RAM used
+;   count_A,
+;   count_B - State variables for the 8 2-bit counters
+;
+de_bounce
+    ;Increment the vertical counter
+        MOVF    count_B,W
+        XORWF   count_A,F
+        COMF    count_B,F
+
+    ;See if any changes occurred
+        MOVF    csa,W
+        XORWF   cva,W
+
+    ;Reset the counter if no change has occurred
+        ANDWF   count_B,F
+        ANDWF   count_A,F
+
+    ;Determine the counter's state
+        MOVF    count_B,W
+        IORWF   count_A,W
+
+    ;Clear all bits that are filtered-or more accurately, save
+    ;the state of those that are being filtered
+        ANDWF   cva,F
+        XORLW   0xff
+
+    ;Re-write the bits that haven't changed.
+        ANDWF   csa,W
+        IORWF   cva,F
+
+        RETURN
+
+        END
+
+</PRE>
+<P>And here's more <A HREF="http://www.interstice.com/~sdattalo/technical/software/software.html">software</A>.</P>
+<P><A HREF="http://www.interstice.com/~sdattalo/">BACK HOME</A></P>
+<P><HR ALIGN=left Width=100%></P>
+<address>This page is maintained by <A HREF="http://www.interstice.com/~sdattalo">Scott Dattalo</A> with the help of <A HREF="http://www.salford.ac.uk/iti/gsc/htmlauth/summary.html">HTML Author</A>. You can reach me at home: <A HREF="mailto:sdattalo@interstice.com">sdattalo@interstice.com</A>  or at work: <A HREF="mailto:sdattalo@unix.sri.com">sdattalo@unix.sri.com</A></address>
+<address>Last modified on 29Apr97.</address>
+<P></P>
+<P>
+</P>
+</BODY></HTML>

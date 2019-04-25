@@ -1,0 +1,18 @@
+# hades.models.Design file
+#  
+[name] SRFF
+[components]
+hades.models.gates.Nand2 i5 7200 14400 1001 5.0E-9
+hades.models.gates.Nand2 i2 7200 10800 1001 5.0E-9
+hades.models.io.Ipin S 3600 16200 1001 
+hades.models.io.Ipin R 3600 11400 1001 
+hades.models.io.Opin Q 15600 12000 1001
+hades.models.io.Opin NQ 15600 15600 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n4 2 S Y i5 B 1 2 3600 16200 7200 16200 0 
+hades.signals.SignalStdLogic1164 n3 2 R Y i2 A 1 2 3600 11400 7200 11400 0 
+hades.signals.SignalStdLogic1164 n1 3 i5 Y NQ A i2 B 2 3 10800 15600 12000 15600 15600 15600 5 12000 15600 12000 14400 6000 13200 6000 12600 7200 12600 1 12000 15600 
+hades.signals.SignalStdLogic1164 n0 3 i2 Y i5 A Q A 2 6 10800 12000 12000 12000 12000 13200 6000 14400 6000 15000 7200 15000 2 12000 12000 15600 12000 1 12000 12000 
+[end signals]
+[end]

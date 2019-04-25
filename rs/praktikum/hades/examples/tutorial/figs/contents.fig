@@ -1,0 +1,30 @@
+#FIG 3.1
+Landscape
+Center
+Metric
+1200 2
+4 0 0 99 0 1 40.0 0.0 4 656.0 4640.0 1350 900 Tutorial Contents\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3288.0 2400 4169 loading and saving designs\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 1096.0 2400 3600 concepts\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3296.0 8400 7170 adding a probe to a signals\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3680.0 8400 7740 zoom and panning commands\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 2040.0 8400 6600 waveform basics\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3608.0 2400 7710 move and delete components\001
+4 0 0 0 0 16 20.0 0.0 4 344.0 2600.0 7800 6000 Waveform display\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 2800.0 2400 4740 using the popup-menu\001
+4 0 0 0 0 16 20.0 0.0 4 344.0 2784.0 1800 6000 Editing commands:\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3280.0 8400 5310 display options, glow mode\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3840.0 8400 4740 color encoding of StdLogic1164\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3488.0 8400 4170 understanding StdLogic1164\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3640.0 8400 3600 starting, stopping, single-step\001
+4 0 0 0 0 16 20.0 0.0 4 344.0 2696.0 7800 3000 Simulation control:\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 1688.0 2400 7170 create signals\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 2344.0 2400 6600 create components\001
+4 0 0 0 0 16 17.0 0.0 4 288.0 3680.0 2400 5359 zoom and panning commands\001
+4 0 0 0 0 16 20.0 0.0 4 344.0 3480.0 1800 3000 HADES basic concepts:\001
+4 0 0 0 0 16 20.0 0.0 4 344.0 2192.0 1800 2400 Welcome page\001
+4 0 0 0 0 16 10.0 0.0 4 192.0 2672.0 1350 9180 HADES tutorial, contents, 25.08.97\001
+2 1 0 1 0 7 0 0 0 0.0 0 0 0 0 0 2
+       450 1170 12600 1170
+2 1 0 1 0 7 0 0 0 0.0 0 0 0 0 0 2
+       450 8820 12600 8820

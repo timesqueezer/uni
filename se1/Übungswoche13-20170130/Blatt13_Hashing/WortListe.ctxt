@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=
+comment0.target=WortListe()
+comment0.text=\n\ Konstruktor\ fuer\ Objekte\ der\ Klasse\ WortListe\n
+comment1.params=wort
+comment1.target=void\ fuegeWortHinzu(java.lang.String)
+comment1.text=\n\ Fuege\ der\ Liste\ ein\ Wort\ hinzu.\n\ @param\ wort\ das\ hinzuzufuegende\ Wort\n
+comment2.params=wort
+comment2.target=boolean\ enthaeltWort(java.lang.String)
+comment2.text=\n\ Pruefe,\ ob\ das\ Wort\ in\ der\ Liste\ enthalten\ ist.\n\ @true,\ falls\ das\ Wort\ in\ der\ Liste\ enthalten\ ist\n
+comment3.params=
+comment3.target=int\ anzahlWoerter()
+comment3.text=\n\ Gib\ die\ Anzahl\ der\ Woerter\ in\ der\ Liste.\n\ @return\ die\ Anzahl\ der\ Woerter\ in\ der\ Liste\n
+comment4.params=index
+comment4.target=java.lang.String\ gibWort(int)
+comment4.text=\n\ Liefere\ das\ Wort\ mit\ dem\ Index\ index.\n\ @param\ index\ der\ Index\n
+comment5.params=
+comment5.target=java.util.Iterator\ iterator()
+comment5.text=\n\ Liefere\ einen\ Iterator\ ueber\ die\ Liste\ der\ Woerter.\n\ @return\ den\ Iterator\n
+comment6.params=
+comment6.target=java.lang.String\ toString()
+comment6.text=\n\ Liefere\ eine\ String-Repraesentation\ der\ Liste.\n\ @return\ eine\ String-Repraesentation\ der\ Liste\n
+numComments=7

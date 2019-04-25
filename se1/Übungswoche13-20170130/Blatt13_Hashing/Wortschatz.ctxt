@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=wort
+comment0.target=void\ fuegeWortHinzu(java.lang.String)
+comment0.text=\n\ Fuege\ ein\ Wort\ zum\ Wortschatz\ hinzu,\ sofern\ es\ noch\ nicht\ enthalten\ ist.\n\ \n\ @param\ wort\ das\ hinzuzufuegende\ Wort\n
+comment1.params=wort
+comment1.target=boolean\ enthaeltWort(java.lang.String)
+comment1.text=\n\ Gib\ an,\ ob\ ein\ Wort\ im\ Wortschatz\ enthalten\ ist.\n\ \n\ @param\ wort\ das\ zu\ ueberpruefende\ Wort\n\ @return\ true,\ falls\ das\ Wort\ enthalten\ ist,\ false\ sonst\n
+comment2.params=
+comment2.target=int\ anzahlWoerter()
+comment2.text=\n\ Gib\ an,\ wieviele\ Woerter\ im\ Wortschatz\ enthalten\ sind.\n\ \n\ @return\ die\ Anzahl\ der\ Woerter\ im\ Wortschatz\n
+comment3.params=
+comment3.target=java.lang.String\ gibBeschreibung()
+comment3.text=\n\ Diese\ Beschreibung\ dient\ zur\ Unterscheidung\ beim\ Messen.\n
+comment4.params=
+comment4.target=void\ schreibeAufKonsole()
+comment4.text=\n\ Schreibt\ den\ Wortschatz\ auf\ die\ Konsole\ (als\ Debugging-Hilfe\ gedacht).\n
+numComments=5

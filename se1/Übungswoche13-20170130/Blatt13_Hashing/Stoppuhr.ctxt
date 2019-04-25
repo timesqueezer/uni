@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=out\ beschreibung
+comment0.target=Stoppuhr(java.io.PrintStream,\ java.lang.String)
+comment0.text=\r\n\ Startet\ den\ ersten\ Messvorgang.\r\n\ @param\ out\ ein\ PrintStream,\ ueber\ den\ die\ Messdaten\ ausgegeben\ werden\ soll\r\n\ @param\ beschreibung\ eine\ Beschreibung\ des\ gemessenen\ Vorgangs\r\n
+comment1.params=
+comment1.target=void\ stopp()
+comment1.text=\r\n\ Stoppt\ den\ Messvorgang\ und\ startet\ einen\ neuen.\r\n
+comment2.params=ms
+comment2.target=void\ printWarningsForShortIntervals(long)
+comment2.text=\r\n\ Gibt\ fuer\ kurze\ Messintervalle\ eine\ entsprechende\ Warnung\ aus.\r\n
+numComments=3

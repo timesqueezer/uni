@@ -1,0 +1,53 @@
+# hades.models.Design file
+#  
+[name] Mux_Demo
+[components]
+hades.models.io.Ipin i5 4800 9000 1001 
+hades.models.io.Opin output_4 23700 13800 1001
+hades.models.io.Ipin i4 4800 7800 1001 
+hades.models.io.Opin output_3 10800 14400 1001
+hades.models.flipflops.Jkff i3 7200 7200 1001
+hades.models.io.Opin output_2 14400 10200 1001
+hades.models.gates.Inv i2 10800 3600 1001 5.0E-9
+hades.models.io.Opin output_1 14400 9000 1001
+hades.models.gates.Buffer i1 7200 3600 1001 1.0E-8
+hades.models.io.Opin output_0 14400 4800 1001
+hades.models.io.Ipin i0 4800 4800 1001 
+hades.models.gates.Mux21 i19 7200 13200 1001 1.0E-8
+hades.models.io.Ipin i17 16800 18600 1001 
+hades.models.io.Ipin i16 16800 17400 1001 
+hades.models.io.Ipin i15 16800 16200 1001 
+hades.models.io.Ipin i14 16800 15000 1001 
+hades.models.io.Ipin i13 16800 13800 1001 
+hades.models.io.Ipin i12 16800 12600 1001 
+hades.models.io.Ipin i10 4800 16800 1001 
+hades.models.io.Ipin i9 4800 15000 1001 
+hades.models.io.Ipin i8 4800 13800 1001 
+hades.models.gates.Mux41 i20 19800 12300 1001 1.5E-8
+hades.models.io.Ipin i7 4800 11400 1001 
+hades.models.io.Ipin i6 4800 10200 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i8 Y i19 A1 1 2 4800 13800 7200 13800 0 
+hades.signals.SignalStdLogic1164 n8 2 i4 Y i3 J 1 2 7200 7800 4800 7800 0 
+hades.signals.SignalStdLogic1164 n7 2 i5 Y i3 NC 1 2 4800 9000 7200 9000 0 
+hades.signals.SignalStdLogic1164 n6 2 i6 Y i3 K 1 2 7200 10200 4800 10200 0 
+hades.signals.SignalStdLogic1164 n5 2 i7 Y i3 NR 1 2 4800 11400 7200 11400 0 
+hades.signals.SignalStdLogic1164 n4 2 i3 NQ output_2 A 1 2 14400 10200 10800 10200 0 
+hades.signals.SignalStdLogic1164 n3 2 i3 Q output_1 A 1 2 10800 9000 14400 9000 0 
+hades.signals.SignalStdLogic1164 n2 2 i2 Y output_0 A 1 2 13200 4800 14400 4800 0 
+hades.signals.SignalStdLogic1164 n20 2 i17 Y i20 S0 2 2 21600 15300 21600 18600 2 21600 18600 16800 18600 0 
+hades.signals.SignalStdLogic1164 n1 2 i1 Y i2 A 1 2 9600 4800 10800 4800 0 
+hades.signals.SignalStdLogic1164 n0 2 i0 Y i1 A 1 2 4800 4800 7200 4800 0 
+hades.signals.SignalStdLogic1164 n19 2 i16 Y i20 S1 2 2 16800 17400 21000 17400 2 21000 17400 21000 15300 0 
+hades.signals.SignalStdLogic1164 n18 2 i15 Y i20 A0 3 2 16800 16200 18600 16200 2 18600 16200 18600 14700 2 18600 14700 19800 14700 0 
+hades.signals.SignalStdLogic1164 n17 2 i14 Y i20 A1 3 2 16800 15000 18300 15000 2 18300 15000 18300 14100 2 18300 14100 19800 14100 0 
+hades.signals.SignalStdLogic1164 n16 2 i13 Y i20 A2 3 2 16800 13800 18000 13800 2 18000 13800 18000 13500 2 18000 13500 19800 13500 0 
+hades.signals.SignalStdLogic1164 n15 2 i12 Y i20 A3 3 2 16800 12600 19200 12600 2 19200 12600 19200 12900 2 19200 12900 19800 12900 0 
+hades.signals.SignalStdLogic1164 n14 2 i20 Y output_4 A 1 2 22800 13800 23700 13800 0 
+hades.signals.SignalStdLogic1164 n13 2 i10 Y i19 S 2 2 8400 15600 8400 16800 2 8400 16800 4800 16800 0 
+hades.signals.SignalStdLogic1164 n12 2 output_3 A output_3 A 0 0 
+hades.signals.SignalStdLogic1164 n11 2 i19 Y output_3 A 1 2 9600 14400 10800 14400 0 
+hades.signals.SignalStdLogic1164 n10 2 i9 Y i19 A0 1 2 7200 15000 4800 15000 0 
+[end signals]
+[end]

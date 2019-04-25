@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=berechner\ groesse
+comment0.target=HashWortschatz(HashWertBerechner,\ int)
+comment0.text=\r\n\ Initialisiert\ ein\ neues\ Exemplar\ von\ HashWortschatz.\r\n\ \r\n\ @param\ berechner\ der\ Berechner,\ welcher\ die\ Hashfunktion\ umsetzt\r\n\ @param\ groesse\ die\ (initiale)\ Groesse\ der\ Hashtabelle\r\n
+comment1.params=wort
+comment1.target=void\ fuegeWortHinzu(java.lang.String)
+comment1.text=\r\n\ Fuege\ ein\ Wort\ zum\ Wortschatz\ hinzu,\ sofern\ es\ noch\ nicht\ enthalten\ ist.\r\n\ \r\n\ @param\ wort\ das\ hinzuzufuegende\ Wort\r\n
+comment2.params=hash
+comment2.target=int\ hashToIndex(int)
+comment3.params=wort
+comment3.target=boolean\ enthaeltWort(java.lang.String)
+comment3.text=\r\n\ Gib\ an,\ ob\ ein\ Wort\ im\ Wortschatz\ enthalten\ ist.\r\n\ \r\n\ @param\ wort\ das\ zu\ ueberpruefende\ Wort\r\n\ @return\ true,\ falls\ das\ Wort\ enthalten\ ist,\ false\ sonst\r\n
+comment4.params=
+comment4.target=int\ anzahlWoerter()
+comment4.text=\r\n\ Gib\ an,\ wieviele\ Woerter\ im\ Wortschatz\ enthalten\ sind.\r\n\ \r\n\ @return\ die\ Anzahl\ der\ Woerter\ im\ Wortschatz\r\n
+comment5.params=
+comment5.target=java.lang.String\ gibBeschreibung()
+comment5.text=\r\n\ Diese\ Beschreibung\ dient\ zur\ Unterscheidung\ beim\ Messen.\r\n
+comment6.params=
+comment6.target=void\ schreibeAufKonsole()
+comment6.text=\r\n\ Schreibt\ den\ Wortschatz\ auf\ die\ Konsole\ (als\ Debugging-Hilfe\ gedacht).\r\n
+numComments=7

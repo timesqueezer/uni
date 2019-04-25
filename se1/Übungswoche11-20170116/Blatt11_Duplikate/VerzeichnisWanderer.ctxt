@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=VerzeichnisWanderer()
+comment0.text=\r\n\ Initialisiert\ einen\ neuen\ VerzeichnisWanderer,\ der\ das\ aktuelle\ Verzeichnis\ durchwandert.\r\n
+comment1.params=startverzeichnis
+comment1.target=VerzeichnisWanderer(java.lang.String)
+comment1.text=\r\n\ Initialisiert\ einen\ neuen\ VerzeichnisWanderer,\ der\ das\ angegebene\ Verzeichnis\ durchwandert.\r\n\ \r\n\ @param\ startverzeichnis\ hier\ faengt\ der\ VerzeichnisWanderer\ an\r\n
+comment2.params=dateiVerarbeiter
+comment2.target=void\ start(DateiVerarbeiter)
+comment2.text=\r\n\ Startet\ den\ VerzeichnisWanderer.\ Jede\ gefundene\ Datei\ wird\ dem\ dateiVerarbeiter\ uebermittelt.\r\n
+comment3.params=verzeichnis
+comment3.target=void\ untersuche(java.io.File)
+comment3.text=\r\n\ Untersucht\ rekursiv\ alle\ Dateien\ eines\ Verzeichnisses.\r\n
+numComments=4

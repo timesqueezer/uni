@@ -1,0 +1,144 @@
+This directory contains some simple example designs with the
+PIC16C84 microcontroller:
+
+o tut84:
+               The original 16C84 demo for the PIC prototyping board
+               from Arizona Microchip. The processor runs a simple loop
+               that samples input A1, has some debouncing delays, and
+               increments a counter register on each transition on A1.
+               The value of the counter register is output on port B.
+
+               While A1 is connected to an input switch on the demo board,
+               our design uses a 1 Hz clock generator to simulate user input.
+
+
+o demo84:      
+               The original 16C84 Data-EEPROM demo from Arizona Microchip.
+               The program enters a loop which writes data-values to all
+               EEPROM-locations and tries to read them back. The program
+               will display the last data value written successfully
+               to all EEPROM-locations on port B.
+
+               If an error occurs, the processor enters a second loop and
+               flashes the LEDs at port B at a 1 Hz clock rate.
+
+
+
+o int:
+               Tests interrupt handling in the simulation model.
+
+
+
+o count:
+               Yet another counter design. However, this one uses and
+               demonstrates the 16C84 interrupt capabilities. Pin B0
+               is configured as the interrupt input, while pins B7..B4
+               are used as outputs. For details, see the documentation,
+               studienarbeit-pic16c84.ps.gz.
+
+
+
+o incr16:
+               Very simple test design to demonstrate the multiword-add
+               technique from Microchip ANN 617. The design increments
+               a 16 bit register inside an infinite loop and outputs
+               the lower 13 bits on ports A and B. See the 'increment16'
+               function in the assembler code for details.
+               
+
+o send232:
+               Simple test design to demonstrate asynchronous RS232 output.
+               The 16C84 sends out a series of 'U' characters at 300 baud
+               with 8N1 settings.
+
+
+o echo232:
+               Demonstration of software-driven asynchronous I/O with the
+               16C84. The processor runs at 500KHz clock frequency and
+               samples input pin A3, which is driven by terminal set to
+               300 baud. The PIC will decode the RS232 data and echo the
+               same data to pin B7.
+
+               Note that the software does not support full-duplex operation.
+               Any characters transmitted to the PIC while it sending will
+               be lost or result in garbled data.
+
+               Please make sure the terminal (vt100) is set to 300 baud, 8N1.
+
+
+o walk:
+               Simple 'nightrider' demo, taken from the PIP-02 serial-port
+               programmer.
+
+               Note that the nested delays-loops in the 'walk.hex' program use
+               the original constants (200 dec = C8 hex) for the real device. 
+               Therefore, the progam runs quite slowly.
+
+               To see something in the simulation, change program locations 
+               15 (0F) and 17 (11) from 30C8 to something approriate, say 3004
+               for a slow computer or 3010 for your brand new gaming PC.
+          
+
+o wdtdemo:
+               Simple demo and test for the watchdog timer. 
+
+               Note that the watchdog timer is disabled by default in our
+               simulation model. To see something interesting in this demo,
+               you have to enable the watchdog via the PIC editor. Open the
+               16C84 editor (via the context-menu), then select component, 
+               and activate the watchdog timer.
+
+
+o midifootswitch:
+
+               Complete design for a 'Midi footswitch' to send MIDI
+               program change message to synthesizers. The MIDI baud
+               rate of 31.25 KHz is generated using software delays
+               from the central 4 MHz clock.
+
+               The design demonstrates the use of heavy multiplexing
+               to work around the low pin count of the smaller PIC 
+               controllers. Both the seven-segment display and the
+               keypad are multiplexed - using the same signals of port B
+               which are switched from output to input mode as necessary.
+
+               Note that the real design includes additional resistors
+               between port B4-7 and the keyboard switches, which it is
+               impossible to model with the HADES StdLogic1164 logic. 
+               Therefore our design produces some short-circuits on
+               port B during display-multiplexing, as long as a key 
+               is pressed. 
+
+               The controller can (and has) actually be built with this
+               program. Use an open-collector driver for the MIDI output.
+               However, you might want to change the loop bounds for the
+               display subroutines, to improve the duty-cycle of the 
+               seven-segment displays. 
+
+               Click on the switches to select the MIDI program number,
+               where the KEY-UP and KEY-DOWN switches allow to increment
+               and decrement the program number by 10 (from 0x to 12x), 
+               and the KEY-0 to KEY-9 keys select the 'ones' digit.
+
+
+
+Here, again, are the steps to program real PICs (16C84) with the 
+low-cost serial programmer and the PIP-02 program: 
+
+1) Connect the serial programmer hardware to a serial port on your PC.
+
+2) Open a DOS-box. 
+
+3) Run the com84.exe program and specify the serial port to use:
+
+   COM84 COM2
+   COM84 COM<x>
+   COM84 REMOVE
+
+4) Run the pip-02.exe program to read, program, and verify the PIC processor
+
+   PIP-02
+
+5) From within PIP-02, load the '.hex' file to load into the PIC,
+   check the fuse settings, then select program, finally verify.
+

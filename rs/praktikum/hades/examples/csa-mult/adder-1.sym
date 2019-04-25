@@ -1,0 +1,14 @@
+hades.symbols.BboxRectangle  0 0 6000 2400
+hades.symbols.Rectangle  0 0 6000 2400
+hades.symbols.PortLabel 5850 1350 3 sum
+hades.symbols.PortSymbol 6000 1200 sum
+hades.symbols.PortLabel 5850 750 3 c_out
+hades.symbols.PortSymbol 6000 600 c_out
+hades.symbols.PortLabel 150 1950 c_in
+hades.symbols.PortSymbol 0 1800 c_in
+hades.symbols.PortLabel 150 1350 a_in
+hades.symbols.PortSymbol 0 1200 a_in
+hades.symbols.PortLabel 150 750 b_in
+hades.symbols.PortSymbol 0 600 b_in
+hades.symbols.InstanceLabel 150 2250 i0
+hades.symbols.ClassLabel 150 450 adder_1

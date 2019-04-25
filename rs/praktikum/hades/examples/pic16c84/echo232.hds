@@ -1,0 +1,20 @@
+# hades.models.Design file
+#  
+[name] Echo-Test
+[components]
+hades.models.special.SerialTerminal vt100 10800 4800 @N 1001 300 8 1 0
+hades.models.io.PowerOnReset reset 1200 7200 @N 1001 0.0050 0.0050
+hades.models.io.ClockGen clk_500khz -1200 10800 @N 1001 2.0E-6 0.5 0.0
+hades.models.io.Opin input_300baud 3000 600 @N 1001 5.0E-9
+hades.models.io.Opin echo_300baud 10800 600 @N 1001 5.0E-9
+hades.models.pic.Pic16C84 cpu 3000 4800 @N 1001 /hades/examples/pic16c84/echo232.rom
+hades.models.io.Pullup i6 9600 0 @N 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 por 2 reset nreset cpu /MCLR 1 2 3000 7200 1200 7200 0 
+hades.signals.SignalStdLogic1164 echo 4 i6 H cpu B7 echo_300baud A vt100 RX 6 2 9600 0 9600 600 2 9600 600 10800 600 2 9600 600 9600 6000 2 9600 6000 10800 6000 2 9600 6000 9600 8400 2 9600 8400 6000 8400 2 9600 6000 9600 600 
+hades.signals.SignalStdLogic1164 receive 6 vt100 TX cpu A4 cpu A4 cpu A4 cpu A4 input_300baud A 8 2 18000 6000 18600 6000 2 18600 6000 18600 1800 2 18600 1800 15600 1800 2 15600 1800 2400 1800 2 2400 1800 2400 6600 2 2400 6600 3000 6600 2 2400 1800 2400 600 2 2400 600 3000 600 1 2400 1800 
+hades.signals.SignalStdLogic1164 clk_500khz 2 clk_500khz clk cpu CLKIN 3 2 1200 12000 6600 12000 2 6600 12000 6600 6600 2 6600 6600 6000 6600 0 
+hades.signals.SignalStdLogic1164 echo 0 0 0 
+[end signals]
+[end]

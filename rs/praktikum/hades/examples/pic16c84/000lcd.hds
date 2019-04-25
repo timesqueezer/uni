@@ -1,0 +1,28 @@
+# hades.models.Design file
+#  
+[name] unnamed
+[components]
+hades.models.io.ClockGen clk_4MHz 6000 1200 @N 1001 4.0E-6 0.5 0.0
+hades.models.io.Pullup i3 22800 3600 @N 1001
+hades.models.pic.Pic16C84 i2 13200 3600 @N 1001 \u002fhome\u002ftech_1\u002fhendrich\u002fjava\u002fhades\u002fbusy1\u002erom
+hades.models.special.TextLCD i0 24000 7800 @N 1001 2 40
+hades.models.io.PowerOnReset reset 8400 6000 @N 1001 2.0E-5 2.0E-5
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 s_d7 2 i2 B7 i0 D7 3 2 16200 7200 19200 7200 2 19200 7200 21600 7200 2 21600 7200 24000 10800 0 
+hades.signals.SignalStdLogic1164 s_rw 2 i2 A2 i0 RW 2 2 13200 4200 11400 4200 2 11400 4200 24000 9000 0 
+hades.signals.SignalStdLogic1164 s_rs 2 i2 A1 i0 RS 2 2 16200 4200 17400 4200 2 17400 4200 24000 9600 0 
+hades.signals.SignalStdLogic1164 n9 2 i2 B3 i0 D3 3 2 13200 9000 12000 9000 2 12000 9000 12600 10200 2 12600 10200 24000 13200 0 
+hades.signals.SignalStdLogic1164 n8 2 i2 B2 i0 D2 3 2 13200 8400 10800 8400 2 10800 8400 12600 10800 2 12600 10800 24000 13800 0 
+hades.signals.SignalStdLogic1164 n7 2 i2 B1 i0 D1 4 2 13200 7800 12000 7800 2 12000 7800 10200 8400 2 10200 8400 12600 11400 2 12600 11400 24000 14400 0 
+hades.signals.SignalStdLogic1164 n6 2 i2 B0 i0 D0 4 2 13200 7200 10800 7200 2 10800 7200 9600 8400 2 9600 8400 12600 12600 2 12600 12600 24000 15000 0 
+hades.signals.SignalStdLogic1164 n5 2 i2 B4 i0 D4 2 2 16200 9000 18000 9000 2 18000 9000 24000 12600 0 
+hades.signals.SignalStdLogic1164 n4 2 i2 B5 i0 D5 2 2 16200 8400 19200 8400 2 19200 8400 24000 12000 0 
+hades.signals.SignalStdLogic1164 n3 2 i2 B6 i0 D6 2 2 16200 7800 20400 7800 2 20400 7800 24000 11400 0 
+hades.signals.SignalStdLogic1164 n1 2 clk_4MHz clk i2 CLKIN 3 2 8400 2400 18000 2400 2 18000 2400 18000 5400 2 18000 5400 16200 5400 0 
+hades.signals.SignalStdLogic1164 n0 2 reset nreset i2 /MCLR 1 2 8400 6000 13200 6000 0 
+hades.signals.SignalStdLogic1164 s_enable 2 i2 A3 i0 E 2 2 13200 4800 12000 4800 2 12000 4800 24000 8400 0 
+hades.signals.SignalStdLogic1164 n14 1 i2 A4 1 2 13200 5400 11400 5400 0 
+hades.signals.SignalStdLogic1164 n11 1 i2 A0 1 2 16200 4800 16800 4800 0 
+[end signals]
+[end]

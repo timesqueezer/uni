@@ -1,0 +1,32 @@
+# hades.models.Design file
+#  
+[name] Register4 
+[components]
+hades.models.flipflops.Dffr i5 11400 19200 1001
+hades.models.flipflops.Dffr i4 11400 14400 1001
+hades.models.flipflops.Dffr i3 11400 9600 1001
+hades.models.flipflops.Dffr i0 11400 4800 1001
+hades.models.io.Ipin D3 7200 6600 1001 
+hades.models.io.Ipin D2 7200 11400 1001 
+hades.models.io.Ipin D1 7200 16200 1001 
+hades.models.io.Ipin D0 7200 21000 1001 
+hades.models.io.Ipin clock 4800 22200 1001 
+hades.models.io.Opin Q3 18000 6600 1001
+hades.models.io.Opin Q2 18000 11400 1001
+hades.models.io.Opin Q1 18000 16200 1001
+hades.models.io.Opin Q0 18000 21000 1001
+hades.models.io.Ipin nreset 4800 23400 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 5 clock Y i5 C i4 C i3 C i0 C 4 3 4800 22200 9600 22200 11400 22200 3 9600 22200 9600 17400 11400 17400 3 9600 17400 9600 12600 11400 12600 3 9600 12600 9600 7800 11400 7800 3 9600 22200 9600 17400 9600 12600 
+hades.signals.SignalStdLogic1164 n8 5 nreset Y i4 NR i3 NR i0 NR i5 NR 4 4 4800 23400 10800 23400 10800 18600 11400 18600 3 10800 18600 10800 13800 11400 13800 3 10800 13800 10800 9000 11400 9000 2 10800 23400 11400 23400 3 10800 18600 10800 13800 10800 23400 
+hades.signals.SignalStdLogic1164 n7 2 D0 Y i5 D 1 2 11400 21000 7200 21000 0 
+hades.signals.SignalStdLogic1164 n6 2 D1 Y i4 D 1 2 7200 16200 11400 16200 0 
+hades.signals.SignalStdLogic1164 n5 2 D2 Y i3 D 1 2 11400 11400 7200 11400 0 
+hades.signals.SignalStdLogic1164 n4 2 D3 Y i0 D 1 2 7200 6600 11400 6600 0 
+hades.signals.SignalStdLogic1164 n3 2 i0 Q Q3 A 1 2 18000 6600 15000 6600 0 
+hades.signals.SignalStdLogic1164 n2 2 i3 Q Q2 A 1 2 15000 11400 18000 11400 0 
+hades.signals.SignalStdLogic1164 n1 2 i4 Q Q1 A 1 2 18000 16200 15000 16200 0 
+hades.signals.SignalStdLogic1164 n0 2 i5 Q Q0 A 1 2 15000 21000 18000 21000 0 
+[end signals]
+[end]

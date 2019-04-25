@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=position
+comment0.target=void\ entferne(int)
+comment0.text=\r\n\ Entferne\ den\ Titel\ an\ der\ angegebenen\ Position.\ Alle\ folgenden\ Eintraege\r\n\ werden\ um\ eine\ Indexposition\ verschoben.<br>\r\n\ \r\n\ @param\ position\r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ Eine\ Position\ in\ der\ Liste.\ Der\ gueltige\ Bereich\ ist\ von\ 0\ bis\ gibLaenge()-1.\r\n
+comment1.params=
+comment1.target=int\ gibLaenge()
+comment1.text=\r\n\ Gib\ die\ Laenge\ der\ Liste\ zurueck.\r\n\ \r\n\ @return\ Anzahl\ der\ Titel\ in\ der\ Liste.\r\n
+comment2.params=
+comment2.target=void\ leere()
+comment2.text=\r\n\ Entferne\ alle\ Titel\ aus\ der\ Liste.\r\n
+numComments=3

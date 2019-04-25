@@ -1,0 +1,14 @@
+# /hades/examples/dcf77/*.hds
+
+Hades example design of a DCF77-signal radio controlled clock.
+This design demonstrates a medium-complexity gate-level design
+with several levels of design hierarchy, and the combination
+with a behavioural model (for the sender).
+
+The DCF77 is a German radio station (77 KHz) located near Frankfurt
+which uses a simple amplitude modulation to distribute the German 
+normal time signal. The sender always sends the data for the next
+minute, consisting of 59 bits, with one bit per second.
+Each single bit is encoded as a 0.1 or 0.2 second period of low amplitude 
+at the start of the second period.  The "missing" bit is used to signal 
+end of transmission for one minute of data.

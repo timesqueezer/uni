@@ -1,0 +1,17 @@
+# hades.models.Design file
+#  
+[name] single_DFF
+[components]
+hades.models.io.Opin i5 13200 5400 1001
+hades.models.io.Ipin i4 3600 5400 1001 
+hades.models.io.Ipin i3 3600 4200 1001 
+hades.models.io.Opin i1 13200 4200 1001
+hades.models.flipflops.Dff i10 7200 3600 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n3 2 i10 Q i1 A 1 2 10800 4200 13200 4200 0 
+hades.signals.SignalStdLogic1164 n2 2 i10 NQ i5 A 1 2 10800 5400 13200 5400 0 
+hades.signals.SignalStdLogic1164 n1 2 i4 Y i10 C 1 2 3600 5400 7200 5400 0 
+hades.signals.SignalStdLogic1164 n0 2 i3 Y i10 D 1 2 3600 4200 7200 4200 0 
+[end signals]
+[end]

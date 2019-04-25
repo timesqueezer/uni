@@ -1,0 +1,43 @@
+# hades.models.Design file
+#  
+[name] LoadCounter4
+[components]
+hades.models.io.Ipin D3 3600 5400 @N 1001 U
+hades.models.io.Opin Carry 25200 3000 @N 1001 5.0E-9
+hades.models.io.Ipin D2 3600 10800 @N 1001 U
+hades.models.io.Ipin D1 3600 16200 @N 1001 U
+hades.models.io.Ipin D0 3600 21600 @N 1001 U
+hades.models.io.Ipin nclear 3600 24000 @N 1001 U
+hades.models.io.Ipin countEnable 3600 25200 @N 1001 U
+hades.models.io.Ipin nreset 3600 27600 @N 1001 U
+hades.models.Design slice3 13200 3600 @N 1001 /hades/examples/dcf77/LoadCount1.hds
+hades.models.Design slice2 13200 9000 @N 1001 /hades/examples/dcf77/LoadCount1.hds
+hades.models.io.Opin Q3 25200 4800 @N 1001 5.0E-9
+hades.models.Design slice1 13200 14400 @N 1001 /hades/examples/dcf77/LoadCount1.hds
+hades.models.io.Opin Q2 25200 10200 @N 1001 5.0E-9
+hades.models.Design slice0 13200 19800 @N 1001 /hades/examples/dcf77/LoadCount1.hds
+hades.models.io.Opin Q1 25200 15600 @N 1001 5.0E-9
+hades.models.io.Opin Q0 25200 21000 @N 1001 5.0E-9
+hades.models.io.Ipin loadEnable 3600 3600 @N 1001 U
+hades.models.io.Ipin clock 3600 26400 @N 1001 U
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n_D2 2 D2 Y slice2 D 1 2 3600 10800 13200 10800 0 
+hades.signals.SignalStdLogic1164 n_D3 2 D3 Y slice3 D 1 2 3600 5400 13200 5400 0 
+hades.signals.SignalStdLogic1164 n_CARRY 2 slice3 carry Carry A 3 2 19200 4200 20400 4200 2 20400 4200 20400 3000 2 20400 3000 25200 3000 0 
+hades.signals.SignalStdLogic1164 n6 2 slice2 carry slice3 countEnable 5 2 19200 9600 20400 9600 2 20400 9600 20400 9000 2 20400 9000 10200 7800 2 10200 7800 10200 4200 2 10200 4200 13200 4200 0 
+hades.signals.SignalStdLogic1164 n5 2 slice1 carry slice2 countEnable 5 2 19200 15000 20400 15000 2 20400 15000 20400 14400 2 20400 14400 10200 13200 2 10200 13200 10200 9600 2 10200 9600 13200 9600 0 
+hades.signals.SignalStdLogic1164 n4 2 slice0 carry slice1 countEnable 5 2 19200 20400 20400 20400 2 20400 20400 20400 19800 2 20400 19800 10200 18600 2 10200 18600 10200 15000 2 10200 15000 13200 15000 0 
+hades.signals.SignalStdLogic1164 n_clear 5 nclear Y slice0 nclear slice1 nclear slice2 nclear slice3 nclear 9 2 3600 24000 11400 24000 2 11400 24000 11400 21000 2 11400 21000 13200 21000 2 11400 21000 11400 15600 2 11400 15600 13200 15600 2 11400 15600 11400 10200 2 11400 10200 13200 10200 2 11400 10200 11400 4800 2 11400 4800 13200 4800 3 11400 21000 11400 15600 11400 10200 
+hades.signals.SignalStdLogic1164 n_Q0 2 slice0 Q Q0 A 2 2 19200 21000 20400 21000 2 20400 21000 25200 21000 0 
+hades.signals.SignalStdLogic1164 n_countenable 2 countEnable Y slice0 countEnable 3 2 3600 25200 10800 25200 2 10800 25200 10800 20400 2 10800 20400 13200 20400 0 
+hades.signals.SignalStdLogic1164 n_Q1 2 slice1 Q Q1 A 2 2 19200 15600 20400 15600 2 20400 15600 25200 15600 0 
+hades.signals.SignalStdLogic1164 n_clock 5 clock Y slice0 clk slice1 clk slice2 clk slice3 clk 9 2 3600 26400 12000 26400 2 12000 26400 12000 22800 2 12000 22800 13200 22800 2 12000 22800 12000 17400 2 12000 17400 13200 17400 2 12000 17400 12000 12000 2 12000 12000 13200 12000 2 12000 12000 12000 6600 2 12000 6600 13200 6600 3 12000 22800 12000 17400 12000 12000 
+hades.signals.SignalStdLogic1164 n_Q2 2 slice2 Q Q2 A 2 2 19200 10200 20400 10200 2 20400 10200 25200 10200 0 
+hades.signals.SignalStdLogic1164 n_nreset 5 nreset Y slice3 nreset slice2 nreset slice1 nreset slice0 nreset 9 2 13200 7200 12600 7200 2 12600 7200 12600 12600 2 12600 12600 13200 12600 2 12600 12600 12600 18000 2 12600 18000 13200 18000 2 12600 18000 12600 23400 2 12600 23400 13200 23400 2 12600 23400 12600 27600 2 12600 27600 3600 27600 3 12600 12600 12600 18000 12600 23400 
+hades.signals.SignalStdLogic1164 n_Q3 2 slice3 Q Q3 A 2 2 19200 4800 20400 4800 2 20400 4800 25200 4800 0 
+hades.signals.SignalStdLogic1164 n_loadenable 5 loadEnable Y slice3 loadEnable slice2 loadEnable slice1 loadEnable slice0 loadEnable 9 2 13200 6000 4200 6000 2 4200 6000 4200 3600 2 4200 3600 3600 3600 2 4200 6000 4200 11400 2 4200 11400 13200 11400 2 4200 11400 4200 16800 2 4200 16800 13200 16800 2 4200 16800 4200 22200 2 4200 22200 13200 22200 3 4200 6000 4200 11400 4200 16800 
+hades.signals.SignalStdLogic1164 n_D0 2 D0 Y slice0 D 1 2 3600 21600 13200 21600 0 
+hades.signals.SignalStdLogic1164 n_D1 2 D1 Y slice1 D 1 2 3600 16200 13200 16200 0 
+[end signals]
+[end]

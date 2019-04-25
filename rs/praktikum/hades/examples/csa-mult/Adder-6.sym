@@ -1,0 +1,44 @@
+hades.symbols.BboxRectangle  0 0 6000 8400
+# hades.symbols.Rectangle  0 0 6000 8400
+hades.symbols.PortLabel 5850 4350 3 S0
+hades.symbols.PortSymbol 6000 4200 S0
+hades.symbols.PortLabel 5850 3750 3 S1
+hades.symbols.PortSymbol 6000 3600 S1
+hades.symbols.PortLabel 5850 3150 3 S2
+hades.symbols.PortSymbol 6000 3000 S2
+hades.symbols.PortLabel 5850 2550 3 S3
+hades.symbols.PortSymbol 6000 2400 S3
+hades.symbols.PortLabel 5850 1950 3 S4
+hades.symbols.PortSymbol 6000 1800 S4
+hades.symbols.PortLabel 5850 1350 3 S5
+hades.symbols.PortSymbol 6000 1200 S5
+hades.symbols.PortLabel 5850 750 3 Cout
+hades.symbols.PortSymbol 6000 600 Cout
+hades.symbols.PortLabel 150 7950 Cin
+hades.symbols.PortSymbol 0 7800 Cin
+hades.symbols.PortLabel 150 7350 A0
+hades.symbols.PortSymbol 0 7200 A0
+hades.symbols.PortLabel 150 6750 A1
+hades.symbols.PortSymbol 0 6600 A1
+hades.symbols.PortLabel 150 6150 A2
+hades.symbols.PortSymbol 0 6000 A2
+hades.symbols.PortLabel 150 5550 A3
+hades.symbols.PortSymbol 0 5400 A3
+hades.symbols.PortLabel 150 4950 A4
+hades.symbols.PortSymbol 0 4800 A4
+hades.symbols.PortLabel 150 4350 A5
+hades.symbols.PortSymbol 0 4200 A5
+hades.symbols.PortLabel 150 3750 B0
+hades.symbols.PortSymbol 0 3600 B0
+hades.symbols.PortLabel 150 3150 B1
+hades.symbols.PortSymbol 0 3000 B1
+hades.symbols.PortLabel 150 2550 B2
+hades.symbols.PortSymbol 0 2400 B2
+hades.symbols.PortLabel 150 1950 B3
+hades.symbols.PortSymbol 0 1800 B3
+hades.symbols.PortLabel 150 1350 B4
+hades.symbols.PortSymbol 0 1200 B4
+hades.symbols.PortLabel 150 750 B5
+hades.symbols.PortSymbol 0 600 B5
+hades.symbols.InstanceLabel 150 8250 i0
+hades.symbols.ClassLabel 150 450 Adder-6_ripple_carry

@@ -1,0 +1,20 @@
+# hades.models.Design file
+#  
+[name] Interrupt_driven_counter
+[components]
+hades.models.io.PowerOnReset por 8400 7200 @N 1001 0.01 0.01
+hades.models.io.HexDisplay HexDisplay 14400 7200 @N 1001
+hades.models.io.ClockGen count_clk 2400 7200 @N 1001 0.1 0.5 0.0
+hades.models.pic.Pic16C84 cpu 10200 4800 @N 1001 /hades/examples/pic16c84/count.rom
+hades.models.io.ClockGen pic_clk 7200 2400 @N 1001 0.0010 0.5 0.0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n8 2 pic_clk clk cpu CLKIN 3 2 9600 3600 13800 3600 2 13800 3600 13800 6600 2 13800 6600 13200 6600 0 
+hades.signals.SignalStdLogic1164 n5 2 por nreset cpu /MCLR 1 2 10200 7200 8400 7200 0 
+hades.signals.SignalStdLogic1164 n4 2 cpu B4 HexDisplay A0 1 2 13200 10200 14400 10200 0 
+hades.signals.SignalStdLogic1164 n3 2 cpu B5 HexDisplay A1 1 2 13200 9600 14400 9600 0 
+hades.signals.SignalStdLogic1164 n2 2 cpu B6 HexDisplay A2 1 2 13200 9000 14400 9000 0 
+hades.signals.SignalStdLogic1164 n1 2 cpu B7 HexDisplay A3 1 2 13200 8400 14400 8400 0 
+hades.signals.SignalStdLogic1164 n0 2 count_clk clk cpu B0 1 2 4800 8400 10200 8400 0 
+[end signals]
+[end]

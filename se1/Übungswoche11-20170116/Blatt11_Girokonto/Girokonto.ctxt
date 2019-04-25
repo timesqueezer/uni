@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Girokonto()
+comment0.text=\r\n\ Ein\ neues\ Konto\ hat\ einen\ Anfangssaldo\ und\ ein\ Dispo-Limit\ von\ 0.\r\n
+comment1.params=
+comment1.target=int\ gibDispoLimit()
+comment1.text=\r\n\ Liefert\ das\ Dispo-Limit\ dieses\ Kontos.\r\n
+comment2.params=dispoLimit
+comment2.target=void\ setzeDispoLimit(int)
+comment2.text=\r\n\ Setze\ das\ Dispo-Limit\ auf\ den\ gegebenen\ Wert.\r\n\ \r\n\ @param\ dispoLimit\ ein\ nicht-negativer\ Wert\ als\ neues\ Dispo-Limit\r\n
+comment3.params=betrag
+comment3.target=void\ zahleEin(int)
+comment3.text=\r\n\ Zahlt\ einen\ Betrag\ auf\ das\ Konto\ ein.\r\n\ \r\n\ @param\ betrag\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ einzuzahlende\ Betrag\r\n
+comment4.params=betrag
+comment4.target=void\ hebeAb(int)
+comment4.text=\r\n\ Hebt\ einen\ Betrag\ vom\ Konto\ ab.\r\n\ \r\n\ @param\ betrag\r\n\ \ \ \ \ \ \ \ \ \ \ \ der\ abzuhebende\ Betrag\r\n
+comment5.params=
+comment5.target=int\ gibSaldo()
+comment5.text=\r\n\ Liefert\ den\ Saldo\ des\ Kontos.\r\n
+comment6.params=
+comment6.target=void\ druckeKontobewegung()
+numComments=7

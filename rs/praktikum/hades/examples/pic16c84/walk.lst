@@ -1,0 +1,141 @@
+MPASM 02.01 Released             WALK.ASM   11-27-1998  13:22:21         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001 
+                    00002 ;*******************************************************************
+                    00003 ;                           walk.asm
+                    00004 ;
+                    00005 ; This code walks LEDs backwards and forwards on port b. 
+                    00006 ; Couldn't be simpler.
+                    00007 ;*******************************************************************
+                    00008 
+Warning[215]: Processor superceded by command line.  Verify processor symbol.
+                    00009       LIST    P=16C84;f=inhx8m
+                    00010       
+  00003FFF          00011 _CP_OFF           equ   H'3FFF'                 ;code protect off
+  00003FFF          00012 _PWRTE_ON   equ   H'3FFF'           ;Power on timer on
+  00003FFB          00013 _WDT_OFF    equ   H'3FFB'                 ;watch dog timer off
+  00003FFD          00014 _XT_OSC           equ   H'3FFD'                 ;crystal oscillator
+Warning[205]: Found directive in column 1. (__CONFIG)
+2007 3FF9           00015 __CONFIG       _CP_OFF & _PWRTE_ON & _WDT_OFF & _XT_OSC
+                    00016                                     ;configure programmer directive
+                    00017 
+  00000000          00018 w       equ     0 ; register destination numbers.
+  00000001          00019 f       equ     1 
+  00000001          00020 same  equ   1
+                    00021 
+  00000002          00022 z       equ     2 ; status flags
+  00000002          00023 zero  equ   2
+  00000000          00024 c     equ   0
+  00000000          00025 carry equ   0
+                    00026       
+  0000000C          00027 count1  equ     0C      ; wait counter ls digit file register C
+  0000000D          00028 count2  equ 0D    ; wait counter ms digit file register D
+  00000006          00029 portb   equ     06      ; port b I/O register f6
+  00000005          00030 porta equ   05    ; port a I/O register f5
+  00000003          00031 status  equ     03      ; status register f3
+                    00032 ;
+                    00033 ;
+                    00034 ;
+0000                00035       org     0   ; origin
+                    00036 ;
+0000                00037 init   
+0000 3000           00038       movlw   0
+Warning[224]: Use of this instruction is not recommended.
+0001 0066           00039       tris    portb                   ; set portb as outputs
+0002 0086           00040       movwf   portb                   ; set portb levels all low
+                    00041 
+0003                00042 start
+0003 1406           00043         bsf portb,0           ; set portb bit 0 high
+                    00044       
+                    00045 
+0004 200F           00046 rot_L call  wait              ; wait for a bit
+0005 1003           00047       bcf   status,c          ; clear carry bit
+0006 0D86           00048       rlf   portb,same        ; rotate left portb, store result portb
+0007 1F86           00049       btfss portb,7                 ; skip next line if top bit set
+0008 2804           00050       goto  rot_L
+MPASM 02.01 Released             WALK.ASM   11-27-1998  13:22:21         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00051 
+0009 200F           00052 rot_R call  wait              ; wait for a bit
+000A 1003           00053       bcf   status,c          ; clear carry bit
+000B 0C86           00054       rrf   portb,same        ; rotate right portb, store in portb
+000C 1C06           00055       btfss portb,0                 ; skip next line if bottom bit set
+000D 2809           00056       goto  rot_R
+000E 2804           00057       goto  rot_L             ; do it all again 
+                    00058 
+                    00059 ; ----------------------------
+                    00060 ; wait subroutine 
+                    00061 ; ----------------------------
+000F                00062 wait    
+000F 30C8           00063       movlw   .200              ; load count1 with decimal 200
+0010 008C           00064       movwf   count1
+0011 30C8           00065 d1    movlw   .200            ; load count2 with decimal 200
+0012 008D           00066       movwf   count2    
+                    00067                         ; shorten these for the simulator
+                    00068       
+0013 0B8D           00069 d2    decfsz  count2,same     ; decrement and skip next line if zero
+0014 2813           00070       goto  d2          ; if not zero           
+Message[305]: Using default destination of 1 (file).
+0015 0B8C           00071       decfsz  count1          ; decrement count1 if count2 is zero
+0016 2811           00072       goto  d1          ; do inside loop again if count2 nz
+0017 3400           00073       retlw       00
+                    00074 ; ----------------------------        
+                    00075 
+Warning[205]: Found directive in column 1. (END)
+                    00076 END
+MPASM 02.01 Released             WALK.ASM   11-27-1998  13:22:21         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_CP_OFF                           00003FFF
+_PWRTE_ON                         00003FFF
+_WDT_OFF                          00003FFB
+_XT_OSC                           00003FFD
+__16C84                           00000001
+c                                 00000000
+carry                             00000000
+count1                            0000000C
+count2                            0000000D
+d1                                00000011
+d2                                00000013
+f                                 00000001
+init                              00000000
+porta                             00000005
+portb                             00000006
+rot_L                             00000004
+rot_R                             00000009
+same                              00000001
+start                             00000003
+status                            00000003
+w                                 00000000
+wait                              0000000F
+z                                 00000002
+zero                              00000002
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXX-------- ---------------- ----------------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    24
+Program Memory Words Free:  1000
+
+
+Errors   :     0
+Warnings :     4 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+

@@ -1,0 +1,37 @@
+
+[JavaFSM V1.0]
+[MOORE]
+[Name]
+CSA_Mult_Controller
+[Inputs 1]
+start,0
+[Outputs 5]
+shift_A
+enable_P
+clear_CP
+enable_Q
+ready
+[Zustaende 9]
+idle,199,106,true,0,0,0,0,0
+mult1,384,204,false,1,1,1,0,0
+mult2,404,249,false,1,1,1,0,0
+mult3,404,313,false,1,1,1,0,0
+mult4,373,365,false,1,1,1,0,0
+mult5,321,403,false,1,1,1,0,0
+propagateCarry,207,437,false,0,0,1,1,0
+ready,129,246,false,0,0,1,0,1
+mult0,305,145,false,1,1,1,0,0
+[Transitionen 11]
+ready,idle,!start
+idle,idle,!start
+mult1,mult2,*
+mult2,mult3,*
+mult3,mult4,*
+mult4,mult5,*
+mult5,propagateCarry,*
+propagateCarry,ready,*
+ready,ready,start
+idle,mult0,start
+mult0,mult1,*
+[Kommentare 0]
+[ENDE]

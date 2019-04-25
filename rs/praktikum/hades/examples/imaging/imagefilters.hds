@@ -1,0 +1,29 @@
+# hades.models.Design file
+#  
+[name] simple_image_filters
+[components]
+hades.models.imaging.InvertFilter i4 13800 10800 @N 1001
+hades.models.imaging.BlueFilter i3 10800 7200 @N 1001
+hades.models.imaging.GreenFilter i2 10800 6000 @N 1001
+hades.models.imaging.SimpleFilter i1 10800 9600 @N 1001
+hades.models.imaging.RedFilter i0 10800 4800 @N 1001
+hades.models.imaging.ImageViewer viewer_source 16800 3000 @N 1001
+hades.models.imaging.ImageViewer viewer_green 16800 6600 @N 1001
+hades.models.imaging.ImageViewer viewer_gray_invert 16800 11400 @N 1001
+hades.models.imaging.ImageSource source 8400 3000 @N 1001
+hades.models.imaging.ImageViewer viewer_blue 16800 7800 @N 1001
+hades.models.imaging.ImageViewer viewer_gray 16800 10200 @N 1001
+hades.models.imaging.ImageViewer viewer_red 16800 5400 @N 1001
+hades.models.imaging.ImageViewer viewer_gauss3 16800 13800 @N 1001
+hades.models.imaging.GaussFilter i6 10800 13200 @N 1001
+[end components]
+[signals]
+hades.models.imaging.ImageSignal n7 2 i6 Y viewer_gauss3 A 1 2 12600 13800 16800 13800 0 
+hades.models.imaging.ImageSignal n5 2 i0 Y viewer_red A 1 2 12600 5400 16800 5400 0 
+hades.models.imaging.ImageSignal n4 2 i2 Y viewer_green A 1 2 12600 6600 16800 6600 0 
+hades.models.imaging.ImageSignal n3 2 i3 Y viewer_blue A 1 2 12600 7800 16800 7800 0 
+hades.models.imaging.ImageSignal n2 3 i1 Y viewer_gray A i4 A 4 2 13200 10200 16800 10200 2 12600 10200 13200 10200 2 13200 10200 13200 11400 2 13200 11400 13800 11400 1 13200 10200 
+hades.models.imaging.ImageSignal n1 2 i4 Y viewer_gray_invert A 1 2 15600 11400 16800 11400 0 
+hades.models.imaging.ImageSignal n0 7 source Y viewer_source A i0 A i2 A i3 A i1 A i6 A 12 2 9600 3000 8400 3000 2 16800 3000 9600 3000 2 9600 3000 9600 5400 2 9600 5400 10800 5400 2 9600 5400 9600 6600 2 9600 6600 10800 6600 2 9600 6600 9600 7800 2 9600 7800 10800 7800 2 9600 7800 9600 10200 2 9600 10200 10800 10200 2 9600 10200 9600 13800 2 9600 13800 10800 13800 5 9600 10200 9600 5400 9600 3000 9600 6600 9600 7800 
+[end signals]
+[end]

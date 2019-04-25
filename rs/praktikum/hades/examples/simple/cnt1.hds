@@ -1,0 +1,22 @@
+# hades.models.Design file
+#  
+[name] SynchronousCounter0
+[components]
+hades.models.gates.And2 i2 10800 10800 1001 1.0E-8
+hades.models.gates.Xor2 i1 6000 4800 1001 1.0E-8
+hades.models.flipflops.Dffr i0 10800 4800 1001
+hades.models.io.Opin cout 16800 12000 1001
+hades.models.io.Ipin clk 3600 7800 1001 
+hades.models.io.Ipin cin 3600 5400 1001 
+hades.models.io.Opin dout 16800 6600 1001
+hades.models.io.Ipin nreset 3600 9000 1001 
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n5 2 i1 Y i0 D 1 4 9600 6000 10200 6000 10200 6600 10800 6600 0 
+hades.signals.SignalStdLogic1164 n4 3 cin Y i1 A i2 B 2 3 3600 5400 4200 5400 6000 5400 3 4200 5400 4200 12600 10800 12600 1 4200 5400 
+hades.signals.SignalStdLogic1164 n3 4 i0 Q dout A i1 B i2 A 3 3 14400 6600 15600 6600 16800 6600 5 15600 6600 15600 10200 5400 10200 5400 6600 6000 6600 3 5400 10200 5400 11400 10800 11400 2 15600 6600 5400 10200 
+hades.signals.SignalStdLogic1164 n2 2 i2 Y cout A 1 2 14400 12000 16800 12000 0 
+hades.signals.SignalStdLogic1164 n1 2 nreset Y i0 NR 1 2 3600 9000 10800 9000 0 
+hades.signals.SignalStdLogic1164 n0 2 clk Y i0 C 1 2 3600 7800 10800 7800 0 
+[end signals]
+[end]

@@ -1,0 +1,14 @@
+# hades.models.Design file
+#  
+[name] tutorial - contents
+[components]
+hades.models.meta.ActionButton usingThePopup 3900 8100 @N 1001 /hades/examples/tutorial/figs/ButtonNextSmall.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/popup.hds
+hades.models.meta.ActionButton StdLogic1164Colors 15900 9300 @N 1001 /hades/examples/tutorial/figs/ButtonNextSmall.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/colors1164.hds
+hades.models.meta.ActionButton simControl 15900 6900 @N 1001 /hades/examples/tutorial/figs/ButtonNextSmall.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/simcontrol.hds
+hades.models.meta.ActionButton welcomeButton 2700 4500 @N 1001 /hades/examples/tutorial/figs/ButtonNextSmall.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/welcome.hds
+hades.models.FigObject figobject 300 300 @N 1001 /hades/examples/tutorial/figs/contents.fig
+hades.models.meta.ActionButton DisplayOptions 15900 10500 @N 1001 /hades/examples/tutorial/figs/ButtonNextSmall.sym hades.gui.OpenDesignCommand 0 0 /hades/examples/tutorial/display.hds
+[end components]
+[signals]
+[end signals]
+[end]

@@ -1,0 +1,44 @@
+
+[JavaFSM V1.0]
+[MOORE]
+[Name]
+RS232-Sender
+[Inputs 1]
+send,0
+[Outputs 4]
+s0
+s1
+s2
+s3
+[Zustaende 12]
+wait,136,340,false,0,0,0,0
+idle,109,177,true,1,0,0,0
+start,294,103,false,0,1,0,0
+d1,520,171,false,0,0,1,0
+d5,454,349,false,0,0,0,1
+d3,540,270,false,0,1,1,0
+d4,499,311,false,1,1,1,0
+d2,550,214,false,1,0,1,0
+d6,411,379,false,1,0,0,1
+d7,360,406,false,0,1,0,1
+stop,223,252,false,1,1,0,1
+d0,435,139,false,1,1,0,0
+[Transitionen 16]
+d1,d2,*
+d2,d3,*
+d3,d4,*
+d4,d5,*
+d5,d6,*
+d6,d7,*
+d7,wait,send
+wait,wait,send
+wait,idle,!send
+idle,idle,!send
+idle,start,send
+d7,stop,!send
+stop,start,send
+stop,idle,!send
+d0,d1,*
+start,d0,*
+[Kommentare 0]
+[ENDE]

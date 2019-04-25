@@ -1,0 +1,25 @@
+# hades.models.Design file
+#  
+[name] Microchip-Tutorial-Demo
+[components]
+hades.models.io.ClockGen pic_clk_1khz 2400 -600 @N 1001 0.01 0.5 0.0
+hades.models.io.ClockGen counter_in 7800 3600 @N 1001 1.0 0.5 0.0
+hades.models.io.PowerOnReset reset 4800 3000 @N 1001 0.0050 0.0050
+hades.models.io.HexDisplay counter_7:4 19200 9000 @N 1001
+hades.models.io.HexDisplay counter_3:0 19200 13200 @N 1001
+hades.models.pic.Pic16C84 cpu 12000 6600 @N 1001 /hades/examples/pic16c84/tut84.hex
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 cpu B1 counter_3:0 A1 3 2 19200 15600 9600 15600 2 9600 15600 9600 10800 2 9600 10800 12000 10800 0 
+hades.signals.SignalStdLogic1164 n8 2 cpu B2 counter_3:0 A2 3 2 12000 11400 10200 11400 2 10200 11400 10200 15000 2 10200 15000 19200 15000 0 
+hades.signals.SignalStdLogic1164 n7 2 cpu B3 counter_3:0 A3 3 2 19200 14400 10800 14400 2 10800 14400 10800 12000 2 10800 12000 12000 12000 0 
+hades.signals.SignalStdLogic1164 n5 2 cpu B4 counter_7:4 A0 1 2 19200 12000 15000 12000 0 
+hades.signals.SignalStdLogic1164 n4 2 cpu B5 counter_7:4 A1 1 2 15000 11400 19200 11400 0 
+hades.signals.SignalStdLogic1164 n3 2 cpu B6 counter_7:4 A2 1 2 19200 10800 15000 10800 0 
+hades.signals.SignalStdLogic1164 n2 2 cpu B7 counter_7:4 A3 1 2 15000 10200 19200 10200 0 
+hades.signals.SignalStdLogic1164 n1 2 reset nreset cpu /MCLR 3 2 12000 9000 5400 9000 2 5400 9000 5400 3000 2 5400 3000 4800 3000 0 
+hades.signals.SignalStdLogic1164 n0 2 pic_clk_1khz clk cpu CLKIN 3 2 15000 8400 16800 8400 2 16800 8400 16800 600 2 16800 600 4800 600 0 
+hades.signals.SignalStdLogic1164 n11 2 cpu A1 counter_in clk 3 2 15000 7200 15600 7200 2 15600 7200 15600 4800 2 15600 4800 10200 4800 0 
+hades.signals.SignalStdLogic1164 n10 2 cpu B0 counter_3:0 A0 3 2 12000 10200 9000 10200 2 9000 10200 9000 16200 2 9000 16200 19200 16200 0 
+[end signals]
+[end]

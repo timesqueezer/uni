@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=DuplikatSucher()
+comment0.text=\r\n\ Initialisiert\ den\ DuplikatSucher.\r\n
+comment1.params=
+comment1.target=void\ start()
+comment1.text=\r\n\ Startet\ die\ Suche\ nach\ Duplikaten.\r\n
+comment2.params=file
+comment2.target=void\ verarbeite(java.io.File)
+comment2.text=\r\n\ Versucht,\ die\ Datei\ zu\ den\ Originalen\ hinzuzufuegen.\r\n\ Falls\ das\ nicht\ klappt,\ handelt\ es\ sich\ um\ ein\ Duplikat.\r\n
+comment3.params=duplikat
+comment3.target=void\ duplikatGefunden(Datei)
+comment3.text=\r\n\ Schreibt\ das\ Duplikat\ zusammen\ mit\ seiner\ Kopie\ auf\ die\ Konsole\ und\ merkt\ sich\ das\ Duplikat.\r\n
+numComments=4

@@ -1,0 +1,16 @@
+hades.symbols.BboxRectangle  0 0 4800 4800
+hades.symbols.ClassLabel 2100 1650 SUM1
+hades.symbols.Rectangle  0 0 4800 4800
+hades.symbols.PortSymbol 1200 0 si
+hades.symbols.PortSymbol 2400 0 ain
+hades.symbols.PortSymbol 3600 0 bin
+hades.symbols.PortSymbol 1200 4800 gi
+hades.symbols.PortSymbol 2400 4800 pi
+hades.symbols.PortSymbol 3600 4800 cin
+hades.symbols.PortLabel 1100 450 si
+hades.symbols.PortLabel 2300 450 ain
+hades.symbols.PortLabel 3500 450 bin
+hades.symbols.PortLabel 1100 4550 gi
+hades.symbols.PortLabel 2300 4550 pi
+hades.symbols.PortLabel 3500 4550 cin
+hades.symbols.InstanceLabel 150 4000 i0

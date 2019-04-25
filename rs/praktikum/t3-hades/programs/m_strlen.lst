@@ -1,0 +1,34 @@
+; strcat
+Start:
+	.org	0x8000
+	.ascii	"Erster String"
+	.defw	0
+	.ascii	"Zweiter String"	; 0x800e
+	.defw	0
+	.org 0x0000
+	movi	R11, 8
+	lsli	R11, 12
+	mov	R10, R11
+	addi	R10, 0xe
+	addi	R10, 0xe
+	jsr	strcat
+	halt
+strcat:
+	movi	R0, 0	; to find null-terminator
+loop:
+	ldw	R1, 0(R10)
+	cmpe	R0, R1
+	bt	concat
+	addi	R10, 2
+	br	loop
+concat:
+	ldw	R1, 0(R11)
+	cmpe	R0, R1
+	bt	end
+	stw	R1, 0(R10)
+	addi	R11, 2
+	addi	R10, 2
+	br	concat
+end:
+	stw	R0, 0(R10)
+	jmp	R15

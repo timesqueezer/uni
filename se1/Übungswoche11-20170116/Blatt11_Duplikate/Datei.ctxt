@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=file
+comment0.target=Datei(java.io.File)
+comment0.text=\r\n\ Initialisiert\ eine\ neue\ Datei\ und\ merkt\ sich\ deren\ Groesse.\r\n\ \r\n\ @param\ file\ das\ einzulesende\ File\r\n
+comment1.params=obj
+comment1.target=boolean\ equals(java.lang.Object)
+comment1.text=\r\n\ Wann\ gelten\ zwei\ Exemplare\ dieser\ Klasse\ als\ gleich?\r\n\ \r\n\ Zwei\ Dateien\ gelten\ als\ gleich,\ sobald\ sie\ die\ gleiche\ Gr\u00F6\u00DFe\ und\ den\ gleichen\ Fingerabdruck\ besitzen.\r\n\ Ansonsten\ muss\ es\ nicht\ dieselbe\ Datei\ sein.\r\n
+comment2.params=
+comment2.target=int\ hashCode()
+comment2.text=\r\n\ Wie\ wird\ der\ hashCode\ berechnet?\r\n\ \r\n\ anscheinend\ \u00FCber\ die\ Gr\u00F6\u00DFe\ der\ Datei,\ limitiert\ auf\ den\ Wertebereich\ eines\ int.\r\n\ Dadurch\ wird\ der\ Vertrag\ zwischen\ equals()\ und\ hashCode()\ nicht\ eingehalten,\ da\r\n\ zwei\ unterschiedliche\ Dateien\ den\ selben\ hashCode\ besitzen\ k\u00F6nnen.\r\n
+comment3.params=
+comment3.target=java.lang.String\ toString()
+comment3.text=\r\n\ Liefert\ den\ Dateinamen\ und\ den\ Fingerabdruck\ als\ String\ zurueck.\r\n\ \r\n\ @return\ String\ im\ Format\ "DATEINAME\ (FINGERABDRUCK)"\r\n
+comment4.params=
+comment4.target=java.lang.String\ fingerabdruck()
+comment4.text=\r\n\ Liefert\ den\ Fingerabdruck.\ Da\ der\ Fingerabdruck\ nur\ bei\ Bedarf\ generiert\ wird,\r\n\ kann\ der\ erste\ Aufruf\ dieser\ Methode\ u.U.\ recht\ lange\ dauern.\r\n\ \r\n\ @return\ der\ Fingerabdruck\r\n
+numComments=5

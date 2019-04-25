@@ -1,0 +1,45 @@
+# hades.models.Design file
+#  
+[name] demo_74181
+[components]
+hades.models.gates.InvSmall i7 6000 16800 @N 1001 5.0E-9
+hades.models.gates.InvSmall i6 16200 6000 @N 1001 5.0E-9
+hades.models.io.Opin i5 19200 6600 @N 1001 5.0E-9
+hades.models.io.Ipin i4 4800 18600 @N 1001 U
+hades.models.io.Ipin i3 4800 17400 @N 1001 U
+hades.models.io.Opin i2 19200 17400 @N 1001 5.0E-9
+hades.models.io.Opin i1 19200 16200 @N 1001 5.0E-9
+hades.models.io.Opin i0 19200 15000 @N 1001 5.0E-9
+hades.models.io.HexSwitch HexSwitch2 1800 0 @N 1001
+hades.models.io.HexSwitch HexSwitch1 1800 5400 @N 1001
+hades.models.io.HexSwitch HexSwitch 1800 10800 @N 1001
+hades.models.Design 74181_ALU 8400 4200 @N 1001 \u002fhades\u002fmodels\u002fttl74\u002fSN74181\u002ehds
+hades.models.io.HexDisplay HexDisplay 19200 8400 @N 1001
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n23 2 i3 Y i7 A 1 2 6000 17400 4800 17400 0 
+hades.signals.SignalStdLogic1164 n22 2 74181_ALU CN+4/ i6 A 1 2 16200 6600 14400 6600 0 
+hades.signals.SignalStdLogic1164 n21 2 i6 Y i5 A 1 2 18000 6600 19200 6600 0 
+hades.signals.SignalStdLogic1164 n20 2 HexSwitch1 Y0 74181_ALU A0 3 2 8400 9000 6600 9000 2 6600 9000 6600 7800 2 6600 7800 4800 7800 0 
+hades.signals.SignalStdLogic1164 n9 2 74181_ALU F3 HexDisplay A3 3 2 19200 9600 15600 9600 2 15600 9600 15600 9000 2 15600 9000 14400 9000 0 
+hades.signals.SignalStdLogic1164 n8 2 74181_ALU F2 HexDisplay A2 1 2 14400 10200 19200 10200 0 
+hades.signals.SignalStdLogic1164 n7 2 HexSwitch Y0 74181_ALU B0 3 2 8400 15000 6000 15000 2 6000 15000 6000 13200 2 6000 13200 4800 13200 0 
+hades.signals.SignalStdLogic1164 n6 2 HexSwitch Y1 74181_ALU B1 3 2 8400 13800 6600 13800 2 6600 13800 6600 12600 2 6600 12600 4800 12600 0 
+hades.signals.SignalStdLogic1164 n5 2 HexSwitch Y2 74181_ALU B2 3 2 8400 12600 7200 12600 2 7200 12600 7200 12000 2 7200 12000 4800 12000 0 
+hades.signals.SignalStdLogic1164 n4 2 HexSwitch Y3 74181_ALU B3 1 2 4800 11400 8400 11400 0 
+hades.signals.SignalStdLogic1164 n3 2 HexSwitch2 Y0 74181_ALU S0 2 2 13200 4200 13200 2400 2 13200 2400 4800 2400 0 
+hades.signals.SignalStdLogic1164 n2 2 HexSwitch1 Y1 74181_ALU A1 3 2 8400 7800 7200 7800 2 7200 7800 7200 7200 2 7200 7200 4800 7200 0 
+hades.signals.SignalStdLogic1164 n1 2 HexSwitch1 Y2 74181_ALU A2 1 2 8400 6600 4800 6600 0 
+hades.signals.SignalStdLogic1164 n0 2 HexSwitch1 Y3 74181_ALU A3 3 2 4800 6000 7200 6000 2 7200 6000 7200 5400 2 7200 5400 8400 5400 0 
+hades.signals.SignalStdLogic1164 n19 2 HexSwitch2 Y1 74181_ALU S1 2 2 12000 4200 12000 1800 2 12000 1800 4800 1800 0 
+hades.signals.SignalStdLogic1164 n18 2 HexSwitch2 Y2 74181_ALU S2 2 2 4800 1200 10800 1200 2 10800 1200 10800 4200 0 
+hades.signals.SignalStdLogic1164 n17 2 HexSwitch2 Y3 74181_ALU S3 2 2 9600 4200 9600 600 2 9600 600 4800 600 0 
+hades.signals.SignalStdLogic1164 n16 2 i7 Y 74181_ALU CN/ 1 2 7800 17400 8400 17400 0 
+hades.signals.SignalStdLogic1164 n15 2 i4 Y 74181_ALU M 1 2 4800 18600 8400 18600 0 
+hades.signals.SignalStdLogic1164 n14 2 74181_ALU A=B i0 A 1 2 14400 15000 19200 15000 0 
+hades.signals.SignalStdLogic1164 n13 2 74181_ALU Y i1 A 1 2 19200 16200 14400 16200 0 
+hades.signals.SignalStdLogic1164 n12 2 74181_ALU X i2 A 1 2 14400 17400 19200 17400 0 
+hades.signals.SignalStdLogic1164 n11 2 74181_ALU F0 HexDisplay A0 3 2 19200 11400 16200 11400 2 16200 11400 16200 12600 2 16200 12600 14400 12600 0 
+hades.signals.SignalStdLogic1164 n10 2 74181_ALU F1 HexDisplay A1 3 2 14400 11400 15600 11400 2 15600 11400 15600 10800 2 15600 10800 19200 10800 0 
+[end signals]
+[end]

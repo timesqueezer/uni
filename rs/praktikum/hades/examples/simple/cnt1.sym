@@ -1,0 +1,12 @@
+hades.symbols.BboxRectangle 0 0 1800 2400
+hades.symbols.ClassLabel 50 400 CNT1
+hades.symbols.PortSymbol 0 600 clk
+hades.symbols.PortSymbol 0 1200 cin
+hades.symbols.PortSymbol 0 1800 nreset
+hades.symbols.PortSymbol 1800 600 dout
+hades.symbols.PortSymbol 1800 1200 cout
+hades.symbols.PortLabel 150 750 clk
+hades.symbols.PortLabel 150 1350 cin
+hades.symbols.PortLabel 150 1950 nreset
+hades.symbols.PortLabel 1700 750 3 dout
+hades.symbols.PortLabel 1700 1350 3 cout

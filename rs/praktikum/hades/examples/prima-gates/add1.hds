@@ -1,0 +1,28 @@
+# hades.models.Design file
+#  
+[name] ADD1
+[components]
+hades.models.gates.And2 i5 19200 22800 1001 1.0E-8
+hades.models.io.Ipin bin 14400 18600 1001 
+hades.models.io.Opin sum 30000 19200 1001
+hades.models.gates.Or3 i11 24000 25200 1001 1.0E-8
+hades.models.gates.And2 i10 19200 27600 1001 1.0E-8
+hades.models.io.Opin cout 30000 26400 1001
+hades.models.io.Ipin cin 14400 19800 1001 
+hades.models.io.Ipin ain 14400 17400 1001 
+hades.models.gates.And2 i9 19200 25200 1001 1.0E-8
+hades.models.gates.Xor2 i8 19200 16800 1001 1.0E-8
+hades.models.gates.Xor2 i7 24000 18000 1001 1.0E-8
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n8 4 cin Y i9 B i10 A i7 B 3 4 14400 19800 15600 19800 15600 27000 19200 27000 3 15600 27000 15600 28200 19200 28200 2 15600 19800 24000 19800 2 15600 27000 15600 19800 
+hades.signals.SignalStdLogic1164 n7 4 bin Y i8 B i5 B i10 B 3 3 14400 18600 16800 18600 19200 18600 3 16800 18600 16800 24600 19200 24600 3 16800 24600 16800 29400 19200 29400 2 16800 18600 16800 24600 
+hades.signals.SignalStdLogic1164 n6 4 ain Y i8 A i5 A i9 A 3 3 14400 17400 18000 17400 19200 17400 3 18000 17400 18000 23400 19200 23400 3 18000 23400 18000 25800 19200 25800 2 18000 17400 18000 23400 
+hades.signals.SignalStdLogic1164 n5 2 i11 Y cout A 1 2 27600 26400 30000 26400 0 
+hades.signals.SignalStdLogic1164 n4 2 i10 Y i11 B 1 4 22800 28800 23400 28800 23400 27000 24000 27000 0 
+hades.signals.SignalStdLogic1164 n3 2 i9 Y i11 C 1 2 24000 26400 22800 26400 0 
+hades.signals.SignalStdLogic1164 n2 2 i5 Y i11 A 1 4 22800 24000 23400 24000 23400 25800 24000 25800 0 
+hades.signals.SignalStdLogic1164 n1 2 i8 Y i7 A 1 4 22800 18000 23400 18000 23400 18600 24000 18600 0 
+hades.signals.SignalStdLogic1164 n0 2 i7 Y sum A 1 2 27600 19200 30000 19200 0 
+[end signals]
+[end]

@@ -1,0 +1,13 @@
+# hades.models.Design file
+#  
+[name] unnamed
+[components]
+hades.models.io.Opin i2 10800 4800 1001
+hades.models.gates.Inv i1 7200 3600 1001
+hades.models.io.PowerOnReset i0 6000 4800 1001 2.0 3.0
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n1 2 i0 nreset i1 A 1 2 7200 4800 6000 4800 0 
+hades.signals.SignalStdLogic1164 n0 2 i1 Y i2 A 1 2 10800 4800 9600 4800 0 
+[end signals]
+[end]

@@ -1,0 +1,67 @@
+# hades.models.Design file
+#  
+[name] DigitalClock 
+[components]
+hades.models.io.HexDisplay i5 19800 18000 1001
+hades.models.io.HexDisplay i4 15600 18000 1001
+hades.models.io.HexDisplay i3 7800 18000 1001
+hades.models.io.HexDisplay i2 3600 18000 1001
+hades.models.io.HexDisplay i1 27600 18000 1001
+hades.models.io.HexDisplay i0 31800 18000 1001
+hades.models.io.Ipin mins -5700 6000 1001 zero
+hades.models.io.Ipin start/stop -5700 4800 1001 zero
+hades.models.gates.Or2 i10 -1200 9600 1001 1.0E-8
+hades.models.Design unnamed 24600 16200 1001 /hades/examples/digiclock/count06.hds
+hades.models.Design unnamed5 3600 8400 1001 /hades/examples/digiclock/count10.hds
+hades.models.Design unnamed4 15600 8400 1001 /hades/examples/digiclock/count10.hds
+hades.models.Design unnamed3 600 16200 1001 /hades/examples/digiclock/count06.hds
+hades.models.Design unnamed2 12600 16200 1001 /hades/examples/digiclock/count06.hds
+hades.models.Design unnamed1 27600 8400 1001 /hades/examples/digiclock/count10.hds
+hades.models.io.Ipin hours -5700 7200 1001 zero
+hades.models.gates.Or2 i9 10800 9600 1001 1.0E-8
+hades.models.gates.Inv i8 23400 9600 1001 5.0E-9
+hades.models.io.ClockGen i7 -7200 0 1001 0.16 0.5 0.0
+hades.models.io.PowerOnReset i6 -4800 -1200 1001 0.0050 0.0050
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n29 2 unnamed5 Q2 i3 A2 1 4 6000 12000 7200 12000 7200 19800 7800 19800 0 
+hades.signals.SignalStdLogic1164 n9 2 unnamed2 Q0 i4 A0 1 2 15000 21000 15600 21000 0 
+hades.signals.SignalStdLogic1164 n28 2 unnamed5 Q1 i3 A1 1 4 6000 12600 6900 12600 6900 20400 7800 20400 0 
+hades.signals.SignalStdLogic1164 n27 2 unnamed5 Q0 i3 A0 1 4 6000 13200 6600 13200 6600 21000 7800 21000 0 
+hades.signals.SignalStdLogic1164 n8 2 unnamed1 Q3 i0 A3 1 4 31800 19200 31500 19200 31500 11400 30000 11400 0 
+hades.signals.SignalStdLogic1164 n26 2 unnamed3 Q0 i2 A0 1 2 3600 21000 3000 21000 0 
+hades.signals.SignalStdLogic1164 n7 2 unnamed1 Q2 i0 A2 1 4 30000 12000 31200 12000 31200 19800 31800 19800 0 
+hades.signals.SignalStdLogic1164 n25 2 unnamed3 Q1 i2 A1 1 2 3000 20400 3600 20400 0 
+hades.signals.SignalStdLogic1164 n6 2 unnamed1 Q1 i0 A1 1 4 31800 20400 30900 20400 30900 12600 30000 12600 0 
+hades.signals.SignalStdLogic1164 n24 2 unnamed3 Q2 i2 A2 1 2 3600 19800 3000 19800 0 
+hades.signals.SignalStdLogic1164 n5 2 unnamed1 Q0 i0 A0 1 4 30000 13200 30600 13200 30600 21000 31800 21000 0 
+hades.signals.SignalStdLogic1164 n23 2 unnamed3 Q3 i2 A3 1 2 3000 19200 3600 19200 0 
+hades.signals.SignalStdLogic1164 n4 2 unnamed1 carry unnamed enable 1 6 30000 10800 30300 10800 30300 15600 24300 15600 24300 18600 24600 18600 0 
+hades.signals.SignalStdLogic1164 n3 2 unnamed Q0 i1 A0 1 2 27600 21000 27000 21000 0 
+hades.signals.SignalStdLogic1164 n22 2 unnamed5 carry unnamed3 enable 1 6 6000 10800 6300 10800 6300 15600 300 15600 300 18600 600 18600 0 
+hades.signals.SignalStdLogic1164 n2 2 unnamed Q1 i1 A1 1 2 27000 20400 27600 20400 0 
+hades.signals.SignalStdLogic1164 n21 2 i10 Y unnamed5 enable 1 2 2400 10800 3600 10800 0 
+hades.signals.SignalStdLogic1164 n20 0 1 1 0 0 0 
+hades.signals.SignalStdLogic1164 n1 2 unnamed Q2 i1 A2 1 3 27600 19800 27300 19800 27000 19800 0 
+hades.signals.SignalStdLogic1164 n0 2 unnamed Q3 i1 A3 1 2 27000 19200 27600 19200 0 
+hades.signals.SignalStdLogic1164 n19 0 1 1 0 0 0 
+hades.signals.SignalStdLogic1164 n18 2 i9 Y unnamed4 enable 1 2 14400 10800 15600 10800 0 
+hades.signals.SignalStdLogic1164 n17 2 unnamed4 Q3 i5 A3 1 4 19800 19200 19500 19200 19500 11400 18000 11400 0 
+hades.signals.SignalStdLogic1164 n16 2 unnamed4 Q2 i5 A2 1 4 18000 12000 19200 12000 19200 19800 19800 19800 0 
+hades.signals.SignalStdLogic1164 n15 2 unnamed4 Q1 i5 A1 1 4 19800 20400 18900 20400 18900 12600 18000 12600 0 
+hades.signals.SignalStdLogic1164 n14 2 unnamed4 Q0 i5 A0 1 4 18000 13200 18600 13200 18600 21000 19800 21000 0 
+hades.signals.SignalStdLogic1164 n13 2 unnamed4 carry unnamed2 enable 1 6 18000 10800 18300 10800 18300 15600 12300 15600 12300 18600 12600 18600 0 
+hades.signals.SignalStdLogic1164 n12 2 unnamed2 Q3 i4 A3 1 2 15600 19200 15000 19200 0 
+hades.signals.SignalStdLogic1164 n11 2 unnamed2 Q2 i4 A2 1 2 15000 19800 15600 19800 0 
+hades.signals.SignalStdLogic1164 n10 2 unnamed2 Q1 i4 A1 1 2 15600 20400 15000 20400 0 
+hades.signals.SignalStdLogic1164 n38 2 start/stop Y i8 A 1 4 -5700 4800 22800 4800 22800 10800 23400 10800 0 
+hades.signals.SignalStdLogic1164 n37 2 i8 Y unnamed1 enable 1 2 27600 10800 25800 10800 0 
+hades.signals.SignalStdLogic1164 n36 2 mins Y i9 A 1 4 -5700 6000 10500 6000 10500 10200 10800 10200 0 
+hades.signals.SignalStdLogic1164 n35 2 hours Y i10 A 1 4 -5700 7200 -1500 7200 -1500 10200 -1200 10200 0 
+hades.signals.SignalStdLogic1164 n34 7 i6 nreset unnamed3 nreset unnamed5 nreset unnamed2 nreset unnamed4 nreset unnamed nreset unnamed1 nreset 6 5 -4800 -1200 -3300 -1200 -3000 -1200 -3000 16800 600 16800 4 -3000 -1200 3300 -1200 3300 9000 3600 9000 4 3300 -1200 9300 -1200 9300 16800 12600 16800 4 9300 -1200 15300 -1200 15300 9000 15600 9000 4 15300 -1200 21300 -1200 21300 16800 24600 16800 4 21300 -1200 27300 -1200 27300 9000 27600 9000 5 -3000 -1200 3300 -1200 9300 -1200 15300 -1200 21300 -1200 
+hades.signals.SignalStdLogic1164 n33 7 i7 clk unnamed3 clk unnamed5 clk unnamed2 clk unnamed4 clk unnamed clk unnamed1 clk 6 4 -4800 1200 -3600 1200 -3600 17400 600 17400 4 -3600 1200 2700 1200 2700 9600 3600 9600 4 2700 1200 8700 1200 8700 17400 12600 17400 4 8700 1200 14700 1200 14700 9600 15600 9600 4 14700 1200 20700 1200 20700 17400 24600 17400 4 20700 1200 26700 1200 26700 9600 27600 9600 5 -3600 1200 2700 1200 8700 1200 14700 1200 20700 1200 
+hades.signals.SignalStdLogic1164 n32 2 unnamed2 carry i10 B 1 6 15000 18600 15300 18600 15300 14700 -1500 14700 -1500 11400 -1200 11400 0 
+hades.signals.SignalStdLogic1164 n31 2 unnamed carry i9 B 1 6 27000 18600 27300 18600 27300 14400 10500 14400 10500 11400 10800 11400 0 
+hades.signals.SignalStdLogic1164 n30 2 unnamed5 Q3 i3 A3 1 4 6000 11400 7500 11400 7500 19200 7800 19200 0 
+[end signals]
+[end]

@@ -1,0 +1,21 @@
+# hades.models.Design file
+#  
+[name] 16C84-EEPROM-Demo
+[components]
+hades.models.pic.SmartPic16F84 i0 12000 6600 @N 1001 1.0E-6 /hades/examples/pic16c84/demo84.hex
+hades.models.io.HexDisplay counter_7:4 19200 9000 @N 1001
+hades.models.io.HexDisplay counter_3:0 19200 13200 @N 1001
+hades.models.io.PowerOnReset reset 4800 3000 @N 1001 5.0E-4 5.0E-4
+[end components]
+[signals]
+hades.signals.SignalStdLogic1164 n9 2 i0 B1 counter_3:0 A1 3 2 19200 15600 9600 15600 2 9600 15600 9600 10800 2 9600 10800 12000 10800 0 
+hades.signals.SignalStdLogic1164 n8 2 i0 B2 counter_3:0 A2 3 2 12000 11400 10200 11400 2 10200 11400 10200 15000 2 10200 15000 19200 15000 0 
+hades.signals.SignalStdLogic1164 n7 2 i0 B3 counter_3:0 A3 3 2 19200 14400 10800 14400 2 10800 14400 10800 12000 2 10800 12000 12000 12000 0 
+hades.signals.SignalStdLogic1164 n5 2 i0 B4 counter_7:4 A0 1 2 19200 12000 15000 12000 0 
+hades.signals.SignalStdLogic1164 n4 2 i0 B5 counter_7:4 A1 1 2 15000 11400 19200 11400 0 
+hades.signals.SignalStdLogic1164 n3 2 i0 B6 counter_7:4 A2 1 2 19200 10800 15000 10800 0 
+hades.signals.SignalStdLogic1164 n2 2 i0 B7 counter_7:4 A3 1 2 15000 10200 19200 10200 0 
+hades.signals.SignalStdLogic1164 n1 2 reset nreset i0 /MCLR 3 2 12000 9000 5400 9000 2 5400 9000 5400 3000 2 5400 3000 4800 3000 0 
+hades.signals.SignalStdLogic1164 n10 2 i0 B0 counter_3:0 A0 3 2 12000 10200 9000 10200 2 9000 10200 9000 16200 2 9000 16200 19200 16200 0 
+[end signals]
+[end]
