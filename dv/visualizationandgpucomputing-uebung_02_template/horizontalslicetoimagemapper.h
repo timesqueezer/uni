@@ -13,6 +13,7 @@ public:
     void setDataSource(FlowDataSource* source);
 
     QImage mapSliceToImage(int iz);
+    int getDataSize();
 
 private:
     FlowDataSource* flowDataSource;

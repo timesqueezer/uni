@@ -1,6 +1,8 @@
 #ifndef HORIZONTALSLICERENDERER_H
 #define HORIZONTALSLICERENDERER_H
 
+#include <iostream>
+
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
@@ -19,6 +21,8 @@ public:
     void drawImage(QMatrix4x4 mvpMatrix);
     void init();
 
+    void moveSlice(int steps);
+
 private:
     void initOpenGLShaders();
 
@@ -27,6 +31,8 @@ private:
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vertexBuffer;
     QOpenGLTexture* texture;
+
+    int slice;
 };
 
 #endif // HORIZONTALSLICERENDERER_H

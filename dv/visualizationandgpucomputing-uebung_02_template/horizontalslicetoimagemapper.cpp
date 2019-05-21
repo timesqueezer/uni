@@ -31,3 +31,8 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int iz) {
 
     return img;
 }
+
+int HorizontalSliceToImageMapper::getDataSize()
+{
+    return flowDataSource->getDataSize();
+}

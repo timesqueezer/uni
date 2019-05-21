@@ -122,11 +122,11 @@ void OpenGLDisplayWidget::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)
     {
-        // Do stuff...
+        horizontalSliceRenderer->moveSlice(4);
     }
     else if (e->key() == Qt::Key_Down)
     {
-        // Do stuff...
+        horizontalSliceRenderer->moveSlice(-4);
     }
     else
     {

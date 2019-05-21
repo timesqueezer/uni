@@ -6,6 +6,8 @@ HorizontalSliceRenderer::HorizontalSliceRenderer()
 
     initializeOpenGLFunctions();
     initOpenGLShaders();
+
+    slice = 0;
 }
 
 HorizontalSliceRenderer::~HorizontalSliceRenderer() {
@@ -74,7 +76,7 @@ void HorizontalSliceRenderer::init()
     vertexBuffer.bind();
     vertexBuffer.allocate(unitCubeVertices, numVertices * 3 * sizeof(float));
 
-    QImage img = mapper->mapSliceToImage(128);
+    QImage img = mapper->mapSliceToImage(slice);
 
     img.save("test.png", "PNG");
 
@@ -82,4 +84,36 @@ void HorizontalSliceRenderer::init()
     texture->setWrapMode(QOpenGLTexture::ClampToEdge);
     texture->setData(img);
 
+}
+
+void HorizontalSliceRenderer::moveSlice(int steps)
+{
+    slice += steps;
+    int dataSize = mapper->getDataSize();
+
+    if (slice < 0) {
+        slice = 0;
+    } else if (slice >= dataSize) {
+        slice = dataSize - 1;
+    }
+
+    float zPos = 1 - (static_cast<float>(slice) / static_cast<float>(dataSize));
+
+    std::cout << "Slice: " << slice << "zPos:" << zPos << std::endl;
+
+    const unsigned int numVertices = 6;
+    float unitCubeVertices[numVertices][3] = {
+        {0, 0, zPos}, {1, 0, zPos}, {0, 1, zPos}, {0, 1, zPos},
+        {1, 1, zPos}, {1, 0, zPos}
+    };
+
+    vertexBuffer.bind();
+    vertexBuffer.allocate(unitCubeVertices, numVertices * 3 * sizeof(float));
+
+    texture->destroy();
+
+    QImage img = mapper->mapSliceToImage(slice);
+    texture->create();
+    texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+    texture->setData(img);
 }
