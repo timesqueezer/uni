@@ -24,6 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    horizontalcontourlinesrenderer.cpp \
+    horizontalslicetocontourlinemapper.cpp \
         main.cpp \
         mainwindow.cpp \
     opengldisplaywidget.cpp \
@@ -33,6 +35,8 @@ SOURCES += \
     horizontalslicerenderer.cpp
 
 HEADERS += \
+    horizontalcontourlinesrenderer.h \
+    horizontalslicetocontourlinemapper.h \
         mainwindow.h \
     opengldisplaywidget.h \
     datavolumeboundingboxrenderer.h \
@@ -42,5 +46,7 @@ HEADERS += \
 DISTFILES += \
     bbox_fshader.glsl \
     bbox_vshader.glsl \
+    clines_fshader.glsl \
+    clines_vshader.glsl \
     hslice_fshader.glsl \
     hslice_vshader.glsl

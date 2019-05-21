@@ -17,8 +17,10 @@ OpenGLDisplayWidget::~OpenGLDisplayWidget()
     // Clean up visualization pipeline.
     delete flowDataSource;
     delete horizontalSliceToImageMapper;
+    delete horizontalSliceToContourLineMapper;
     delete bboxRenderer;
     delete horizontalSliceRenderer;
+    delete horizontalContourLinesRenderer;
 }
 
 
@@ -60,6 +62,7 @@ void OpenGLDisplayWidget::paintGL()
     // Call renderer modules.
     bboxRenderer->drawBoundingBox(mvpMatrix);
     horizontalSliceRenderer->drawImage(mvpMatrix);
+    horizontalContourLinesRenderer->drawImage(mvpMatrix);
 }
 
 
@@ -161,17 +164,25 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     flowDataSource = new FlowDataSource();
-    flowDataSource->createData(256, 0);
+    flowDataSource->createData(128, 0);
 
     // Initialize mapper modules.
     horizontalSliceToImageMapper = new HorizontalSliceToImageMapper();
     horizontalSliceToImageMapper->setDataSource(flowDataSource);
 
+    horizontalSliceToContourLineMapper = new HorizontalSliceToContourLineMapper();
+    horizontalSliceToContourLineMapper->setDataSource(flowDataSource);
+
     // Initialize rendering modules.
     bboxRenderer = new DataVolumeBoundingBoxRenderer();
+
     horizontalSliceRenderer = new HorizontalSliceRenderer();
     horizontalSliceRenderer->setMapper(horizontalSliceToImageMapper);
     horizontalSliceRenderer->init();
 
-    flowDataSource->printValuesOfHorizontalSlice(128);
+    horizontalContourLinesRenderer = new HorizontalContourLinesRenderer();
+    horizontalContourLinesRenderer->setMapper(horizontalSliceToContourLineMapper);
+    horizontalContourLinesRenderer->init();
+
+    // flowDataSource->printValuesOfHorizontalSlice(128);
 }

@@ -52,7 +52,9 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp \
+SOURCES       = horizontalcontourlinesrenderer.cpp \
+		horizontalslicetocontourlinemapper.cpp \
+		main.cpp \
 		mainwindow.cpp \
 		opengldisplaywidget.cpp \
 		datavolumeboundingboxrenderer.cpp \
@@ -60,7 +62,9 @@ SOURCES       = main.cpp \
 		horizontalslicetoimagemapper.cpp \
 		horizontalslicerenderer.cpp moc_mainwindow.cpp \
 		moc_opengldisplaywidget.cpp
-OBJECTS       = main.o \
+OBJECTS       = horizontalcontourlinesrenderer.o \
+		horizontalslicetocontourlinemapper.o \
+		main.o \
 		mainwindow.o \
 		opengldisplaywidget.o \
 		datavolumeboundingboxrenderer.o \
@@ -71,6 +75,8 @@ OBJECTS       = main.o \
 		moc_opengldisplaywidget.o
 DIST          = bbox_fshader.glsl \
 		bbox_vshader.glsl \
+		clines_fshader.glsl \
+		clines_vshader.glsl \
 		hslice_fshader.glsl \
 		hslice_vshader.glsl \
 		/usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -265,6 +271,7 @@ DIST          = bbox_fshader.glsl \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -284,11 +291,15 @@ DIST          = bbox_fshader.glsl \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		VisualizationAndGPUComputing.pro mainwindow.h \
+		VisualizationAndGPUComputing.pro horizontalcontourlinesrenderer.h \
+		horizontalslicetocontourlinemapper.h \
+		mainwindow.h \
 		opengldisplaywidget.h \
 		datavolumeboundingboxrenderer.h \
 		horizontalslicetoimagemapper.h \
-		horizontalslicerenderer.h main.cpp \
+		horizontalslicerenderer.h horizontalcontourlinesrenderer.cpp \
+		horizontalslicetocontourlinemapper.cpp \
+		main.cpp \
 		mainwindow.cpp \
 		opengldisplaywidget.cpp \
 		datavolumeboundingboxrenderer.cpp \
@@ -498,6 +509,7 @@ Makefile: VisualizationAndGPUComputing.pro /usr/lib/qt/mkspecs/linux-g++/qmake.c
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -714,6 +726,7 @@ Makefile: VisualizationAndGPUComputing.pro /usr/lib/qt/mkspecs/linux-g++/qmake.c
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -752,8 +765,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h opengldisplaywidget.h datavolumeboundingboxrenderer.h horizontalslicetoimagemapper.h horizontalslicerenderer.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp opengldisplaywidget.cpp datavolumeboundingboxrenderer.cpp flowdatasource.cpp horizontalslicetoimagemapper.cpp horizontalslicerenderer.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents horizontalcontourlinesrenderer.h horizontalslicetocontourlinemapper.h mainwindow.h opengldisplaywidget.h datavolumeboundingboxrenderer.h horizontalslicetoimagemapper.h horizontalslicerenderer.h $(DISTDIR)/
+	$(COPY_FILE) --parents horizontalcontourlinesrenderer.cpp horizontalslicetocontourlinemapper.cpp main.cpp mainwindow.cpp opengldisplaywidget.cpp datavolumeboundingboxrenderer.cpp flowdatasource.cpp horizontalslicetoimagemapper.cpp horizontalslicerenderer.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -797,7 +810,9 @@ moc_opengldisplaywidget.cpp: opengldisplaywidget.h \
 		datavolumeboundingboxrenderer.h \
 		horizontalslicetoimagemapper.h \
 		flowdatasource.h \
+		horizontalslicetocontourlinemapper.h \
 		horizontalslicerenderer.h \
+		horizontalcontourlinesrenderer.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include /home/matz/uni/dv/visualizationandgpucomputing-uebung_02_template/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/matz/uni/dv/visualizationandgpucomputing-uebung_02_template -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/8.3.0 -I/usr/include/c++/8.3.0/x86_64-pc-linux-gnu -I/usr/include/c++/8.3.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include-fixed -I/usr/include opengldisplaywidget.h -o moc_opengldisplaywidget.cpp
@@ -818,6 +833,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
+horizontalcontourlinesrenderer.o: horizontalcontourlinesrenderer.cpp horizontalcontourlinesrenderer.h \
+		horizontalslicetocontourlinemapper.h \
+		flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o horizontalcontourlinesrenderer.o horizontalcontourlinesrenderer.cpp
+
+horizontalslicetocontourlinemapper.o: horizontalslicetocontourlinemapper.cpp horizontalslicetocontourlinemapper.h \
+		flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o horizontalslicetocontourlinemapper.o horizontalslicetocontourlinemapper.cpp
+
 main.o: main.cpp mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
@@ -826,14 +850,18 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		datavolumeboundingboxrenderer.h \
 		horizontalslicetoimagemapper.h \
 		flowdatasource.h \
-		horizontalslicerenderer.h
+		horizontalslicetocontourlinemapper.h \
+		horizontalslicerenderer.h \
+		horizontalcontourlinesrenderer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 opengldisplaywidget.o: opengldisplaywidget.cpp opengldisplaywidget.h \
 		datavolumeboundingboxrenderer.h \
 		horizontalslicetoimagemapper.h \
 		flowdatasource.h \
-		horizontalslicerenderer.h
+		horizontalslicetocontourlinemapper.h \
+		horizontalslicerenderer.h \
+		horizontalcontourlinesrenderer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o opengldisplaywidget.o opengldisplaywidget.cpp
 
 datavolumeboundingboxrenderer.o: datavolumeboundingboxrenderer.cpp datavolumeboundingboxrenderer.h

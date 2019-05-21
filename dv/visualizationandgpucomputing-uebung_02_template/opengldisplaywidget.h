@@ -6,7 +6,9 @@
 
 #include "datavolumeboundingboxrenderer.h"
 #include "horizontalslicetoimagemapper.h"
+#include "horizontalslicetocontourlinemapper.h"
 #include "horizontalslicerenderer.h"
+#include "horizontalcontourlinesrenderer.h"
 
 
 class OpenGLDisplayWidget : public QOpenGLWidget, protected QOpenGLFunctions
@@ -14,8 +16,8 @@ class OpenGLDisplayWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    explicit OpenGLDisplayWidget(QWidget *parent = 0);
-    ~OpenGLDisplayWidget();
+    explicit OpenGLDisplayWidget(QWidget *parent = nullptr);
+    ~OpenGLDisplayWidget() override;
 
 protected:
     void initializeGL() override;
@@ -51,9 +53,11 @@ private:
     FlowDataSource* flowDataSource;
 
     HorizontalSliceToImageMapper* horizontalSliceToImageMapper;
+    HorizontalSliceToContourLineMapper* horizontalSliceToContourLineMapper;
 
     DataVolumeBoundingBoxRenderer *bboxRenderer;
     HorizontalSliceRenderer* horizontalSliceRenderer;
+    HorizontalContourLinesRenderer* horizontalContourLinesRenderer;
 
     // Initialize the pipeline (create instances of data source, mapping,
     // rendering etc. modules and connect them).
