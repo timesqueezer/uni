@@ -15,13 +15,14 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int iz) {
 
     for (int iy = 0; iy < dataSize; ++iy) {
         for (int ix = 0; ix < dataSize; ++ix) {
-            int v = (int) flowDataSource->getDataValue(ix, iy, iz, 0);
+            float v = flowDataSource->getDataValue(ix, iy, iz, 0);
             v *= 3 * 255;
+            int v_int = static_cast<int>(v);
             QColor c;
-            if (v >= 0) {
-                c.setRed(v);
+            if (v_int >= 0) {
+                c.setRed(v_int);
             } else {
-                c.setBlue(-v);
+                c.setBlue(-v_int);
             }
 
             img.setPixelColor(ix, iy, c);

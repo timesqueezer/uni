@@ -1,12 +1,11 @@
-#version 400
-
+#version 140
 uniform mat4 mvpMatrix;
 in vec4 vertexPosition;
 
-smooth out vec2 texCoord;
+smooth out vec4 texCoord;
 
 void main(void)
 {
     gl_Position = mvpMatrix * vertexPosition;
-    // qt_TexCoord0 = qt_MultiTexCoord0;
+    texCoord = vertexPosition;
 }
