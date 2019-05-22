@@ -7,7 +7,7 @@ HorizontalSliceRenderer::HorizontalSliceRenderer()
     initializeOpenGLFunctions();
     initOpenGLShaders();
 
-    slice = 0;
+    slice = 4;
 }
 
 HorizontalSliceRenderer::~HorizontalSliceRenderer() {

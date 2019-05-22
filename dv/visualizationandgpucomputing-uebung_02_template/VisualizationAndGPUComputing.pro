@@ -32,7 +32,9 @@ SOURCES += \
     datavolumeboundingboxrenderer.cpp \
     flowdatasource.cpp \
     horizontalslicetoimagemapper.cpp \
-    horizontalslicerenderer.cpp
+    horizontalslicerenderer.cpp \
+    streamlinemapper.cpp \
+    streamlinerenderer.cpp
 
 HEADERS += \
     horizontalcontourlinesrenderer.h \
@@ -41,7 +43,9 @@ HEADERS += \
     opengldisplaywidget.h \
     datavolumeboundingboxrenderer.h \
     horizontalslicetoimagemapper.h \
-    horizontalslicerenderer.h
+    horizontalslicerenderer.h \
+    streamlinemapper.h \
+    streamlinerenderer.h
 
 DISTFILES += \
     bbox_fshader.glsl \
@@ -49,4 +53,6 @@ DISTFILES += \
     clines_fshader.glsl \
     clines_vshader.glsl \
     hslice_fshader.glsl \
-    hslice_vshader.glsl
+    hslice_vshader.glsl \
+    slines_fshader.glsl \
+    slines_vshader.glsl

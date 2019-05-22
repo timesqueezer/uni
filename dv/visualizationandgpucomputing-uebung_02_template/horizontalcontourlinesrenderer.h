@@ -30,7 +30,6 @@ private:
 
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vertexBuffer;
-    QOpenGLTexture* texture;
 
     int slice;
     int numVertices;

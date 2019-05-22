@@ -18,9 +18,12 @@ OpenGLDisplayWidget::~OpenGLDisplayWidget()
     delete flowDataSource;
     delete horizontalSliceToImageMapper;
     delete horizontalSliceToContourLineMapper;
+    delete streamLineMapper;
+
     delete bboxRenderer;
     delete horizontalSliceRenderer;
     delete horizontalContourLinesRenderer;
+    delete streamLineRenderer;
 }
 
 
@@ -62,7 +65,8 @@ void OpenGLDisplayWidget::paintGL()
     // Call renderer modules.
     bboxRenderer->drawBoundingBox(mvpMatrix);
     horizontalSliceRenderer->drawImage(mvpMatrix);
-    horizontalContourLinesRenderer->drawImage(mvpMatrix);
+    // horizontalContourLinesRenderer->drawImage(mvpMatrix);
+    streamLineRenderer->drawImage(mvpMatrix);
 }
 
 
@@ -126,10 +130,14 @@ void OpenGLDisplayWidget::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Up)
     {
         horizontalSliceRenderer->moveSlice(4);
+        horizontalContourLinesRenderer->moveSlice(4);
+        streamLineRenderer->moveSlice(4);
     }
     else if (e->key() == Qt::Key_Down)
     {
         horizontalSliceRenderer->moveSlice(-4);
+        horizontalContourLinesRenderer->moveSlice(-4);
+        streamLineRenderer->moveSlice(-4);
     }
     else
     {
@@ -164,7 +172,7 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     flowDataSource = new FlowDataSource();
-    flowDataSource->createData(128, 0);
+    flowDataSource->createData(32, 0);
 
     // Initialize mapper modules.
     horizontalSliceToImageMapper = new HorizontalSliceToImageMapper();
@@ -172,6 +180,9 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     horizontalSliceToContourLineMapper = new HorizontalSliceToContourLineMapper();
     horizontalSliceToContourLineMapper->setDataSource(flowDataSource);
+
+    streamLineMapper = new StreamLineMapper();
+    streamLineMapper->setDataSource(flowDataSource);
 
     // Initialize rendering modules.
     bboxRenderer = new DataVolumeBoundingBoxRenderer();
@@ -183,6 +194,10 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
     horizontalContourLinesRenderer = new HorizontalContourLinesRenderer();
     horizontalContourLinesRenderer->setMapper(horizontalSliceToContourLineMapper);
     horizontalContourLinesRenderer->init();
+
+    streamLineRenderer = new StreamLineRenderer();
+    streamLineRenderer->setMapper(streamLineMapper);
+    streamLineRenderer->init();
 
     // flowDataSource->printValuesOfHorizontalSlice(128);
 }

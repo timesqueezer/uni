@@ -2,20 +2,15 @@
 
 HorizontalContourLinesRenderer::HorizontalContourLinesRenderer()
 {
-    texture = new QOpenGLTexture(QOpenGLTexture::Target2D);
-
     initializeOpenGLFunctions();
     initOpenGLShaders();
 
-    slice = 64;
+    slice = 0;
 }
 
 HorizontalContourLinesRenderer::~HorizontalContourLinesRenderer() {
     vertexBuffer.destroy();
 
-    texture->destroy();
-
-    delete texture;
 }
 
 void HorizontalContourLinesRenderer::setMapper(HorizontalSliceToContourLineMapper* mapper) {
@@ -37,7 +32,7 @@ void HorizontalContourLinesRenderer::drawImage(QMatrix4x4 mvpMatrix)
 
     // Issue OpenGL draw commands.
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(4);
+    glLineWidth(1);
     glDrawArrays(GL_LINES, 0, numVertices);
 }
 
@@ -57,21 +52,31 @@ void HorizontalContourLinesRenderer::init()
 
     std::cout << "numVertices: " << numVertices << std::endl;
 
-    float* bufferData = new float[numVertices*3];
+    /*float* bufferData = new float[numVertices*3];
     for (int i = 0; i < numVertices; i++) {
         bufferData[i] = list.data()[i].x();
         bufferData[i+1] = list.data()[i].y();
         bufferData[i+2] = list.data()[i].z();
 
         std::cout << i << ": " << list.data()[i].x() << ", " << list.data()[i].y() << ", " << list.data()[i].z() << std::endl;
-    }
+    }*/
 
     // Create vertex buffer and upload vertex data to buffer.
     vertexBuffer.create(); // make sure to destroy in destructor!
     vertexBuffer.bind();
-    vertexBuffer.allocate(bufferData, numVertices * 3 * sizeof(float));
+    vertexBuffer.allocate(list.data(), numVertices * sizeof(QVector3D));
 }
 
 void HorizontalContourLinesRenderer::moveSlice(int steps)
 {
+    slice += steps;
+    int dataSize = mapper->getDataSize();
+
+    if (slice < 0) {
+        slice = 0;
+    } else if (slice >= dataSize) {
+        slice = dataSize - 1;
+    }
+
+    init();
 }
