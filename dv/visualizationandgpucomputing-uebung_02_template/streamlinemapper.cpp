@@ -36,13 +36,14 @@ QVector<QVector3D> StreamLineMapper::mapToStreamLines(int iz) {
             for (float step = 0; step < maxStep; step += stepSize) {
                 // direction.normalize();
                 if (current_pos.x() > 1 || current_pos.y() > 1 || current_pos.z() > 1) {
+                    std::cout << "break at step " << step << std::endl;
                     break;
                 }
 
                 list.append(current_pos);
                 current_pos += direction * stepSize;
                 list.append(current_pos);
-                std::cout << direction.length() << std::endl;
+                // std::cout << direction.length() << std::endl;
                 direction = getInterpolatedDataValue(current_pos, static_cast<float>(dataSize));
             }
         }

@@ -42,7 +42,7 @@ void StreamLineRenderer::initOpenGLShaders()
 
 void StreamLineRenderer::init()
 {
-    QVector<QVector3D> list = mapper->mapToStreamLines(slice);
+    /*QVector<QVector3D> list = mapper->mapToStreamLines(slice);
     numVertices = list.length();
 
     std::cout << "numVertices: " << numVertices << std::endl;
@@ -50,7 +50,7 @@ void StreamLineRenderer::init()
     // Create vertex buffer and upload vertex data to buffer.
     vertexBuffer.create(); // make sure to destroy in destructor!
     vertexBuffer.bind();
-    vertexBuffer.allocate(list.data(), numVertices * sizeof(QVector3D));
+    vertexBuffer.allocate(list.data(), numVertices * sizeof(QVector3D));*/
 }
 
 void StreamLineRenderer::moveSlice(int steps)

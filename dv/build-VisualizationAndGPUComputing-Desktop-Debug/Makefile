@@ -50,27 +50,39 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../visualizationandgpucomputing-uebung_02_template/main.cpp \
+SOURCES       = ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.cpp \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.cpp \
+		../visualizationandgpucomputing-uebung_02_template/main.cpp \
 		../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp \
 		../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp \
 		../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.cpp \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.cpp \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.cpp \
-		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp moc_mainwindow.cpp \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.cpp \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.cpp moc_mainwindow.cpp \
 		moc_opengldisplaywidget.cpp
-OBJECTS       = main.o \
+OBJECTS       = horizontalcontourlinesrenderer.o \
+		horizontalslicetocontourlinemapper.o \
+		main.o \
 		mainwindow.o \
 		opengldisplaywidget.o \
 		datavolumeboundingboxrenderer.o \
 		flowdatasource.o \
 		horizontalslicetoimagemapper.o \
 		horizontalslicerenderer.o \
+		streamlinemapper.o \
+		streamlinerenderer.o \
 		moc_mainwindow.o \
 		moc_opengldisplaywidget.o
 DIST          = ../visualizationandgpucomputing-uebung_02_template/bbox_fshader.glsl \
 		../visualizationandgpucomputing-uebung_02_template/bbox_vshader.glsl \
+		../visualizationandgpucomputing-uebung_02_template/clines_fshader.glsl \
+		../visualizationandgpucomputing-uebung_02_template/clines_vshader.glsl \
 		../visualizationandgpucomputing-uebung_02_template/hslice_fshader.glsl \
 		../visualizationandgpucomputing-uebung_02_template/hslice_vshader.glsl \
+		../visualizationandgpucomputing-uebung_02_template/slines_fshader.glsl \
+		../visualizationandgpucomputing-uebung_02_template/slines_vshader.glsl \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -159,17 +171,25 @@ DIST          = ../visualizationandgpucomputing-uebung_02_template/bbox_fshader.
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../visualizationandgpucomputing-uebung_02_template/VisualizationAndGPUComputing.pro ../visualizationandgpucomputing-uebung_02_template/mainwindow.h \
+		../visualizationandgpucomputing-uebung_02_template/VisualizationAndGPUComputing.pro ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/mainwindow.h \
 		../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.h \
 		../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h \
-		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h ../visualizationandgpucomputing-uebung_02_template/main.cpp \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.cpp \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.cpp \
+		../visualizationandgpucomputing-uebung_02_template/main.cpp \
 		../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp \
 		../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp \
 		../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.cpp \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.cpp \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.cpp \
-		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.cpp \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.cpp
 QMAKE_TARGET  = VisualizationAndGPUComputing
 DESTDIR       = 
 TARGET        = VisualizationAndGPUComputing
@@ -381,8 +401,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../visualizationandgpucomputing-uebung_02_template/mainwindow.h ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.h ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h ../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h ../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../visualizationandgpucomputing-uebung_02_template/main.cpp ../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.cpp ../visualizationandgpucomputing-uebung_02_template/flowdatasource.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h ../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h ../visualizationandgpucomputing-uebung_02_template/mainwindow.h ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.h ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h ../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h ../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h ../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h ../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.cpp ../visualizationandgpucomputing-uebung_02_template/main.cpp ../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.cpp ../visualizationandgpucomputing-uebung_02_template/flowdatasource.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp ../visualizationandgpucomputing-uebung_02_template/streamlinemapper.cpp ../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -425,7 +445,11 @@ moc_mainwindow.cpp: ../visualizationandgpucomputing-uebung_02_template/mainwindo
 moc_opengldisplaywidget.cpp: ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h \
 		../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -445,6 +469,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
+horizontalcontourlinesrenderer.o: ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o horizontalcontourlinesrenderer.o ../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.cpp
+
+horizontalslicetocontourlinemapper.o: ../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.cpp ../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o horizontalslicetocontourlinemapper.o ../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.cpp
+
 main.o: ../visualizationandgpucomputing-uebung_02_template/main.cpp ../visualizationandgpucomputing-uebung_02_template/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../visualizationandgpucomputing-uebung_02_template/main.cpp
 
@@ -453,14 +486,22 @@ mainwindow.o: ../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp 
 		../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h \
-		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../visualizationandgpucomputing-uebung_02_template/mainwindow.cpp
 
 opengldisplaywidget.o: ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.h \
 		../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h \
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h \
-		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicetocontourlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/horizontalcontourlinesrenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o opengldisplaywidget.o ../visualizationandgpucomputing-uebung_02_template/opengldisplaywidget.cpp
 
 datavolumeboundingboxrenderer.o: ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.cpp ../visualizationandgpucomputing-uebung_02_template/datavolumeboundingboxrenderer.h
@@ -478,6 +519,15 @@ horizontalslicerenderer.o: ../visualizationandgpucomputing-uebung_02_template/ho
 		../visualizationandgpucomputing-uebung_02_template/horizontalslicetoimagemapper.h \
 		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o horizontalslicerenderer.o ../visualizationandgpucomputing-uebung_02_template/horizontalslicerenderer.cpp
+
+streamlinemapper.o: ../visualizationandgpucomputing-uebung_02_template/streamlinemapper.cpp ../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o streamlinemapper.o ../visualizationandgpucomputing-uebung_02_template/streamlinemapper.cpp
+
+streamlinerenderer.o: ../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.cpp ../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.h \
+		../visualizationandgpucomputing-uebung_02_template/streamlinemapper.h \
+		../visualizationandgpucomputing-uebung_02_template/flowdatasource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o streamlinerenderer.o ../visualizationandgpucomputing-uebung_02_template/streamlinerenderer.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

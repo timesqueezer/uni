@@ -13,5 +13,9 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    int n = 5 & 8;
+
+    std::cout << "n: " << n << std::endl;
+
     return a.exec();
 }

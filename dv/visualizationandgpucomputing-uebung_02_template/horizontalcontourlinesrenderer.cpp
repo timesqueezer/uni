@@ -32,7 +32,7 @@ void HorizontalContourLinesRenderer::drawImage(QMatrix4x4 mvpMatrix)
 
     // Issue OpenGL draw commands.
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(1);
+    glLineWidth(2);
     glDrawArrays(GL_LINES, 0, numVertices);
 }
 
@@ -51,15 +51,6 @@ void HorizontalContourLinesRenderer::init()
     numVertices = list.length();
 
     std::cout << "numVertices: " << numVertices << std::endl;
-
-    /*float* bufferData = new float[numVertices*3];
-    for (int i = 0; i < numVertices; i++) {
-        bufferData[i] = list.data()[i].x();
-        bufferData[i+1] = list.data()[i].y();
-        bufferData[i+2] = list.data()[i].z();
-
-        std::cout << i << ": " << list.data()[i].x() << ", " << list.data()[i].y() << ", " << list.data()[i].z() << std::endl;
-    }*/
 
     // Create vertex buffer and upload vertex data to buffer.
     vertexBuffer.create(); // make sure to destroy in destructor!

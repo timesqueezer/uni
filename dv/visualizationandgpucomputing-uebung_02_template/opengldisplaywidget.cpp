@@ -37,6 +37,7 @@ void OpenGLDisplayWidget::initializeGL()
 
     // Enable depth buffer.
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
 
     // Our own initialization of the visualization pipeline.
     initVisualizationPipeline();
@@ -65,8 +66,8 @@ void OpenGLDisplayWidget::paintGL()
     // Call renderer modules.
     bboxRenderer->drawBoundingBox(mvpMatrix);
     horizontalSliceRenderer->drawImage(mvpMatrix);
-    // horizontalContourLinesRenderer->drawImage(mvpMatrix);
-    streamLineRenderer->drawImage(mvpMatrix);
+    horizontalContourLinesRenderer->drawImage(mvpMatrix);
+    // streamLineRenderer->drawImage(mvpMatrix);
 }
 
 
@@ -172,7 +173,7 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     flowDataSource = new FlowDataSource();
-    flowDataSource->createData(32, 0);
+    flowDataSource->createData(8, 0);
 
     // Initialize mapper modules.
     horizontalSliceToImageMapper = new HorizontalSliceToImageMapper();
