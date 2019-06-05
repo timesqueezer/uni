@@ -173,7 +173,7 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     flowDataSource = new FlowDataSource();
-    flowDataSource->createData(8, 0);
+    flowDataSource->createData(64, 0);
 
     // Initialize mapper modules.
     horizontalSliceToImageMapper = new HorizontalSliceToImageMapper();
