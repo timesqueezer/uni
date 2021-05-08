@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+%\usepackage{fullpage}
+
+\title{\textbf{Mathe Hausaufgaben zum 1. und 2. Dezember 2016}}
+\author{Elaha Khaleqi(6947801), Matz Radloff(6946325)}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Elaha Khaleqi(6947801), Matz Radloff(6946325) - Mathe I\_Inf}
+\cfoot{\thepage}
+
+\newcommand{\Myrightarrow}{\stackrel{\mathclap{\normalfont\mbox{(*)}}}{\Rightarrow}}
+
+
+\begin{document}
+\pagenumbering{arabic}
+  \maketitle
+  \date{}
+
+\section{} % 1
+\paragraph{Geg:}
+$A = \{a,b,c,d,e,f\}, R = \{(a,b),(b,c),(c,c),(c,d),(b,f),(f,e),(e,e\}$
+\subsection*{(a)}
+
+\begin{tikzpicture}
+    [scale=1, transform shape]
+    \Vertex[x=5, y=5] a
+    \Vertex[x=3, y=5] b
+    \Vertex[x=1, y=3] c
+    \Vertex[x=3, y=1] d
+    \Vertex[x=5, y=1] e
+    \Vertex[x=7, y=3] f
+    \tikzstyle{EdgeStyle}=[post, bend right]
+    \Edge[](a)(b)
+    \Edge[](b)(c)
+    \Loop[dist=1.5cm, dir=SO](c)
+    \Edge[](c)(d)
+    \Edge[](b)(f)
+    \Edge[](f)(e)
+    \Loop[dist=1.5cm, dir=EA](e)
+
+\end{tikzpicture}
+
+
+
+\end{document}
