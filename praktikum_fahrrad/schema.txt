@@ -1,0 +1,119 @@
+User
+ - id
+ - email (unique?)
+ - password_hash
+ - password_salt
+ - is_admin
+ - name
+ - weitere Stammdaten...
+ - credibility # speichert die Zuverlässigkeit der Nutzermeldungen
+               # z.B. Durchschnitt aller scores aller eigenen reports > threshold
+
+ - reports # backref Report
+
+GET /users # Liste aller User - Admin only
+POST /users # User-Registrierung
+
+GET /users/<id>
+PATCH /users/<id>
+DELETE /users/<id>
+
+GET /users/reports # liste aller Reports eines users
+POST /users/reports # neuen Report hinzufügen
+
+GET /users/tracks
+POST /users/tracks
+
+===========================================================
+
+Report
+ - id
+ - lat
+ - long
+ - type # z.B. Gefahr, Allg. Rückmeldung - vordefiniert
+ - custom_type # Falls kein vordefinierter Typ zutreffend
+ - taken_datetime # zeitpunkt, als die Reaktion den Radfahrers stattgefunden hat
+
+ - submitted # boolean - false, wenn man während der fahrt eine position speichert und später mit information füllt und danach "submitted"
+
+ - submitted_datetime # zeitpunkt, an dem der report eingereicht wurd. "submitted" könnte auch durch "submitted_date != null" ersetzt werden. Alternativ status -> created, submitted, verified
+
+ - additional_info # text
+
+ - proof_picture_id # foreign key Picture
+ - user_id # foreign key User
+ - report_request_id # foreign key ReportRequest # falls auf einen ReportRequest "geantwortet" wurde
+
+ - report_group_id # foreign key ReportGroup
+ - track_id # foreign key Track
+
+ - report_reviews # backref ReportReview
+
+GET /reports # liste aller reports - gefiltert z.B. ?lat=12&long=42&radius=10
+
+GET /report/<id>
+PATCH /report/<id> # Report submitten/zusätzliche infos hinzufügen
+
+GET /report/<id>/report-reviews
+POST /report/<id>/report-reviews
+
+===========================================================
+
+ReportReview
+ - id
+ - score/accuracy
+
+ - report_id # foreign key Report
+ - user_id # foreign key User - User, der das review erstellt hat. "Reviewee" ist report_review.report.user.
+ - report_user_unique_constraint # Alternativ über permission-System
+
+===========================================================
+
+ReportRequest
+ # lässt User wissen, dass zu dieser Stelle um Rückmeldung gebeten wird
+ - id
+ - lat
+ - long
+ - description
+ (-type?)
+ - archived # boolean
+
+GET /report-requests # liste aller ReportReviews - ?archived=false - ?lat=12&long=42&radius=10
+POST /report-requests # Admin only - neuen report request hinzufügen
+
+============================================================
+
+ReportGroup
+ # gruppiert Reports, die z.B. sehr dicht beieinander liegen und wahrscheinlich das gleiche Problem / die gleiche Meldung beinhalten
+ # vl. automatisch vom backend generiert?
+ - id
+ - reports # backref Report
+
+============================================================
+
+Track
+ # eine Fahrt
+ - id
+
+ - track_points # backref TrackPoints
+
+POST /tracks
+
+GET /track/<id>
+POST /track/<id>/track-points
+
+============================================================
+
+ TrackPoint
+ - id
+ - lat
+ - long
+ - created_datetime
+
+ - track_id
+
+============================================================
+
+Picture
+ - id
+ - upload_location

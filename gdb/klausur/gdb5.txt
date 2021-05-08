@@ -1,0 +1,57 @@
+5)
+
+a)
+
+i)
+SELECT r.Ringname, AVG(w.Alter)
+FROM Ring r, Wesen w, RingtraegerIn rt
+WHERE rt.Ring = r.Ringname
+	AND rt.RNr = W.WNr
+GROUP BY (r.Ringname);
+
+ii)
+SELECT r.Ringname, r.Kraft, w.Alter
+FROM Ring r, Wesen w, RingtraegerIn rt,
+WHERE rt.Ring=r.Ringname
+AND rt.RNr=w.WNr
+AND r.Ringname NOT IN(
+	SELECT r2.Ringname
+	FROM Ring r2, Ort o, RingtraegerIn rt, Wesen w,
+	WHERE rt.Ring=r2.Ringname
+	AND rt.RNr=w.WNr
+	AND w.Volk="Zwerg"
+	AND o.BuergermeisterIn=w.WNr
+);
+
+iii)
+SELECT g.GNr, g.Gruppenname
+FROM Gruppierung g, Wesen w,
+WHERE g.AnfueherIn=w.WNr
+AND w.Volk = (SELECT w2.Volk
+			  FROM Wesen w2
+			  WHERE w2.Vorname = 'Gimli'
+			  AND w2.Nachname = 'Elbenfreund')
+ORDER BY w.Nachname DESC;
+
+iv)
+SELECT o.ONr, o.Ortsname, o.Anzahleinwohner
+FROM Ort o
+WHERE o.Anzahleinwohner >= 5000
+AND o.AnzahlEinwohner <= 25000
+AND (SELECT MAX(w.Alter)
+	 FROM Wesen w, HatBesucht hb, Ort o2
+	 WHERE hb.BesucherIn=W.WNr
+	 AND hb.Ort=o2.ONr
+	 AND o2.ONr=o.ONr
+	) > 15;
+
+b)
+
+SELECT DISTINCT o.ONr, o.Ortsname
+FROM Ort o, HatBesucht hb, Wesen w
+OUTER JOIN RingTraeger ON RingTraeger.RNr=hb.Besucher
+OUTER JOIN Grupperung ON Gruppierung.AnfuehrerIn=hb.Besucher
+WHERE o.ONr=hb.Ort
+AND RingTraeger.RNr=w.WNr
+AND w.WNr=hb.Besucher
+AND (w.Volk = "Elben" OR w.Volk = "Menschen");

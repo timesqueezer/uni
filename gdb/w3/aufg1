@@ -1,0 +1,25 @@
+Person(PNr, Name, Geburtstag)
+       ___
+
+SIM(Telefonnummer, Anbieter, Person_PNr -> Person.PNr)
+                             ------------------------
+    _____________
+
+Auftrag(Datum, Zeit, SIM_Telefonnummer -> SIM.Telefonnummer)
+                     --------------------------------------
+        ___________________________________________________
+
+Ortung(
+    (SIM_Telefonnummer, Auftrag_Datum, Auftrag_Zeit) -> (Auftrag.SIM_Telefonnummer, Auftrag.Datum, Auftrag.Zeit)
+     ----------------------------------------------------------------------------------------------------------
+     __________________________________________________________________________________________________________
+)
+
+Aufzeichnung(
+    (SIM_Telefonnummer, Auftrag_Datum, Auftrag_Zeit) -> (Auftrag.SIM_Telefonnummer, Auftrag.Datum, Auftrag.Zeit)
+     ----------------------------------------------------------------------------------------------------------
+     __________________________________________________________________________________________________________
+    Dateiname,
+    SIM_Telefonnummer_angerufen -> SIM.Telefonnummer,
+    ------------------------------------------------
+)
