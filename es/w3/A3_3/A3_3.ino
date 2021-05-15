@@ -14,7 +14,7 @@ bool current_button_state = HIGH;
 bool current_button2_state = HIGH;
 
 const uint16_t TIMER_INTERVAL = 1E3; // 1000us
-const uint32_t BUTTON_CHECK_THRESHOLD = 50000; // 50ms
+const uint32_t BUTTON_CHECK_THRESHOLD = 25000; // 25ms
 const uint16_t button_total_checks = BUTTON_CHECK_THRESHOLD / TIMER_INTERVAL;
 
 uint8_t button_check_count = 0;
@@ -26,7 +26,6 @@ uint8_t button2_high_count = 0;
 bool check_for_double_high = false;
 
 bool button_counting = false;
-bool button2_counting = false;
 
 uint8_t button_counter = 0;
 uint8_t button2_counter = 0;
@@ -37,122 +36,93 @@ void changeLedState(void) {
 }
 
 void checkButtons(void) {
-  bool button_is_high = false;
-  bool button2_is_high = false;
-
   bool current_state = digitalRead(button_pin);
   bool current_state2 = digitalRead(button2_pin);
 
-  if (!button_counting && current_state != current_button_state) { // start counting
+  if (!button_counting && (
+    current_state != current_button_state ||
+    current_state2 != current_button2_state
+  )) { // start counting
     button_counting = true;
-  }
-
-  if (!button2_counting && current_state2 != current_button2_state) { // start counting for button2
-    button2_counting = true;
   }
 
   if (button_counting) {
     if (current_state == HIGH) {
       button_high_count++;
     }
-    button_check_count++;
-
-    if (button_check_count >= button_total_checks) {
-      if (current_button_state == HIGH) {
-        float ratio = ((float) button_high_count / (float) button_total_checks);
-        Serial.println("Ratio button1 falling: " + (String) ratio);
-        bool button_is_low = ratio < 0.2f;
-        if (button_is_low) {
-          current_button_state = LOW;
-        } else {
-          button_counting = false;
-        }
-      } else {
-        float ratio = ((float) button_high_count / (float) button_total_checks);
-        button_is_high = ratio > 0.8f;
-        Serial.println("Ratio button1 rising: " + (String) ratio);
-        if (button_is_high) {
-          if (!check_for_double_high) {
-            current_button_state = HIGH;
-            toggle_complete = true;
-            button_counting = false;
-          } else {
-            if (button2_is_high) {
-              current_button_state = HIGH;
-              current_button2_state = HIGH;
-              toggle_both_complete = true;
-              check_for_double_high = false;
-              button_counting = false;
-            }
-          }
-        }
-      }
-  
-      button_high_count = 0;
-      button_check_count = 0;
-    }
-
-  }
-
-  if (button2_counting) {
     if (current_state2 == HIGH) {
       button2_high_count++;
     }
-    button2_check_count++;
+    button_check_count++;
 
-    if (button2_check_count >= button_total_checks) {
-      if (current_button2_state == HIGH) {
-        float ratio = ((float) button2_high_count / (float) button_total_checks);
-        Serial.println("Ratio button2 falling: " + (String) ratio);
-        bool button_is_low = ratio < 0.2f;
-        if (button_is_low) {
-          current_button2_state = LOW;
-        } else {
-          button2_counting = false;
+    if (button_check_count >= button_total_checks) {
+      float ratio = ((float) button_high_count / (float) button_total_checks);
+      button_high_count = 0;
+      float ratio2 = ((float) button2_high_count / (float) button_total_checks);
+      button2_high_count = 0;
+
+      // Button 1:
+      if (current_button_state == HIGH) {
+        // Button LOW?
+        if (ratio < 0.2f) {
+          current_button_state = LOW;
         }
       } else {
-        float ratio = ((float) button2_high_count / (float) button_total_checks);
-        button2_is_high = ratio > 0.8f;
-        Serial.println("Ratio button2 rising: " + (String) ratio);
-        if (button2_is_high) {
+        // Button wieder HIGH?
+        if (ratio > 0.8f) {
           if (!check_for_double_high) {
-            current_button2_state = HIGH;
-            toggle2_complete = true;
-            button2_counting = false;
+            current_button_state = HIGH;
+            toggle_complete = true;
           } else {
-            if (button_is_high) {
+            if (ratio2 > 0.8f) {
               current_button_state = HIGH;
               current_button2_state = HIGH;
               toggle_both_complete = true;
               check_for_double_high = false;
-              button2_counting = false;
             }
           }
         }
       }
 
-      button2_high_count = 0;
-      button2_check_count = 0;
+      // Button 2:
+      if (current_button2_state == HIGH) {
+        // Button2 LOW?
+        if (ratio2 < 0.2f) {
+          current_button2_state = LOW;
+        }
+      } else {
+        // Button2 wieder HIGH?
+        if (ratio2 > 0.8f) {
+          if (!check_for_double_high) {
+            current_button2_state = HIGH;
+            toggle2_complete = true;
+          } 
+        }
+      } 
+      
+      // Initalisliere nächstes Timer-Intervall:
+      button_check_count = 0;
+      if (current_button_state == HIGH && current_button2_state == HIGH) {
+        button_counting = false;
+      }
+      if (current_button_state == LOW && current_button2_state == LOW && !check_for_double_high) {
+      check_for_double_high = true;
+      }
     }
   }
-
-  if (current_button_state == LOW && current_button2_state == LOW) {
-    check_for_double_high = true;
-  }
-
 }
 
 void setup(void) {
-  //configuration of digital I/O pin #13
+  // configuration of digital I/O pin #13
   pinMode(led_pin , OUTPUT);
   pinMode(button_pin, INPUT);
   pinMode(button2_pin, INPUT);
 
   Serial.begin(9600);
 
-  //configuration of timer3 (@ 1kHz, 1E3us)
+  // configuration of timer3 (@ 1kHz, 1E3us)
   Timer3.initialize(TIMER_INTERVAL);
-  //attatch ISR
+  // attatch ISR
   Timer3.attachInterrupt(checkButtons); // attatch ISR & start timer
 
   Serial.println("Checking " + (String) button_total_checks + " times per trigger.");
