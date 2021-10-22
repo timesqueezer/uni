@@ -1,0 +1,55 @@
+bachelor
+
+expose
+ - what am i gonna do
+ - related work
+ - time?
+
+ - richard august see (6 pages expose, ASAP)
+    https://www.inf.uni-hamburg.de/inst/ab/snp/team/see.html
+
+ 	- reverse engineering, improving break points?
+ 		- regex instead of bytestring
+ 		- find "CA*E" in memory
+ 		- identify instructions that access specific memory/data
+
+ 	- "natural website behavior"
+ 		- anti automation
+ 		- ML based "captcha"
+ 		- counter anti automation stuff
+ 		- detect human/not human based on graph structure of pages
+ 		- ML focused
+ 		- focus points (detect human / try to beat "captcha")
+
+ 	- federated learning of bot detection (collaborative bot detection)
+ 		- existing captcha: google, cloudflare, hcaptcha
+ 		- privacy
+ 		- croud sourced detection approach
+ 		- learning without sharing traffic, only
+
+ 		- write multiple services aka websites
+ 		- design attacks to learn from
+
+	35-40 seiten
+
+	How can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?
+
+
+
+ 	- his research
+ 		- reverse engineering
+ 		- automation / anti-automation
+
+ - https://www.inf.uni-hamburg.de/inst/ab/snp/team/wettlaufer.html
+ 	- tradeoff privacy / intrusion detection
+ 	- merkle hash tree
+ 	- ? wat
+
+ - https://www.inf.uni-hamburg.de/inst/ab/snp/team/shafeeq.html
+    - data aggregation
+    - blockchain + smart contract
+    - no!
+
+ - https://www.inf.uni-hamburg.de/inst/ab/snp/team/sertbas.html
+    - robust periodictiy detection / traffic prediction
+    - 

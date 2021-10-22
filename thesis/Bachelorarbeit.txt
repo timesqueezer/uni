@@ -1,0 +1,39 @@
+PKI
+async
+(blockchain)
+
+document data
+metadata
+history
+
+--------------
+
+Fortgeschrittene elektronische Signatur
+https://www.openlaw.io/
+https://www.docusign.com/
+
+--------------
+
+signierte transaktionen etc.
+
+wie kann man das mit datenschutz vereinbaren
+
+integritätsgeschützte datenstruktur
+
+
+--------------
+
+implementierungen / messungen
+
+https://www.inf.uni-hamburg.de/inst/ab/snp/team/burkert.html
+
+expose
+
+ - wie kann man möglichst einfach signaturen / fortgeschrittene elektronische signaturen + blockchain stuff per open source library umsetzen
+
+
+anforderungen
+
+vorhandene technologien
+vorhaben usw
+zeitplan

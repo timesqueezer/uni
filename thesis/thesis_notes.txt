@@ -1,0 +1,13 @@
+
+ 	- federated learning of bot detection (collaborative bot detection)
+ 		- existing captcha: google, cloudflare, hcaptcha
+ 		- privacy
+ 		- croud sourced detection approach
+ 		- learning without sharing traffic, only
+
+ 		- write multiple services aka websites
+ 		- design attacks to learn from
+
+	35-40 seiten
+
+	How can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?

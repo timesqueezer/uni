@@ -1,0 +1,3 @@
+[submodule "bpns"]
+	path = bpns
+	url = git@github.com:timesqueezer/bpns.git
