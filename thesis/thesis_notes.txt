@@ -11,3 +11,9 @@
 	35-40 seiten
 
 	How can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?
+
+
+expose
+ - what am i gonna do (vorhaben)
+ - related work
+ - time?

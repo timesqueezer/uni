@@ -1,17 +1,12 @@
 %!TEX encoding = UTF-8 Unicode
 %!TEX root = expose.tex
 
-% Kodierung, Sprache, Patches {{{
-\usepackage[T1]{fontenc}    % Ausgabekodierung; ermöglicht Akzente und Umlaute
-                            %  sowie korrekte Silbentrennung.
-\usepackage[utf8]{inputenc} % Erlaubt die direkte Eingabe spezieller Zeichen;
-                            %  utf8 muss die Eingabekodierung des Editors sein.
-\usepackage[ngerman]{babel} % Deutsche Sprachanpassungen (z.B. Überschriften).
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}      % Optimale Randausrichtung und Skalierung.
 \usepackage[
     autostyle,
     ]{csquotes}             % Korrekte Anführungszeichen in der Literaturliste.
-%\usepackage{fixltx2e}      % Patches fuer LaTeX2e - seit 2015 nicht mehr nötig
 \usepackage{scrhack}        % Verhindert Warnungen mit älteren Paketen.
 \usepackage[
   newcommands
@@ -100,7 +95,7 @@
 %\usepackage{breakurl}
 %\def\UrlBreaks{\do\/\do-}
 \usepackage{listings}       % Spezielle Umgebung für Quelltextformatierung.
-    \lstset{                
+    \lstset{
         language=C,
         breaklines=true,
         breakatwhitespace=true,

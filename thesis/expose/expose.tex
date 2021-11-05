@@ -13,50 +13,121 @@
 \include{stylesvs}
 % ===================================Dokument===================================
 
-\title{Hinweise für das Erscheinungsbild von Seminar-, Studien- und Bachelor-,
-    Master- und Diplomarbeiten}
-\author{Hannes Federrath}
+\title{How can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?}
+\author{Matz-Jona Radloff}
 % \date{01.01.2015} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
                     %  diese Zeile aktivieren.
 
 \begin{document}
 
 \begin{titlepage}
-% \includegraphics[width=6.8cm]{../pic/up-uhh-logo-u-2010-u-farbe-u-rgb.pdf}
 \begin{center}\Large
-    % Universität Hamburg \par
-    % Fachbereich Informatik
-    \vfill
-    \makeatletter
-    {\Large\textsf{\textbf{\@title}}\par}
-    \makeatother
-    \bigskip
-    am Arbeitsbereich Sicherheit in Verteilten Systemen (SVS) \par
-    \bigskip
-    \makeatletter
-    {\@author} \par
-    \makeatother
-    \bigskip
-    \makeatletter
-    {\@date}
-    \makeatother
-    \vfill
-    \vfill
-    (Muster für das Deckblatt: siehe Anhang dieser Hinweise)
+	\vfill
+    Exposé for Bachelor Thesis
+	\vfill
+	\makeatletter
+	{\Large\textsf{\textbf{\@title}}\par}
+	\makeatother
+	\vfill
+    submitted by
+	\par\bigskip
+	\makeatletter
+	{\@author} \par
+	\makeatother
+	Matriculation number 6946325 \par
+	Study Program: Computer Science
+	\vfill
+	\makeatletter
+	submitted on {\@date}
+	\makeatother
+	\vfill
+	Supervisor: August See\par
+	First reviewer: Prof. Dr. Mathias Fischer \par
+	Zweitgutachter: N.N.
 \end{center}
 \end{titlepage}
 
-\chapter*{Aufgabenstellung}
 
-Nur Studien-, Bachelor-, Master- und Diplomarbeiten: Soweit eine ausformulierte Aufgabenstellung mit der Betreuerin bzw. dem Betreuer vereinbart wurde, diese bitte hier einfügen.
+\chapter*{Abstract}
 
-\chapter*{Zusammenfassung}
-
-Für die eilige Leserin bzw. den eiligen Leser sollen auf etwa einer halben, maximal einer Seite die wichtigsten Inhalte, Erkenntnisse, Neuerungen bzw. Ergebnisse der Arbeit beschrieben werden.
-
-Durch eine solche Zusammenfassung (im Engl. auch Abstract genannt) am Anfang der Arbeit wird die Arbeit deutlich aufgewertet. Hier sollte vermittelt werden, warum man die Arbeit lesen sollte.
+Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to explore the state-of-art as well as provide a proof-of-concept for a basic system that incorporates all of the above criterions. These concerns will be addressed by implementing an open-source library that uses federated learning which performs well enough to be considered a realistic choid within currently available alternatives.
 
 \tableofcontents
+
+\chapter{Motivation}
+
+why bot bad
+
+\chapter{Method}
+
+This exposé and the thesis based on it will be split into the following high-level parts:
+
+\begin{enumerate}
+	\item Exploration of related work and state of the art
+	\item Proof of concept of the proposed architecture
+	\item Empirical study testing the claims
+	\begin{enumerate}
+		\item Performance
+		\item Privacy
+		\item Feasibility
+	\end{enumerate}
+\end{enumerate}
+
+This work aims to incorporate an existing library that provides federated learning capabilities and can be run either on the client's browser or the websites' servers.
+
+The proof of concept is intended to show the feasibility of implementing such a system while taking the specified constraints into account. It will include multiple website instances that all use the bot detection library and a primary server that holds the model, fascilitates communication to and from the website instances, and incorporates learned updates.
+
+\section{Website Instance Structure}
+
+To be determined is whether to perform the actual training of the model in the client's browser or the websites' backend server. The former variant has the advantage of the client data never leaving the own browser which makes a strong case for privacy concerns. It also allows websites that don't use or don't have access to a backend to use this system. Its disadvantages are potentially high performance penalties, e.g. if the training code needs to run on older hardware which also might affect the actual website's performance. Another potential risk is the exposure of the training logic and model which attackers might use to reverse engineer the system and find a way to disguise themselves as non-malicious clients.
+
+Analysis of available libraries revealed only three potential candidates for the browser-based approach:
+
+\begin{enumerate}
+	\item Experimental and unmaintained library for TensorFlow.js \cite{PAIR-federated-learning-github}
+	\item A github user's attempt \cite{shashwatsahay-pyjs_federated_learning-github} to solve this problem following a discussion in TensorFlow's github issues.
+	\item Implementing an own solution on top of a browser-based ML library.
+\end{enumerate}
+
+The amount and quality of libraries suitable for the server-side approach seems to be much higher. A selection of the most popular libraries includes the following projects:
+
+\begin{enumerate}
+	\item https://github.com/IBM/federated-learning-lib
+	\item https://fedml.ai/
+	\item https://flower.dev/
+	\item https://www.tensorflow.org/federated/federated_learning
+\end{enumerate}
+
+Weighing the advantages and disadvantages of both solutions against each other leads to the choice of running the federated learning client on the website's backends. Both the potentially increased performance and non-exposure of the learning logic and model are the biggest factors in this choice. Privacy-concious website operators need to either choose a hoster that provides access to the backend software, or host the application backend themselves such that control over the user data can be guaranteed. Due to this the requirement to install the software in the backend is reasonable.
+
+\section{Backend Technology Stack}
+
+As python is the de-facto language of choice for machine learning applications and has both great available projects for web applications and is well suitable for rapid prototyping, it is also used for both the website instances' and primary server's backends.
+
+The specific software stack consists of a python application using the Flask microframework which serves a REST-style API and the static frontend files in the website instances.
+
+
+\chapter{Related Work}
+
+
+
+\chapter{Proposed Architecture}
+
+asdasd
+
+\section{Federated Learning}
+
+asdasd
+
+
+
+
+
+
+
+
+
+
 
 \chapter{Vorbemerkung}
 
