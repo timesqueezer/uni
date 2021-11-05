@@ -17,3 +17,15 @@ expose
  - what am i gonna do (vorhaben)
  - related work
  - time?
+
+
+
+ - what am i gonna do
+   - https://datadome.co/resources/account-takeover/
+   - https://datadome.co/bot-management-protection/scraper-crawler-bots-how-to-protect-your-website-against-intensive-scraping/
+ - related work
+  - https://datadome.co/free-signup/ very expensive
+
+  - FLEAM: IOT focussed with learners on edge nodes
+
+ - time
