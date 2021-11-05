@@ -28,7 +28,9 @@
     backend=biber,
     %backref=true
     ]{biblatex}             % Biblatex mit alphabetischem Style und biber.
-\bibliography{\jobname.bib} % Dateiname der bib-Datei.
+
+\addbibresource{\jobname.bib} % Dateiname der bib-Datei.
+
 \DeclareFieldFormat*{title}{
     \mkbibemph{#1}}         % Make titles italics
 % }}}
