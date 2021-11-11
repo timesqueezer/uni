@@ -74,6 +74,26 @@ This exposé and the thesis based on it will be split into the following high-le
 	\end{enumerate}
 \end{enumerate}
 
+\chapter{Related Work}
+
+\section{Proprietary Solutions}
+
+https://datadome.co
+https://www.perimeterx.com/products/bot-defender/
+https://www.imperva.com/products/advanced-bot-protection-management/
+https://www.fastly.com/products/cloud-security/bot-protection
+
+\section{Scientific Work}
+
+The paper "FLEAM: A Federated Learning Empowered Architecture to Mitigate DDoS in Industrial IoT" \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focusses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
+
+Other works related to DDoS mitigation that also incorporate machine learning include Farivar \emph{et al.} \cite{FaFa2020}, Liu \emph{et al.} \cite{8594641} and Hussain \emph{et al.} \cite{9000893}.
+
+Many of the existing state of the art solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models. The browser environment in the web offers a much greater amount and variety of user information that can be very useful to differentiate between a valid user and a malicious bot.
+
+
+\chapter{Proposed Architecture}
+
 This work aims to incorporate an existing library that provides federated learning capabilities and can be run either on the client's browser or the websites' servers.
 
 The proof of concept is intended to show the feasibility of implementing such a system while taking the specified constraints into account. It will include multiple website instances that all use the bot detection library and a primary server that holds the model, fascilitates communication to and from the website instances, and incorporates learned updates.
@@ -108,28 +128,17 @@ As python is the de-facto language of choice for machine learning applications a
 The specific software stack consists of a python application using the Flask microframework which serves a REST-style API and the static frontend files in the website instances.
 
 
-\chapter{Related Work}
-
-\section{Proprietary Solutions}
-
-https://datadome.co
-
-\section{Scientific Work}
-
-The paper "FLEAM: A Federated Learning Empowered Architecture to Mitigate DDoS in Industrial IoT" \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focusses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
-
-Other works related to DDoS mitigation that also incorporate machine learning include Farivar \emph{et al.} \cite{FaFa2020}, Liu \emph{et al.} \cite{8594641} and Hussain \emph{et al.} \cite{9000893}.
-
-Many of the existing state of the art solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models. The browser environment in the web offers a much greater amount and variety of user information that can be very useful to differentiate between a valid user and a malicious bot.
-
-
-\chapter{Proposed Architecture}
+\section{Federated Learning}
 
 A big part of the system design is going to be the choice of user data and transformations performed on the same to be used in the model's parameter space.
 
-\section{Federated Learning}
 
-asdasd
+\chapter{Empirical Study}
+
+\section{Performance}
+
+To be determined is whether the proposed architecture actually works with the goal.
+
 
 
 \begin{raggedright}
