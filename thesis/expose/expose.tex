@@ -16,7 +16,7 @@
 
 % ===================================Dokument===================================
 
-\title{How can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?}
+\title{How well can federated learning be utilized to implement a decentralized and privacy focused bot detection system for websites?}
 \author{Matz-Jona Radloff}
 % \date{01.01.2015} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
                     %  diese Zeile aktivieren.
@@ -53,7 +53,7 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to explore the state-of-art as well as provide a proof-of-concept for a basic system that incorporates all of the above criterions. These concerns will be addressed by implementing an open-source library that uses federated learning which performs well enough to be considered a realistic choid within currently available alternatives.
+Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to explore the state-of-art as well as provide a proof-of-concept for a basic system that incorporates all of the above criterions. These concerns will be addressed by implementing an open-source library that uses federated learning and its performance will be compared against existing solutions.
 
 \tableofcontents
 
@@ -61,7 +61,7 @@ Malicious use of automated bots present an increasing risk to applications in th
 
 In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is resposible for this.
 
-Bot attacks can have several goals. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website data and can use the data for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience.
+The usage of bots can have several goals. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website data and can use the data for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience.
 
 Recent studies show that of 2020's internet traffic, 25.6\% was fraudulent and automatically generated \cite{BAD_BOT_REPORT2020} \cite{BAD_BOT_REPORT2021}. They also show that both the percentage of bot traffic in general as well as malicious bot traffic has increased over time.
 
@@ -88,30 +88,34 @@ This exposé and the thesis based on it initially explore related works and the 
 \url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
 \url{https://www.fastly.com/products/cloud-security/bot-protection} \\
 \url{https://www.cloudflare.com/products/bot-management/} \\
+\url{https://developers.google.com/recaptcha/docs/v3} \\
+\url{https://www.hcaptcha.com/} \\
 
 
 \section{Scientific Work}
 
-The paper "FLEAM: A Federated Learning Empowered Architecture to Mitigate DDoS in Industrial IoT" \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focusses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
+The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focusses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
 
 Other works related to DDoS mitigation that also incorporate machine learning include Farivar \emph{et al.} \cite{FaFa2020}, Liu \emph{et al.} \cite{8594641} and Hussain \emph{et al.} \cite{9000893}.
 
-Many of the existing state of the art solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models. The browser environment in the web offers a much greater amount and variety of user information that can be very useful to differentiate between a valid user and a malicious bot and is not accessible on the IP packet level.
+Many of the above solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models and are intended to be run in a server environment. In comparison clients' browser environments in the web offer a much greater amount and variety of user information that might be very useful to differentiate between a valid user and a malicious bot.
 
-The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focusses on mobile devices and does not incorporate federated learning. Instead the authors perform the actual check on a pre-trained model on the user's device and generate a proof which is verified on a server.
+The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focusses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proofis generated that is verified on a server.
 
 
 \chapter{Proposed Architecture}
 
-This work aims to incorporate an existing library that provides federated learning capabilities and can be run either on the client's browser or the websites' servers.
+This work aims to incorporate an existing library that provides federated learning capabilities and can be run either on the client's browser or the websites' servers. Ideally an existing machine learning will be used to limit the scope of the thesis.
 
 The proof of concept is intended to show the feasibility of implementing such a system while taking the specified constraints into account. It will include multiple website instances that all use the bot detection library and a primary server that holds the model, facilitates communication to and from the website instances, and incorporates learned updates.
 
-To avoid having to use user data at all, the learning system could only work on request metadata on the web server or backend level. In this case the available data would limited to combinations of IP data, such as addresses and timing data, as well as HTTP request metadata which, in most cases, contains pre-defined data that can be easily faked by bots. This work assumes that dynamic user data is needed in order to properly distinguish between human- and bot-initiated requests. It also needs to determine whether it suffices to gather data in the website's backend or frontend only or if both soruces are needed. For now all possiblities will remain open and potential existing software will be evaluated.
+To avoid having to use user data at all, the learning system could only work on request metadata on the web server or backend level. In this case the available data would be limited to combinations of IP data, such as addresses and timing data, as well as HTTP request metadata which, in most cases, contains pre-defined data that can be easily faked by bots. As \cite{PETS2021} shows, having access to user data from the client's device can be very successful so this work assumes that dynamic user data is needed in order to properly distinguish between human- and bot-initiated requests. It also needs to determine whether it suffices to gather data in the website's backend or frontend only or if both sources are needed. For now all possiblities will remain open and potential existing software will be evaluated.
 
 At the same time a friction-less system is desired that uses already existing data instead of requiring additional user input, e.g. solving a puzzle or performing object detection.
 
 \section{Website Instance Structure}
+
+The thesis will be using the Flower framework because it can use several different machine learning backends for greater flexibility in the choice of network used. It will run as part of the server implementation of the respective websites.
 
 To be determined is whether to perform the actual training of the model in the client's browser or the websites' backend server. The former variant has the advantage of the client data never leaving the own browser which makes a strong case for privacy concerns. It also allows websites that don't use or don't have access to a backend to use this system. Its disadvantages are potentially high performance penalties, e.g. if the training code needs to run on older hardware which also might affect the actual website's performance. Another potential risk is the exposure of the training logic and model which attackers might use to reverse engineer the system and find a way to disguise themselves as non-malicious clients.
 
