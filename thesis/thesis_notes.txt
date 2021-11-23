@@ -29,3 +29,71 @@ expose
   - FLEAM: IOT focussed with learners on edge nodes
 
  - time
+
+-----------------------------
+
+Googlebot [TODO] ??
+
+--------
+
+projekte, die kein paper sind?
+
+-----------
+
+https://arxiv.org/abs/1802.04289 (LSTM, text based)
+
+------
+
+captcha alternative: only decide whether bot, not good vs. bad
+
+
+https://towardsdatascience.com/mouse-movement-modelling-to-predict-online-fraud-873d90b201e2
+
+mouse movement + clicks + scroll + touch
+angle of movement
+distance travelled
+velocity
+angular velocity (specific direction)
+
+
+if action happens without mouse or keyboard input -> bot
+if no javascript is run or no data is received from the client -> bot
+else integrate data over specified period / multiple requests and let ML model decide
+
+
+which user, not if user:
+https://arxiv.org/pdf/1810.04668v1.pdf
+https://arxiv.org/abs/1810.04668
+https://github.com/margitantal68/mouse_dynamics_balabit_chaoshen_dfl
+
+
+https://github.com/balabit/Mouse-Dynamics-Challenge
+
+https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Continuous_Authentication/5619328
+
+https://ms.sapientia.ro/~manyi/DFL.html
+
+
+ - maybe only mouse stuff, expect to be extendable to mobile etc.
+
+---
+with keyboard:
+https://vmonaco.com/datasets/
+
+----------
+https://www.stratosphereips.org/datasets-ctu13 (1,2,9) bzw. 10
+
+
+----------
+
+compare different combinations of datasets per website, also vs. only 1 website
+
+----------
+
+attack test maybe:
+ - https://github.com/ultrafunkamsterdam/undetected-chromedriver
+ - https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth
+
+--------------
+
+https://friendlycaptcha.com/ bad because only anti spam
