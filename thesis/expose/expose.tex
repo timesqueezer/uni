@@ -77,7 +77,39 @@ A promising technique that combines both machine learning and respecting modern 
 
 \chapter{Method}
 
-This exposé and the thesis based on it initially explore related works and the state of the art in the field of applying machine learning and especially federated learning to bot detection. Next a system architecture of a potential software is proposed as a proof of concept. This includes decisions about what existing software libraries are suitible for integration, how and where the software needs to run in practice, how federated learning will be integrated, and what data exactly is most appropriate to be used in the learning algorithm. A hypothesis is made that this system is practically feasible. The evaluation of the claims is being done in terms of performance, privacy and comparability to existing solutions.
+\section{Concept}
+
+The thesis hypothesizes that machine learning systems incorporating federated learning perform better than non-federated counterparts while maintaining user privacy. It assumes that users perform actions on websites using a mouse or touchpad which are hard to fake by attackers trying to emulate human behavior. Chunks of 10-20 mouse events are used as input parameters. \cite{9111596} show that 10 events should be used as a miniumum for the similar task of user identity prediction. Multiple results can be averaged to increase detection performance.
+
+\section{Datasets}
+
+Many publicly available datasets exist that contain valid user mouse movement and click data. The following datasets will be aggregated and labeled as human input.
+Shen et. al's \cite{6263955} dataset contains mouse dynamics information from 28 users and 30 sessions per users which each contain around 3000 mouse events.
+The DFL dataset \cite{9111596} includes 20-30 sessions of 21 users.
+The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
+
+% fixed mouse operation:
+% https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313
+
+% additional:
+% https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/&utm_campaign=redirect-usage#section0-3
+
+Data that is labeled as bot input will be generated using three methods. The first naive approach interpolates linearly between the start and end point of randomly generated movements. The second method adds noise and the third uses both B-spline interpolation and noise. More complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The three methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement.
+
+
+Ten percent of the aggregated data will be split and used as test data while the rest is used for training.
+
+\section{Machine Learning Model}
+
+Many different machine learning models are suitable for binary classification. Hu et. al \cite{8275816} compare different classifiers in a similar context with Random Forest and Multilayer Perceptron performing the best. If time allows it, the thesis will compare multiple several classification methods against each other and only use one otherwise.
+
+% wie netz designen?
+
+\section{Evaluation}
+
+Bot datasets will be split by their generation method such that different combinations of data are used per learning participant.  The human datasets will also be split into subsets containing random samples from all or only specific datasets. The thesis will primarily compare the performance of the individual classifiers with and without federated learning with the hypothesis that the more learning results of different input data is combined, the better the overall performance.
+
+
 
 \chapter{Related Work}
 
@@ -94,13 +126,15 @@ This exposé and the thesis based on it initially explore related works and the 
 
 \section{Scientific Work}
 
-The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focusses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
+The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
 
 Other works related to DDoS mitigation that also incorporate machine learning include Farivar \emph{et al.} \cite{FaFa2020}, Liu \emph{et al.} \cite{8594641} and Hussain \emph{et al.} \cite{9000893}.
 
 Many of the above solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models and are intended to be run in a server environment. In comparison clients' browser environments in the web offer a much greater amount and variety of user information that might be very useful to differentiate between a valid user and a malicious bot.
 
-The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focusses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proofis generated that is verified on a server.
+The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proofis generated that is verified on a server.
+
+
 
 
 \chapter{Proposed Architecture}
