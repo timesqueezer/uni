@@ -73,13 +73,13 @@ Many website operators tend to use solutions that are easy to integrate and perf
 
 \todo{machine learning motivation}
 
-A promising technique that combines both machine learning and respecting modern privacy standards is federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16}.
+A promising technique that combines both machine learning and respects modern privacy standards is federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16}.
 
 \chapter{Method}
 
 \section{Concept}
 
-The thesis hypothesizes that machine learning systems incorporating federated learning perform better than non-federated counterparts while maintaining user privacy. It assumes that users perform actions on websites using a mouse or touchpad which are hard to fake by attackers trying to emulate human behavior. Chunks of 10-20 mouse events are used as input parameters. \cite{9111596} show that 10 events should be used as a miniumum for the similar task of user identity prediction. Multiple results can be averaged to increase detection performance.
+The thesis hypothesizes that machine learning systems incorporating federated learning perform better than non-federated counterparts while maintaining user privacy. It assumes that users perform actions on websites using a mouse or touchpad which are hard to fake by attackers trying to emulate human behavior. Raw mouse data is segmented into mouse actions such as mouse move (MM) or mouse move and a click or point and click (PC) similar to \cite{9111596} and their previous paper \cite{DBLP:journals/corr/abs-1810-04668}. Multiple results can be averaged to increase detection performance.
 
 \section{Datasets}
 
@@ -99,16 +99,19 @@ Data that is labeled as bot input will be generated using three methods. The fir
 
 Ten percent of the aggregated data will be split and used as test data while the rest is used for training.
 
+
 \section{Machine Learning Model}
 
-Many different machine learning models are suitable for binary classification. Hu et. al \cite{8275816} compare different classifiers in a similar context with Random Forest and Multilayer Perceptron performing the best. If time allows it, the thesis will compare multiple several classification methods against each other and only use one otherwise.
+Many different machine learning models are suitable for binary classification. Hu et. al \cite{8275816} compare different classifiers in a similar context with Random Forest and Multilayer Perceptron performing the best. If time allows it, the thesis will compare multiple classification methods against each other and only use one otherwise.
 
-% wie netz designen?
+The input features will consist of the $x$- and $y$-coordinates as well as a normalized time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+
+
+The thesis will use Tensorflow with and without federated learning with a Random Forest keras model.
 
 \section{Evaluation}
 
 Bot datasets will be split by their generation method such that different combinations of data are used per learning participant.  The human datasets will also be split into subsets containing random samples from all or only specific datasets. The thesis will primarily compare the performance of the individual classifiers with and without federated learning with the hypothesis that the more learning results of different input data is combined, the better the overall performance.
-
 
 
 \chapter{Related Work}
@@ -136,6 +139,7 @@ The work of \cite{PETS2021} outlines the problems and privacy-realted concerns r
 
 
 
+\iffalse % old
 
 \chapter{Proposed Architecture}
 
@@ -190,6 +194,7 @@ A big part of the system design is going to be the choice of user data and trans
 
 To be determined is whether the proposed architecture actually works with the goal.
 
+\fi
 
 
 \begin{raggedright}
