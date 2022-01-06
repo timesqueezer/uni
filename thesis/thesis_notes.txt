@@ -77,6 +77,7 @@ https://ms.sapientia.ro/~manyi/DFL.html
  - maybe only mouse stuff, expect to be extendable to mobile etc.
 
 ---
+
 with keyboard:
 https://vmonaco.com/datasets/
 
@@ -94,6 +95,26 @@ attack test maybe:
  - https://github.com/ultrafunkamsterdam/undetected-chromedriver
  - https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth
 
+pyautogui
+scrappy
+
 --------------
 
 https://friendlycaptcha.com/ bad because only anti spam
+
+----------------
+
+vergleich mit federated vs ohne
+vergleich mit privacy vs ohne
+
+tensorflow federated
+
+------------------
+
+klassische daten (normalitätsmodell)
+
+performance vergleichen
+
+---------------------------------
+
+
