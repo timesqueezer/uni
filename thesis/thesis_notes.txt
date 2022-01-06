@@ -82,10 +82,6 @@ with keyboard:
 https://vmonaco.com/datasets/
 
 ----------
-https://www.stratosphereips.org/datasets-ctu13 (1,2,9) bzw. 10
-
-
-----------
 
 compare different combinations of datasets per website, also vs. only 1 website
 
