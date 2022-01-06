@@ -53,13 +53,19 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to explore the state-of-art as well as provide a proof-of-concept for a basic system that incorporates all of the above criterions. These concerns will be addressed by implementing an open-source library that uses federated learning and its performance will be compared against existing solutions.
+Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions.
+
+Option 1:
+These concerns will be addressed by implementing an open-source library that uses federated learning and its performance will be compared against existing solutions.
+
+Option 2:
+The usage of federated learning which allows the usage of additional user data will be compared against a non-federated approach and different input data.
 
 \tableofcontents
 
 \chapter{Motivation}
 
-In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is responsible for this.
+In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year \cite{BAD_BOT_REPORT2020} \cite{BAD_BOT_REPORT2021}. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is responsible for this.
 
 The usage of bots can have several goals. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website data and can use the data for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience.
 
@@ -69,11 +75,40 @@ Most of the above attacks need to trick the webserver and application backends i
 
 A complication in this problem space is the, often desired, requirement for non-malicious bots to be granted normal access. The most prominent example are scraper bots from search engines that need to request websites periodically to build their search indices. A common technique to exploit this requirement is trying to emulate known bot signatures from large search engines, e.g. Googlebot \cite{8421894}.
 
-Many website operators tend to use solutions that are easy to integrate and perform well. This requires embeding external software which collects user data and sends it to servers of the software vendors. These often do not disclose what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the concrete data transfer in a very detailed and legally complicated way, e.g. in countries falling under the GDPR \cite{GDPR}. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
+Many website operators tend to use solutions that are easy to integrate. This requires embeding external software which collects user data and sends it to servers of the software vendors. Closed source software does not allow to determine what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the concrete data transfer in a very detailed and legally complicated way, e.g. in countries falling under the GDPR \cite{GDPR}. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
 
 \todo{machine learning motivation}
 
 A promising technique that combines both machine learning and respects modern privacy standards is federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16}.
+
+
+\chapter{Related Work}
+
+\section{Proprietary Solutions}
+
+\url{https://datadome.co/} \\
+\url{https://www.perimeterx.com/products/bot-defender/} \\
+\url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
+\url{https://www.fastly.com/products/cloud-security/bot-protection} \\
+\url{https://www.cloudflare.com/products/bot-management/} \\
+\url{https://developers.google.com/recaptcha/docs/v3} \\
+\url{https://www.hcaptcha.com/} \\
+
+
+\section{Scientific Work}
+
+The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
+
+\todo{More sources}
+
+Many of the above solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models and are intended to be run in a server environment. In comparison clients' browser environments in the web offer a much greater amount and variety of user information that might be very useful to differentiate between a valid user and a malicious bot.
+
+The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
+
+Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users but privacy concerns often stand in the way of using such a method in practice.
+
+Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with 93\% accuracy with only one mouse trajectory as input.
+
 
 \chapter{Method}
 
@@ -113,32 +148,6 @@ The thesis will use Tensorflow with and without federated learning with a Random
 \section{Evaluation}
 
 The bot datasets will be split by their generation method such that different combinations of data are used per learning participant. The human datasets will also be split into subsets containing random samples from all or only specific datasets. The thesis will primarily compare the performance of the individual classifiers with and without federated learning with the hypothesis that the more learning results of different input data is combined, the better the overall performance.
-
-
-\chapter{Related Work}
-
-\section{Proprietary Solutions}
-
-\url{https://datadome.co/} \\
-\url{https://www.perimeterx.com/products/bot-defender/} \\
-\url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
-\url{https://www.fastly.com/products/cloud-security/bot-protection} \\
-\url{https://www.cloudflare.com/products/bot-management/} \\
-\url{https://developers.google.com/recaptcha/docs/v3} \\
-\url{https://www.hcaptcha.com/} \\
-
-
-\section{Scientific Work}
-
-The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
-
-Other works related to DDoS mitigation that also incorporate machine learning include Farivar \emph{et al.} \cite{FaFa2020}, Liu \emph{et al.} \cite{8594641} and Hussain \emph{et al.} \cite{9000893}.
-
-Many of the above solutions use the actual IP network traffic to extract relevant information to be used as input parameters for their models and are intended to be run in a server environment. In comparison clients' browser environments in the web offer a much greater amount and variety of user information that might be very useful to differentiate between a valid user and a malicious bot.
-
-The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proofis generated that is verified on a server.
-
-Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users but privacy concerns often stand in the way of using such a method in practice.
 
 \chapter{Time plan}
 
