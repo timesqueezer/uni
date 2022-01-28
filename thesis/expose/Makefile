@@ -1,0 +1,2 @@
+clean:
+	rm *.bbl *.blg *.aux *.bcf *.blg *.fdb_latexmk *.fls *.log *.out *.run.xml *.synctex.gz *.toc
