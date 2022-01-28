@@ -112,27 +112,3 @@ klassische daten (normalitätsmodell)
 performance vergleichen
 
 ---------------------------------
-
-# scraping
-http://www.diva-portal.org/smash/get/diva2:1117695/FULLTEXT01.pdf
-
-https://www.stratosphereips.org/datasets-ctu13
-https://www.sciencedirect.com/science/article/pii/S0167404814000923?via%3Dihub
-
-----------
-
-pcap datasets: kann schlecht mit mausdaten verglichen werden. nur success insgesamt
-keine zuordnung request->mouse action oder andersrum
-
-entweder:
- - keine zuordnung
- - arbiträre zuordnung packageflow->mouse action
- - custom creation / experiment
-
-reicht vergleich federated and not beider systeme separat?
-
-----------------
-
-2 websites
-
-IDS system?
