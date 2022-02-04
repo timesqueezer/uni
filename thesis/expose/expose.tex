@@ -59,9 +59,10 @@ Malicious use of automated bots present an increasing risk to applications in th
 
 \chapter{Motivation}
 
-In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year \cite{BAD_BOT_REPORT2020} \cite{BAD_BOT_REPORT2021}. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is responsible for this.
+In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year \cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021}. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is responsible for this.
 
-The usage of bots can have several goals. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website data and can use the data for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience.
+The usage of bots can have several goals. This thesis primarily focuses on detecting web-based bots that try to access or perform actions on websites but other and related attack types exist, for example:
+DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website data and can use the data for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience.
 
 Recent studies show that of 2020's internet traffic 25.6\% was fraudulent and automatically generated \cite{BAD_BOT_REPORT2020} \cite{BAD_BOT_REPORT2021}. They also show that both the percentage of bot traffic in general as well as malicious bot traffic has increased over time.
 
@@ -104,11 +105,12 @@ Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility 
 
 \section{Concept}
 
-The thesis explores how additional data which might might be personal user data can potentially improve a machine learning system for bot detection. I also shows how federated learning can be used to allow using user data while mainting privacy.
+The thesis explores how additional data, which might be personal user data, can potentially improve a machine learning system for bot detection. It also shows how federated learning can be used to allow using user data while mainting privacy.
 
-For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented.
+For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform the best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
+Iliou et al.'s work it used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
-For the additional user data mouse, touchpad or touch gestures are used to supplement the data. This is harder to fake by attackers trying to emulate human behavior. This type of sensitive user data could not be reasonably used by a third party provider and would require explicit user consent \cite{GDPR}.
+Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not be reasonably used by a third party provider and would require explicit user consent \cite{GDPR}.
 
 To avoid the complicated privacy-realted implications federated learning, a technique that combines both machine learning and respects modern privacy standards \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16}, is used and compared against.
 
@@ -126,16 +128,17 @@ The DFL dataset \cite{9111596} includes 20-30 sessions of 21 users.
 The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
 
 If needed, additional datasets are available, e.g.:
-\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}
-
-\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/&utm_campaign=redirect-usage#section0-3}
+\footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
+\footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
 
 
 \subsection{Bot Data}
 
-To generate bot request data two different approaches are implemented by using the selenium-python \cite{SELENIUM_PYTHON} library which runs automated actions in an actual browser environment. The first is a naive approach of just performing the desired actions, e.g. scraping information or registering a user account. The second includes efforts to make the requests seem more human, for example by using randomized delays or requesting different pages before performing the actual target actions.
+To generate bot request data two different approaches are implemented by using the selenium-python \cite{SELENIUMPYTHON} library which runs automated actions in an actual browser environment. Instead of the standard chromedriver which runs a headless google chrome instance, undetected-chromedriver \cite{UNDETECTEDCHROMEDRIVER} is used which is a patched version that claims to not trigger many anti-bot services. If time allows it, both variants could be compared against, too.
 
-Mouse data labeled as bot input will be generated using three methods. The first naive approach interpolates linearly between the start and end point of randomly generated movements. The second method adds noise and the third uses both B-spline interpolation and noise. More complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The three methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement.
+The first, naive approach just performs the desired actions, e.g. scraping information or registering a user account. The second includes efforts to make the requests seem more human, for example by using randomized delays or requesting different pages before performing the actual target actions.
+
+Mouse data labeled as bot input will be generated using three methods. The first naive approach interpolates linearly between the start and end point of randomly generated movements. The second method adds noise and the third uses existing open source libraries (Probably one of \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}},\footnote{\url{https://github.com/patrikoss/pyclick}}). More complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The three methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement.
 
 Raw mouse data is segmented into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC) similar to \cite{9111596} and their previous paper \cite{DBLP:journals/corr/abs-1810-04668}. Multiple results can be averaged to increase detection performance.
 
