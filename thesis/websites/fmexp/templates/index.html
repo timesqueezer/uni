@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}FMEXP{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_reset.css') }}">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+
+    {% if current_user.is_authenticated %}
+    Hello {{ current_user.name }}
+    {% endif %}
+
+    {% block body %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='fmexp.js') }}"></script>
+  </body>
+</html>
