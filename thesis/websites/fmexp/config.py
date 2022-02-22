@@ -3,4 +3,4 @@ SECRET_KEY = 'oomeihu8ia7eHoh6quae4sheen5hie3aixaej8aoju4bohjaet0Ohh7ohdu9Quahbi
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres@/fmexp'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-LAYOUT_NAME = 'layout2'
+LAYOUT_NAME = 'layout1'

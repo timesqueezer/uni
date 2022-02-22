@@ -3,3 +3,4 @@ Flask-WTF
 Flask-SQLAlchemy
 Flask-Migrate
 flask-login
+wtforms[email]

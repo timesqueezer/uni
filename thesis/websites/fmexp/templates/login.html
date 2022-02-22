@@ -1,12 +1,15 @@
 {% extends layout %}
 
-{% block body %}
+{% block content %}
 <h1>Login</h1>
 
 <form method="POST" action="/login">
     {{ form.csrf_token }}
-    {{ form.email.label }} {{ form.email(size=20) }}
-    <input type="submit" value="Go">
+    <div class="form-input">{{ form.email.label }} {{ form.email() }}</div>
+    <div class="form-input">{{ form.password.label }} {{ form.password() }}</div>
+    <div class="form-input">
+        <input type="submit" value="Login">
+    </div>
 </form>
 
 {% endblock %}

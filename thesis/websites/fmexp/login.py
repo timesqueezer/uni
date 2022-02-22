@@ -26,8 +26,11 @@ def load_user(user_id):
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
-    form = UserRegisterForm
-    return render_template_fmexp('register.html')
+    form = UserRegisterForm()
+    if form.validate_on_submit():
+        print(dir(form))
+
+    return render_template_fmexp('register.html', form=form)
 
 
 @main.route('/login', methods=['GET', 'POST'])

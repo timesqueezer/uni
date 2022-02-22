@@ -1,12 +1,16 @@
 {% extends layout %}
 
-{% block body %}
+{% block content %}
 <h1>Register</h1>
 
 <form method="POST" action="/register">
     {{ form.csrf_token }}
-    {{ form.email.label }} {{ form.name(size=20) }}
-    <input type="submit" value="Go">
+    <div class="form-input">{{ form.email.label }} {{ form.email() }}</div>
+    <div class="form-input">{{ form.password.label }} {{ form.password() }}</div>
+    <div class="form-input">{{ form.password2.label }} {{ form.password2() }}</div>
+    <div class="form-input">
+        <input type="submit" value="Register">
+    </div>
 </form>
 
 {% endblock %}
