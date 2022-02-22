@@ -9,9 +9,9 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
-    publicPath: '/',
+    publicPath: '/dist',
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
@@ -22,7 +22,7 @@ module.exports = {
       { test: /\.js$/, use: ['babel-loader'] },
       { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
       { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
-      { test: /\.(sass|scss)$/, use: ['sass-loader'] },
+      { test: /\.(sass|scss|css)$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
     ],
   },
 }
