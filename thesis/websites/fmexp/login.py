@@ -24,16 +24,20 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@main.route('/register', methods=['GET', 'POST'])
+@main.route('/register', methods=['POST'])
 def register():
     form = UserRegisterForm()
     if form.validate_on_submit():
         print(dir(form))
 
+
+@main.route('/content/register', methods=['GET'])
+def register_content():
+    form = UserRegisterForm()
     return render_template_fmexp('register.html', form=form)
 
 
-@main.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['POST'])
 def login():
     form = UserLoginForm()
     if form.validate_on_submit():
@@ -47,5 +51,8 @@ def login():
         if not is_safe_url(next_url):
             return abort(400)
 
-        return redirect(next_url or url_for('index'))
+
+@main.route('/content/login', methods=['GET'])
+def login_content():
+    form = UserLoginForm()
     return render_template_fmexp('login.html', form=form)
