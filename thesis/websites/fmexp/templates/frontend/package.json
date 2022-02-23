@@ -17,6 +17,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "js-cookie": "^3.0.1",
     "sass": "^1.49.8",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",

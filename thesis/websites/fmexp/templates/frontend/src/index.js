@@ -1,11 +1,12 @@
 import './scss/custom.scss'
 
-import { createApp } from 'vue'
+import * as Vue from 'vue'
 
 import main from './main'
 import router from './router'
 
-const app = createApp(main)
+
+const app = Vue.createApp(main)
 app.use(router)
 
 app.mount('#app')
