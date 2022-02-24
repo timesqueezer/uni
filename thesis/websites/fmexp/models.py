@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 
 from fmexp.extensions import db
 
@@ -10,7 +10,7 @@ class User(db.Model):
 
     uuid = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=True, unique=True)
 
     password_salt = db.Column(db.LargeBinary)
     password_hash = db.Column(db.LargeBinary)
@@ -21,7 +21,7 @@ class User(db.Model):
 
     @property
     def is_active(self):
-        return True
+        return self.email is not None
 
     @property
     def is_anonymous(self):
@@ -29,3 +29,21 @@ class User(db.Model):
 
     def get_id(self):
         return self.uuid
+
+
+class DataPoint(db.Model):
+    __tablename__ = 'data_points'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    created = db.Column(db.DateTime, nullable=False)
+
+    user_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey('users.uuid'), nullable=False)
+    user = db.relationship('User', backref='datapoints')
+
+    data = db.Column(JSONB)
+
+    def __init__(self, created, user_uuid, data):
+        self.created = created
+        self.user_uuid = user_uuid
+        self.data = data

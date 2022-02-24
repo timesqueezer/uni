@@ -1,83 +1,112 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import {
+  throttle
+} from 'lodash'
 
 
 export default class InputRecorder {
-    constructor() {
-        this.eventList = []
-        this.dataSenderTimeout = null
-        this.userUUID = null
+  constructor() {
+    this.eventList = []
+    this.dataSenderTimeout = null
+    this.userUUID = null
+
+  }
+
+  async init() {
+    await this.setUserUUID()
+
+    this.setupListeners()
+    this.setupDataSender()
+  }
+
+  async setUserUUID() {
+    const alreadySetUserUUID = Cookies.get('user_uuid')
+    console.log({alreadySetUserUUID})
+    if (alreadySetUserUUID) {
+      this.userUUID = alreadySetUserUUID
+
+    } else {
+      const response = await axios.post('/user-uuid')
+      this.userUUID = response.data.user_uuid
+      Cookies.set('user_uuid', this.userUUID)
+
+    }
+  }
+
+  setupListeners() {
+    this.addEventListener('pointermove', this.onPointerMove, true)
+    this.addEventListener('pointerdown', this.onPointerDown)
+    this.addEventListener('pointerup', this.onPointerUp)
+  }
+
+  addEventListener(eventType, fn, throttled) {
+    document.addEventListener(
+      eventType,
+      throttled ? throttle(fn.bind(this), 50) : fn.bind(this),
+      { passive: true },
+    )
+  }
+
+  setupDataSender() {
+    this.dataSenderTimeout = window.setTimeout(this.sendData.bind(this), 2000)
+  }
+
+  async sendData() {
+    if (this.eventList.length) {
+      const data = this.eventList
+      this.eventList = []
+
+      const payload = {
+        meta: {
+          user_uuid: this.userUUID,
+        },
+        data,
+      }
+
+      await axios.post('/data-capture', payload)
 
     }
 
-    async init() {
-        await this.setUserUUID()
+    this.setupDataSender()
+  }
 
-        this.setupListeners()
-        this.setupDataSender()
-    }
+  pushEvent(data) {
+    this.eventList.push({
+      dt: (new Date()).toISOString(),
+      data,
+    })
+  }
 
-    async setUserUUID() {
-        const alreadySetUserUUID = Cookies.get('user_uuid')
-        console.log({alreadySetUserUUID})
-        if (alreadySetUserUUID) {
-            this.userUUID = alreadySetUserUUID
+  onPointerMove(e) {
+    this.pushEvent({
+      type: 'move',
+      position: { x: e.clientX, y: e.clientY },
+      positionAbsolute: { x: e.pageX, y: e.pageY },
+      screen: { width: e.view.innerWidth, height: e.view.innerHeight },
+      pointerType: e.pointerType,
+    })
+  }
 
-        } else {
-            const response = await axios.post('/user-uuid')
-            this.userUUID = response.data.user_uuid
-            Cookies.set('user_uuid', this.userUUID)
+  onPointerDown(e) {
+    this.pushEvent({
+      type: 'pointerdown',
+      position: { x: e.clientX, y: e.clientY },
+      positionAbsolute: { x: e.pageX, y: e.pageY },
+      screen: { width: e.view.innerWidth, height: e.view.innerHeight },
+      pointerType: e.pointerType,
+      buttons: e.buttons,
+    })
+  }
 
-        }
-    }
-
-    setupListeners() {
-        document.addEventListener('pointermove', this.onPointerMove.bind(this), { passive: true })
-        document.addEventListener('pointerdown', this.onPointerDown.bind(this), { passive: true })
-        document.addEventListener('pointerup', this.onPointerUp.bind(this), { passive: true })
-    }
-
-    setupDataSender() {
-        this.dataSenderTimeout = window.setTimeout(this.sendData.bind(this), 1000)
-    }
-
-    async sendData() {
-        console.log(this)
-        const data = this.eventList
-        this.eventList = []
-
-        const payload = {
-            meta: {
-                user_uuid: this.userUUID,
-            },
-            data,
-        }
-
-        console.log(payload)
-
-        await axios.post('/data-capture', payload)
-
-        this.setupDataSender()
-    }
-
-    onPointerMove(e) {
-        this.eventList.push({
-            type: 'move',
-            event: e.toString(),
-            dt: (new Date()).toISOString(),
-        })
-    }
-
-    onPointerDown(e) {
-        console.log('onPointerDown', e)
-        this.eventList.push({
-            type: 'pointerdown',
-            event: e.toString(),
-            dt: (new Date()).toISOString(),
-        })
-    }
-
-    onPointerUp(e) {
-        console.log('onPointerUp', e)
-    }
+  onPointerUp(e) {
+    this.pushEvent({
+      type: 'pointerdown',
+      position: { x: e.clientX, y: e.clientY },
+      positionAbsolute: { x: e.pageX, y: e.pageY },
+      screen: { width: e.view.innerWidth, height: e.view.innerHeight },
+      pointerType: e.pointerType,
+      buttons: e.buttons,
+    })
+  }
 }

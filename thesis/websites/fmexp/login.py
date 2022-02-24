@@ -26,6 +26,8 @@ def load_user(user_id):
 
 @main.route('/register', methods=['POST'])
 def register():
+    assert not current_user.is_active
+
     form = UserRegisterForm()
     if form.validate_on_submit():
         print(dir(form))

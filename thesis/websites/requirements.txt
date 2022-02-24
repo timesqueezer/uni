@@ -4,3 +4,7 @@ Flask-SQLAlchemy
 Flask-Migrate
 flask-login
 wtforms[email]
+
+psycopg2
+
+python-dateutil
