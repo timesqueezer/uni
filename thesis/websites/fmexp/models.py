@@ -15,6 +15,9 @@ class User(db.Model):
     password_salt = db.Column(db.LargeBinary)
     password_hash = db.Column(db.LargeBinary)
 
+    first_name = db.Column(db.String, nullable=True)
+    last_name = db.Column(db.String, nullable=True)
+
     @property
     def is_authenticated(self):
         pass
@@ -29,6 +32,10 @@ class User(db.Model):
 
     def get_id(self):
         return self.uuid
+
+    def get_json(self):
+        data = {}
+        for attr in ['email', ]
 
 
 class DataPoint(db.Model):

@@ -1,0 +1,12 @@
+$enable-shadows: true;
+$enable-rounded: true;
+
+$primary: #233AA8;
+$secondary: #535975;
+$info: #44ADDB;
+$warning: #E0A47D;
+$danger: #A84423;
+
+$font-family-base: 'Open Sans';
+
+@import "./custom.scss";

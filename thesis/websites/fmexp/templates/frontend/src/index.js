@@ -1,4 +1,4 @@
-import './scss/custom.scss'
+import('./scss/' + FMEXP_LAYOUT + '.scss')
 
 import * as Vue from 'vue'
 

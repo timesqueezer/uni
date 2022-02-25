@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
-    publicPath: '/dist',
+    publicPath: '/dist/',
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -29,6 +30,7 @@ module.exports = {
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
     }),
+    new MiniCssExtractPlugin(),
   ],
   module: {
     rules: [
@@ -36,7 +38,7 @@ module.exports = {
       { test: /\.vue$/, use: 'vue-loader' },
       { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
       { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
-      { test: /\.(sass|scss|css)$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.(sass|scss|css)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] },
     ],
   },
 }

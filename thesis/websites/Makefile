@@ -11,3 +11,9 @@ flask-run:
 
 flask-shell:
 	FLASK_ENV=development FLASK_APP=fmexp env/bin/flask shell
+
+frontend1:
+	cd fmexp/templates/frontend; yarn build-frontend1
+
+frontend2:
+	cd fmexp/templates/frontend; yarn build-frontend2

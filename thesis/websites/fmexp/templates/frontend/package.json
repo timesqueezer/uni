@@ -5,8 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "webpack --config config/webpack.config.js",
-    "build-watch": "webpack --watch --config config/webpack.config.js"
+    "build-frontend1": "webpack --config config/frontend1.config.js",
+    "build-frontend2": "webpack --config config/frontend2.config.js",
+    "build-watch": "webpack --watch --config config/frontend1.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -19,6 +20,7 @@
     "html-webpack-plugin": "^5.5.0",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.5.3",
     "sass": "^1.49.8",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",

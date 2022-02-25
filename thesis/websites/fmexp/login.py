@@ -4,7 +4,7 @@ from flask import (
     redirect,
     url_for,
 )
-from flask_login import login_user
+from flask_login import login_user, current_user
 
 from fmexp.extensions import login_manager
 from fmexp.forms import (
@@ -16,6 +16,7 @@ from fmexp.main import main
 from fmexp.utils import (
     render_template_fmexp,
     is_safe_url,
+    json_response,
 )
 
 
@@ -24,13 +25,28 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
+@main.route('/user')
+def user():
+    if not current_user.is_active:
+        abort(400)
+
+    return json_response(current_user.get_json())
+
+
 @main.route('/register', methods=['POST'])
 def register():
     assert not current_user.is_active
 
     form = UserRegisterForm()
     if form.validate_on_submit():
-        print(dir(form))
+        if form.password.data != form.password2.data:
+            return json_response({ 'errors': [{ 'password': 'Passwords do not match' }] })
+
+        current_user.email = form.email.data
+
+        db.session.commit()
+
+        return json_response(current_user.get_json())
 
 
 @main.route('/content/register', methods=['GET'])

@@ -15,3 +15,9 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
+
+def json_response(data, status_code=200):
+    response = current_app.response_class(json.dumps(data), mimetype='application/json')
+    response.status_code = status_code
+
+    return response
