@@ -1,11 +1,15 @@
 <script>
 export default {
   name: 'Header',
+  props: {
+    currentUser: { type: Object, required: false, default: null},
+  },
   data() {
     return {
     }
   },
   mounted() {
+    console.log('header', this.currentUser)
   }
 }
 </script>
@@ -34,8 +38,15 @@ export default {
 
         <div class="flex-grow-1"></div>
 
-        <router-link class="btn btn-outline-secondary me-3" to="/login">Login</router-link>
-        <router-link class="btn btn-outline-secondary" to="/register">Register</router-link>
+        <div v-if="currentUser">
+          <router-link class="nav-link" to="/profile">
+            {{ currentUser.email }}
+          </router-link>
+        </div>
+        <div v-else>
+          <router-link class="btn btn-outline-secondary me-3" to="/login">Login</router-link>
+          <router-link class="btn btn-outline-secondary" to="/register">Register</router-link>
+        </div>
       </div>
     </div>
   </nav>

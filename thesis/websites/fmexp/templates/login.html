@@ -1,6 +1,40 @@
+<script type="text/javascript">
+    window.onSubmit = function(e) {
+        console.log('onSubmit', e)
+    }
+
+    window.login = function(email, password) {
+        fetch('/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        })
+        .then(r => r.json())
+        .then((r) => {
+            console.log('hmmmmm', r)
+            window.localStorage.setItem('fmexp_jwt_token', r.token)
+            window.location.href = '/'
+        })
+        .catch((error) => {
+            coinsole.log({ error })
+        })
+    }
+
+</script>
+
+{% if login_user %}
+
+<script type="text/javascript">
+    window.login('{{ login_user.email }}', '{{ password }}')
+</script>
+
+{% else %}
+
 <h1>Login</h1>
 
-<form method="POST" action="/login">
+<form method="POST" onsubmit="onSubmit">
     {{ form.csrf_token }}
     <div class="form-input">{{ form.email.label }} {{ form.email() }}</div>
     <div class="form-input">{{ form.password.label }} {{ form.password() }}</div>
@@ -8,3 +42,5 @@
         <input type="submit" value="Login">
     </div>
 </form>
+
+{% endif %}

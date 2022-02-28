@@ -4,7 +4,7 @@ import uuid
 from dateutil.parser import parse
 
 from flask import Blueprint, send_file, request, abort
-from flask_login import current_user, login_user
+from flask_jwt_next import current_identity
 
 from fmexp.extensions import db
 from fmexp.models import DataPoint, User
@@ -22,9 +22,8 @@ def index(path=None):
 
 @main.route('/user-uuid', methods=['POST'])
 def user_uuid():
-    print('active', current_user.is_active)
-    if current_user.is_authenticated:
-        return { 'user_uuid': str(current_user.uuid) }
+    if current_identity:
+        return { 'user_uuid': str(current_identity.uuid) }
 
     already_set_uuid = request.cookies.get('user_uuid')
     if already_set_uuid:
@@ -35,10 +34,7 @@ def user_uuid():
     db.session.add(new_user)
     db.session.commit()
 
-    login_user(new_user)
-
     new_user_uuid = new_user.uuid
-    print('new_user_uuid', new_user_uuid)
 
     return { 'user_uuid': str(new_user_uuid) }
 
@@ -50,8 +46,8 @@ def data_capture():
     if not payload.get('meta') or not payload['meta'].get('user_uuid'):
         abort(400)
 
-    if current_user.is_authenticated and \
-        str(current_user.uuid) != payload['meta']['user_uuid']:
+    if current_identity and \
+        str(current_identity.uuid) != payload['meta']['user_uuid']:
         abort(400)
 
     for dp in payload['data']:
@@ -73,6 +69,11 @@ def blog():
 @main.route('/content/home')
 def home():
     return render_template_fmexp('home.html')
+
+
+@main.route('/content/profile')
+def profile():
+    return render_template_fmexp('profile.html')
 
 
 @main.route('/dist')

@@ -4,3 +4,5 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://postgres@/fmexp'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 LAYOUT_NAME = 'layout1'
+
+JWT_AUTH_USERNAME_KEY = 'email'

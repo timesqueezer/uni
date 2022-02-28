@@ -1791,6 +1791,11 @@ fastest-levenshtein@^1.0.12:
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
   integrity sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow==
 
+fg-loadcss@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fg-loadcss/-/fg-loadcss-2.1.0.tgz#b3cbdf2ab5ee82a13ddb26340f10e3ac43fe2233"
+  integrity sha512-HpvR2uRoKvrYAEwimw+k4Fr2NVHYPfld5Lc/f9uy3mKeUTXhS5urL24XA2rqyq5b2i410EXCLir4Uhsb8J1QaQ==
+
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
@@ -2908,7 +2913,15 @@ vue-router@4:
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.18"
 
-vue-template-compiler@^2.6.14:
+vue-runtime-template-compiler@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vue-runtime-template-compiler/-/vue-runtime-template-compiler-1.3.0.tgz#0eba086616c18c86520b9e866a319ac5640eeb5e"
+  integrity sha512-JSztrOuMb12YxaKzFvsNlbOmvusulf3NFyqFoUNouUEIvdSPnRHkpyBmY+CTtxo2xBGPeKuhLx3jnAy51GTM5w==
+  dependencies:
+    fg-loadcss "^2.1.0"
+    vue-template-compiler "^2.6.11"
+
+vue-template-compiler@^2.6.11, vue-template-compiler@^2.6.14:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.14.tgz#a2f0e7d985670d42c9c9ee0d044fed7690f4f763"
   integrity sha512-ODQS1SyMbjKoO1JBJZojSw6FE4qnh9rIpUZn2EUT86FKizx9uH5z6uXiIrm4/Nb/gwxTi/o17ZDEGWAXHvtC7g==

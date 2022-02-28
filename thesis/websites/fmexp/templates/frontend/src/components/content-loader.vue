@@ -1,9 +1,14 @@
 <script>
 import axios from 'axios'
 
+// import { RuntimeTemplateCompiler } from 'vue-runtime-template-compiler'
+
 
 export default {
   name: 'ContentLoader',
+  components: {
+    // RuntimeTemplateCompiler,
+  },
   data() {
     return {
       content: '',
@@ -24,11 +29,15 @@ export default {
       const path = this.$route.path === '/' ? '/home' : this.$route.path
       const response = await axios.get('/content' + path)
       this.content = response.data
-    }
+    },
+    test() {
+      console.log('hmmmm')
+    },
   }
 }
 </script>
 
 <template>
-  <div v-html="content"></div>
+  <!--<RuntimeTemplateCompiler :template="html"></RuntimeTemplateCompiler>-->
+  <div v-html="this.content"></div>
 </template>

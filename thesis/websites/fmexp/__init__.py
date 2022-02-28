@@ -4,7 +4,7 @@ from flask import Flask
 from fmexp.extensions import (
     db,
     migrate,
-    login_manager,
+    jwt,
 )
 import fmexp.login
 
@@ -20,7 +20,7 @@ def create_app(
 
     db.init_app(app)
     migrate.init_app(app, db)
-    login_manager.init_app(app)
+    jwt.init_app(app)
 
     from fmexp.main import main
     app.register_blueprint(main)

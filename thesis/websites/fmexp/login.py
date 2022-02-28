@@ -1,12 +1,15 @@
+import json
+from uuid import UUID
+
 from flask import (
     request,
     abort,
     redirect,
     url_for,
 )
-from flask_login import login_user, current_user
+from flask_jwt_next import JWTError, current_identity, jwt_required
 
-from fmexp.extensions import login_manager
+from fmexp.extensions import jwt, db
 from fmexp.forms import (
     UserLoginForm,
     UserRegisterForm,
@@ -17,36 +20,56 @@ from fmexp.utils import (
     render_template_fmexp,
     is_safe_url,
     json_response,
+    load_cookie_user,
 )
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+@jwt.authentication_handler
+def authenticate(email, password):
+    user = User.query.filter_by(email=email).first()
+    if user and user.check_password(password):
+        user.logged_in = True
+        db.session.commit()
+        return user
+
+
+@jwt.identity_handler
+def identity(payload):
+    from pprint import pprint
+    pprint(payload)
+    return User.query.filter_by(uuid=UUID(payload['identity'])).first()
+
+
+@jwt.auth_response_handler
+def auth_response_handler(access_token, identity):
+    return json.dumps({ 'token': access_token })
 
 
 @main.route('/user')
+@jwt_required()
 def user():
-    if not current_user.is_active:
+    if not current_identity or not current_identity.is_active:
         abort(400)
 
-    return json_response(current_user.get_json())
+    return json_response(current_identity.get_json())
 
 
 @main.route('/register', methods=['POST'])
 def register():
-    assert not current_user.is_active
+    user = load_cookie_user()
+    if user and user.is_active:
+        abort(400)
 
     form = UserRegisterForm()
     if form.validate_on_submit():
-        if form.password.data != form.password2.data:
-            return json_response({ 'errors': [{ 'password': 'Passwords do not match' }] })
-
-        current_user.email = form.email.data
+        user.email = form.email.data
+        user.set_password(form.password.data)
 
         db.session.commit()
 
-        return json_response(current_user.get_json())
+        return render_template_fmexp('login.html', login_user=user, password=form.password.data)
+
+    return render_template_fmexp('register.html', form=form)
 
 
 @main.route('/content/register', methods=['GET'])
@@ -55,19 +78,16 @@ def register_content():
     return render_template_fmexp('register.html', form=form)
 
 
-@main.route('/login', methods=['POST'])
+"""@main.route('/login', methods=['POST'])
 def login():
     form = UserLoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email).first()
-        login_user(user)
-
-        flash('Logged in successfully.')
 
         next_url = request.args.get('next')
 
         if not is_safe_url(next_url):
-            return abort(400)
+            return abort(400)"""
 
 
 @main.route('/content/login', methods=['GET'])

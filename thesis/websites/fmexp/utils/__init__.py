@@ -1,6 +1,10 @@
+import json
+from uuid import UUID
 from urllib.parse import urlparse, urljoin
 
-from flask import render_template, current_app
+from flask import render_template, current_app, request
+
+from fmexp.models import User
 
 
 def render_template_fmexp(template_name, **kwargs):
@@ -16,8 +20,17 @@ def is_safe_url(target):
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
 
+
 def json_response(data, status_code=200):
     response = current_app.response_class(json.dumps(data), mimetype='application/json')
     response.status_code = status_code
 
     return response
+
+
+def load_cookie_user():
+    user_uuid = request.cookies.get('user_uuid')
+    if not user_uuid:
+        return None
+
+    return User.query.filter_by(uuid=UUID(user_uuid)).first()
