@@ -4,11 +4,18 @@ import uuid
 from dateutil.parser import parse
 
 from flask import Blueprint, send_file, request, abort
-from flask_jwt_next import current_identity
+from flask_jwt_next import current_identity, jwt_required
 
 from fmexp.extensions import db
+from fmexp.forms import (
+    UserProfileForm,
+    UserChangePasswordForm,
+)
 from fmexp.models import DataPoint, User
-from fmexp.utils import render_template_fmexp
+from fmexp.utils import (
+    render_template_fmexp,
+    json_response,
+)
 
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
@@ -72,8 +79,38 @@ def home():
 
 
 @main.route('/content/profile')
+@jwt_required()
 def profile():
-    return render_template_fmexp('profile.html')
+    user_profile_form = UserProfileForm(obj=current_identity)
+    user_change_password_form = UserChangePasswordForm(obj=current_identity)
+    return render_template_fmexp(
+        'profile.html',
+        user_profile_form=user_profile_form,
+        user_change_password_form=user_change_password_form,
+    )
+
+
+@main.route('/user', methods=['GET', 'POST'])
+@jwt_required()
+def user():
+    if request.method == 'GET':
+        if not current_identity or not current_identity.is_active:
+            abort(400)
+
+        return json_response(current_identity.get_json())
+
+    elif request.method == 'POST':
+        user_profile_form = UserProfileForm()
+        if user_profile_form.validate_on_submit():
+            user_profile_form.populate_obj(current_identity)
+            db.session.commit()
+
+            return json_response(current_identity.get_json())
+
+        return json_response({
+            'errors': user_profile_form.errors,
+            'form_errors': user_profile_form.form_errors,
+        }, 400)
 
 
 @main.route('/dist')

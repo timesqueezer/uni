@@ -35,8 +35,6 @@ def authenticate(email, password):
 
 @jwt.identity_handler
 def identity(payload):
-    from pprint import pprint
-    pprint(payload)
     return User.query.filter_by(uuid=UUID(payload['identity'])).first()
 
 
@@ -45,20 +43,11 @@ def auth_response_handler(access_token, identity):
     return json.dumps({ 'token': access_token })
 
 
-@main.route('/user')
-@jwt_required()
-def user():
-    if not current_identity or not current_identity.is_active:
-        abort(400)
-
-    return json_response(current_identity.get_json())
-
-
 @main.route('/register', methods=['POST'])
 def register():
     user = load_cookie_user()
     if user and user.is_active:
-        abort(400)
+        return json_response(user.get_json())
 
     form = UserRegisterForm()
     if form.validate_on_submit():
@@ -67,9 +56,12 @@ def register():
 
         db.session.commit()
 
-        return render_template_fmexp('login.html', login_user=user, password=form.password.data)
+        return json_response(user.get_json())
 
-    return render_template_fmexp('register.html', form=form)
+    return json_response({
+        'errors': form.errors,
+        'form_errors': form.form_errors,
+    }, 400)
 
 
 @main.route('/content/register', methods=['GET'])

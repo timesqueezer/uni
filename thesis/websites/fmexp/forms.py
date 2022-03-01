@@ -3,12 +3,15 @@ from wtforms import (
     PasswordField,
     EmailField,
     BooleanField,
+    DateField,
+    StringField,
 )
 from wtforms.validators import (
     DataRequired,
     Email,
     Length,
     ValidationError,
+    Optional,
 )
 
 from fmexp.models import User
@@ -33,3 +36,21 @@ class UserRegisterForm(FlaskForm):
     def validate_password2(form, field):
         if field.data != form.password.data:
             raise ValidationError('Passwords do not match')
+
+
+class UserProfileForm(FlaskForm):
+    email = EmailField('Email', validators=[Email(), Optional()])
+    first_name = StringField('First Name', validators=[Optional()])
+    last_name = StringField('Last Name', validators=[Optional()])
+    date_of_birth = DateField('Date of Birth', validators=[Optional()])
+    address_line_1 = StringField('Address Line 1', validators=[Optional()])
+    address_line_2 = StringField('Address Line 2', validators=[Optional()])
+    zip_code = StringField('Postal Code', validators=[Optional()])
+    city = StringField('City', validators=[Optional()])
+    state = StringField('State', validators=[Optional()])
+    country = StringField('Country', validators=[Optional()])
+
+
+class UserChangePasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), Length(min=8)])
