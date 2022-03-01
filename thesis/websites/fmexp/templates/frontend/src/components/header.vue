@@ -9,13 +9,12 @@ export default {
     }
   },
   mounted() {
-    console.log('header', this.currentUser)
   }
 }
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
       <router-link class="navbar-brand" to="/">FM Exp 1</router-link>
 

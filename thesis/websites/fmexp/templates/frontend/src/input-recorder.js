@@ -22,7 +22,6 @@ export default class InputRecorder {
 
   async setUserUUID() {
     const alreadySetUserUUID = Cookies.get('user_uuid')
-    console.log({alreadySetUserUUID})
     if (alreadySetUserUUID) {
       this.userUUID = alreadySetUserUUID
 

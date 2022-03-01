@@ -25,7 +25,16 @@
       if (window.localStorage.getItem('fmexp_jwt_token')) {
         axios.defaults.headers.common.Authorization = 'JWT ' + window.localStorage.getItem('fmexp_jwt_token')
         const currentUserResponse = await axios.get('/user')
-        this.currentUser = currentUserResponse.data
+        .catch((error) => {
+          console.log({ error })
+          window.localStorage.removeItem('fmexp_jwt_token')
+        })
+
+        if (currentUserResponse) {
+          this.currentUser = currentUserResponse.data
+
+        }
+
       }
 
       this.loading = false

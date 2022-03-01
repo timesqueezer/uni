@@ -1,46 +1,25 @@
-<script type="text/javascript">
-    window.onSubmit = function(e) {
-        console.log('onSubmit', e)
-    }
+<div class="row">
+  <div class="col-xs-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <div class="bg-light shadow-sm p-4">
+      <h1 class="mb-3">Login</h1>
 
-    window.login = function(email, password) {
-        fetch('/auth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-        .then(r => r.json())
-        .then((r) => {
-            console.log('hmmmmm', r)
-            window.localStorage.setItem('fmexp_jwt_token', r.token)
-            window.location.href = '/'
-        })
-        .catch((error) => {
-            coinsole.log({ error })
-        })
-    }
+      <form method="POST" @submit.prevent="login">
+        {{ form.csrf_token }}
+        <div class="form-floating mb-3">
+          {{ form.email(class_='form-control', placeholder=form.email.label.text) }}
+          {{ form.email.label }}
+        </div>
+        <div class="form-floating mb-3">
+          {{ form.password(class_='form-control', placeholder=form.password.label.text) }}
+          {{ form.password.label }}
+        </div>
 
-</script>
+        <div v-if="errorMessage" class="alert alert-danger" role="alert" v-text="errorMessage"></div>
 
-{% if login_user %}
-
-<script type="text/javascript">
-    window.login('{{ login_user.email }}', '{{ password }}')
-</script>
-
-{% else %}
-
-<h1>Login</h1>
-
-<form method="POST" onsubmit="onSubmit">
-    {{ form.csrf_token }}
-    <div class="form-input">{{ form.email.label }} {{ form.email() }}</div>
-    <div class="form-input">{{ form.password.label }} {{ form.password() }}</div>
-    <div class="form-input">
-        <input type="submit" value="Login">
+        <div>
+          <button class="btn btn-primary w-100" type="submit">Login</button>
+        </div>
+      </form>
     </div>
-</form>
-
-{% endif %}
+  </div>
+</div>

@@ -13,7 +13,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
-      '@': path.resolve(__dirname, '.')
+      '@': path.resolve(__dirname, '.'),
+      'vue$': 'vue/dist/vue.esm-bundler.js',
     }
   },
   output: {
