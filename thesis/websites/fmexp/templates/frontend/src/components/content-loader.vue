@@ -52,14 +52,8 @@ export default {
       ]
 
       if (
-        this.currentUser && restrictedLoggedinPaths.indexOf(path) !== -1
-      ) {
-        console.log(this.$route, this.$route.redirectedFrom, this.$router)
-        // path = this.$route
-
-
-      } else if (
-        !this.currentUser && restrictedLoggedOutPaths.indexOf(path) !== -1
+        (this.currentUser && restrictedLoggedinPaths.indexOf(path) !== -1) ||
+        (!this.currentUser && restrictedLoggedOutPaths.indexOf(path) !== -1)
       ) {
         this.$router.replace('/')
 

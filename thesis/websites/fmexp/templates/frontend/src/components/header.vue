@@ -36,19 +36,17 @@ export default {
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
         <ul class="navbar-nav">
           <li class="nav-item">
+            <router-link class="nav-link" to="/" active-class="active">About</router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/blog" active-class="active">Blog</router-link>
           </li>
           <li class="nav-item">
-            
-          </li>
-          <li class="nav-item">
-            
+            <router-link class="nav-link" to="/contact" active-class="active">Contact / Imprint</router-link>
           </li>
         </ul>
 
         <div class="flex-grow-1"></div>
-        <router-link class="btn btn-outline-secondary me-3" to="/login" active-class="active">Login</router-link>
-        
 
         <div v-if="currentUser" class="d-flex">
           <router-link class="nav-link me-3" to="/profile">
