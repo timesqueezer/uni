@@ -1,4 +1,7 @@
+@import "open-sans";
+
 @import "../../node_modules/bootstrap/scss/functions";
+
 
 $enable-shadows: true;
 $enable-rounded: true;
@@ -17,6 +20,9 @@ $font-family-base: 'Open Sans';
 
 $input-bg: tint-color($body-bg, 30%);
 $form-check-input-width: 1.5em;
+
+$navbar-padding-y: 1rem;
+
 
 @import "./custom.scss";
 

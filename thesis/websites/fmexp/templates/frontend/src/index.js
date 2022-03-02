@@ -1,5 +1,7 @@
 import('./scss/' + FMEXP_LAYOUT + '.scss')
 
+import { Collapse } from 'bootstrap'
+
 import * as Vue from 'vue'
 
 import main from './main'

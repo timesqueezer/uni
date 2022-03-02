@@ -97,7 +97,14 @@ export default {
       const formData = new FormData(e.target)
       const data = Object.fromEntries(formData.entries())
 
-      await this.loginAs(data.email, data.password)
+      await this.loginAs(data.email.toLowerCase(), data.password)
+      const currentUserResponse = await axios.get('/user')
+      if (currentUserResponse) {
+        this.$emit('set-user', currentUserResponse)
+        this.currentUser = currentUserResponse.data
+
+      }
+
       this.$router.replace('/')
 
     },
@@ -115,6 +122,8 @@ export default {
       this.errorMessage = null
 
       const formData = new FormData(e.target)
+      const email = formData.get('email')
+      formData.set('email', email.toLowerCase())
       const data = Object.fromEntries(formData.entries())
 
       const response = await fetch(
@@ -135,6 +144,7 @@ export default {
         if (response.status == 200) {
           await this.loginAs(data.email, data.password)
           this.$emit('set-user', responseData)
+          this.currentUser = responseData
           this.$router.replace('/')
 
         } else {

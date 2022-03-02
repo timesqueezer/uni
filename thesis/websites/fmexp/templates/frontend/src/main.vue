@@ -70,9 +70,9 @@
 </script>
 
 <template>
-  <Header :current-user="currentUser"></Header>
+  <Header :current-user="currentUser" :disabled="showConsentAlert"></Header>
 
-  <main class="container flex-shrink-0 pt-4">
+  <main class="container flex-shrink-0 pt-3">
     <div v-if="loading">
       Loading
     </div>
@@ -88,7 +88,7 @@
         </div>
 
       </div>
-      <div v-else>
+      <div v-else class="mb-5">
 
         <router-view
           :user="currentUser"
@@ -99,7 +99,7 @@
     </div>
   </main>
 
-  <footer class="mt-auto bg-light py-3">
+  <footer class="mt-auto bg-light py-3 shadow-sm border-top">
     <div class="container">
       <span>&copy; 2022 Matz Radloff</span>
     </div>

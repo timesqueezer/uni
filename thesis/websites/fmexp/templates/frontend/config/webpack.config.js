@@ -5,9 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 
-module.exports = {
+let config = {
   mode: 'development',
   entry: './src/index.js',
   resolve: {
@@ -19,7 +20,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash].bundle.js',
     publicPath: '/dist/',
   },
   devtool: 'inline-source-map',
@@ -38,8 +39,29 @@ module.exports = {
       { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
       { test: /\.vue$/, use: 'vue-loader' },
       { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
-      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
+      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/resource' },
       { test: /\.(sass|scss|css)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] },
     ],
   },
 }
+
+if (process.env.NODE_ENV === 'production') {
+  config = {
+    ...config,
+    optimization: {
+      minimize: true,
+      minimizer: [new CssMinimizerPlugin(), '...'],
+      runtimeChunk: {
+        name: 'runtime',
+      },
+    },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000,
+    },
+    devtool: false,
+  }
+}
+
+module.exports = config
