@@ -9,19 +9,21 @@
     open=any,               % Kapitel kann auf jeder Seite beginnen.
     final                   % Entfernt alle todonotes und den Entwurfstempel.
     ]{scrreprt}
+
 % ===================================Praeambel==================================
 \include{stylesvs}
 
-\addbibresource{expose.bib}
+\addbibresource{thesis.bib}
 
 % ===================================Dokument===================================
+
+\begin{document}
 
 \title{On using privacy preseving machine learning for\\decentralized web bot detection}
 \author{Matz-Jona Radloff}
 % \date{01.01.2015} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
                     %  diese Zeile aktivieren.
 
-\begin{document}
 
 \begin{titlepage}
 \begin{center}\Large
@@ -53,7 +55,7 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots present an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions and compares different combinations of the system with and without federated learning and personal data.
+Malicious use of automated bots presents an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions and compares different combinations of the system with and without federated learning and personal data.
 
 \tableofcontents
 
@@ -173,38 +175,69 @@ A system for pre-processing the different datasets will be developed.
 The thesis will either use Tensorflow with and without federated learning or scikit-learn with/without Flower.
 Tensorflow is one of the most widely used machine learning frameworks and the integration of its runtime into distributed learners in the form of website backends or even client devices is feasible. Scikit-learn and Flower seem to be more accessible but both approaches will be compared. The thesis does not include the actual integration into such systems. A simulated environment of multiple learner instances that have access to a secure communications channel will be developed.
 
-\section{Evaluation}
 
-The performance of the following scenarios will be evaluated and compared:
+% Main Part
+\chapter{State of the Art}
+TODO
 
-\begin{enumerate}
-	\item Only request metadata, data from both websites, naive bot data
-	\item Only request metadata, data from both websites, advanced bot data
-	\item Request metadata and mouse data, data from both websites, naive bot data
-	\item Request metadata and mouse data, data from both websites, advanced bot data
-	\item Only request metadata, combined data by federated learning, naive bot data
-	\item Only request metadata, combined data by federated learning, advanced bot data
-	\item Request metadata and mouse data, combined data by federated learning, naive bot data
-	\item Request metadata and mouse data, combined data by federated learning, advanced bot data
-\end{enumerate}
+\chapter{Essentials/Fundamentals}
+TODO
 
-The performance will be primarily quantified by bot detection rate. Additionally the accuracy will be compared by providing the confusion matrices and ROC curve visualizations of all scenarios. Especially the false positive rate will be weighed very highly as bot detection is false positive intolerant to not disturb the user experience.
+\chapter{Experiment/Data Collection}
 
-\chapter{Time plan}
+A user experiment was announced to all members of the University of Hamburg to gather a representative data set for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and design was implemented.
 
-My planned steps in roughly two week intervals: \\
+\section{Websites}
 
-\begin{enumerate}
-	\item Implement the basic websites and plan the experiment
-	\item Start implementing data aggregator and feature extractor
-	\item Implement the bot data generator (only naive types)
-	\item Build the ML model, verify that it works and that it can classify the data correctly
-	\item Compare the metadata and mouse data approaches
-	\item Integrate Federated learning and build the simulated environment of multiple distributed learners
-	\item Extend the bot data generation
-	\item Formulate and perform the experiments to test the thesis' hypothesis
-	\item Process and visualize the results
-\end{enumerate}
+The basis of both websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. Flask allows to register functions which are called at specific points in the request lifecycle. For this purpose the \lstinline{after_request} decorator is used which is called right before the handled request is returned.
+
+Bot data is generated by sending requests to the same websites but including an additional query string which details the current bot configuration.
+
+The following data is stored in a postgresql database:
+
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+user uuid & The current user's UUIDv4 \\ \hline
+request method & One of {'GET', 'POST'}, other request methods are not used \\ \hline
+request url & The full request URL including scheme, host, root path, path and query string \\ \hline
+request path & The request path \\ \hline
+request origin & The host from which the request was sent from \\ \hline
+request remote address & The IP address of the client \\ \hline
+request referrer & The referer value from the corresponding header field \\ \hline
+response content type & The response's body media type \\ \hline
+response content length & The response's body size in bytes \\ \hline
+response date & The date and time of the response \\ \hline
+response status code & The HTTP status code of the response \\ \hline
+user type & One of {Bot, Human} \\ \hline
+random delays & Whether random delays for bot-generated requests were enabled \\ \hline
+advanced & Whether the advanced bot version was used \\ \hline
+bot mode & One of {Request, Mouse} \\ \hline
+data type & One of {Request, Mouse} \\ saved separately because e.g. mouse bots also generate request data \\ \hline
+\hline
+\end{tabular}
+\end{table}
+
+
+\chapter{Bot Data Generation}
+
+\chapter{Feature Extraction}
+
+\chapter{Evaluation}
+
+% Conclusion etc
+\chapter{Conclusion}
+
+% Appendix
+\chapter{Appendix}
+
+\section{Source Code}
+
+\begin{itemize}
+	\item Experiment Websites and Machine Learning Model: Github repository\footnote{\url{https://github.com/timesqueezer/fmexp}} and attached USB drive
+	\item Thesis: Github repository\footnote{\url{https://github.com/timesqueezer/uni/thesis}}
+\end{itemize}
+
 
 
 \begin{raggedright}
