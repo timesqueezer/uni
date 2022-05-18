@@ -273,12 +273,15 @@ All actions are configued to wait for the target element to be visible and click
 
 \section{Request Bot}
 
-The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions.
+The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions. Barring the random delays it will perform the actions as fast as possible.
 
 In advanced mode... \todo
 
 \section{Mouse Bot}
 
+The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
+
+The advanced mouse bot uses an additional library to provide additional interpolation methods. PyAutoGUI\footenote{\url{https://pyautogui.readthedocs.io/en/latest/}} provides the required functionality and can easily be extended.
 
 \chapter{Evaluation}
 
