@@ -244,7 +244,7 @@ user uuid & The current user's UUIDv4 \\ \hline
 type & One of \{'pointermove', 'pointerdown', 'pointerup'\} \\ \hline
 position & The pointer's x and y screen coordinate in pixels \\ \hline
 document size & The document's width and height in pixels \\ \hline
-pointer_type & One of \{'mouse', 'pen', 'touch'\} \\ \hline
+pointer type & One of \{'mouse', 'pen', 'touch'\} \\ \hline
 buttons & What buttons are pressed as a binary encoded integer \\ \hline
 dt & The date and time of when the event occurred \\ \hline
 
@@ -282,13 +282,13 @@ In advanced mode... \todo
 
 The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
-The advanced mouse bot uses the PyAutoGUI\footenote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
+The advanced mouse bot uses the PyAutoGUI\footnote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
 
 \chapter{Evaluation}
 
 \section{Feature Extraction}
 
-First, the stored unique users are filtered based on a minimum number of data points ($min_dp = 20\todo$).
+First, the stored unique users are filtered based on a minimum number of data points (20).
 
 \subsection{Request Data Features}
 
