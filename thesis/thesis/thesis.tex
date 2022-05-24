@@ -146,6 +146,7 @@ Raw mouse data is segmented into mouse actions such as mouse move (MM) or mouse 
 
 
 \section{Machine Learning Model}
+\label{machine_learning_model}
 
 Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron perform the best.
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest performs the best when using request metadata.
@@ -281,11 +282,21 @@ In advanced mode... \todo
 
 The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
-The advanced mouse bot uses an additional library to provide additional interpolation methods. PyAutoGUI\footenote{\url{https://pyautogui.readthedocs.io/en/latest/}} provides the required functionality and can easily be extended.
+The advanced mouse bot uses the PyAutoGUI\footenote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
 
 \chapter{Evaluation}
 
 \section{Feature Extraction}
+
+First, the stored unique users are filtered based on a minimum number of data points ($min_dp = 20\todo$).
+
+\subsection{Request Data Features}
+
+The request data is aggregated per user \todo{per user/max 20?} and the feature data is calculated as described in \nameref{machine_learning_model}.
+
+\subsection{Mouse Data Features}
+
+The mouse data is calculated per user and grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
 
 \section{Results}
 
