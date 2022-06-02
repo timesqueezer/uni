@@ -8,7 +8,7 @@
     numbers=noenddot,       % Entfernt den letzten Punkt der Kapitelnummern.
     open=any,               % Kapitel kann auf jeder Seite beginnen.
     final                   % Entfernt alle todonotes und den Entwurfstempel.
-    ]{scrreprt}
+]{scrreprt}
 
 % ===================================Praeambel==================================
 \include{stylesvs}
@@ -59,7 +59,7 @@ Malicious use of automated bots presents an increasing risk to applications in t
 
 \tableofcontents
 
-\chapter{Motivation}
+\chapter{Introduction}
 
 In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming the target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past year \cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021}. Especially the increased usage of web interfaces in poorly secured IoT devices and the trend to (re-)implement software as web applications is responsible for this.
 
@@ -72,24 +72,33 @@ Most of the above attacks need to trick the webserver and application backends i
 
 A complication in this problem space is the, often desired, requirement for non-malicious bots to be granted normal access. A prominent example are scraper bots used by search engines that need to request websites periodically to build their search indices. A common technique to exploit this requirement is trying to emulate known bot signatures from large search engines, e.g. Googlebot \cite{8421894}.
 
-Many website operators tend to use solutions that are easy to integrate. This requires embeding external software which collects user data and sends it to servers of the software vendors. Closed source software does not allow to determine what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the concrete data transfer in a very detailed and legally complicated way, e.g. in countries falling under the GDPR \cite{GDPR}. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
+Many website operators tend to use solutions that are easy to integrate. This requires embeding external software which collects user data and sends it to servers of the software vendors. Closed source software does not allow to determine what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the data transfers in a very detailed and legally complicated way. For example, in countries falling under the GDPR \cite{GDPR} a comprehensive data protection documentation is required. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
 
 
 
-\chapter{Related Work}
+\chapter{}
 
-\section{Proprietary Solutions}
+%\section{Proprietary Solutions}
+%\url{https://datadome.co/} \\
+%\url{https://www.perimeterx.com/products/bot-defender/} \\
+%\url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
+%\url{https://www.fastly.com/products/cloud-security/bot-protection} \\
+%\url{https://www.cloudflare.com/products/bot-management/} \\
+%\url{https://developers.google.com/recaptcha/docs/v3} \\
+%\url{https://www.hcaptcha.com/} \\
 
-\url{https://datadome.co/} \\
-\url{https://www.perimeterx.com/products/bot-defender/} \\
-\url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
-\url{https://www.fastly.com/products/cloud-security/bot-protection} \\
-\url{https://www.cloudflare.com/products/bot-management/} \\
-\url{https://developers.google.com/recaptcha/docs/v3} \\
-\url{https://www.hcaptcha.com/} \\
+\section{Requirements}
+
+The main requirement of a bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. If these factors are degraded by including other features, this work defines the overall value still lower as without.
+
+The most desirable additional requirement is privacy friendliness, the feasibility of which this work aims to show. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
+
+Meeting the requirements would be easier if the whole or critical parts of the underlying system were publicly available, preferably as open source.
+
+Other optional challenges are ease of use for the operator and integration into existing solutions.\todo
 
 
-\section{Scientific Work}
+\section{Related Work}
 
 The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
 
@@ -99,15 +108,23 @@ The work of \cite{PETS2021} outlines the problems and privacy-realted concerns r
 
 Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users but privacy concerns often stand in the way of using such a method in practice.
 
+Antal et al.\cite{9111596} and their previous paper\cite{DBLP:journals/corr/abs-1810-04668} segment raw mouse data into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC). Multiple results can be averaged to increase detection performance. \todo{more info}
+
 Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with 93\% accuracy with only one mouse trajectory as input.
+
+\section{Exposition}
+\todo{other title?}
+
+None of the proposed systems in existing scientific literature include all of this work's defined requirements. The separate parts are explored and shown to be feasible but a concrete combination of bot detection by human biometric data and federated learning to preserver user privacy does not exist publicly.
+
+Proprietary solutions might employ comparable systems but their closed source nature does not allow for any qualitative comparisons.
 
 
 \chapter{Method}
 
-
 \section{Concept}
 
-The thesis explores how additional data, which might be personal user data, can potentially improve a machine learning system for bot detection. It also shows how federated learning can be used to allow using user data while mainting privacy.
+The thesis explores how biometric data, can potentially improve a machine learning system for bot detection. It also shows how federated learning can be used to allow using this data while mainting privacy, as biometric data is most likely considered personal user data.
 
 For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform the best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
 Iliou et al.'s work is used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
@@ -118,7 +135,6 @@ To avoid the complicated privacy-related implications federated learning, a tech
 
 
 \section{Datasets}
-
 
 \subsection{Human Data}
 
@@ -133,56 +149,22 @@ If needed, additional datasets are available, e.g.:
 \footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
 \footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
 
+\subsection{Bot Mouse Data}
 
-\subsection{Bot Data}
-
-To generate bot request data two different approaches are implemented by using the selenium-python \cite{SELENIUMPYTHON} library which runs automated actions in an actual browser environment. Instead of the standard chromedriver which runs a headless google chrome instance, undetected-chromedriver \cite{UNDETECTEDCHROMEDRIVER} is used which is a patched version that claims to not trigger many anti-bot services. If time allows it, both variants could be compared against, too.
-
-The first, naive approach just performs the desired actions, e.g. scraping information or registering a user account. The second includes efforts to make the requests seem more human, for example by using randomized delays or requesting different pages before performing the actual target actions.
-
-Mouse data labeled as bot input will be generated using two methods. The first naive approach interpolates linearly between the start and end point of randomly generated movements. The second method uses existing open source libraries (Probably one of \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}},\footnote{\url{https://github.com/patrikoss/pyclick}}). More complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The two methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement.
-
-Raw mouse data is segmented into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC) similar to \cite{9111596} and their previous paper \cite{DBLP:journals/corr/abs-1810-04668}. Multiple results can be averaged to increase detection performance.
-
+\todo{remove?}
+Complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The two methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement. \todo{what are the references actually about}
 
 \section{Machine Learning Model}
-\label{machine_learning_model}
 
 Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron perform the best.
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest performs the best when using request metadata.
-If time allows it, the thesis will compare multiple classification methods against each other and only use one otherwise.
 
-Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. The following are listed for Random Forest and advanced bots:
+\todo{maybe}A comparison of different classification methods is included in the results.
 
-
-\begin{enumerate}
-	% \item Total number of HTTP HEAD requests issued during the session. (5)
-	\item The percentage of HTTP requests that led to an HTTP 4xx code response. (7)
-	\item The percentage of HTTP requests that requested a css file. (10)
-	\item The percentage of HTTP requests that requested a JavaScript file. (11)
-	% \item The number of the requested HTML files divided by the number of requested image files in a session. (12)
-	% \item Boolean indicating if a session has at least one request with a known search engine refer. (14)
-	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
-	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
-	\item 16 Depth SD Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
-\end{enumerate}
-
-Attribute 14 might not be suitible as the users in the experiment will be asked to access the websites directly. The websites are otherwise designed such that all attributes are meaningful.
-
-The mouse data input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
-
-A system for pre-processing the different datasets will be developed.
-
-The thesis will either use Tensorflow with and without federated learning or scikit-learn with/without Flower.
-Tensorflow is one of the most widely used machine learning frameworks and the integration of its runtime into distributed learners in the form of website backends or even client devices is feasible. Scikit-learn and Flower seem to be more accessible but both approaches will be compared. The thesis does not include the actual integration into such systems. A simulated environment of multiple learner instances that have access to a secure communications channel will be developed.
+Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For Random Forest, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
 
 
-% Main Part
-\chapter{State of the Art}
-TODO
 
-\chapter{Essentials/Fundamentals}
-TODO
 
 \chapter{Experiment/Data Collection}
 
@@ -255,6 +237,9 @@ All events are cached locally in a list which is sent to the backend every two s
 
 \chapter{Bot Data Generation}
 
+To generate bot data the different variants are implemented by using the selenium-python \cite{SELENIUMPYTHON} library. It is design to run automated actions in a browser environment.
+
+
 All bots are implemented as a generic python class \lstinline{Bot} which sets up a selenium\cite{SELENIUMPYTHON} webdriver instance and provides wrapper methods for randomly waiting between calls and locating elements. It starts a (possibly headless) browser instance with a specific window size. Firefox is used as the browser backend and 1920x1080 is used as the window size. It also performs an initial request to set the current bot parameters and saves the returned cookie.
 
 \todo{why not undetected chromedriver or similar}
@@ -283,12 +268,38 @@ In advanced mode... \todo
 The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
 The advanced mouse bot uses the PyAutoGUI\footnote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
+The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}} builds on top of PyAutoGUI.
+\footnote{\url{https://github.com/patrikoss/pyclick}}
 
-\chapter{Evaluation}
+\chapter{Implementation}
+
+
+\section{Machine Learning Model}
+\label{machine_learning_model}
+
+The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} is used.
+
+\begin{enumerate}
+	% \item Total number of HTTP HEAD requests issued during the session. (5)
+	\item The percentage of HTTP requests that led to an HTTP 4xx code response. (7)
+	\item The percentage of HTTP requests that requested a css file. (10)
+	\item The percentage of HTTP requests that requested a JavaScript file. (11)
+	% \item The number of the requested HTML files divided by the number of requested image files in a session. (12)
+	% \item Boolean indicating if a session has at least one request with a known search engine refer. (14)
+	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
+	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
+	\item 16 Depth SD Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
+\end{enumerate}
+
+
+
+
+% The mouse data input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+
 
 \section{Feature Extraction}
 
-First, the stored unique users are filtered based on a minimum number of data points (20).
+First, the stored unique users are filtered based on a minimum number of data points (20). In a (multi-threaded) pre-processing step the feature data is queried, loaded and calculated per user and labeled as "human" or "bot".
 
 \subsection{Request Data Features}
 
@@ -296,15 +307,45 @@ The request data is aggregated per user \todo{per user/max 20?} and the feature 
 
 \subsection{Mouse Data Features}
 
-The mouse data is calculated per user and grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
+The mouse data is calculated per user and grouped into actions, similar to \cite{}. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
 
-\section{Results}
 
-% Conclusion etc
+The machine learning input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+\todo
+
+\subsection{Classifier Implementation}
+
+scikit-learn \\
+RandomForestClassifier \\
+testing for hyperparameters $\rightarrow n_estimators=100, max_depth=3$ \\
+
+\subsection{Federated Learning}
+
+
+\chapter{Evaluation}
+
+\section{Request Data Performance}
+
+\section{Mouse Data Performance}
+
+\section{Combined Performance}
+
+\section{Combined + Federated Performance}
+
+
+\chapter{Discussion}
+
+
 \chapter{Conclusion}
+Bot bad. User data good, nomnom.
+
+
+\begin{raggedright}
+  \printbibliography
+\end{raggedright}
 
 % Appendix
-\chapter{Appendix}
+\chapter*{Appendix}
 
 \section{Source Code}
 
@@ -312,11 +353,5 @@ The mouse data is calculated per user and grouped into actions. Each action repr
 	\item Experiment Websites and Machine Learning Model: Github repository\footnote{\url{https://github.com/timesqueezer/fmexp}} and attached USB drive
 	\item Thesis: Github repository\footnote{\url{https://github.com/timesqueezer/uni/thesis}}
 \end{itemize}
-
-
-
-\begin{raggedright}
-  \printbibliography
-\end{raggedright}
 
 \end{document}
