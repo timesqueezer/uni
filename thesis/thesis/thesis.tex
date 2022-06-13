@@ -102,7 +102,7 @@ Other optional challenges are ease of use for the operator and integration into 
 
 The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
 
-Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different machine learning algorithms and combinations of different attributes used in previous literature. The attributes comprise mostly of request metadata which would be suitible for a privacy-friendly bot detection system, for example the percentage of image requests or the number of total bytes per session. The authors split the bot data in their dataset into simple and advanced bots which is determined by whether the requests have a browser agent name and, in case they do, whether the IPs have shown malicious activity before. Their results show that different sets of attributes are performing best depending on the classification algorithm used. The best performing one is Random Forest although the paper concludes that using an ensemble classifier that averages over all used methods would be more stable. Additionally simple web bots can be detected very easily while detecting advanced bots is significantly harder, with areas under the ROC curve of $1.00$ and $0.64$ respectively. Especially in false positive intolerant use cases the performance of detecting advanced bots is too poor to be used in the real world. The authors conclude that future work would need to incorporate more advanced features which can not be easily simulated by bots.
+Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different machine learning algorithms and combinations of different attributes used in previous literature. The attributes comprise mostly of request metadata which would be suitible for a privacy-friendly bot detection system, for example the percentage of image requests or the number of total bytes per session. The authors split the bot data in their dataset into simple and advanced bots which is determined by whether the requests have a browser agent name and, in case they do, whether the IPs have shown malicious activity before. Their results show that different sets of attributes are performing best depending on the classification algorithm used. The best performing ones are Random Forest and Multilayer Perceptron although the paper concludes that using an ensemble classifier that averages over all used methods would be more stable. Additionally simple web bots can be detected very easily while detecting advanced bots is significantly harder, with areas under the ROC curve of $1.00$ and $0.64$ respectively. Especially in false positive intolerant use cases the performance of detecting advanced bots is too poor to be used in the real world. The authors conclude that future work would need to incorporate more advanced features which can not be easily simulated by bots.
 
 The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
 
@@ -156,14 +156,39 @@ Complicated simulations exist but their implementations are not publicly availab
 
 \section{Machine Learning Model}
 
-Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron perform the best.
-Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest performs the best when using request metadata.
+Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron (MLP) perform the best.
+Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest and MLP perform well when using request metadata.
 
-\todo{maybe}A comparison of different classification methods is included in the results.
+Although federated versions of Random Forest Algorithms exist \cite{}, a MLP-based model is used, mainly because the federated version is better supported by the used libraries TensorFlow and Flower.
 
-Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For Random Forest, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
+\subsection{Model Parameters}
 
+Hu et al. \cite{8275816} describe that they reduced their initially 232-dimensional feature input to 150 dimensions but don't elaborate on the exact layer configuration. Iliou et al. \cite{10.1145/3339252.3339267} list the following parameters for their MLP classifier which is used as the basis for this model. \\
+\\
 
+Simple Web bots: \\
+tanh activation, adam solver, \\
+a=0.1, b1=0.9, b2=0.9, e=1e-05, \\
+hidden layer sizes: (100, 50), \\
+constant learning rate \\
+\\
+Advanced Web bots: \\
+tanh activation, sgd solver, \\
+a=1, b1=0.1, b2=0.1, e=1e-08, \\
+hidden layer sizes: (400), \\
+invscaling learning rate \\
+
+\subsection{Feature Selection}
+
+Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For MLP, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
+
+\subsection{Classification and Evaluation}
+
+The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate and False Negative Rate are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case.
+
+\subsection{Federated Learning}
+
+FedAvg
 
 
 \chapter{Experiment/Data Collection}
@@ -315,11 +340,11 @@ The machine learning input features will consist of the (normalized) $x$- and $y
 
 \subsection{Classifier Implementation}
 
-scikit-learn \\
-RandomForestClassifier \\
-testing for hyperparameters $\rightarrow n_estimators=100, max_depth=3$ \\
+The classifier implementation uses a TensorFlow sequential keras model.
 
 \subsection{Federated Learning}
+
+To enable federated learning, client and server classes are implemented. The python library Flower\footnote{\url{https://flower.dev/}} is used. Although TensorFlow supports their own version of federated learning, Flower is easier to use..\todo
 
 
 \chapter{Evaluation}
