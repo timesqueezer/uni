@@ -55,7 +55,7 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots presents an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions and compares different combinations of the system with and without federated learning and personal data.
+Malicious use of automated bots presents an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions.
 
 \tableofcontents
 
@@ -112,53 +112,41 @@ Antal et al.\cite{9111596} and their previous paper\cite{DBLP:journals/corr/abs-
 
 Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with 93\% accuracy with only one mouse trajectory as input.
 
-\section{Exposition}
-\todo{other title?}
-
-None of the proposed systems in existing scientific literature include all of this work's defined requirements. The separate parts are explored and shown to be feasible but a concrete combination of bot detection by human biometric data and federated learning to preserver user privacy does not exist publicly.
-
-Proprietary solutions might employ comparable systems but their closed source nature does not allow for any qualitative comparisons.
-
 
 \chapter{Method}
 
 \section{Concept}
 
-The thesis explores how biometric data, can potentially improve a machine learning system for bot detection. It also shows how federated learning can be used to allow using this data while mainting privacy, as biometric data is most likely considered personal user data.
+The thesis explores how biometric data, can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between operators without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which this work hypothesizes to improve the performance.
 
 For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform the best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
 Iliou et al.'s work is used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
 Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}.
 
-To avoid the complicated privacy-related implications federated learning, a technique that uses machine learning and respects modern privacy standards \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16}, is used and compared against.
-
 
 \section{Datasets}
 
-\subsection{Human Data}
-
 To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the metadata approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
-While no suitible datasets exist that include both request and mouse data, many publicly available datasets exist that contain valid user mouse movement and click data. If it is going to seem useful the experiments data could be augmented by these.
+While no suitible datasets exist that include both request and mouse data, many publicly available datasets exist that contain valid user mouse movement and click data.
 Shen et al.'s \cite{6263955} dataset contains mouse dynamics information from 28 users and 30 sessions per users which each contain around 3000 mouse events.
 The DFL dataset \cite{9111596} includes 20-30 sessions of 21 users.
 The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
+
+These datasets are used to validate the transferability of this method.
 
 If needed, additional datasets are available, e.g.:
 \footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
 \footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
 
-\subsection{Bot Mouse Data}
-
-\todo{remove?}
-Complicated simulations exist but their implementations are not publicly available. \cite{8275816} \cite{Nazar2003} The two methods used depict a reasonable choice of a basic attack that tries to evade detection by fake mouse movement. \todo{what are the references actually about}
 
 \section{Machine Learning Model}
 
 Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron (MLP) perform the best.
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest and MLP perform well when using request metadata.
 
+\todo{remove?}
 Although federated versions of Random Forest Algorithms exist \cite{}, a MLP-based model is used, mainly because the federated version is better supported by the used libraries TensorFlow and Flower.
 
 \subsection{Model Parameters}
@@ -182,20 +170,30 @@ invscaling learning rate \\
 
 Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For MLP, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
 
+The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} is used.
+
+\begin{enumerate}
+	% \item Total number of HTTP HEAD requests issued during the session. (5)
+	\item The percentage of HTTP requests that led to an HTTP 4xx code response. (7)
+	\item The percentage of HTTP requests that requested a css file. (10)
+	\item The percentage of HTTP requests that requested a JavaScript file. (11)
+	% \item The number of the requested HTML files divided by the number of requested image files in a session. (12)
+	% \item Boolean indicating if a session has at least one request with a known search engine refer. (14)
+	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
+	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
+	\item 16 Depth SD Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
+\end{enumerate}
+
 \subsection{Classification and Evaluation}
 
 The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate and False Negative Rate are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case.
 
-\subsection{Federated Learning}
 
-FedAvg
-
-
-\chapter{Experiment/Data Collection}
+\section{Experiment/Data Collection}
 
 A user experiment was announced to all members of the University of Hamburg to gather a representative data set for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and design was implemented.
 
-\section{Websites}
+\subsection{Websites}
 
 The basis of both websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. Their structure and content mimic blog-style websites with login and register functionality. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page.
 On first visit users get presented a dialog asking to confirm the data collection.
@@ -208,7 +206,7 @@ To combine the advantages of both approaches a hybrid system is used that interc
 
 All users, logged in or not, are identified by a version 4 UUID which is immediately stored in cookie after accepting the initial dialog prompt. Every data point that is written to the postgresql database gets a reference to the correspoding user and the current date and time.
 
-\subsection{Request Metadata}
+\subsubsection{Request Metadata}
 
 For the request metadata relevant information of every request is recorded. Flask allows to register functions which are called at specific points in the request lifecycle. For this purpose the \lstinline{after_request} decorator is used which is called right before the handled request is returned.
 
@@ -239,7 +237,7 @@ data type & One of \{Request, Mouse\} \\ & saved separately because e.g. mouse b
 \end{tabular}
 \end{table}
 
-\subsection{Mouse Data}
+\subsubsection{Mouse Data}
 
 All information for the mouse data sets is recorded by a JavaScript library which is deployed as part of a VueJS application. It registers listener functions for the events \lstinline{pointermove, pointerdown, pointerup} on the whole document which are throttled to $30$ events per second. Pointer events are used because they include mouse, touch, pen/stylus and other pointing devices. For every event the following data is recorded:
 
@@ -260,7 +258,7 @@ dt & The date and time of when the event occurred \\ \hline
 
 All events are cached locally in a list which is sent to the backend every two seconds which writes every data point individually to the database. This request is excluded from the request data capture.
 
-\chapter{Bot Data Generation}
+\section{Bot Data Generation}
 
 To generate bot data the different variants are implemented by using the selenium-python \cite{SELENIUMPYTHON} library. It is design to run automated actions in a browser environment.
 
@@ -282,13 +280,13 @@ The classes \lstinline{RequestBot} and \lstinline{MouseBot} inherit from \lstinl
 
 All actions are configued to wait for the target element to be visible and clickable, scrolling it into view, if not. If configured as such, before each action a random delay between $0$ and $2$ seconds is performed\todo{waited for, ??}.
 
-\section{Request Bot}
+\subsection{Request Bot}
 
 The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions. Barring the random delays it will perform the actions as fast as possible.
 
 In advanced mode... \todo
 
-\section{Mouse Bot}
+\subsection{Mouse Bot}
 
 The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
@@ -301,21 +299,6 @@ The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}
 
 \section{Machine Learning Model}
 \label{machine_learning_model}
-
-The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} is used.
-
-\begin{enumerate}
-	% \item Total number of HTTP HEAD requests issued during the session. (5)
-	\item The percentage of HTTP requests that led to an HTTP 4xx code response. (7)
-	\item The percentage of HTTP requests that requested a css file. (10)
-	\item The percentage of HTTP requests that requested a JavaScript file. (11)
-	% \item The number of the requested HTML files divided by the number of requested image files in a session. (12)
-	% \item Boolean indicating if a session has at least one request with a known search engine refer. (14)
-	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
-	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
-	\item 16 Depth SD Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
-\end{enumerate}
-
 
 
 
@@ -353,9 +336,7 @@ To enable federated learning, client and server classes are implemented. The pyt
 
 \section{Mouse Data Performance}
 
-\section{Combined Performance}
-
-\section{Combined + Federated Performance}
+\section{Performance on External Dataset}
 
 
 \chapter{Discussion}
