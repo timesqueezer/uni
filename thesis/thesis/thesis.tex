@@ -55,7 +55,7 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots presents an increasing risk to applications in the web. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions.
+Malicious use of automated bots presents an increasing risk to applications in the web. Their detection represents an integral part of modern security system. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions. It utilizes biometric data in the form of pointer interactions.
 
 \tableofcontents
 
@@ -76,7 +76,7 @@ Many website operators tend to use solutions that are easy to integrate. This re
 
 
 
-\chapter{}
+\chapter{Requirements and Related Work}
 
 %\section{Proprietary Solutions}
 %\url{https://datadome.co/} \\
@@ -91,11 +91,11 @@ Many website operators tend to use solutions that are easy to integrate. This re
 
 The main requirement of a bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. If these factors are degraded by including other features, this work defines the overall value still lower as without.
 
-The most desirable additional requirement is privacy friendliness, the feasibility of which this work aims to show. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
-
 Meeting the requirements would be easier if the whole or critical parts of the underlying system were publicly available, preferably as open source.
 
-Other optional challenges are ease of use for the operator and integration into existing solutions.\todo
+Other optional challenges are ease of use for the operator and integration into existing solutions.
+
+The most desirable additional requirement is privacy friendliness, the feasibility of which this work aims to show. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
 
 
 \section{Related Work}
@@ -104,39 +104,42 @@ The paper \cite{LiJi2021} introduces a federated learning approach similar to th
 
 Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different machine learning algorithms and combinations of different attributes used in previous literature. The attributes comprise mostly of request metadata which would be suitible for a privacy-friendly bot detection system, for example the percentage of image requests or the number of total bytes per session. The authors split the bot data in their dataset into simple and advanced bots which is determined by whether the requests have a browser agent name and, in case they do, whether the IPs have shown malicious activity before. Their results show that different sets of attributes are performing best depending on the classification algorithm used. The best performing ones are Random Forest and Multilayer Perceptron although the paper concludes that using an ensemble classifier that averages over all used methods would be more stable. Additionally simple web bots can be detected very easily while detecting advanced bots is significantly harder, with areas under the ROC curve of $1.00$ and $0.64$ respectively. Especially in false positive intolerant use cases the performance of detecting advanced bots is too poor to be used in the real world. The authors conclude that future work would need to incorporate more advanced features which can not be easily simulated by bots.
 
-The work of \cite{PETS2021} outlines the problems and privacy-realted concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
+The work of \cite{PETS2021} outlines the problems and privacy-related concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
 
-Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users but privacy concerns often stand in the way of using such a method in practice.
+Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users.
+Shen et al. use a pattern-growth-based mining method which results in false negative and false positive rates of $1.12\%$ and $0.37\%$ respectively.
+Antal et al. report $0.92$ and $1$ AUC for the test and training part of the Balabit dataset \cite{BALABIT_CHALLENGE} with their two-class classifier.
+Privacy concerns were cited as one the primary challenges of using such a methods in practice. Their good perfomance makes using mouse data a promising method if these concerns could be remedied.
 
 Antal et al.\cite{9111596} and their previous paper\cite{DBLP:journals/corr/abs-1810-04668} segment raw mouse data into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC). Multiple results can be averaged to increase detection performance. \todo{more info}
 
-Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with 93\% accuracy with only one mouse trajectory as input.
+Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} also show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with $93\%$ accuracy with only one mouse trajectory as input.
 
 
 \chapter{Method}
 
 \section{Concept}
 
-The thesis explores how biometric data, can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between operators without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which this work hypothesizes to improve the performance.
+The thesis explores how biometric data can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between operators without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance.
 
-For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform the best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
+For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
 Iliou et al.'s work is used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
-Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}.
+Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}. As this type of data collection would be hard to justify as strictly necessary, it would be best to process the data in an anonymized and indirect way which this method of machine learning provides.
 
 
 \section{Datasets}
 
-To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the metadata approach while a javascript library records mouse data and sends it to the site's backends for storage.
+To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
-While no suitible datasets exist that include both request and mouse data, many publicly available datasets exist that contain valid user mouse movement and click data.
+While no suitible datasets exist that include both request and mouse data, publicly available datasets exist that contain real-world user mouse movement and interaction data.
 
 The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
-Antal et. al's dataset \cite{9111596} includes around 20-30 sessions of 21 users and is used to validate the transferability of this method.
+Antal et. al's dataset \cite{9111596} includes around 20-30 sessions of 21 users. As the Balabit dataset is older and has been used more in other publications, Antal et. al's dataset is used to validate the transferability of this method.
 
-If needed, additional datasets are available, e.g.:
-\footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
-\footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
+% If needed, additional datasets are available, e.g.:
+% \footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
+% \footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
 
 
 \section{Machine Learning Model}
@@ -145,6 +148,10 @@ Many different machine learning models are suitable for binary classification. H
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest and MLP perform well when using request metadata.
 
 Random Forest\cite{Breiman2001} is a perturb-and-combine technique that uses an ensemble of decision trees with randomized input sample selection and parameters. The randomness has the goal of decreasing the variance and avoid overfitting which are common problems in single decision trees. The final prediction is calculated from the average over all trees. The used implementation's documentation notes that compared to the original publication, their method averages over the probabilistic predictions, instead of only single decisions.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html\#random-forests}}
+
+Multilayer Perceptron describes a type of feedforward artificial neural network which connects many perceptron algorithm instances. It is inspired by biological neural networks and has at least three layers (input, hidden, output) which are usually fully connected. By iterating over training data, values for the perceptron's weighted inputs are learned such that the overall system behaves as a classifier or system for regression analysis.
+
+As their performance is comparable in this context and Random Forest's implementation is easier as well as more performant compared to MLP, the former is chosen for this work.
 
 \subsection{Model Parameters}
 
@@ -312,9 +319,6 @@ The machine learning input features will consist of the (normalized) $x$- and $y
 % The classifier implementation uses a TensorFlow sequential keras model.
 The classifier implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library.
 
-\subsection{Federated Learning}
-
-To enable federated learning, client and server classes are implemented. The python library Flower\footnote{\url{https://flower.dev/}} is used. Although TensorFlow supports their own version of federated learning, Flower is easier to use..\todo
 
 
 \chapter{Evaluation}
