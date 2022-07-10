@@ -130,11 +130,9 @@ Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cit
 To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the metadata approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
 While no suitible datasets exist that include both request and mouse data, many publicly available datasets exist that contain valid user mouse movement and click data.
-Shen et al.'s \cite{6263955} dataset contains mouse dynamics information from 28 users and 30 sessions per users which each contain around 3000 mouse events.
-The DFL dataset \cite{9111596} includes 20-30 sessions of 21 users.
-The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
 
-These datasets are used to validate the transferability of this method.
+The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
+Antal et. al's dataset \cite{9111596} includes around 20-30 sessions of 21 users and is used to validate the transferability of this method.
 
 If needed, additional datasets are available, e.g.:
 \footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
@@ -146,25 +144,15 @@ If needed, additional datasets are available, e.g.:
 Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron (MLP) perform the best.
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest and MLP perform well when using request metadata.
 
-\todo{remove?}
-Although federated versions of Random Forest Algorithms exist \cite{}, a MLP-based model is used, mainly because the federated version is better supported by the used libraries TensorFlow and Flower.
+Random Forest\cite{Breiman2001} is a perturb-and-combine technique that uses an ensemble of decision trees with randomized input sample selection and parameters. The randomness has the goal of decreasing the variance and avoid overfitting which are common problems in single decision trees. The final prediction is calculated from the average over all trees. The used implementation's documentation notes that compared to the original publication, their method averages over the probabilistic predictions, instead of only single decisions.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html\#random-forests}}
 
 \subsection{Model Parameters}
 
-Hu et al. \cite{8275816} describe that they reduced their initially 232-dimensional feature input to 150 dimensions but don't elaborate on the exact layer configuration. Iliou et al. \cite{10.1145/3339252.3339267} list the following parameters for their MLP classifier which is used as the basis for this model. \\
-\\
+The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator.
 
-Simple Web bots: \\
-tanh activation, adam solver, \\
-a=0.1, b1=0.9, b2=0.9, e=1e-05, \\
-hidden layer sizes: (100, 50), \\
-constant learning rate \\
-\\
-Advanced Web bots: \\
-tanh activation, sgd solver, \\
-a=1, b1=0.1, b2=0.1, e=1e-08, \\
-hidden layer sizes: (400), \\
-invscaling learning rate \\
+Additional parameters include the maximum depth of trees, the minimum number of samples required to split a node in the trees and the minimum number of samples required to be at a leaf node.
+
+An empirical search will determinte the best parameters for this use case.
 
 \subsection{Feature Selection}
 
@@ -263,9 +251,7 @@ All events are cached locally in a list which is sent to the backend every two s
 To generate bot data the different variants are implemented by using the selenium-python \cite{SELENIUMPYTHON} library. It is design to run automated actions in a browser environment.
 
 
-All bots are implemented as a generic python class \lstinline{Bot} which sets up a selenium\cite{SELENIUMPYTHON} webdriver instance and provides wrapper methods for randomly waiting between calls and locating elements. It starts a (possibly headless) browser instance with a specific window size. Firefox is used as the browser backend and 1920x1080 is used as the window size. It also performs an initial request to set the current bot parameters and saves the returned cookie.
-
-\todo{why not undetected chromedriver or similar}
+All bots are implemented as a generic python class \lstinline{Bot} which sets up a selenium\cite{SELENIUMPYTHON} webdriver instance and provides wrapper methods for randomly waiting between calls and locating elements. It starts a  browser instance with a specific window size. Firefox is used as the browser backend and 1366x768, 1920x1080 and 2560x1440 are used as the window sizes as these represent very common monitor resolutions.\footnote{\url{https://gs.statcounter.com/screen-resolution-stats/desktop/worldwide}} It also performs an initial request to set the current bot parameters and saves the returned cookie.
 
 The classes \lstinline{RequestBot} and \lstinline{MouseBot} inherit from \lstinline{Bot} and implement methods for the following actions:
 
@@ -278,7 +264,7 @@ The classes \lstinline{RequestBot} and \lstinline{MouseBot} inherit from \lstinl
 	\item Filling in profile data
 \end{itemize}
 
-All actions are configued to wait for the target element to be visible and clickable, scrolling it into view, if not. If configured as such, before each action a random delay between $0$ and $2$ seconds is performed\todo{waited for, ??}.
+All actions are configued to wait for the target element to be visible and clickable, scrolling it into view, if not. If configured as such, before each action a random delay between $0$ and $2$ seconds is waited for.
 
 \subsection{Request Bot}
 
@@ -297,8 +283,8 @@ The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}
 \chapter{Implementation}
 
 
-\section{Machine Learning Model}
-\label{machine_learning_model}
+% \section{Machine Learning Model}
+% \label{machine_learning_model}
 
 
 
@@ -323,7 +309,8 @@ The machine learning input features will consist of the (normalized) $x$- and $y
 
 \subsection{Classifier Implementation}
 
-The classifier implementation uses a TensorFlow sequential keras model.
+% The classifier implementation uses a TensorFlow sequential keras model.
+The classifier implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library.
 
 \subsection{Federated Learning}
 
@@ -332,12 +319,46 @@ To enable federated learning, client and server classes are implemented. The pyt
 
 \chapter{Evaluation}
 
+\section{Experiment Data Quality}
+
+The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figures/user_dp_hist.png}
+	\caption{Distribution of users in terms of datapoint count}
+	\label{fig:user_dp_hist}
+\end{figure}
+
+
+
 \section{Request Data Performance}
+
+To match the number of users, the same number of bots with variable session length is compared against.
+
+The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \todo{generate more bot data}.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figures/roc_request_both_instances.png}
+	\caption{Distribution of users in terms of datapoint count}
+	\label{fig:roc_request_both_instances}
+\end{figure}
+
 
 \section{Mouse Data Performance}
 
+When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figures/roc_mouse_both_instances.png}
+	\caption{Distribution of users in terms of datapoint count}
+	\label{fig:roc_mouse_both_instances}
+\end{figure}
+
 \section{Performance on External Dataset}
 
+To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Their raw mouse movement and interaction data is preprocessed in the same way as the experiment's data. This results in a much larger test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors.
+
+When scoring the trained model with "User1"'s data as the test set, the model's accuracy increases to $99.11\%$.
 
 \chapter{Discussion}
 
