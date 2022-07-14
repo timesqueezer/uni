@@ -362,7 +362,13 @@ When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ w
 
 To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Their raw mouse movement and interaction data is preprocessed in the same way as the experiment's data. This results in a much larger test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors.
 
-When scoring the trained model with "User1"'s data as the test set, the model's accuracy increases to $99.11\%$.
+For comparison the model is trained on data from each instance and both combined. When scoring the model with "User1"'s data as the test set, the model's accuracy increases to $99.11\%$, $99.05\%$ and \todo. For the whole dataset, which resulted in $1.54M$ input vectors, the accuracy dropped to $98.20\%$, $97.94\%$.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figures/roc_both_datasets_both_instances.png}
+	\caption{ROC curves}
+	\label{fig:roc_both_datasets_both_instances}
+\end{figure}
 
 \chapter{Discussion}
 
