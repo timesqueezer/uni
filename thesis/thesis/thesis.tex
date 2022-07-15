@@ -111,7 +111,7 @@ Shen et al. use a pattern-growth-based mining method which results in false nega
 Antal et al. report $0.92$ and $1$ AUC for the test and training part of the Balabit dataset \cite{BALABIT_CHALLENGE} with their two-class classifier.
 Privacy concerns were cited as one the primary challenges of using such a methods in practice. Their good perfomance makes using mouse data a promising method if these concerns could be remedied.
 
-Antal et al.\cite{9111596} and their previous paper\cite{DBLP:journals/corr/abs-1810-04668} segment raw mouse data into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC). Multiple results can be averaged to increase detection performance. \todo{more info}
+Antal et al.\cite{9111596} and their previous paper\cite{https://doi.org/10.1049/iet-bmt.2018.5126} segment raw mouse data into mouse actions such as mouse move (MM) or mouse move and a click (point and click, PC). Multiple results can be averaged to increase detection performance. Their work analyses the Balabit dataset and determines parameters for a intrusion detection system. The authors explicitely mention the bad reproducibility of previous work and focus on describing their experiments with great attention to this goal.
 
 Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} also show the feasibility of using biometric features for bot detection in general and propose new mouse trajectory synthesis methods as well as a GAN-based learning system that can distinguish between humans and bots with $93\%$ accuracy with only one mouse trajectory as input.
 
@@ -180,7 +180,7 @@ The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} i
 	\item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
 \end{enumerate}
 
-The mouse data features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, including mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+The mouse data features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, including mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
 
 Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group.
 
@@ -198,8 +198,8 @@ A user experiment was announced to all members of the University of Hamburg to g
 
 The basis of both websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. Their structure and content mimic blog-style websites with login and register functionality. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page.
 On first visit users get presented a dialog asking to confirm the data collection.
-After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages.\todo{crap formulation}.
-All parts give similar opportunity for user input as regular websites including many possible navigation paths and form interaction.
+After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
+All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
 One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (Single Page Application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
 
@@ -308,7 +308,7 @@ The request data is aggregated per user \todo{per user/max 20?} and the feature 
 The mouse data is calculated per user and grouped into actions, similar to \cite{}. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
 
 
-The machine learning input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+The machine learning input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
 \todo
 
 \subsection{Classifier Implementation}
@@ -324,8 +324,8 @@ The classifier implementation uses the RandomForestClassifier class from the sci
 
 The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
 
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{figures/user_dp_hist.png}
+\begin{figure}[h]
+	\includegraphics[width=0.75\textwidth]{figures/user_dp_hist.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:user_dp_hist}
 \end{figure}
@@ -338,8 +338,8 @@ To match the number of users, the same number of bots with variable session leng
 
 The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \todo{generate more bot data}.
 
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{figures/roc_request_both_instances.png}
+\begin{figure}[h]
+	\includegraphics[width=0.75\textwidth]{figures/roc_request_both_instances.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:roc_request_both_instances}
 \end{figure}
@@ -349,8 +349,8 @@ The model's accuracy when only using the request-type data points is $76.60\%$ a
 
 When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
 
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{figures/roc_mouse_both_instances.png}
+\begin{figure}[h]
+	\includegraphics[width=0.75\textwidth]{figures/roc_mouse_both_instances.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:roc_mouse_both_instances}
 \end{figure}
@@ -361,11 +361,25 @@ To compare the performance to different real-world data, Antal et. al's dataset 
 
 For comparison the model is trained on data from each instance and both combined. When scoring the model with "User1"'s data as the test set, the model's accuracy increases to $99.11\%$, $99.05\%$ and \todo. For the whole dataset, which resulted in $1.54M$ input vectors, the accuracy dropped to $98.20\%$, $97.94\%$.
 
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{figures/roc_both_datasets_both_instances.png}
+\begin{figure}[h]
+	\includegraphics[width=0.75\textwidth]{figures/roc_both_datasets_both_instances.png}
 	\caption{ROC curves}
 	\label{fig:roc_both_datasets_both_instances}
 \end{figure}
+
+
+\section{Execution Speed Performance}
+
+The execution speed is measured by predicting a score after each request. The total time, time without extracting the features and score are logged and averaged over multiple requests. These values are calculated for different amounts of previous data points which are incorporated. This is significant because the mouse features include many values which are accumulated over many data points. \ref{fig:speed_per_dp_count} shows the times and performance for the different numbers.
+
+\begin{figure}[h]
+	\includegraphics[width=0.75\textwidth]{figures/speed_per_dp_count.png}
+	\caption{Execution speed and score versus number of previous data points}
+	\label{fig:speed_per_dp_count}
+\end{figure}
+
+
+
 
 \chapter{Discussion}
 
