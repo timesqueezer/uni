@@ -106,7 +106,7 @@ Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different ma
 
 The work of \cite{PETS2021} outlines the problems and privacy-related concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
 
-Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} \cite{DBLP:journals/corr/abs-1810-04668} show the viability of using mouse and trackpad actions to verify the authenticity of users.
+Among others, the works of Shen et al. \cite{6263955} and Antal et al. \cite{9111596} show the viability of using mouse and trackpad actions to verify the authenticity of users.
 Shen et al. use a pattern-growth-based mining method which results in false negative and false positive rates of $1.12\%$ and $0.37\%$ respectively.
 Antal et al. report $0.92$ and $1$ AUC for the test and training part of the Balabit dataset \cite{BALABIT_CHALLENGE} with their two-class classifier.
 Privacy concerns were cited as one the primary challenges of using such a methods in practice. Their good perfomance makes using mouse data a promising method if these concerns could be remedied.
@@ -120,26 +120,30 @@ Additionally Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} also show the feasibi
 
 \section{Concept}
 
-The thesis explores how biometric data can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between operators without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance.
+The thesis explores how biometric data can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between systems without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance.
 
 For comparison a similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
 Iliou et al.'s work is used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
-Mouse, touchpad or touch gestures, which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}. As this type of data collection would be hard to justify as strictly necessary, it would be best to process the data in an anonymized and indirect way which this method of machine learning provides.
+Mouse, touchpad or touch gestures (pointer data), which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}. As this type of data collection would be hard to justify as strictly necessary, it would be best to process the data in an anonymized and indirect way which this method of machine learning provides.
 
+This work hypothesizes that a system using pointer data outperforms the compared to one using request metadata and thus justifes the use of sensitive user data.
+
+It will also be shown that the requirement of good execution speed is met by integrating the trained model into the experiments' websites as representative real-world applications. As the recorded data is aggregated over time per user, each server response includes the current score as a number between 0 and 1. How much of the past data can be used without compromising request performance will additionally be determined.
 
 \section{Datasets}
 
-To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
+To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. This way biases of different datasets are eliminated and the different systems' performances can be directly compared against.
 
-While no suitible datasets exist that include both request and mouse data, publicly available datasets exist that contain real-world user mouse movement and interaction data.
+The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
-The Balabit Mouse Dynamics Challenge Data Set \cite{BALABIT_CHALLENGE} includes a few longer session and several shorter session which are meant to be used for training and testing respectively. For the purposes of bot detection, both can be used.
-Antal et. al's dataset \cite{9111596} includes around 20-30 sessions of 21 users. As the Balabit dataset is older and has been used more in other publications, Antal et. al's dataset is used to validate the transferability of this method.
+To verify the proposed system does not overfit to the experiment's limited data, different public data is used to compare against. While no suitible datasets exist that include both request and mouse data, datasets that contain real-world user mouse movement and interaction data are publicly available.
 
-% If needed, additional datasets are available, e.g.:
-% \footnote{\url{https://figshare.com/articles/dataset/Mouse_Behavior_Data_for_Static_Authentication/5619313}}
-% \footnote{\url{https://www.uvic.ca/ecs/ece/isot/datasets/?utm_medium=redirect&utm_source=/engineering/ece/isot/datasets/}}
+The Balabit Mouse Dynamics Challenge dataset \cite{BALABIT_CHALLENGE} includes a few longer and several shorter sessions which are meant to be used for training and testing respectively.
+Antal et. al's dataset \cite{9111596} includes 21 users with around 20-30 sessions each. Their work compares their own dataset against the Balabit and ChaoShen datasets. In their scenario of detecting whether mouse data belongs to a specific user, the former corresponds to better but comparable results.
+At the time of publication the referenced ChaoShen dataset is not available anymore.
+
+Antal et. al's dataset is used to validate the transferability of this method because of its better performance and because the other datasets are older and have been used more in other publications.
 
 
 \section{Machine Learning Model}
@@ -163,30 +167,32 @@ An empirical search will determinte the best parameters for this use case.
 
 \subsection{Feature Selection}
 
-Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For MLP, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
+Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For Random Forest, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
 
 The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} is used.
 
 \begin{enumerate}
-	% \item Total number of HTTP HEAD requests issued during the session. (5)
 	\item The percentage of HTTP requests that led to an HTTP 4xx code response. (7)
 	\item The percentage of HTTP requests that requested a css file. (10)
 	\item The percentage of HTTP requests that requested a JavaScript file. (11)
-	% \item The number of the requested HTML files divided by the number of requested image files in a session. (12)
-	% \item Boolean indicating if a session has at least one request with a known search engine refer. (14)
 	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
 	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
-	\item 16 Depth SD Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
+	\item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
 \end{enumerate}
+
+The mouse data features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, including mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+
+Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group.
+
 
 \subsection{Classification and Evaluation}
 
-The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate and False Negative Rate are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case.
+The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another good metric for comparing results because it provides a single numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861}
 
 
 \section{Experiment/Data Collection}
 
-A user experiment was announced to all members of the University of Hamburg to gather a representative data set for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and design was implemented.
+A user experiment was announced to all members of the University of Hamburg to gather a representative dataset for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and designs was implemented.
 
 \subsection{Websites}
 
@@ -234,7 +240,7 @@ data type & One of \{Request, Mouse\} \\ & saved separately because e.g. mouse b
 
 \subsubsection{Mouse Data}
 
-All information for the mouse data sets is recorded by a JavaScript library which is deployed as part of a VueJS application. It registers listener functions for the events \lstinline{pointermove, pointerdown, pointerup} on the whole document which are throttled to $30$ events per second. Pointer events are used because they include mouse, touch, pen/stylus and other pointing devices. For every event the following data is recorded:
+All information for the mouse datasets is recorded by a JavaScript library which is deployed as part of a VueJS application. It registers listener functions for the events \lstinline{pointermove, pointerdown, pointerup} on the whole document which are throttled to $30$ events per second. Pointer events are used because they include mouse, touch, pen/stylus and other pointing devices. For every event the following data is recorded:
 
 
 \begin{table}[]
@@ -277,25 +283,16 @@ All actions are configued to wait for the target element to be visible and click
 
 The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions. Barring the random delays it will perform the actions as fast as possible.
 
-In advanced mode... \todo
-
 \subsection{Mouse Bot}
 
-The basic mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
+The mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
 The advanced mouse bot uses the PyAutoGUI\footnote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
 The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}} builds on top of PyAutoGUI.
 \footnote{\url{https://github.com/patrikoss/pyclick}}
 
+
 \chapter{Implementation}
-
-
-% \section{Machine Learning Model}
-% \label{machine_learning_model}
-
-
-
-% The mouse data input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{DBLP:journals/corr/abs-1810-04668}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
 
 
 \section{Feature Extraction}
