@@ -325,7 +325,7 @@ The classifier implementation uses the RandomForestClassifier class from the sci
 The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
 
 \begin{figure}[h]
-	\includegraphics[width=0.75\textwidth]{figures/user_dp_hist.png}
+	\includegraphics[width=\textwidth]{figures/user_dp_hist.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:user_dp_hist}
 \end{figure}
@@ -339,7 +339,7 @@ To match the number of users, the same number of bots with variable session leng
 The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \todo{generate more bot data}.
 
 \begin{figure}[h]
-	\includegraphics[width=0.75\textwidth]{figures/roc_request_both_instances.png}
+	\includegraphics[width=\textwidth]{figures/roc_request_both_instances.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:roc_request_both_instances}
 \end{figure}
@@ -350,7 +350,7 @@ The model's accuracy when only using the request-type data points is $76.60\%$ a
 When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
 
 \begin{figure}[h]
-	\includegraphics[width=0.75\textwidth]{figures/roc_mouse_both_instances.png}
+	\includegraphics[width=\textwidth]{figures/roc_mouse_both_instances.png}
 	\caption{Distribution of users in terms of datapoint count}
 	\label{fig:roc_mouse_both_instances}
 \end{figure}
@@ -362,7 +362,7 @@ To compare the performance to different real-world data, Antal et. al's dataset 
 For comparison the model is trained on data from each instance and both combined. When scoring the model with "User1"'s data as the test set, the model's accuracy increases to $99.11\%$, $99.05\%$ and \todo. For the whole dataset, which resulted in $1.54M$ input vectors, the accuracy dropped to $98.20\%$, $97.94\%$.
 
 \begin{figure}[h]
-	\includegraphics[width=0.75\textwidth]{figures/roc_both_datasets_both_instances.png}
+	\includegraphics[width=\textwidth]{figures/roc_both_datasets_both_instances.png}
 	\caption{ROC curves}
 	\label{fig:roc_both_datasets_both_instances}
 \end{figure}
@@ -373,16 +373,19 @@ For comparison the model is trained on data from each instance and both combined
 The execution speed is measured by predicting a score after each request. The total time, time without extracting the features and score are logged and averaged over multiple requests. These values are calculated for different amounts of previous data points which are incorporated. This is significant because the mouse features include many values which are accumulated over many data points. \ref{fig:speed_per_dp_count} shows the times and performance for the different numbers.
 
 \begin{figure}[h]
-	\includegraphics[width=0.75\textwidth]{figures/speed_per_dp_count.png}
+	\includegraphics[width=\textwidth]{figures/speed_per_dp_count.png}
 	\caption{Execution speed and score versus number of previous data points}
 	\label{fig:speed_per_dp_count}
 \end{figure}
 
+The measured data shows that by only considering $100$ previous data points the total prediction time can be reduced to $27ms$ with a corresponding accuracy of $93.67\%$ compared to $900ms$ and $95.15\%$ ($2000$ previous data points). Reducing the amount of data points below $100$ yielded very low accuracies ($<80$) while not reducing the prediction time significantly. Compared to the average response times of all the experiments' requests of $23.78ms$ and $16.67ms$, this is still a very significant amount. One method which might be acceptable is to run the prediction in parallel to the request processing and waiting a few milliseconds for the result before returning a response. Another method would be to separate the feature extraction from the combination of data points. But for some values this might not be possible or lose information, e.g. mean or standard deiviation of several data.
+A better method might be to separate the prediction system entirely from single requests and decide on a per-user basis asynchronously after enough samples have been collected whether to take any action against it or not.
 
 
 
-\chapter{Discussion}
 
+\chapter{Discussion and Shortcomings}
+In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needs to make many assumptions in order to limit the scope and produce scientifically valuable data.
 
 \chapter{Conclusion}
 Bot bad. User data good, nomnom.
