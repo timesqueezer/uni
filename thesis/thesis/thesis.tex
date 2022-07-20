@@ -97,7 +97,6 @@ Other optional challenges are ease of use for the operator and integration into 
 
 The most desirable additional requirement is privacy friendliness, the feasibility of which this work aims to show. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
 
-
 \section{Related Work}
 
 The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
@@ -385,11 +384,21 @@ A better method might be to separate the prediction system entirely from single 
 
 
 \chapter{Discussion and Shortcomings}
-In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needs to make many assumptions in order to limit the scope and produce scientifically valuable data.
+In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needs to make many assumptions in order to limit the scope and produce generalizable data.
+
+One limitation is that this approach does only work for clients that use a pointer device, i.e. mouse, touchpad or touch screen. If this is not acceptable, a different method would additionally need to be used. This applies for example when screen readers, text-based browsers or automated clients should be supported. A compromise might be to use the pointer-based system to trigger additional security checks at critical actions, such as registering an account or posting content.
+
+Another problem might be that this approach does not elimitate all user tracking and the associated data processing. Especially public pages that should to be accessed without the need to ask for explicit confirmation. Although this is a general problem for websites that store or process user data, e.g. in the form of cookies, it applies to this approach as well. The main advantage is that the proposed system can be run by the same operator and does not need to send user data to any third parties.
+
+Even the best-case accuracy of $>99\%$ might be not enough for some applications, especially if critical decisions depend on the system.
 
 \chapter{Conclusion}
-Bot bad. User data good, nomnom.
 
+The Evaluation shows that in general a bot detection system which incorporates pointer data can be considered for practical use. Its main performance criteria in the form of high accuracy and a low false positive rate are given but its actual value is dependend on the concrete usage and operation.
+
+The requirement to be privacy-friendly is met by using a machine-learning-based system which can be deployed by operators themselves and does not need to share any identifiable user data with third parties.
+
+Finally, good execution speed is not achieved in every case and does degrade the overall value of the proposed system. In practice, higher accuracy can be traded for higher execution speed. Additionally the system has many possibilities to be optimized and improved which would meet this requirement as well.
 
 \begin{raggedright}
   \printbibliography
