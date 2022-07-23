@@ -13,6 +13,8 @@
 % ===================================Praeambel==================================
 \include{stylesvs}
 
+\renewcommand{\arraystretch}{1.5}
+
 \addbibresource{thesis.bib}
 
 % ===================================Dokument===================================
@@ -166,6 +168,8 @@ An empirical search will determinte the best parameters for this use case.
 
 \subsection{Feature Selection}
 
+\subsubsection{Request Data}
+
 Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For Random Forest, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
 
 The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} is used.
@@ -179,9 +183,60 @@ The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} i
 	\item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
 \end{enumerate}
 
-The mouse data features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, including mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
+\label{concept_mouse_data}
+\subsubsection{Mouse Data}
 
-Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group.
+The mouse data features consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features are engineered similar to Gamboa et.al.\cite{GAMBOA2004}, including the path length from the origin, angle of the path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used. Some features used in the authors' work have been omitted with the goal of simplifying and speeding up the feature extraction which can be revisited if the performance seems poor.
+
+Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group. As a basis for all derived values, the time, x and y coordinates are linearly interpolated such that vectors with uniformly spaced values $x'_t$ and $y'_t$ every $20ms$ are generated. All inidices start at zero.
+
+The path length from the origin $s_t'$ is the accumulated sum of previous segment lengths:
+
+\[
+s'_t = \sum_{k = 0}^{t - 1} \sqrt{(x'_{k+1} - x'_{k})^2 + (y'_{k+1} - y'_{k})^2}
+\]
+
+The angle of the path tangent with the x-axis $\theta_t$ is the arctangent ($atan2$ is used, which returns only values $-\pi < \theta < \pi$) of the segment at time $t > 0$. At $t=0$ an angle of $0$ is assumed.
+
+\[
+\theta_t = atan2( (y'_{t+1} - y'_{t}), (x'_{t+1} - x'_{t}) )
+\]
+
+The temporal features horizontal ($v_x$), vertical ($v_y$), tangential ($v$) and angular velocity ($\omega$) as well as tangential acceleration ($\dot{v}$) and jerk ($\ddot{v}$) are computed as follows:
+
+\[
+v_x = \frac{\delta x}{\delta t}; \quad
+v_y = \frac{\delta y}{\delta t}; \quad
+v = \sqrt{v_x^2 + v_y^2}; \quad
+\omega = \frac{\delta \theta}{\delta t}; \quad
+\dot{v} = \frac{\delta v}{\delta t}; \quad
+\ddot{v} = \frac{\delta \dot{v}}{\delta t}
+\]
+
+For each of the $9$ vectors ($x'_t$, $y'_t$, $s'_t$, $v_x$, $v_y$, $v$, $\omega$, $\dot{v}$, $\ddot{v}$) the mean, standard deviation, minimum, maximum and value range (max - min) yield the first $45$ feature values.
+
+Additionally the time $t_total$ and length $s_{n-1}$ of the stroke (i.e. group of $n$ data points), its straightness and jitter are computed. The time is the difference between the first and last datapoints' timestamps and the length can is the accumulated sum of segment lengths but using the raw instead of the interpolated data.
+
+\[
+t_{total} = t_{n-1} - t_0
+\]
+
+\[
+s_{n-1} = \sum_{k = 0}^{n - 1} \sqrt{(x'_{k+1} - x'_{k})^2 + (y'_{k+1} - y'_{k})^2}
+\]
+
+Analogous to Gamboa et.al.'s definition\cite{GAMBOA2004} the straightness is defined as the ratio of the Euclidian distance between the first and last points of each group, and the total distance:
+
+\[
+straightness = \frac{ \sqrt{ (x_0 - x_{n-1})^2 + (y_0 - y_{n-1})^2 } }{s_{n-1}}
+\]
+
+The jitter is the ratio between the original and smoothed path lengths:
+
+\[
+jitter = \frac{s'_{n'-1}}{s_{n-1}}
+\]
+
 
 
 \subsection{Classification and Evaluation}
@@ -219,7 +274,7 @@ The following data is stored in the database:
 \hline
 user uuid & The current user's UUIDv4 \\ \hline
 request method & One of \{'GET', 'POST'\}, other request methods are not used \\ \hline
-request url & The full request URL including scheme, host, root path, path and query string \\ \hline
+request url & The full request URL including \\ & scheme, host, root path, path and query string \\ \hline
 request path & The request path \\ \hline
 request origin & The host from which the request was sent from \\ \hline
 request remote address & The IP address of the client \\ \hline
@@ -300,24 +355,29 @@ First, the stored unique users are filtered based on a minimum number of data po
 
 \subsection{Request Data Features}
 
-The request data is aggregated per user \todo{per user/max 20?} and the feature data is calculated as described in \nameref{machine_learning_model}.
+The request data is aggregated per user \todo{per user/max 20?} and the feature data is calculated as described in the \nameref{concept_mouse_data} section.
 
 \subsection{Mouse Data Features}
 
-The mouse data is calculated per user and grouped into actions, similar to \cite{}. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
-
-
-The machine learning input features will consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features will be engineered similar to \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, such as mean, standard deviation, minimum and maximum value of path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used.
-\todo
+The mouse data is calculated per user and grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
 
 \subsection{Classifier Implementation}
 
 % The classifier implementation uses a TensorFlow sequential keras model.
-The classifier implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library.
+The classifier implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library. The standard methods $fit$, $score$ and $predict$ are used.
 
 
 
 \chapter{Evaluation}
+
+\section{Model Hyperparameters}
+
+Estimators: 10-500
+Max depth: 0-5
+
+Best: 100 estimators, 1 max depth
+
+\todo
 
 \section{Experiment Data Quality}
 
