@@ -50,7 +50,7 @@
 	\vfill
 	Supervisor: August See\par
 	First reviewer: Prof. Dr. Mathias Fischer \par
-	Zweitgutachter: N.N.
+	Zweitgutachter: August See
 \end{center}
 \end{titlepage}
 
@@ -103,7 +103,6 @@ Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different ma
 
 
 The work of \cite{PETS2021} outlines problems and privacy-related concerns in the context of bot detection and aims to solve a very similar problem but focuses on mobile devices. They explicitely comment on and compare their work against Google's reCAPTCHA v3 \cite{RECPATCHA_V3} which is a very prevelant but opaque solution. Especially the transmission of raw user data to third party servers (which often are located in a differen country) is considered pervasive and raises privacy concerns. In their own method "zkSENSE" the authors run a pre-trained machine learning model on the users' devices such that no user data has to be sent to their or any other servers. To avoid local changes to the model a cryptographic zero-knowledge proof is generated that is verified on a server. The model iself operates on data from the mobile device's sensors including accelerometers and gyroscopes. They postulate that a human-performed touch event or click generates specific information in these sensors that is either hard to fake or absent. In a comparison of different classifier models most perform very similar with Decision Trees and Random Forest being slightly better. Finally, they also tested the performance in terms of execution time, CPU and memory utilization, and consumed bandwith with the result that their method is comparable to existing CAPTCHA solutions.
-
 
 
 The work of Shen et al. \cite{6263955} show the viability of using mouse and trackpad actions to verify the authenticity of users. Shen et al. use a pattern-growth-based mining method in which they group raw mouse events into mouse actions, such as single click, double click or drag-and-drop. This data is combined with additional information of the current application type (e.g. surfing the internet, word processing or playing games), the screen area where the mouse movement occurred, window position and timestamp into a database of mouse operation sequences. They employ a pattern growth approach which identifies relationships within the data. The authors further state that the mined patterns cannot be used directly by a classifier and are thus converting into a feature vector containing data such as the time it took a user to click a button, movement speed or acceleration. Finally 3 different one-class detectors (Nearest Neighbor, single-layer Neural Network, Support Vector Machine) are compared resulting in the SVM method performing the best with false positive and false negative rates of 0.37\% and 1.12\% respectively. This was only achieved by incorporating 3000 operations and 30 minutes of processing for successful authentication. With a more practically feasible authentication time of one minute, the values for FPR and FNR increate to 44.65\% and 34.78\%. This drastically limits the applicability of this approach which the authors conclude as well.
@@ -173,9 +172,9 @@ As their performance is comparable in this context and Random Forest's implement
 
 \todo{more text}
 
-The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator.
+The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. \todo
 
-Additional parameters include the maximum depth of trees, the minimum number of samples required to split a node in the trees and the minimum number of samples required to be at a leaf node.
+Additional parameters include the minimum number (or fraction) of samples required to split a node ($min_samples_split$). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than $min_samples_split$ samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the num
 
 An empirical search will determine the best parameters for this use case.
 
@@ -387,13 +386,6 @@ The classifier implementation uses the RandomForestClassifier class from the sci
 
 \chapter{Evaluation}
 
-\section{Model Hyperparameters}
-\todo{explain+data}
-Estimators: 10-500
-Max depth: 0-5
-
-Best: 100 estimators, 1 max depth
-
 \section{Experiment Data Quality}
 
 The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
@@ -404,6 +396,80 @@ The experiment assumed that participants use the provided website frontends whic
 	\label{fig:user_dp_hist}
 \end{figure}
 
+
+\section{Model Hyperparameters}
+
+To empirically determine the best Random Forest parameters both mouse and request data (not advanced, with random delays) from the experiment's first website and generated bots (same number of sessions as human users) were used to calculate the accuracy for combinations of the following parameters:
+
+\begin{enumerate}
+	\item Number of estimators (10, 50, 100, 150, 200, 1000)
+	\item Maximum number of features (None, log2, sqrt)
+	\item Maximum tree depth (None, 1, 2, 3, 4)
+\end{enumerate}
+
+Table \ref{table:mouse_params} and \ref{table:request_params} show the $16$ best performing combinations for mouse  and request data.
+
+\setlength{\arrayrulewidth}{0.2mm}
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{0.9}
+
+
+\begin{table}[h!]
+\centering
+\caption{Model accuracy for different parameters (mouse data)}
+\label{table:mouse_params}
+\begin{tabular}{|l|l|l|l|l}
+\hline
+Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
+\hline
+None          & $ 10$           & None         & $ 0.9975874547647768$ \\
+sqrt          & $ 200$          & None         & $ 0.9951749095295537$ \\
+None          & $ 100$          & None         & $ 0.9951749095295537$ \\
+sqrt          & $ 10$           & None         & $ 0.9939686369119421$ \\
+None          & $ 50$           & None         & $ 0.9939686369119421$ \\
+None          & $ 1000$         & None         & $ 0.9939686369119421$ \\
+sqrt          & $ 50$           & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 150$          & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 1000$         & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 100$          & None         & $ 0.9927623642943305$ \\
+None          & $ 200$          & None         & $ 0.9927623642943305$ \\
+None          & $ 150$          & None         & $ 0.9927623642943305$ \\
+None          & $ 1000$         & $ 4$         & $ 0.9927623642943305$ \\
+None          & $ 10$           & $ 4$         & $ 0.9927623642943305$ \\
+log2          & $ 50$           & None         & $ 0.991556091676719$ \\
+log2          & $ 200$          & $ 0$         & $ 0.991556091676719$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Model accuracy for different parameters (request data)}
+\label{table:request_params}
+\begin{tabular}{|l|l|l|l|l}
+\hline
+Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
+\hline
+sqrt & $ 200$  & None & $ 0.8723404255319149$  \\
+sqrt & $ 150$  & None & $ 0.8723404255319149$  \\
+sqrt & $ 1000$ & None & $ 0.8723404255319149$  \\
+log2 & $ 200$  & None & $ 0.8723404255319149$  \\
+log2 & $ 150$  & None & $ 0.8723404255319149$  \\
+log2 & $ 1000$ & None & $ 0.8723404255319149$  \\
+sqrt & $ 50$   & None & $ 0.851063829787234$   \\
+sqrt & $ 100$  & None & $ 0.851063829787234$   \\
+None   & $ 50$   & None & $ 0.851063829787234$   \\
+log2 & $ 50$   & None & $ 0.851063829787234$   \\
+log2 & $ 100$  & None & $ 0.851063829787234$   \\
+sqrt & $ 10$   & None & $ 0.8297872340425532$  \\
+None   & $ 200$  & None & $ 0.8297872340425532$  \\
+None   & $ 150$  & None & $ 0.8297872340425532$  \\
+None   & $ 1000$ & None & $ 0.8297872340425532$  \\
+None   & $ 100$  & None & $ 0.8297872340425532$ \\
+
+\hline
+\end{tabular}
+\end{table}
 
 
 \section{Request Data Performance}
