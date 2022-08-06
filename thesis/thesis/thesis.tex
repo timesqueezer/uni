@@ -50,7 +50,7 @@
 	\vfill
 	Supervisor: August See\par
 	First reviewer: Prof. Dr. Mathias Fischer \par
-	Zweitgutachter: N.N.
+	Zweitgutachter: August See
 \end{center}
 \end{titlepage}
 
@@ -97,18 +97,12 @@ Other optional challenges are ease of use for the operator and integration into 
 
 \section{Related Work}
 
-The paper \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
+The paper of Li et al. \cite{LiJi2021} introduces a federated learning approach similar to the goals of this work but differs in the specific use case and implementation. Their system focuses on the detection of IoT (Internet of Things) devices which are easily hacked and turned into zombies. These zombies are commonly used in DDoS (Distributed Denial of Service) attacks which their strategy tries to make not feasible to perform. They also develop their own iterative model averaging based method "gated recurrent unit" (GRU) which is optimized for their specific use case.
 
-Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different machine learning algorithms and combinations of different attributes used in previous literature. The attributes comprise mostly of request metadata which would be suitible for a privacy-friendly bot detection system, for example the percentage of image requests or the number of total bytes per session. The authors split the bot data in their dataset into simple and advanced bots which is determined by whether the requests have a browser agent name and, in case they do, whether the IPs have shown malicious activity before. Their results show that different sets of attributes are performing best depending on the classification algorithm used. The best performing ones are Random Forest and Multilayer Perceptron although the paper concludes that using an ensemble classifier that averages over all used methods would be more stable. Additionally simple web bots can be detected very easily while detecting advanced bots is significantly harder, with areas under the ROC curve of $1.00$ and $0.64$ respectively. Especially in false positive intolerant use cases the performance of detecting advanced bots is too poor to be used in the real world. The authors conclude that future work would need to incorporate more advanced features which can not be easily simulated by bots.
-
-\todo next para
-
-The authors propose a machine learning based web bot detection framework which operates on request log data. They also identify which extracted features of the data perform best in this context. Their method was tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data includes IP addresses, request method, request path, referrers, user agent strings and timestamps.
+Iliou et al. \cite{10.1145/3339252.3339267} present a comparison of different machine learning algorithms and combinations of different attributes used in previous literature. Their methods were tested on a year's worth of HTTP log data from MK-Lab's public web server\footnote{Multimedia Knowledge and Social Media Analytics Laboratory, \url{https://mklab.iti.gr/}}. The data included IP addresses, request method, request path, referrers, user agent strings and timestamps. The attributes comprise mostly of request metadata which would be suitible for a privacy-friendly bot detection system, for example the percentage of image requests or the number of total bytes per session. The authors split the bot data in their dataset into simple and advanced bots which is determined by whether the requests have a browser agent name and, in case they do, whether the IPs have shown malicious activity before. Their results show that different sets of attributes are performing best depending on the classification algorithm used. The best machine learning methods are Random Forest and Multilayer Perceptron although the paper concludes that using an ensemble classifier that averages over all used methods would be more stable. Additionally simple web bots can be detected very easily while detecting advanced bots is significantly harder, with areas under the ROC curve of $1.00$ and $0.64$ respectively. Especially in false positive intolerant use cases the performance of detecting advanced bots is too poor to be used in the real world. The authors conclude that future work would need to incorporate more advanced features which can not be easily simulated by bots.
 
 
-
-The work of \cite{PETS2021} outlines the problems and privacy-related concerns really well and tries to solve a very similar problem but focuses on mobile devices. The authors run a pre-trained machine learning model on the user's device. To avoid local changes to the model a cryptographic proof is generated that is verified on a server.
-
+The work of \cite{PETS2021} outlines problems and privacy-related concerns in the context of bot detection and aims to solve a very similar problem but focuses on mobile devices. They explicitely comment on and compare their work against Google's reCAPTCHA v3 \cite{RECPATCHA_V3} which is a very prevelant but opaque solution. Especially the transmission of raw user data to third party servers (which often are located in a differen country) is considered pervasive and raises privacy concerns. In their own method "zkSENSE" the authors run a pre-trained machine learning model on the users' devices such that no user data has to be sent to their or any other servers. To avoid local changes to the model a cryptographic zero-knowledge proof is generated that is verified on a server. The model iself operates on data from the mobile device's sensors including accelerometers and gyroscopes. They postulate that a human-performed touch event or click generates specific information in these sensors that is either hard to fake or absent. In a comparison of different classifier models most perform very similar with Decision Trees and Random Forest being slightly better. Finally, they also tested the performance in terms of execution time, CPU and memory utilization, and consumed bandwith with the result that their method is comparable to existing CAPTCHA solutions.
 
 
 The work of Shen et al. \cite{6263955} show the viability of using mouse and trackpad actions to verify the authenticity of users. Shen et al. use a pattern-growth-based mining method in which they group raw mouse events into mouse actions, such as single click, double click or drag-and-drop. This data is combined with additional information of the current application type (e.g. surfing the internet, word processing or playing games), the screen area where the mouse movement occurred, window position and timestamp into a database of mouse operation sequences. They employ a pattern growth approach which identifies relationships within the data. The authors further state that the mined patterns cannot be used directly by a classifier and are thus converting into a feature vector containing data such as the time it took a user to click a button, movement speed or acceleration. Finally 3 different one-class detectors (Nearest Neighbor, single-layer Neural Network, Support Vector Machine) are compared resulting in the SVM method performing the best with false positive and false negative rates of 0.37\% and 1.12\% respectively. This was only achieved by incorporating 3000 operations and 30 minutes of processing for successful authentication. With a more practically feasible authentication time of one minute, the values for FPR and FNR increate to 44.65\% and 34.78\%. This drastically limits the applicability of this approach which the authors conclude as well.
@@ -119,25 +113,32 @@ Acien et al. \cite{Acien2020BeCAPTCHAMouseSM} show the feasibility of using biom
 
 In their 2004 paper, Pusara et al. \cite{10.1145/1029208.1029210} use mouse movement data to re-authenticate already logged in users with the goal of identifying anomalous behavior to combat insider attacks where a potential assailant might have access to an existing user session. Similar to Antal et al.'s \cite{https://doi.org/10.1049/iet-bmt.2018.5126} extracted features, the authors use both the raw mouse events and derivative data, such as angle speed, distance as well as values for the mean, standard deviation and third moment over multiple samples. Decision tree classifiers and a smoothing filter were used to reach average false positive and false negative rates of 0.43\% and 1.75\%, although with high variability depending on which concrete users were used as input. While these initial results are promising, the authors conclude that scalability might become an issue as their model needs to be trained for each combination of users. As this approach requires already logged in users and is designed to identitfy specific users only its application in the context of bot detection is limited but the successful usage of mouse data is shown.
 
-Ahmed et al. pursue the very similar goal of identifying users based on mouse dynamics. In an own experiment they collected 998 session of 22 participants
-A MLP-based neural network with a single hidden layer of 40 neurons was used for classification. The authors conclude that, despite their results' good false positive and false negative rates of 2.4649\% and 2.4614\%, practically viable access control was not achieved. But the values were still better than some established methods based on biometric data, e.g. voice or face recognition. \todo
 % file:///Z:/uni/thesis/papers/mouse_feature_papers/A_New_Biometric_Technology_Based_on_Mouse_Dynamics.pdf
+Ahmed et al. pursue the very similar goal of identifying users based on mouse dynamics. In an own experiment they collected 998 session of 22 participants
+A MLP-based neural network with a single hidden layer of 40 neurons was used for classification. The raw data was segmented into the mouse actions types mouse-move, drag-and-drop, point-and-click and silence. Together with the corresponding distance in pixels, time, speed and direction (8 directions spanning $45\deg$) this data was passed through a noise reduction stage, followed by inputting it into the neural network. The authors conclude that, despite their results' good false positive and false negative rates of 2.4649\% and 2.4614\%, practically viable access control was not achieved. Despite this the values were still better than some established methods based on biometric data, e.g. voice or face recognition.
 
+\todo{maybe more }
 
 \chapter{Method}
 
-The thesis explores how biometric data can potentially improve a machine learning system for bot detection. A ML-based system is chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between systems without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
+The thesis explores how biometric data can potentially improve a machine learning system for bot detection. Compared to data that is only indirectly generated by a human, for example web requests metadata, biometric data contains more information that can be directly used to decide whether a bot or human generated the data. A big part of request data is redundant as it either does not change between different requests or clients, e.g. the "User-Agent" header, or can be easily faked. Illustrated by figure \ref{fig:user_mouse_heatmap}, human-generated mouse data contains many different movements which are hard to model for an attacker.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{figures/user_mouse_heatmap.png}
+	\caption{29 Mouse movements captured from a human user}
+	\label{fig:user_mouse_heatmap}
+\end{figure}
+
+As previous works showed, mouse data in combination with machine learning systems have the potential to perform well enough for practical use but lacked either performance or execution speed, especially when trying to differenciate between different human users. When reducing the goal to only detecting bots versus any human, this work aims to show the increased viability.
+
+A ML-based system is also chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between systems without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
 
 
 \section{Concept}
 
-A similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented. blabal request
+A similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented for detecting bots via request data. Their work is used as the basis for the machine learning system because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
-Iliou et al.'s work is used as the basis for the machine learning system of this thesis because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
-
-Mouse, touchpad or touch gestures (pointer data), which are not considered by Iliou et al. \cite{10.1145/3339252.3339267}, supplement the data in this work's approach. This type of data is harder to fake by attackers trying to emulate human behavior and would be classified as sensitive user data. It could not reasonably be used by a third party provider and would require explicit user consent \cite{GDPR}. As this type of data collection would be hard to justify as strictly necessary, it would be best to process the data in an anonymized and indirect way which this method of machine learning provides.
-
-This work hypothesizes that a system using pointer data outperforms the compared to one using request metadata and thus justifes the use of sensitive user data.
+Mouse, touchpad or touch gestures (pointer data) are used as the second type of data in this work's approach. This data is harder to fake by attackers trying to emulate human behavior. Because it would be classified as sensitive user data, this type of data collection and processing could not reasonably be used by a third party provider or without a strictly necessary reason and would require explicit user consent \cite{GDPR}. Thus it would be best to process the data in an anonymized and indirect way which this method of machine learning provides as well. Derived data features are adapted from previous works and limited to simplify the preprocessing while maintaining good performance.
 
 It will also be shown that the requirement of good execution speed is met by integrating the trained model into the experiments' websites as representative real-world applications. As the recorded data is aggregated over time per user, each server response includes the current score as a number between 0 and 1. How much of the past data can be used without compromising request performance will additionally be determined.
 
@@ -161,7 +162,7 @@ Antal et. al's dataset is used to validate the transferability of this method be
 Many different machine learning models are suitable for binary classification. Hu et al. \cite{8275816} compare different classifiers in a context where mouse data is used. Random Forest and Multilayer Perceptron (MLP) perform the best.
 Iliou et al. \cite{10.1145/3339252.3339267} also show that Random Forest and MLP perform well when using request metadata.
 
-Random Forest\cite{Breiman2001} is a perturb-and-combine technique that uses an ensemble of decision trees with randomized input sample selection and parameters. The randomness has the goal of decreasing the variance and avoid overfitting which are common problems in single decision trees. The final prediction is calculated from the average over all trees. The used implementation's documentation notes that compared to the original publication, their method averages over the probabilistic predictions, instead of only single decisions.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html\#random-forests}}
+Random Forest\cite{Breiman2001} is a perturb-and-combine technique that uses an ensemble of decision trees. Decision tree learning in general is a supervised machine learning method which can be used for classification or regression depending on the output being a discrete value (i.e. class) or real number. For each node of the tree a binary decision criterion is calculated and the data is split accordingly. With increasing tree depth this approach is able to approximate very irregular models but also has a high risk of overfitting. Random Forests extend this technique by randomizing the input sample selection and parameters with the goal of decreasing the variance and avoiding overfitting. Choosing a random subset of inputs repeatedly is generally known as bootstrap  aggregation or bagging. The Random Forest algorithm in particular additionally randomizes the input selection at each node when growing the tree to further increase the resulting benefits. The final prediction is calculated from the average over all trees. The used implementation's documentation notes that compared to the original publication, their method averages over the probabilistic predictions, instead of only single decisions.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html\#random-forests}} Their decision trees' used split criterion function is the Gini impurity which compares the amount of incorrect labeling of randomly chosen samples if their label (for the current feature) was also chosen randomly to the currently assigned label.
 
 Multilayer Perceptron describes a type of feedforward artificial neural network which connects many perceptron algorithm instances. It is inspired by biological neural networks and has at least three layers (input, hidden, output) which are usually fully connected. By iterating over training data, values for the perceptron's weighted inputs are learned such that the overall system behaves as a classifier or system for regression analysis.
 
@@ -169,13 +170,17 @@ As their performance is comparable in this context and Random Forest's implement
 
 \subsection{Model Parameters}
 
-The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator.
+\todo{more text}
 
-Additional parameters include the maximum depth of trees, the minimum number of samples required to split a node in the trees and the minimum number of samples required to be at a leaf node.
+The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. \todo
 
-An empirical search will determinte the best parameters for this use case.
+Additional parameters include the minimum number (or fraction) of samples required to split a node ($min_samples_split$). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than $min_samples_split$ samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the num
+
+An empirical search will determine the best parameters for this use case.
 
 \subsection{Feature Selection}
+
+The following sections describe which features for both request and mouse data are chosen and how they are used as inputs for the Random Forest machine learning system. Previous works are referenced which already compared several different possiblities in similar contexts.
 
 \subsubsection{Request Data}
 
@@ -259,6 +264,7 @@ A user experiment was announced to all members of the University of Hamburg to g
 
 % \subsection{Websites}
 
+\todo{move to implementation}
 The basis of both websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. Their structure and content mimic blog-style websites with login and register functionality. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page.
 On first visit users get presented a dialog asking to confirm the data collection.
 After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
@@ -342,11 +348,12 @@ The classes \lstinline{RequestBot} and \lstinline{MouseBot} inherit from \lstinl
 
 All actions are configued to wait for the target element to be visible and clickable, scrolling it into view, if not. If configured as such, before each action a random delay between $0$ and $2$ seconds is waited for.
 
-\subsection{Request Bot}
+\todo{maybe expand}
+% \subsection{Request Bot}
 
 The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions. Barring the random delays it will perform the actions as fast as possible.
 
-\subsection{Mouse Bot}
+% \subsection{Mouse Bot}
 
 The mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
 
@@ -356,7 +363,7 @@ The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}
 
 
 \chapter{Implementation}
-
+\todo{eithe expand or move into method}
 
 \section{Feature Extraction}
 
@@ -379,15 +386,6 @@ The classifier implementation uses the RandomForestClassifier class from the sci
 
 \chapter{Evaluation}
 
-\section{Model Hyperparameters}
-
-Estimators: 10-500
-Max depth: 0-5
-
-Best: 100 estimators, 1 max depth
-
-\todo
-
 \section{Experiment Data Quality}
 
 The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
@@ -399,8 +397,84 @@ The experiment assumed that participants use the provided website frontends whic
 \end{figure}
 
 
+\section{Model Hyperparameters}
+
+To empirically determine the best Random Forest parameters both mouse and request data (not advanced, with random delays) from the experiment's first website and generated bots (same number of sessions as human users) were used to calculate the accuracy for combinations of the following parameters:
+
+\begin{enumerate}
+	\item Number of estimators (10, 50, 100, 150, 200, 1000)
+	\item Maximum number of features (None, log2, sqrt)
+	\item Maximum tree depth (None, 1, 2, 3, 4)
+\end{enumerate}
+
+Table \ref{table:mouse_params} and \ref{table:request_params} show the $16$ best performing combinations for mouse  and request data.
+
+\setlength{\arrayrulewidth}{0.2mm}
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{0.9}
+
+
+\begin{table}[h!]
+\centering
+\caption{Model accuracy for different parameters (mouse data)}
+\label{table:mouse_params}
+\begin{tabular}{|l|l|l|l|l}
+\hline
+Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
+\hline
+None          & $ 10$           & None         & $ 0.9975874547647768$ \\
+sqrt          & $ 200$          & None         & $ 0.9951749095295537$ \\
+None          & $ 100$          & None         & $ 0.9951749095295537$ \\
+sqrt          & $ 10$           & None         & $ 0.9939686369119421$ \\
+None          & $ 50$           & None         & $ 0.9939686369119421$ \\
+None          & $ 1000$         & None         & $ 0.9939686369119421$ \\
+sqrt          & $ 50$           & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 150$          & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 1000$         & None         & $ 0.9927623642943305$ \\
+sqrt          & $ 100$          & None         & $ 0.9927623642943305$ \\
+None          & $ 200$          & None         & $ 0.9927623642943305$ \\
+None          & $ 150$          & None         & $ 0.9927623642943305$ \\
+None          & $ 1000$         & $ 4$         & $ 0.9927623642943305$ \\
+None          & $ 10$           & $ 4$         & $ 0.9927623642943305$ \\
+log2          & $ 50$           & None         & $ 0.991556091676719$ \\
+log2          & $ 200$          & $ 0$         & $ 0.991556091676719$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Model accuracy for different parameters (request data)}
+\label{table:request_params}
+\begin{tabular}{|l|l|l|l|l}
+\hline
+Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
+\hline
+sqrt & $ 200$  & None & $ 0.8723404255319149$  \\
+sqrt & $ 150$  & None & $ 0.8723404255319149$  \\
+sqrt & $ 1000$ & None & $ 0.8723404255319149$  \\
+log2 & $ 200$  & None & $ 0.8723404255319149$  \\
+log2 & $ 150$  & None & $ 0.8723404255319149$  \\
+log2 & $ 1000$ & None & $ 0.8723404255319149$  \\
+sqrt & $ 50$   & None & $ 0.851063829787234$   \\
+sqrt & $ 100$  & None & $ 0.851063829787234$   \\
+None   & $ 50$   & None & $ 0.851063829787234$   \\
+log2 & $ 50$   & None & $ 0.851063829787234$   \\
+log2 & $ 100$  & None & $ 0.851063829787234$   \\
+sqrt & $ 10$   & None & $ 0.8297872340425532$  \\
+None   & $ 200$  & None & $ 0.8297872340425532$  \\
+None   & $ 150$  & None & $ 0.8297872340425532$  \\
+None   & $ 1000$ & None & $ 0.8297872340425532$  \\
+None   & $ 100$  & None & $ 0.8297872340425532$ \\
+
+\hline
+\end{tabular}
+\end{table}
+
 
 \section{Request Data Performance}
+
+\todo{more text+explanation}
 
 To match the number of users, the same number of bots with variable session length is compared against.
 
@@ -415,6 +489,8 @@ The model's accuracy when only using the request-type data points is $76.60\%$ a
 
 \section{Mouse Data Performance}
 
+\todo{TP FP table, different experiments}
+
 When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
 
 \begin{figure}[h]
@@ -424,6 +500,8 @@ When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ w
 \end{figure}
 
 \section{Performance on External Dataset}
+
+\todo{more text}
 
 To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Their raw mouse movement and interaction data is preprocessed in the same way as the experiment's data. This results in a much larger test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors.
 
