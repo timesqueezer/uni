@@ -129,18 +129,18 @@ The thesis explores how biometric data can potentially improve a machine learnin
 	\label{fig:user_mouse_heatmap}
 \end{figure}
 
-As previous works showed, mouse data in combination with machine learning systems have the potential to perform well enough for practical use but lacked either performance or execution speed, especially when trying to differenciate between different human users. When reducing the goal to only detecting bots versus any human, this work aims to show the increased viability.
-
-A ML-based system is also chosen because methods like federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} can be used to transfer learned knowledge of different bot behavior between systems without compromising user privacy in comparison to traditional methods. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
+As previous works showed, mouse data in combination with machine learning systems have the potential to perform well enough for practical use but lacked either performance or execution speed, especially when trying to differenciate between different human users. When reducing the goal to only detecting bots versus any human, this work aims to show the increased viability. Its approach differs from similar works, such as Acien et al.'s BeCAPTCHA method \cite{Acien2020BeCAPTCHAMouseSM} in that it also hypothesises that a simplified approach in terms of model parameters, input feature complexity can be found to improve the practical feasibility, ease of deployment and execution speed. This is achieved by performing both the experiments and data collection as well as the evaluation in an environment which is representative of a real application.
 
 
 \section{Concept}
 
-A similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented for detecting bots via request data. Their work is used as the basis for the machine learning system because they compared the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
+For classification a system based on machine learning is chosen because it allows learned knowledge about different bot behavior to be more easily transfered between systems without compromising user privacy in comparison to other methods. For example federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} is an approach that only shares internal model parameters which are sufficiently anonymized so that specific users cannot be identified. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
+
+A similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented for detecting bots via request data. Their work is used as the basis for the machine learning system to compare against. They evaluated the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
 Mouse, touchpad or touch gestures (pointer data) are used as the second type of data in this work's approach. This data is harder to fake by attackers trying to emulate human behavior. Because it would be classified as sensitive user data, this type of data collection and processing could not reasonably be used by a third party provider or without a strictly necessary reason and would require explicit user consent \cite{GDPR}. Thus it would be best to process the data in an anonymized and indirect way which this method of machine learning provides as well. Derived data features are adapted from previous works and limited to simplify the preprocessing while maintaining good performance.
 
-It will also be shown that the requirement of good execution speed is met by integrating the trained model into the experiments' websites as representative real-world applications. As the recorded data is aggregated over time per user, each server response includes the current score as a number between 0 and 1. How much of the past data can be used without compromising request performance will additionally be determined.
+It is also shown that the requirement of good execution speed is met by integrating the trained model into the experiments' websites as representative real-world applications. As the recorded data is aggregated over time per user, each server response includes the current score as a number between 0 and 1. How much of the past data can be used without compromising request performance is additionally determined.
 
 \section{Datasets}
 
@@ -170,17 +170,17 @@ As their performance is comparable in this context and Random Forest's implement
 
 \subsection{Model Parameters}
 
-\todo{more text}
+The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. In general as more trees are used less overfitting occurs and the model generalizes better. \todo
+% https://en.wikipedia.org/wiki/Random_forest#cite_note-elemstatlearn-3
+% https://hastie.su.domains/ElemStatLearn/
 
-The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. \todo
+Additional parameters include the minimum number (or fraction) of samples required to split a node ($min_samples_split$). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than $min_samples_split$ samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the total feature count which is also recommended by previous literature. \cite{Hastie2009}
 
-Additional parameters include the minimum number (or fraction) of samples required to split a node ($min_samples_split$). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than $min_samples_split$ samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the num
-
-An empirical search will determine the best parameters for this use case.
+An empirical search is used to determine the best parameters for this use case. Additionally it is evaluated how the predictive performance changes for different amounts of training data.
 
 \subsection{Feature Selection}
 
-The following sections describe which features for both request and mouse data are chosen and how they are used as inputs for the Random Forest machine learning system. Previous works are referenced which already compared several different possiblities in similar contexts.
+The following sections describe for both request and mouse data which features are chosen and how they are used as inputs for the Random Forest machine learning system. Previous works are referenced which already compared several different possiblities in similar contexts.
 
 \subsubsection{Request Data}
 
@@ -255,28 +255,24 @@ jitter = \frac{s'_{n'-1}}{s_{n-1}}
 
 \subsection{Classification and Evaluation}
 
-The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another good metric for comparing results because it provides a single numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861}
-
+The actual classification is performed by splitting the extracted features into training and test data. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another metric used for comparing results because it provides a single and condensed numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861}
 
 \section{Experiment/Data Collection}
 
 A user experiment was announced to all members of the University of Hamburg to gather a representative dataset for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and designs was implemented.
 
-% \subsection{Websites}
+\subsection{Websites}
 
-\todo{move to implementation}
-The basis of both websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. Their structure and content mimic blog-style websites with login and register functionality. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page.
-On first visit users get presented a dialog asking to confirm the data collection.
-After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
+The structure and content mimic blog-style websites with login and register functionalities. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection. After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
 All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
 One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (Single Page Application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
 
 To combine the advantages of both approaches a hybrid system is used that intercepts URL changes, e.g. from clicking a link, preventing the default action and loading the target page through a separate HTTP request. The main content section is then replaced by the newly loaded HTML data. From the backend's point of view at least one request is performed per visited page while mouse data is recorded without any gaps.
 
-All users, logged in or not, are identified by a version 4 UUID which is immediately stored in cookie after accepting the initial dialog prompt. Every data point that is written to the postgresql database gets a reference to the correspoding user and the current date and time.
+All users, logged in or not, are identified by a version 4 UUID which is immediately stored in cookie after accepting the initial dialog prompt. Every data point that is written to the database gets a reference to the correspoding user and the current date and time.
 
-\subsubsection{Request Metadata}
+\subsection{Request Metadata}
 
 For the request metadata relevant information of every request is recorded. Flask allows to register functions which are called at specific points in the request lifecycle. For this purpose the \lstinline{after_request} decorator is used which is called right before the handled request is returned.
 
@@ -307,10 +303,9 @@ data type & One of \{Request, Mouse\} \\ & saved separately because e.g. mouse b
 \end{tabular}
 \end{table}
 
-\subsubsection{Mouse Data}
+\subsection{Mouse Data}
 
 All information for the mouse datasets is recorded by a JavaScript library which is deployed as part of a VueJS application. It registers listener functions for the events \lstinline{pointermove, pointerdown, pointerup} on the whole document which are throttled to $30$ events per second. Pointer events are used because they include mouse, touch, pen/stylus and other pointing devices. For every event the following data is recorded:
-
 
 \begin{table}[]
 \begin{tabular}{|l|l|}
@@ -330,58 +325,55 @@ All events are cached locally in a list which is sent to the backend every two s
 
 \section{Bot Data Generation}
 
-To generate bot data the different variants are implemented by using the selenium-python \cite{SELENIUMPYTHON} library. It is design to run automated actions in a browser environment.
+To generate bot data the different variants were implemented by using the selenium-python and puppeteer (JavaScript) libraries.\footnote{\url{https://selenium-python.readthedocs.io/}} \footnote{\url{https://pptr.dev/}} They are designed to run automated actions in a browser environment.
 
-
-All bots are implemented as a generic python class \lstinline{Bot} which sets up a selenium\cite{SELENIUMPYTHON} webdriver instance and provides wrapper methods for randomly waiting between calls and locating elements. It starts a  browser instance with a specific window size. Firefox is used as the browser backend and 1366x768, 1920x1080 and 2560x1440 are used as the window sizes as these represent very common monitor resolutions.\footnote{\url{https://gs.statcounter.com/screen-resolution-stats/desktop/worldwide}} It also performs an initial request to set the current bot parameters and saves the returned cookie.
+Most bot variants were implemented as a generic class \lstinline{Bot} which sets up a selenium webdriver instance and provides wrapper methods for randomly waiting between calls and locating elements. When instantiated it starts a  browser instance with a specific window size. Firefox was used as the browser backend and 1366x768, 1920x1080 and 2560x1440 were used as the window sizes as these represent very common monitor resolutions.\footnote{\url{https://gs.statcounter.com/screen-resolution-stats/desktop/worldwide}} The class also handles the initially required request to set the current bot parameters and saves the returned cookie. The advanced mouse bot was implemented separately with puppeteer and the extension ghost-cursor \footnote{\url{https://github.com/Xetera/ghost-cursor}} because many instances could be run in parallel. After initially planning to use the PyAutoGUI \footnote{\url{https://pyautogui.readthedocs.io/en/latest/}} library, it turned out that its method of faking a cursor was not compatible with running headless browser instances without GUIs. The puppeteer automation was otherwise implemented to have the exact same methods as the selenium variant.
 
 The classes \lstinline{RequestBot} and \lstinline{MouseBot} inherit from \lstinline{Bot} and implement methods for the following actions:
 
-\begin{itemize}
+\begin{enumerate}
 	\item Accepting the initial prompt dialog to start the experiment
 	\item Visiting the top-level pages \{About, Blog, Contact/Imprint, Login, Register\}
-	\item Visiting randomly selected single blog pages with a parameter for how many (default: $10$)
-	\item Visiting completely randomly selected pages with a parameter for how many (default: $100$)
+	\item Visiting 10 randomly selected single blog pages with a parameter for how many
+	\item Visiting 100 completely randomly selected pages with a parameter for how many
 	\item Registering an account
-	\item Filling in profile data
-\end{itemize}
+	% \item Filling in profile data
+\end{enumerate}
+
+Randomly choosing the next link to click in action 3. and 4. increases the data's variance greatly by allowing for many different combinations of start and end points for mouse movements.
 
 All actions are configued to wait for the target element to be visible and clickable, scrolling it into view, if not. If configured as such, before each action a random delay between $0$ and $2$ seconds is waited for.
-
-\todo{maybe expand}
-% \subsection{Request Bot}
 
 The request bot primarily uses selenium's basic \lstinline{click}, \lstinline{back} and \lstinline{send_keys} methods to perform the actions. Barring the random delays it will perform the actions as fast as possible.
 
 % \subsection{Mouse Bot}
 
-The mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement.
-
-The advanced mouse bot uses the PyAutoGUI\footnote{\url{https://pyautogui.readthedocs.io/en/latest/}} library to provide additional interpolation methods. It can also be more easily extended than Selenium.
-The library \footnote{\url{https://github.com/AntoinePassemiers/Realistic-Mouse}} builds on top of PyAutoGUI.
-\footnote{\url{https://github.com/patrikoss/pyclick}}
+The mouse bot uses the same Selenium-based methods for locating elements but replaces the basic actions with Selenium's ActionChains which can automate low-level interactions including mouse movements, mouse button actions and keypresses. By default it interpolates linearly between the starting and ending locations of the movement. Ghost-cursor's implementation uses bezier curves with randomly selected control points in a limited area on one side of the line between start and end points. Additionally the specific move and click coordinates are also selected randomly from the target element's area. Figure \ref{fig:bot_mouse_heatmap} visualizes the generated mouse movements from one bot session.
 
 
-\chapter{Implementation}
-\todo{eithe expand or move into method}
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{figures/bot_mouse_heatmap.png}
+	\caption{Advanced Bot Mouse Movements Example}
+	\label{fig:bot_mouse_heatmap}
+\end{figure}
 
-\section{Feature Extraction}
+
+
+\section{Implementation}
+
+The basis of the experiment's websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. All web and application servers run on a bare-metal linux computer located in a German datacenter and are configured as real applications would be in a production environment. A postgresql server with two separate databases is also deployed. For evaluation their data was mirrored to local postgresql instances and queried directly from the same python application that runs the websites to avoid code duplication and benefit from SQLs expressiveness.
+
+\subsection{Feature Extraction}
 
 First, the stored unique users are filtered based on a minimum number of data points (20). In a (multi-threaded) pre-processing step the feature data is queried, loaded and calculated per user and labeled as "human" or "bot".
 
-\subsection{Request Data Features}
+The request data is aggregated per user and the features are calculated as described in the \nameref{concept_mouse_data} section.
 
-The request data is aggregated per user \todo{per user/max 20?} and the feature data is calculated as described in the \nameref{concept_mouse_data} section.
+The mouse data is also calculated per user but grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
 
-\subsection{Mouse Data Features}
+\subsection{Evaluation}
 
-The mouse data is calculated per user and grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
-
-\subsection{Classifier Implementation}
-
-% The classifier implementation uses a TensorFlow sequential keras model.
-The classifier implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library. The standard methods $fit$, $score$ and $predict$ are used.
-
+For training and classification the implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library. The standard methods $fit$, $score$ and $predict$ are used to train the model and test its accuracy. Additional metrics are calculated using custom methods. Classes and launch scripts are implemented for bot data generation, loading the external dataset and generating figures for visualization.
 
 
 \chapter{Evaluation}
