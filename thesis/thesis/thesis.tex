@@ -89,9 +89,9 @@ This thesis primarily focuses on detecting web-based bots that try to access or 
 
 \section{Requirements}
 
-The main requirement of a bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. If these factors are degraded by including other features, this work defines the overall value still lower as without.
+The main requirement of a bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. If these factors are degraded by including other features, this work defines the overall value still lower as without. This work aims to verify previous works' results where mouse dynamics as one example of biometric data was used successfully to identify bots. Its performance is compared to a similar detection system which operates on request metadata only, representative of a non-biometric approach. Finally one goal is to reduce the system's complexity, increase its performance and test its applicability in a realistic environment.
 
-The most desirable additional requirement is privacy friendliness, the feasibility of which this work aims to show. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
+The most desirable additional requirement is privacy friendliness, the feasibility of which this work tries to show as well. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
 
 Other optional challenges are ease of use for the operator and integration into existing solutions. These goals were be made easier if the whole or critical parts of the underlying system were available publicly and/or open-source.
 
@@ -378,9 +378,11 @@ For training and classification the implementation uses the RandomForestClassifi
 
 \chapter{Evaluation}
 
+To evaluate this work's results regarding the posed requirements the collected user experiment data was analyzed and unusable data was filtered out. After generating the synthetic bot data, the best Random Forest model's parameters were determined empirically. The model's performance was measured in different scenarios and compared to the request metadata method. The resulting best model was then tested on an external dataset. Finally its execution speed was analyzed to determine its applicability.\todo{bessere formulierung meh}
+
 \section{Experiment Data Quality}
 
-The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute Javascript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map 0-1 datapoints. With the chosen threshold of 2 datapoints per user the experiment resulted in recording 321 and 240 participants respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
+The experiment assumed that participants use the provided website frontends which set cookies to map recorded datapoints to specific users. The first website's basic statistics showed that 124867 unique users have been recorded which indicates that an actual bot was used to visit this website which did not execute JavaScript and set the cookie correctly. The histogram of the number of datapoints per users confirms that the vast majority of users only map to zero to one datapoints. With the chosen threshold of two datapoints per user the experiment resulted in recording 322 and 163 participants on the two websites respectively. Figure \ref{fig:user_dp_hist} shows the distribution of the number of user (request and mouse) in terms of the number of datapoints.
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{figures/user_dp_hist.png}
