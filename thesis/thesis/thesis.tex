@@ -393,7 +393,7 @@ The experiment assumed that participants use the provided website frontends whic
 
 \section{Model Hyperparameters}
 
-To empirically determine the best Random Forest parameters both mouse and request data from the experiment's first website and generated bots (same number of sessions as human users) were used to calculate the accuracy for combinations of the following parameters:
+To empirically determine the best Random Forest parameters both mouse and request data from the experiment's first website and generated bots (same number of sessions as human users) were used to calculate the performance for combinations of the following parameters:
 
 \begin{enumerate}
 	\item Number of estimators (10, 50, 100, 150, 200, 1000)
@@ -404,67 +404,72 @@ To empirically determine the best Random Forest parameters both mouse and reques
 Table \ref{table:mouse_params} and \ref{table:request_params} show the $16$ best performing combinations for mouse  and request data.
 
 \setlength{\arrayrulewidth}{0.2mm}
-\setlength{\tabcolsep}{18pt}
-\renewcommand{\arraystretch}{0.9}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1}
 
-
-\begin{table}[h!]
-\centering
-\caption{Model accuracy for different parameters (mouse data)}
-\label{table:mouse_params}
-\begin{tabular}{|l|l|l|l|l}
-\hline
-Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
-\hline
-None          & $ 10$           & None         & $ 0.9975874547647768$ \\
-sqrt          & $ 200$          & None         & $ 0.9951749095295537$ \\
-None          & $ 100$          & None         & $ 0.9951749095295537$ \\
-sqrt          & $ 10$           & None         & $ 0.9939686369119421$ \\
-None          & $ 50$           & None         & $ 0.9939686369119421$ \\
-None          & $ 1000$         & None         & $ 0.9939686369119421$ \\
-sqrt          & $ 50$           & None         & $ 0.9927623642943305$ \\
-sqrt          & $ 150$          & None         & $ 0.9927623642943305$ \\
-sqrt          & $ 1000$         & None         & $ 0.9927623642943305$ \\
-sqrt          & $ 100$          & None         & $ 0.9927623642943305$ \\
-None          & $ 200$          & None         & $ 0.9927623642943305$ \\
-None          & $ 150$          & None         & $ 0.9927623642943305$ \\
-None          & $ 1000$         & $ 4$         & $ 0.9927623642943305$ \\
-None          & $ 10$           & $ 4$         & $ 0.9927623642943305$ \\
-log2          & $ 50$           & None         & $ 0.991556091676719$ \\
-log2          & $ 200$          & $ 0$         & $ 0.991556091676719$ \\
-\hline
-\end{tabular}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Max Features & \# Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC \\
+			\hline
+			None & 10 & None & 0.972 & 0.984 & 0.977 & 0.981 & 0.997 \\
+			\hline
+			log2 & 10 & None & 0.967 & 0.970 & 0.985 & 0.977 & 0.992 \\
+			\hline
+			sqrt & 10 & None & 0.967 & 0.970 & 0.985 & 0.977 & 0.992 \\
+			\hline
+			log2 & 1000 & None & 0.961 & 0.962 & 0.985 & 0.973 & 0.996 \\
+			\hline
+			sqrt & 200 & None & 0.961 & 0.962 & 0.985 & 0.973 & 0.996 \\
+			\hline
+			None & 100 & None & 0.961 & 0.969 & 0.977 & 0.973 & 0.996 \\
+			\hline
+			sqrt & 1000 & None & 0.961 & 0.962 & 0.985 & 0.973 & 0.996 \\
+			\hline
+			None & 150 & None & 0.961 & 0.969 & 0.977 & 0.973 & 0.997 \\
+			\hline
+			log2 & 100 & None & 0.961 & 0.962 & 0.985 & 0.973 & 0.996 \\
+			\hline
+			None & 200 & None & 0.961 & 0.969 & 0.977 & 0.973 & 0.996 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Model accuracy for different parameters (request data)}
 \end{table}
 
-\begin{table}[h!]
-\centering
-\caption{Model accuracy for different parameters (request data)}
-\label{table:request_params}
-\begin{tabular}{|l|l|l|l|l}
-\hline
-Max\_features' & 'n\_estimators' & 'max\_depth' & Accuracy \\
-\hline
-sqrt & $ 200$  & None & $ 0.8723404255319149$  \\
-sqrt & $ 150$  & None & $ 0.8723404255319149$  \\
-sqrt & $ 1000$ & None & $ 0.8723404255319149$  \\
-log2 & $ 200$  & None & $ 0.8723404255319149$  \\
-log2 & $ 150$  & None & $ 0.8723404255319149$  \\
-log2 & $ 1000$ & None & $ 0.8723404255319149$  \\
-sqrt & $ 50$   & None & $ 0.851063829787234$   \\
-sqrt & $ 100$  & None & $ 0.851063829787234$   \\
-None   & $ 50$   & None & $ 0.851063829787234$   \\
-log2 & $ 50$   & None & $ 0.851063829787234$   \\
-log2 & $ 100$  & None & $ 0.851063829787234$   \\
-sqrt & $ 10$   & None & $ 0.8297872340425532$  \\
-None   & $ 200$  & None & $ 0.8297872340425532$  \\
-None   & $ 150$  & None & $ 0.8297872340425532$  \\
-None   & $ 1000$ & None & $ 0.8297872340425532$  \\
-None   & $ 100$  & None & $ 0.8297872340425532$ \\
-
-\hline
-\end{tabular}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|l|l|l|l|}
+			\hline
+			Max Features & \# Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC \\
+			\hline
+			sqrt & 1000 & None & 0.967 & 0.970 & 0.979 & 0.975 & 0.995 \\
+			\hline
+			log2 & 1000 & None & 0.967 & 0.970 & 0.980 & 0.975 & 0.994 \\
+			\hline
+			sqrt & 50 & None & 0.967 & 0.970 & 0.980 & 0.975 & 0.993 \\
+			\hline
+			sqrt & 150 & None & 0.966 & 0.970 & 0.978 & 0.974 & 0.994 \\
+			\hline
+			sqrt & 200 & None & 0.966 & 0.970 & 0.978 & 0.974 & 0.994 \\
+			\hline
+			log2 & 100 & None & 0.966 & 0.968 & 0.980 & 0.974 & 0.993 \\
+			\hline
+			log2 & 150 & None & 0.965 & 0.966 & 0.981 & 0.974 & 0.993 \\
+			\hline
+			log2 & 200 & None & 0.965 & 0.968 & 0.979 & 0.973 & 0.994 \\
+			\hline
+			log2 & 50 & None & 0.964 & 0.967 & 0.979 & 0.973 & 0.992 \\
+			\hline
+			sqrt & 100 & None & 0.964 & 0.968 & 0.978 & 0.973 & 0.994 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Model accuracy for different parameters (mouse data)}
 \end{table}
 
+The data is sorted primarily by accuracy as the most important metric. As the top three mouse data results have the same accuracy value, their AUC is considered next.
 
 \section{Request Data Performance}
 
