@@ -396,12 +396,39 @@ The experiment assumed that participants use the provided website frontends whic
 
 \section{Limited Data}
 
+\todo{maybe per user / total limit}
+
 With the goal of measuring limitations and the scalability in terms of the amount of data being available, the number of data points per user session were limited. In contrast to offline analysis, where limited data would not be an issue, the fewer data points are needed in (close to) realtime analysis for a satisfactory classification the better. Especially machine learning based systems scale generally better the more input data is available. For example Iliou et al.'s result of $1.00 AUC$ and $0.01 FPR$ in their simple bot evaluation \cite{10.1145/3339252.3339267}, which is best comparable to this work's generated bot data, shows that near perfect performance can be achieved.
 
-Without any limtitations the request data model's evaluation metrics show very good performance too. Table \ref{table:request_params_no_limit} shows.
+With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. 
 
 
-The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \todo{generate more bot data}.
+\begin{table}
+    \begin{center}
+        \begin{tabular}{rrrrrrr}
+            \toprule
+            Data Points / User & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
+            \midrule
+            200 & 0.980 & 0.980 & 0.980 & 0.980 & 0.982 & 0.209 \\
+            100 & 0.970 & 0.961 & 0.980 & 0.970 & 0.985 & 0.209 \\
+            No limit & 0.960 & 0.960 & 0.960 & 0.960 & 0.972 & 0.215 \\
+            50 & 0.950 & 0.941 & 0.960 & 0.950 & 0.976 & 0.208 \\
+            20 & 0.910 & 0.918 & 0.900 & 0.909 & 0.975 & 0.221 \\
+            5 & 0.900 & 0.885 & 0.920 & 0.902 & 0.945 & 0.220 \\
+            10 & 0.890 & 0.842 & 0.960 & 0.897 & 0.956 & 0.220 \\
+            4 & 0.880 & 0.913 & 0.840 & 0.875 & 0.922 & 0.211 \\
+            3 & 0.790 & 0.822 & 0.740 & 0.779 & 0.877 & 0.214 \\
+            2 & 0.690 & 0.744 & 0.580 & 0.652 & 0.774 & 0.226 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{Model performance with varying amounts of data points per user}
+    \label{table:request_params_no_limit}
+\end{table}
+
+
+
+The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \t
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{figures/roc_request_both_instances.png}
