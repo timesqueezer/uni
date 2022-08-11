@@ -194,7 +194,8 @@ The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} i
 	\item The percentage of HTTP requests that requested a JavaScript file. (11)
 	\item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
 	\item The total time (in seconds) between the first and the last HTTP request of the session. (21)
-	\item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path).
+	\item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path). (16)
+	\item Mean and Standard Deviation of times between successive requests. (23)
 \end{enumerate}
 
 \label{concept_mouse_data}
@@ -411,27 +412,27 @@ Table \ref{table:mouse_params} and \ref{table:request_params} show the $16$ best
 	\begin{center}
 		\begin{tabular}{|l|l|l|l|l|l|l|l|}
 			\hline
-			Max Features & \# Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC \\
+			Max Features & # Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
 			\hline
-			log2 & 200 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			None & 1000 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.973 & 4.348 \\
 			\hline
-			sqrt & 150 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			log2 & 200 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.973 & 0.732 \\
 			\hline
-			log2 & 10 & None & 0.872 & 0.647 & 1 & 0.786 & 0.980 \\
+			log2 & 1000 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.975 & 3.965 \\
 			\hline
-			log2 & 1000 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			None & 100 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.973 & 0.486 \\
 			\hline
-			sqrt & 200 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			sqrt & 1000 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.972 & 3.912 \\
 			\hline
-			log2 & 50 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			log2 & 100 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.971 & 0.389 \\
 			\hline
-			sqrt & 10 & None & 0.872 & 0.647 & 1 & 0.786 & 0.980 \\
+			log2 & 150 & None & 0.910 & 0.887 & 0.940 & 0.913 & 0.972 & 0.694 \\
 			\hline
-			sqrt & 1000 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			None & 50 & None & 0.900 & 0.870 & 0.940 & 0.904 & 0.971 & 0.273 \\
 			\hline
-			log2 & 100 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			sqrt & 200 & None & 0.900 & 0.870 & 0.940 & 0.904 & 0.972 & 0.727 \\
 			\hline
-			sqrt & 50 & None & 0.872 & 0.647 & 1 & 0.786 & 0.990 \\
+			None & 150 & None & 0.900 & 0.870 & 0.940 & 0.904 & 0.972 & 0.703 \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -442,27 +443,27 @@ Table \ref{table:mouse_params} and \ref{table:request_params} show the $16$ best
 	\begin{center}
 		\begin{tabular}{|l|l|l|l|l|l|l|l|}
 			\hline
-			Max Features & \# Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC \\
+			Max Features & # Estimators & Max Depth & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
 			\hline
-			sqrt & 1000 & None & 0.967 & 0.970 & 0.979 & 0.975 & 0.995 \\
+			sqrt & 1000 & None & 0.960 & 0.963 & 0.958 & 0.960 & 0.993 & 60.058 \\
 			\hline
-			log2 & 1000 & None & 0.967 & 0.970 & 0.980 & 0.975 & 0.994 \\
+			sqrt & 50 & None & 0.960 & 0.964 & 0.956 & 0.960 & 0.991 & 5.954 \\
 			\hline
-			sqrt & 50 & None & 0.967 & 0.970 & 0.980 & 0.975 & 0.993 \\
+			sqrt & 200 & None & 0.959 & 0.963 & 0.956 & 0.959 & 0.992 & 19.735 \\
 			\hline
-			sqrt & 150 & None & 0.966 & 0.970 & 0.978 & 0.974 & 0.994 \\
+			sqrt & 150 & None & 0.959 & 0.964 & 0.954 & 0.959 & 0.992 & 5.711 \\
 			\hline
-			sqrt & 200 & None & 0.966 & 0.970 & 0.978 & 0.974 & 0.994 \\
+			sqrt & 100 & None & 0.959 & 0.964 & 0.954 & 0.959 & 0.992 & 12.142 \\
 			\hline
-			log2 & 100 & None & 0.966 & 0.968 & 0.980 & 0.974 & 0.993 \\
+			log2 & 200 & None & 0.958 & 0.958 & 0.959 & 0.958 & 0.993 & 10.663 \\
 			\hline
-			log2 & 150 & None & 0.965 & 0.966 & 0.981 & 0.974 & 0.993 \\
+			log2 & 1000 & None & 0.958 & 0.961 & 0.955 & 0.958 & 0.993 & 63.159 \\
 			\hline
-			log2 & 200 & None & 0.965 & 0.968 & 0.979 & 0.973 & 0.994 \\
+			log2 & 150 & None & 0.958 & 0.957 & 0.959 & 0.958 & 0.993 & 12.179 \\
 			\hline
-			log2 & 50 & None & 0.964 & 0.967 & 0.979 & 0.973 & 0.992 \\
+			log2 & 100 & None & 0.956 & 0.956 & 0.956 & 0.956 & 0.992 & 10.144 \\
 			\hline
-			sqrt & 100 & None & 0.964 & 0.968 & 0.978 & 0.973 & 0.994 \\
+			None & 1000 & None & 0.955 & 0.954 & 0.957 & 0.955 & 0.990 & 126.303 \\
 			\hline
 		\end{tabular}
 	\end{center}
