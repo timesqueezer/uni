@@ -15,7 +15,12 @@
 \usepackage[table]{xcolor}
 \include{stylesvs}
 
-\renewcommand{\arraystretch}{1.5}
+
+\setlength{\arrayrulewidth}{0.2mm}
+\setlength{\tabcolsep}{4pt}
+% \renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{1}
+
 
 \addbibresource{thesis.bib}
 
@@ -184,6 +189,7 @@ An empirical search is used to determine the best parameters for this use case. 
 
 The following sections describe for both request and mouse data which features are chosen and how they are used as inputs for the Random Forest machine learning system. Previous works are referenced which already compared several different possiblities in similar contexts.
 
+\label{concept_request_data}
 \subsubsection{Request Data}
 
 Iliou et al. \cite{10.1145/3339252.3339267} ranked the best performing metrics for simple and advanced bots per classification algorithm. For Random Forest, some attributes are not suitible in this theses. For example the authors include a boolean indicating whether a request has a known search engine in their "Referer" header (attribute 14). Because participants are asked to visit the websites directly this attribute is omitted. The websites are otherwise designed such that all of the above attributes are meaningful. The used attributes are listed in the implementation section.
@@ -264,12 +270,13 @@ The actual classification is performed by splitting the extracted features into 
 
 A user experiment was announced to all members of the University of Hamburg to gather a representative dataset for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any biases as much as possible. To gather all required data a custom website with two different frontend layouts and designs was implemented.
 
+\label{concept_websites}
 \subsection{Websites}
 
 The structure and content mimic blog-style websites with login and register functionalities. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection. After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
 All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
-One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (Single Page Application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
+One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (single-page application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
 
 To combine the advantages of both approaches a hybrid system is used that intercepts URL changes, e.g. from clicking a link, preventing the default action and loading the target page through a separate HTTP request. The main content section is then replaced by the newly loaded HTML data. From the backend's point of view at least one request is performed per visited page while mouse data is recorded without any gaps.
 
@@ -396,11 +403,12 @@ The experiment assumed that participants use the provided website frontends whic
 
 \section{Limited Data}
 
-\todo{maybe per user / total limit}
+With the goal of measuring limitations and the scalability in terms of the amount of data being available, the number of data points per user session were limited. In contrast to offline analysis, where limited data would not be an issue, the fewer data points are needed in (close to) realtime analysis for a satisfactory classification the better to detect bots as quickly as possible. Especially machine learning based systems scale generally better the more input data is available. For example Iliou et al.'s result of $1.00 AUC$ and $0.01 FPR$ in their simple bot evaluation \cite{10.1145/3339252.3339267}, which is best comparable to this work's generated bot data, shows that near perfect performance can be achieved. Conversely a balance needs to be found between amount of data and performance.
 
-With the goal of measuring limitations and the scalability in terms of the amount of data being available, the number of data points per user session were limited. In contrast to offline analysis, where limited data would not be an issue, the fewer data points are needed in (close to) realtime analysis for a satisfactory classification the better. Especially machine learning based systems scale generally better the more input data is available. For example Iliou et al.'s result of $1.00 AUC$ and $0.01 FPR$ in their simple bot evaluation \cite{10.1145/3339252.3339267}, which is best comparable to this work's generated bot data, shows that near perfect performance can be achieved.
+With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. As figure \ref{fig:user_dp_hist} shows, there are many cases where less datapoints than the limit are available. This results in lower values for features which calculate an absolute metric instead of a percentage or relative one, e.g. feature four and five described in \ref{concept_request_data}. These differences in absolute values can be easily learned and overfitted to by the machine learning model but don't represent actual distinct bot or human behavior.
+Another problem is the variability of available requests in a practical setting. As mentioned in \ref{concept_websites}, many websites are single-page applications where an initially loaded JavaScript bundle contains many website components such that less subsequent requests need to be made. Thus a worst-case scenario would be that only 2 requests are initially available. More commonly additional resources, such as images, css files or api data might be loaded but even in this case the initial requests would be the same between humans and bots as they are automatically performed by the browser and are independent of any interaction with the website itself. As a middle ground 10 data points are chosen for the remaining experiments. This amount of requests can be assumed to be available in almost any context.
 
-With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. 
+Similarly the mouse data model performs in general better the more data is available (Table \ref{table:mouse_params_no_limit}). A big advantage of this approach is that more data points can potentially be aquired in a shorter amount of time compared to request data. For example, when sampling at $30$ events per second, it only takes $1.66s$ ($50$ samples) to capture the amount of data points needed to surpass the request data model's performance.
 
 
 \begin{table}
@@ -422,19 +430,33 @@ With less limitations the request data model's evaluation metrics show increasin
             \bottomrule
         \end{tabular}
     \end{center}
-    \caption{Model performance with varying amounts of data points per user}
+    \caption{Request data model performance with varying amounts of data points per user}
     \label{table:request_params_no_limit}
 \end{table}
 
 
+\begin{table}
+    \begin{center}
+        \begin{tabular}{rrrrrrr}
+            \toprule
+            Data Points / User & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
+            \midrule
+            No limit & 0.966 & 0.964 & 0.968 & 0.966 & 0.993 & 0.449 \\
+            50 & 0.933 & 0.943 & 0.922 & 0.933 & 0.979 & 0.124 \\
+            200 & 0.930 & 0.951 & 0.906 & 0.928 & 0.979 & 0.189 \\
+            100 & 0.920 & 0.942 & 0.895 & 0.918 & 0.975 & 0.149 \\
+            20 & 0.855 & 0.846 & 0.868 & 0.857 & 0.949 & 0.114 \\
+            10 & 0.850 & 0.862 & 0.833 & 0.847 & 0.903 & 0.120 \\
+            5 & 0.846 & 0.909 & 0.769 & 0.833 & 0.916 & 0.099 \\
+            4 & 0.826 & 0.895 & 0.739 & 0.810 & 0.879 & 0.098 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{Mouse data model performance with varying amounts of data points per user}
+    \label{table:mouse_params_no_limit}
+\end{table}
 
-The model's accuracy when only using the request-type data points is $76.60\%$ and $76.92\%$ for the two websites recpectively which indicates that this performance might be a limitation of the model. Their ROC curves \ref{fig:roc_request_both_instances} show that \t
 
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{figures/roc_request_both_instances.png}
-    \caption{Distribution of users in terms of datapoint count}
-    \label{fig:roc_request_both_instances}
-\end{figure}
 
 
 
@@ -448,13 +470,9 @@ To empirically determine the best Random Forest parameters both mouse and reques
     \item Maximum tree depth (None, 1, 2, 3, 4, 6, 7)
 \end{enumerate}
 
-Table \ref{table:request_params} and \ref{table:mouse_params} show the $10$ best performing combinations for mouse  and request data. The data is sorted primarily by accuracy as the most important metric. The additional scores Precision, Recall, F1, AUC and the training time were computed as well. Their values of the top performing results lie close together except training time which is important in the context of applicability and is considered second most important. The different values for the number of estimators and the maximum number of features for split consideration perform very similarly. For request data, the chosen values for following experiments were chosen to be $100$ and $None$ respectively as their result had the same accuracy and AUC as the top result but its training time was significantly lower at $0.486s$. Analogously for the mouse data result, $50$ and $sqrt$ were chosen. All results have in common that no restriction to the decision trees' maximum depth is applied which is also the default value of scikit-learn's implementation. This is expected as the tree depth is directly correlated with the ability to classify multi-dimensional input data.
+Table \ref{table:request_params} and \ref{table:mouse_params} show the $10$ best performing combinations for mouse  and request data. The data is sorted primarily by accuracy as the most important metric. The additional scores Precision, Recall, F1, AUC and the training time were computed as well. Their values of the top performing results lie close together except training time which is important in the context of applicability and is considered second most important. The different values for the number of estimators and the maximum number of features for split consideration perform very similarly. For request data, the chosen values for following experiments were chosen to be $100$ and $None$ respectively as their result had the same accuracy and AUC as the top result but its training time was significantly lower at $0.486s$. Analogously for the mouse data result, $200$ and $sqrt$ were chosen. All results have in common that no restriction to the decision trees' maximum depth is applied which is also the default value of scikit-learn's implementation. This is expected as the tree depth is directly correlated with the ability to classify multi-dimensional input data.
 
-These results also give a first look into the expected performance with the model based on request data, in general, performing worse compared to mouse data in terms of accuracy. In addition to the increase in accuracy of $5$ percentage points, the latter model's precision and AUC values are better too. These are directly related to a lower false positive rate which is especially important in this bot detection context.
-
-\setlength{\arrayrulewidth}{0.2mm}
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1}
+These results also give a first look into the expected performance with the model based on request data, in general, performing worse compared to mouse data in terms of accuracy. In addition to the increase in accuracy of $5.6$ percentage points, the latter model's precision and AUC values are better too. These are directly related to a lower false positive rate which is especially important in this bot detection context.
 
 \begin{table}
     \begin{center}
@@ -484,17 +502,17 @@ These results also give a first look into the expected performance with the mode
         \begin{tabular}{lrlrrrrrr}
             \toprule Max Features & \# Estimators & Max Depth & Accuracy & Prec. & Recall & F1 & AUC & Tr. Time (s) \\
             \midrule
-            sqrt & 1000 & None & 0.960 & 0.963 & 0.958 & 0.960 & 0.993 & 60.058 \\
+            sqrt & 150 & None & 0.967 & 0.964 & 0.969 & 0.967 & 0.994 & 11.305 \\
+            log2 & 1000 & None & 0.966 & 0.962 & 0.970 & 0.966 & 0.993 & 70.796 \\
             \rowcolor{green}
-            sqrt & 50 & None & 0.960 & 0.964 & 0.956 & 0.960 & 0.991 & 5.954 \\
-            sqrt & 200 & None & 0.959 & 0.963 & 0.956 & 0.959 & 0.992 & 19.735 \\
-            sqrt & 150 & None & 0.959 & 0.964 & 0.954 & 0.959 & 0.992 & 5.711 \\
-            sqrt & 100 & None & 0.959 & 0.964 & 0.954 & 0.959 & 0.992 & 12.142 \\
-            log2 & 200 & None & 0.958 & 0.958 & 0.959 & 0.958 & 0.993 & 10.663 \\
-            log2 & 1000 & None & 0.958 & 0.961 & 0.955 & 0.958 & 0.993 & 63.159 \\
-            log2 & 150 & None & 0.958 & 0.957 & 0.959 & 0.958 & 0.993 & 12.179 \\
-            log2 & 100 & None & 0.956 & 0.956 & 0.956 & 0.956 & 0.992 & 10.144 \\
-            None & 1000 & None & 0.955 & 0.954 & 0.957 & 0.955 & 0.990 & 126.303 \\
+            sqrt & 200 & None & 0.966 & 0.962 & 0.970 & 0.966 & 0.994 & 5.899 \\
+            sqrt & 50 & None & 0.966 & 0.964 & 0.968 & 0.966 & 0.993 & 9.280 \\
+            sqrt & 100 & None & 0.966 & 0.962 & 0.969 & 0.966 & 0.994 & 9.815 \\
+            sqrt & 1000 & None & 0.966 & 0.960 & 0.971 & 0.966 & 0.994 & 82.889 \\
+            log2 & 200 & None & 0.964 & 0.963 & 0.965 & 0.964 & 0.993 & 20.381 \\
+            log2 & 150 & None & 0.962 & 0.963 & 0.960 & 0.962 & 0.993 & 5.950 \\
+            None & 150 & None & 0.961 & 0.954 & 0.969 & 0.961 & 0.991 & 91.586 \\
+            None & 200 & None & 0.961 & 0.953 & 0.969 & 0.961 & 0.991 & 110.588 \\
             \bottomrule
         \end{tabular}
     \end{center}
