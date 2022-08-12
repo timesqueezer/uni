@@ -558,19 +558,54 @@ The first direct comparison used all available human mouse data and the generate
 
 
 \begin{figure}[h]
-    \includegraphics[width=\textwidth]{figures/fig:mouse_advanced_roc.png}
+    \includegraphics[width=\textwidth]{figures/mouse_advanced_roc.png}
     \caption{Advanced mouse bot ROC curve}
     \label{fig:mouse_advanced_roc}
 \end{figure}
 
+\todo{ww. training with}
 
-When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
+The next experiment evaluates how well advanced bots can be detected when only training with basic mouse data and vice versa. All available human data was included in training. Table \ref{table:simple_vs_advanced_mouse_separate_train_test} shows that the model expectedly generalized poorly when training with basic bot data with an accuracy of only $52.29\%$ which is only slightly better than random guessing. Training with advanced bot data resulted in an increased accuracy of $76.9\%$ when trying to detect basic bots. The low recall value implies a high false negative rate and means that many bots remained undetected. These results can be explained by the different data generation methods.
 
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{figures/roc_mouse_both_instances.png}
-    \caption{Distribution of users in terms of datapoint count}
-    \label{fig:roc_mouse_both_instances}
-\end{figure}
+\begin{table}
+    \begin{center}
+        \begin{tabular}{lrrrrrr}
+            \toprule
+            Scenario & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
+            \midrule
+            Adv. training data, basic test data & 0.769 & 0.938 & 0.577 & 0.714 & 0.928 & 1.306 \\
+            Basic training data, adv. test data & 0.529 & 0.952 & 0.061 & 0.115 & 0.765 & 0.888 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{Model performance with separate training and test data}
+    \label{table:simple_vs_advanced_mouse_separate_train_test}
+\end{table}
+
+It follows the more relevant comparison of training with one website's data and testing with the other's. \ref{table:website_mouse_compare}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{lrrrrrr}
+            \toprule
+            Scenario & Accuracy & Precision & Recall & F1 Score & AUC & Training Time \\
+            \midrule
+            W1 training data, W2 test data & 0.966 & 0.955 & 0.964 & 0.960 & 0.993 & 1.075 \\
+            W2 training data, W1 test data & 0.914 & 0.715 & 0.961 & 0.820 & 0.983 & 0.524 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \caption{Model performance comparing training/testing with different website's datas}
+    \label{table:website_mouse_compare}
+\end{table}
+
+
+
+%\begin{figure}[h]
+%    \includegraphics[width=\textwidth]{figures/roc_mouse_both_instances.png}
+%    \caption{Distribution of users in terms of datapoint count}
+%    \label{fig:roc_mouse_both_instances}
+%\end{figure}
 
 \section{Performance on External Dataset}
 
