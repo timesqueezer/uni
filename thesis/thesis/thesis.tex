@@ -388,7 +388,7 @@ For training and classification the implementation uses the RandomForestClassifi
 
 \chapter{Evaluation}
 
-To evaluate this work's results regarding the posed requirements the collected user experiment data was analyzed and unusable data was filtered out. After generating the synthetic bot data, the best Random Forest model's parameters were determined empirically. The model's performance was measured in different scenarios and compared to the request metadata method. First it was determined what impact limited versus all available data has ony the performance. Then the basic and advanced mouse bot variance were compared. Multiple combinations of training and test data including an external dataset were evaluated to reason about the generalizability of both the experiment's data as well as this work's method in general. Finally its execution speed was analyzed to determine its applicability.
+To evaluate this work's results regarding the posed requirements the collected user experiment data was analyzed and unusable data was filtered out. After generating the synthetic bot data, it was determined what impact limited versus all available data has on the performance. Subsequently the best Random Forest model parameters were determined empirically. The model's performance was also measured in different scenarios and compared to the request metadata method. Then the basic and advanced mouse bot variance were compared. Multiple combinations of training and test data including an external dataset were evaluated to reason about the generalizability of both the experiment's data as well as this work's method in general. Finally its execution speed was analyzed to determine its applicability.
 
 \section{Experiment Data Quality}
 
@@ -457,9 +457,6 @@ Similarly the mouse data model performs in general better the more data is avail
 \end{table}
 
 
-
-
-
 \section{Model Hyperparameters and General Performance}
 
 To empirically determine the best Random Forest parameters both mouse and request data from the both experiment's websites and generated bots (same number of sessions as human users, advanced for mouse bot) were used to calculate the performance for combinations of the following parameters:
@@ -520,9 +517,13 @@ These results also give a first look into the expected performance with the mode
     \label{table:mouse_params}
 \end{table}
 
-\section{Mouse Data Performance}
+\section{Different Scenario Comparison}
 
-\todo{TP FP table, different experiments}
+The following scenarios aim to evaluate the method of bot detection using mouse dynamics in different realistic contexts. Initially it is determined whether an advanced method of generating fake mouse data can be detected better or worse compared to a simple approach. Then both methods are separated and used for training and testing separately. 
+
+Simple versus Advanced Mouse Data Performance
+
+The first direct comparison used all available human mouse data and the generated simple and advanced mouse data respectively for both training and testing datasets. 
 
 When using mouse data, the classifiers' accuracies are $95.66\%$ and $93.58\%$ which is significantly better compared to using only request data and confirms the hypothesis that bot detection works better when incorporating biometric data. Their ROC curves \ref{fig:roc_mouse_both_instances} show that the requirement for a low False Positive Rate is also met. Their areas under the curve of $0.98$ also show this methods good performance.
 
