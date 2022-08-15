@@ -614,24 +614,22 @@ The first scenario has a $5.2\%$ higher accuracy of $96.6\%$ compared to trainin
 
 \section{Performance on External Dataset}
 
-To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Inputs from 21 users were collected during their normal computer activities on one desktop and 20 laptop devices. Both mice and touchpads were used. Their raw mouse movement and interaction data is preprocessed in a very similar way to the experiment's data. After conversion to the used model's format, the data is used as a large test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors.
+To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Inputs from 21 users were collected during their normal computer activities on one desktop and 20 laptop devices. Both mice and touchpads were used. Their raw mouse movement and interaction data is preprocessed in a very similar way to the experiment's data. After conversion to the used model's format, the data is used as a large test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors. The whole dataset yielded $1.54M$ input vectors.
 
-For comparison the model is trained on data from both websites and the advanced bot data. When scoring the model with "User1"'s data as the test set, the model achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $99.76\%$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance.
+For comparison the model is trained on data from both websites and the advanced bot data. When scoring the model with "User1"'s data as the test set, the model achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $99.76\%$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance. Reversing the setup and using the external data for training confirms that more data increases the model's performance. Its accuracy increases to $99.71\%$ and the values for FPR, FNR to $0.55\%$ and $0.15\%$ respectively. The comparison to the whole DFL dataset results in the model achieving an accuracy of $83.03\%$ with a reduced False Positive Rate of $17.16\%$. Although the data is even more unbalanced, the performance is slightly better.
 
-\todo{train on external, test on own}
 
-For the whole dataset, which resulted in $1.54M$ input vectors, the accuracy dropped to $98.20\%$, $97.94\%$.
 
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{figures/roc_both_datasets_both_instances.png}
-    \caption{ROC curves}
-    \label{fig:roc_both_datasets_both_instances}
-\end{figure}
+%\begin{figure}[H]
+%    \includegraphics[width=\textwidth]{figures/roc_both_datasets_both_instances.png}
+%    \caption{ROC curves}
+%    \label{fig:roc_both_datasets_both_instances}
+%\end{figure}
 
 
 \section{Execution Speed Performance}
 
-The execution speed is measured by predicting a score after each request. The total time, time without extracting the features and score are logged and averaged over multiple requests. These values are calculated for different amounts of previous data points which are incorporated. This is significant because the mouse features include many values which are accumulated over many data points. \ref{fig:speed_per_dp_count} shows the times and performance for the different numbers.
+The execution speed is measured by predicting a score after each request. This experiment only considers one user at a time which is why the actual accuracies differ from previous sections and are only meant to be compared in a relative manner. The human user having the most available datapoints and a correspondingly generated bot user is used. The total time, time without extracting the features and score are logged and averaged over multiple requests. These values are calculated for different amounts of previous data points which are incorporated. This is significant because the mouse features include many values which are accumulated over many data points. Figure \ref{fig:speed_per_dp_count} graphs the times and performance for the different numbers.
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{figures/speed_per_dp_count.png}
@@ -643,24 +641,19 @@ The measured data shows that by only considering $100$ previous data points the 
 A better method might be to separate the prediction system entirely from single requests and decide on a per-user basis asynchronously after enough samples have been collected whether to take any action against it or not.
 
 
+\chapter{Discussion and Conclusion}
 
+In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needed to make many assumptions in order to limit the scope and produce generalizable data.
 
-\chapter{Discussion}
-In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needs to make many assumptions in order to limit the scope and produce generalizable data.
-
-One limitation is that this approach does only work for clients that use a pointer device, i.e. mouse, touchpad or touch screen. If this is not acceptable, a different method would additionally need to be used. This applies for example when screen readers, text-based browsers or automated clients should be supported. A compromise might be to use the pointer-based system to trigger additional security checks at critical actions, such as registering an account or posting content.
+One limitation is that this approach does only work for clients that use a pointer device, i.e. mouse, touchpad or touch screen. If this is not acceptable, a different method or other biometric data would additionally need to be used. This applies for example when screen readers, text-based browsers or automated clients should be supported. A compromise might be to use the pointer-based system to trigger additional security checks at critical actions, such as registering an account or posting content.
 
 Another problem might be that this approach does not elimitate all user tracking and the associated data processing. Especially public pages that should to be accessed without the need to ask for explicit confirmation. Although this is a general problem for websites that store or process user data, e.g. in the form of cookies, it applies to this approach as well. The main advantage is that the proposed system can be run by the same operator and does not need to send user data to any third parties.
 
 Even the best-case accuracy of $>99\%$ might be not enough for some applications, especially if critical decisions depend on the system.
 
-\chapter{Conclusion}
+The Evaluation shows that in general a bot detection system which incorporates pointer data can be considered for practical use. Its main performance criteria in the form of high accuracy and a low false positive rate are given but its actual value is dependend on the concrete usage, operation and performance needs. The requirement to be privacy-friendly is met by using a system based on machine learning which can be deployed by operators themselves and does not need to share any identifiable user data with third parties. Finally, good execution speed is not achieved in every case and does degrade the overall value of the proposed system. In practice, higher accuracy can be traded for higher execution speed. Additionally the system has many possibilities to be optimized and improved which would meet this requirement as well.
 
-The Evaluation shows that in general a bot detection system which incorporates pointer data can be considered for practical use. Its main performance criteria in the form of high accuracy and a low false positive rate are given but its actual value is dependend on the concrete usage and operation.
-
-The requirement to be privacy-friendly is met by using a machine-learning-based system which can be deployed by operators themselves and does not need to share any identifiable user data with third parties.
-
-Finally, good execution speed is not achieved in every case and does degrade the overall value of the proposed system. In practice, higher accuracy can be traded for higher execution speed. Additionally the system has many possibilities to be optimized and improved which would meet this requirement as well.
+Ultimately the mouse dynamics approach cannot solve the problem of bot detection by itself and should not solely be relied upon but can definitely improve overall performance as part of a composite system.
 
 \begin{raggedright}
   \printbibliography
