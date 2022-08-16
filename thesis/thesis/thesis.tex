@@ -19,7 +19,7 @@
 \setlength{\arrayrulewidth}{0.2mm}
 \setlength{\tabcolsep}{4pt}
 % \renewcommand{\arraystretch}{1.5}
-\renewcommand{\arraystretch}{1}
+\renewcommand{\arraystretch}{1.2}
 
 
 \addbibresource{thesis.bib}
@@ -65,15 +65,15 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots presents an increasing risk to applications in the web. Their detection represents an integral part of modern security system. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions. It utilizes biometric data in the form of pointer interactions. Compared to previous works this thesis focuses on real world applicability in both data collection and evaluation by additionally simplifying the machine learning model and collecting a dataset of matching and thus better comparable request and mouse data.
+Malicious use of automated bots presents an increasing risk to applications in the web. Their detection represents an integral part of modern security system. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions. It utilizes biometric data in the form of pointer interactions. Compared to previous works this thesis focuses on real world applicability in both data collection and evaluation by additionally simplifying the machine learning model and collecting a dataset of matching and thus better comparable request and mouse data. The proposed system achieves 96.6\% accuracy when tested with this work's dataset and up to 99.7\% when incorporating an external dataset. It is also tunable for high execution speed, but compromises in performance need to be made.
 
 \tableofcontents
 
 \chapter{Introduction}
 
-In this work, the term bot is referring to software that is automatically performing HTTP(S) requests with the intent of harming a target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past years. In their yearly report, the Imperva Threat Research Lab\footnote{\url{https://www.imperva.com/blog/}} show that both the percentage of bot traffic in general and the absolute amount of malicious bot traffic have increased over time.\cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021,BAD_BOT_REPORT2022} For example 27.7\% of 2021's internet traffic was fraudulent and automatically generate compared to 25.6\% in 2020.
+The ability to identify the current partner in a communication system as a human or computer is desirable in many contexts. Bots can be used to achieve malicious goals which operators want to prohibit and can be grouped into the following categories. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website information and can use it for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience. Imperva's 2022 Report\cite{BAD_BOT_REPORT2022} cites Account Takeover, Scraping and Scalping as the top three most common attack types.
 
-The usage of bots can have several goals and can be grouped into the following categories. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website information and can use it for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience. Imperva's 2022 Report\cite{BAD_BOT_REPORT2022} cites Account Takeover, Scraping and Scalping as the top three most common attack types.
+In this work, the term bot is referring to software that automatically performs HTTP(S) requests with the intent of harming a target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past years. In their yearly report, the Imperva Threat Research Lab\footnote{\url{https://www.imperva.com/blog/}} show that both the percentage of bot traffic in general and the absolute amount of malicious bot traffic have increased over time.\cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021,BAD_BOT_REPORT2022} For example 27.7\% of 2021's internet traffic was fraudulent and automatically generate compared to 25.6\% in 2020.
 
 Most of the above attacks need to trick a webserver and their application backends into performing the request as if it had been initiated by a human. Instead of combating the resulting issues separately, bot detection could potentially mitigate many at once.
 
@@ -81,7 +81,15 @@ A complication in this problem space is the, often desired, requirement for non-
 
 Many website operators tend to use solutions that are easy to integrate. This requires embeding external software which collects user data and sends it to servers of the software vendors. Closed source software does not allow to determine what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the data transfers in a very detailed and legally complicated way. For example, in countries falling under the GDPR \cite{GDPR} a comprehensive data protection documentation is required. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
 
-This thesis primarily focuses on detecting web-based bots that try to access or perform actions on websites which are the primary medium with which people interact on the internet. In contrast to related works this thesis focus is set on the applicability in real world application and on trying to simplify the overall system to increase the ease of use and execution speed. Additionally a dataset of matching request and mouse data is collected to compare both data types as best as possible.
+This thesis primarily focuses on detecting web-based bots that try to access or perform actions on websites which are the primary medium with which people interact on the internet. In contrast to related works its focus is set on the applicability in real world use cases and on trying to simplify the overall system to increase the ease of use and execution speed. Additionally a dataset of matching request and mouse data is collected to compare both data types as best as possible.
+
+This work's main contributions are:
+
+\begin{itemize}
+    \item Validating previous works' results for machine learning based bot detection methods
+    \item Collecting a dataset from real world websites and users with matching request and mouse data that can be directly compared
+    \item Evaluating the proposed architecture's performance in scenarios which a typical deployment might encounter
+\end{itemize}
 
 
 \chapter{Requirements and Related Work}
@@ -95,13 +103,24 @@ This thesis primarily focuses on detecting web-based bots that try to access or 
 %\url{https://developers.google.com/recaptcha/docs/v3} \\
 %\url{https://www.hcaptcha.com/} \\
 
+Depending on several factors a bot detection system can have many different requirements. These include for example:
+
+\begin{itemize}
+    \item The types of bot that are expected to be used and need to be detected
+    \item A focus on reliability and low false positive rate because disrupting the normal user flow for humans might be even less desirable than leaving some bots undetected
+    \item The need for immediate decisions because following actions depend on the actor being a bot or human, e.g. CAPTCHAs
+\end{itemize}
+
+
 \section{Requirements}
 
-The main requirement of a bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. If these factors are degraded by including other features, this work defines the overall value still lower as without. This work aims to verify previous works' results where mouse dynamics as one example of biometric data was used successfully to identify bots. Its performance is compared to a similar detection system which operates on request metadata only, representative of a non-biometric approach. Finally one goal is to reduce the system's complexity, increase its performance and test its applicability in a realistic environment.
+The main requirement of the proposed bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. In concrete terms, reliable in this context means a generally high accuracy. A low false positive rate is explicitely weighed higher than other metrics because accusing a human of being a bot and disrupting their usage of the application is considered worse than vice versa, where a bot might be falsely detected as a human. If the needed analysis cannot be run synchronously while the actor is performing actions, bots might be detected too late or some actions would need to wait for the detection system if they require a definite classification. This is why the system's execution speed is the next most important requirement.
 
-The most desirable additional requirement is privacy friendliness, the feasibility of which this work tries to show as well. For this to be met a level of transparency is required in order to comprehend the user data flow. Proprietary solutions needed to be trusted or individual agreements needed to be found.
+If these factors are degraded by including other features, this work defines the overall value still lower as without. This work aims to verify previous works' results where mouse dynamics as one example of biometric data was used successfully to identify bots. Its performance is compared to a similar detection system which operates on request metadata only, representative of a non-biometric approach. Finally one goal is to reduce the system's complexity, increase its performance and test its applicability in a realistic environment.
 
-Other optional challenges are ease of use for the operator and integration into existing solutions. These goals were be made easier if the whole or critical parts of the underlying system were available publicly and/or open-source.
+Other challenges considered are ease of use for the operator and the possibility to be integrated into existing solutions. These goals are being made easier because, in contrast to proprietary solution, its implementation is explained in detail and available publicly.
+
+The most desirable additional requirement is privacy friendliness which a machine learning system, that can be deployed within an operator's infrastructure, provides. Its parameters represent sufficiently anonymized user data that it can be more easily used and shared.
 
 \section{Related Work}
 
@@ -130,9 +149,9 @@ A MLP-based neural network with a single hidden layer of 40 neurons was used for
 Due to the sheer size of the problem space in bot detection and human authentication scientific works need to limit their scope to generate any meaningful results. These limitations could be in the form of specific input data, methods or goals which result in compromises needing to being made in other parts. For example Iliou et al. \cite{10.1145/3339252.3339267} compare in great detail how different machine learning algorithms, their parameters and different input features perform on real world request metadata. But their poor performance for detecting advanced bots show that their findings might not be relevant when detecting such bots is desirable. Papadopoulos et. al \cite{PETS2021} limit their method to specific cases where mobile devices and data from their accelerometers and gyroscopes are used. This would not be applicable as soon as this data is not made available by the user or other devices are used. To bring the field of bot detection forward many different approaches need to be combined and also tested under real world conditions which this work aims to add to.
 
 
-\chapter{Machine Learning Based Bot Detection Using Mouse Dynamics Compared to Request Metadata in a Practical Context}
+\chapter{Request Metadata and Mouse Dynamics for Practical Bot Detection}
 
-The thesis explores how biometric data can potentially improve a machine learning system for bot detection. Compared to data that is only indirectly generated by a human, for example web requests metadata, biometric data contains more information that can be directly used to decide whether a bot or human generated the data. A big part of request data is redundant as it either does not change between different requests or clients, e.g. the "User-Agent" header, or can be easily faked. Illustrated by figure \ref{fig:user_mouse_heatmap}, human-generated mouse data contains many different movements which are hard to model for an attacker.
+The thesis explores how biometric data can potentially improve a machine learning system for bot detection. Compared to data that is only indirectly generated by a human, for example web requests metadata, biometric data contains more information that can be directly used to decide whether it originated from a bot or human. A big part of request data is redundant as it either does not change between different requests or clients, e.g. the "User-Agent" header, or can be easily faked. Illustrated by figure \ref{fig:user_mouse_heatmap}, human-generated mouse data contains many different movements which are hard to model mathematically and thus difficult for an attacker to imitate.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{figures/user_mouse_heatmap.png}
@@ -140,16 +159,11 @@ The thesis explores how biometric data can potentially improve a machine learnin
     \label{fig:user_mouse_heatmap}
 \end{figure}
 
-As previous works showed, mouse data in combination with machine learning systems have the potential to perform well enough for practical use but lacked either performance or execution speed, especially when trying to differenciate between different human users. When reducing the goal to only detecting bots versus any human, this work aims to show the increased viability. Its approach differs from similar works, such as Acien et al.'s BeCAPTCHA method \cite{Acien2020BeCAPTCHAMouseSM} in that it also hypothesises that a simplified approach in terms of model parameters, input feature complexity can be found to improve the practical feasibility, ease of deployment and execution speed. This is achieved by performing both the experiments and data collection as well as the evaluation in an environment which is representative of a real application.
-
-
-\section{Concept}
-
-For classification a system based on machine learning is chosen because it allows learned knowledge about different bot behavior to be more easily transfered between systems without compromising user privacy in comparison to other methods. For example federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} is an approach that only shares internal model parameters which are sufficiently anonymized so that specific users cannot be identified. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
+For classification a system based on machine learning is primarily chosen because it performed well in previous works, such as the papers from Iliou et al. \cite{10.1145/3339252.3339267} and Acien et al. \cite{Acien2020BeCAPTCHAMouseSM}. As they and other related works showed, machine learning systems have the potential to perform well enough for practical use but lacked either performance or execution speed, especially when trying to differenciate between different human users. When reducing the goal to only detecting bots versus any human, this work aims to show the increased viability. Its approach differs from similar works, such as Acien et al.'s BeCAPTCHA method \cite{Acien2020BeCAPTCHAMouseSM} in that it also hypothesises that a simplified approach in terms of model parameters, input feature complexity can be found to improve the practical feasibility, ease of deployment and execution speed. This is achieved by performing both the experiments and data collection as well as the evaluation in an environment which is representative of a real application.
 
 A similar system to the proposed architecture of Iliou et al. \cite{10.1145/3339252.3339267} is implemented for detecting bots via request data. Their work is used as the basis for the machine learning system to compare against. They evaluated the most promising features that have been proposed over 5 years prior to their publication (2019) and accumulated their findings in concise results.
 
-Mouse, touchpad or touch gestures (pointer data) are used as the second type of data in this work's approach. This data is harder to fake by attackers trying to emulate human behavior. Because it would be classified as sensitive user data, this type of data collection and processing could not reasonably be used by a third party provider or without a strictly necessary reason and would require explicit user consent \cite{GDPR}. Thus it would be best to process the data in an anonymized and indirect way which this method of machine learning provides as well. Derived data features are adapted from previous works and limited to simplify the preprocessing while maintaining good performance.
+Mouse, touchpad or touch gestures (pointer data) are used as the second type of input data in this work's approach. This data is harder to fake by attackers trying to emulate human behavior. Because it would be classified as sensitive user data, this type of data collection and processing could not reasonably be used by a third party provider or without a strictly necessary reason and would require explicit user consent \cite{GDPR}. Thus it would be best to process the data in an anonymized and indirect way. Machine learning architectures allow learned knowledge about different bot behavior to be more easily transfered between systems in this indirect form without compromising user privacy in comparison to other methods. For example federated learning \cite{DBLP:journals/corr/KonecnyMR15} \cite{DBLP:journals/corr/KonecnyMRR16} is an approach that only shares internal model parameters which are sufficiently anonymized so that specific users cannot be identified. It consequently allows the incorporation of very sensitive personal data which, this work hypothesizes, will improve the performance. Compared to the often very artificially constructed environments of related works, this thesis tries to use a very realistic and web-based approach.
 
 It is also shown that the requirement of good execution speed is met by integrating the trained model into the experiments' websites as representative real-world applications. As the recorded data is aggregated over time per user, each server response includes the current score as a number between 0 and 1. How much of the past data can be used without compromising request performance is additionally determined.
 
@@ -157,15 +171,11 @@ It is also shown that the requirement of good execution speed is met by integrat
 
 To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. This way biases of different datasets are eliminated and the different systems' performances can be directly compared against.
 
-The websites have a basic blog-style structure with different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
+The websites have a basic blog-style structure, shown in screenshots \ref{screenshot:fmexp1} and \ref{screenshot:fmexp2}. They include different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
-To verify the proposed system does not overfit to the experiment's limited data, different public data is used to compare against. While no suitible datasets exist that include both request and mouse data, datasets that contain real-world user mouse movement and interaction data are publicly available.
-
-The Balabit Mouse Dynamics Challenge dataset \cite{BALABIT_CHALLENGE} includes a few longer and several shorter sessions which are meant to be used for training and testing respectively.
+While no suitible datasets exist that include both request and mouse data, datasets that contain real-world user mouse movement and interaction data are publicly available. For example the Balabit Mouse Dynamics Challenge dataset \cite{BALABIT_CHALLENGE} includes a few longer and several shorter sessions which are meant to be used for training and testing respectively.
 Antal et. al's dataset \cite{9111596} includes 21 users with around 20-30 sessions each. Their work compares their own dataset against the Balabit and ChaoShen datasets. In their scenario of detecting whether mouse data belongs to a specific user, the former corresponds to better but comparable results.
-At the time of publication the referenced ChaoShen dataset is not available anymore.
-
-Antal et. al's dataset is used to validate the transferability of this method because of its better performance and because the other datasets are older and have been used more in other publications.
+At the time of publication the referenced ChaoShen dataset is not available anymore. Antal et. al's dataset is used to validate the transferability of this work's method because of its better performance and because the other datasets are older and have been used more in other publications.
 
 
 \section{Machine Learning Model}
@@ -181,7 +191,7 @@ As their performance is comparable in this context and Random Forest's implement
 
 \subsection{Model Parameters}
 
-The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. In general as more trees are used less overfitting occurs and the model generalizes better. Additional parameters include the minimum number (or fraction) of samples required to split a node ($min_samples_split$). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than $min_samples_split$ samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the total feature count which is also recommended by previous literature. \cite{Hastie2009}
+The most important parameters of the Random Forest algorithm are the number of estimators (i.e. number of decision trees) and the maximum number of randomly selected features per estimator. In general as more trees are used less overfitting occurs and the model generalizes better. Additional parameters include the minimum number (or fraction) of samples required to split a node (\lstinline{min_samples_split}). When using the minimum value of two, node splitting is effectively unrestricted. Bigger values also affect the maximum tree depth. It can either be set directly as a parameter or is the depth at which all leaves contain no more than \lstinline{min_samples_split} samples. In the unrestricted case, this means that all leaves need to be pure when the maximum depth is reached. Additionally weights can be assigned to different classes or samples. For binary classification class weights are not considered and sample weights might be useful if there is additional data available before classification. When combining this type of machine learning system with other bot detection systems, their existing prediction could be added as weights. As this thesis only considers the classifier itself, no weights are used. Finally the maxmimum number of features that are tested when determining the node split can be set. Scikit-learn's implementation \footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}} uses the square root of the total feature count which is also recommended by previous literature. \cite{Hastie2009}
 
 An empirical search is used to determine the best parameters for this use case. Additionally it is evaluated how the predictive performance changes for different amounts of training data.
 
@@ -202,16 +212,16 @@ The following selection from Iliou et al.' work \cite{10.1145/3339252.3339267} i
     \item The percentage of HTTP requests that requested a JavaScript file. (11)
     \item The percentage of HTTP requested URLs that contain the previously requested URL as a subpart. (20)
     \item The total time (in seconds) between the first and the last HTTP request of the session. (21)
-    \item Standard deviation of requested pages' depth (i.e. number of ’/’ in URL path). (16)
+    \item Standard deviation of requested pages' depth (i.e. number of "/" in URL path). (16)
     \item Mean and Standard Deviation of times between successive requests. (23)
 \end{enumerate}
 
 \label{concept_mouse_data}
 \subsubsection{Mouse Data}
 
-The mouse data features consist of the (normalized) $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features are engineered similar to Gamboa et.al.\cite{GAMBOA2004} and \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, including the path length from the origin, angle of the path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used. Some features used in the authors' work have been omitted with the goal of simplifying and speeding up the feature extraction which can be revisited if the performance seems poor.
+The mouse data features consist of the relative $x$- and $y$-coordinates as well as a time value for each mouse event. Additional features are engineered similar to Gamboa et.al.\cite{GAMBOA2004} and \cite{https://doi.org/10.1049/iet-bmt.2018.5126}, including the path length from the origin, angle of the path tangent, horizontal, vertical and overall velocity, acceleration, jerk, angular velocity. Additionally the type of action, length of the movement and time needed to complete the action will be used. Some features that are considered in the authors' work have been omitted with the goal of simplifying and speeding up the feature extraction which can be revisited if the performance seems poor.
 
-Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group. As a basis for all derived values, the time, x and y coordinates are linearly interpolated such that vectors with uniformly spaced values $x'_t$ and $y'_t$ every $20ms$ are generated. All inidices start at zero.
+Single mouse data points are grouped based on the following rules: They either end with a click, have a maximum of 50 data points or span a maximum of two seconds. The features are calculated for each group. As a basis for all derived values, the time, x and y coordinates are linearly interpolated such that vectors with uniformly spaced values $x'_t$ and $y'_t$ every $20ms$ are generated. All indices start at zero.
 
 The path length from the origin $s_t'$ is the accumulated sum of previous segment lengths:
 
@@ -236,9 +246,9 @@ v = \sqrt{v_x^2 + v_y^2}; \quad
 \ddot{v} = \frac{\delta \dot{v}}{\delta t}
 \]
 
-For each of the $9$ vectors ($x'_t$, $y'_t$, $s'_t$, $v_x$, $v_y$, $v$, $\omega$, $\dot{v}$, $\ddot{v}$) the mean, standard deviation, minimum, maximum and value range (max - min) yield the first $45$ feature values.
+For each of the $9$ vectors $(x'_t, y'_t, s'_t, v_x, v_y, v, \omega, \dot{v}, \ddot{v})$ the mean, standard deviation, minimum, maximum and value range (max - min) yield the first $45$ feature values.
 
-Additionally the time $t_total$ and length $s_{n-1}$ of the stroke (i.e. group of $n$ data points), its straightness and jitter are computed. The time is the difference between the first and last datapoints' timestamps and the length can is the accumulated sum of segment lengths but using the raw instead of the interpolated data.
+Additionally the time $t_{total}$ and length $s_{n-1}$ of the stroke (i.e. group of $n$ data points), its straightness and jitter are computed. The time is the difference between the first and last datapoints' timestamps and the length can is the accumulated sum of segment lengths but using the raw instead of the interpolated data.
 
 \[
 t_{total} = t_{n-1} - t_0
@@ -260,20 +270,21 @@ The jitter is the ratio between the original and smoothed path lengths:
 jitter = \frac{s'_{n'-1}}{s_{n-1}}
 \]
 
+In total the 49 values make up the input vector that is computed for each mouse action group. They are paired with the corresponding "is-bot" or "is-human" label depending on which user they originate from.
 
 
 \subsection{Classification and Evaluation}
 
 The actual classification is performed by splitting the extracted feature data points into training and test sets. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label which the model uses to calculate its error while learning. In the testing phase a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another metric used for comparing results because it provides a single and condensed numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861} Depending on the context, other useful metrics are precision and recall. Precision is the ratio of the true positives and all positively classified results. Recall is the ratio of true positives and all actually positive data points. As a high precision value is directly correlated with a low amount of false positives, it is considered more important in this work's context.
 
-\section{Experiment/Data Collection}
+\section{Experiment and Data Collection}
 
 A user experiment was announced to all members of the University of Hamburg to gather a representative dataset for human interactions on websites. The specific goal of the experiment was not directly included in the announcement to avoid any initial biases. To gather all required data a custom website with two different frontend layouts and designs was implemented.
 
 \label{concept_websites}
 \subsection{Websites}
 
-The structure and content mimic blog-style websites with login and register functionalities. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection. After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
+The structure and content mimic blog-style websites with login and register functionalities (see screenshots \ref{screenshot:fmexp1_register}. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection. After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
 All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
 One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (single-page application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
@@ -658,7 +669,7 @@ Recall 0.953125
 
 To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Inputs from 21 users were collected during their normal computer activities on one desktop and 20 laptop devices. Both mice and touchpads were used. Their raw mouse movement and interaction data is preprocessed in a very similar way to the experiment's data. After conversion to the used model's format, the data is used as a large test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors. The whole dataset yielded $1.54M$ input vectors.
 
-For comparison the model is trained on data from both websites and the advanced bot data. When scoring the model with "User1"'s data as the test set, the model achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $99.76\%$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance. Reversing the setup and using the external data for training confirms that more data increases the model's performance. Its accuracy increases to $99.71\%$ and the values for FPR, FNR to $0.55\%$ and $0.15\%$ respectively. The comparison to the whole DFL dataset results in the model achieving an accuracy of $83.03\%$ with a reduced False Positive Rate of $17.16\%$. Although the data is even more unbalanced, the performance is slightly better.
+For comparison the model is trained on data from both websites and the advanced bot data. When scoring the model with "User1"'s data as the test set, the model achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $0.9976$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance. Reversing the setup and using the external data for training confirms that more data increases the model's performance. Its accuracy increases to $99.71\%$ and the values for FPR, FNR to $0.55\%$ and $0.15\%$ respectively. The comparison to the whole DFL dataset results in the model achieving an accuracy of $83.03\%$ with a reduced False Positive Rate of $17.16\%$. Although the data is even more unbalanced, the performance is slightly better.
 
 
 
@@ -710,5 +721,25 @@ Ultimately the mouse dynamics approach cannot solve the problem of bot detection
     \item Experiment Websites and Machine Learning Model: Github repository\footnote{\url{https://github.com/timesqueezer/fmexp}} and attached USB drive
     \item Thesis: Github repository\footnote{\url{https://github.com/timesqueezer/uni/thesis}}
 \end{itemize}
+
+\section*{Screenshots}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{screenshots/fmexp1.png}
+    \caption{The user experiment's first website}
+    \label{screenshot:fmexp1}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{screenshots/fmexp2.png}
+    \caption{The user experiment's second website}
+    \label{screenshot:fmexp2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{screenshots/fmexp1_register.png}
+    \caption{Registration section}
+    \label{screenshot:fmexp2}
+\end{figure}
 
 \end{document}
