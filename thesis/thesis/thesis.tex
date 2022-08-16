@@ -284,7 +284,7 @@ A user experiment was announced to all members of the University of Hamburg to g
 \label{concept_websites}
 \subsection{Websites}
 
-The structure and content mimic blog-style websites with login and register functionalities (see screenshots \ref{screenshot:fmexp1_register}. They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection. After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
+The structure and content mimic blog-style websites with login and register functionalities (see screenshot \ref{screenshot:fmexp1_register}). They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection (see screenshot \ref{screenshot:fmexp2_consent}). After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
 All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
 One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (single-page application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
@@ -395,20 +395,16 @@ The mouse bot uses the same Selenium-based methods for locating elements but rep
 
 The basis of the experiment's websites is a Flask\footnote{\url{https://flask.palletsprojects.com/}}-based python application. They are deployed behind a nginx reverse proxy web server which exposes them on two public domains. All web and application servers run on a bare-metal linux computer located in a German datacenter and are configured as real applications would be in a production environment. A postgresql server with two separate databases is also deployed. For evaluation their data was mirrored to local postgresql instances and queried directly from the same python application that runs the websites to avoid code duplication and benefit from SQLs expressiveness.
 
-\subsection{Feature Extraction}
-
-First, the stored unique users are filtered based on a, to be determined, minimum number of data points. In a multi-threaded pre-processing step the feature data is queried per user and labeled as "human" or "bot". The request data is aggregated per user and the features are calculated as described in the \nameref{concept_request_data} section.
+In order to extract the feature data the stored unique users are filtered based on a, to be determined, minimum number of data points. In a multi-threaded pre-processing step the feature data is queried per user and labeled as "human" or "bot". The request data is aggregated per user and the features are calculated as described in the \nameref{concept_request_data} section.
 
 The mouse data is also calculated per user but grouped into actions. Each action represents a mouse movement that is either a maximum of $2$ seconds long or ends with a click. It is also ensured that within any action the screen resolution or page scroll position does not change.
-
-\subsection{Evaluation}
 
 For training and classification the implementation uses the RandomForestClassifier class from the scikit-learn\footnote{\url{https://scikit-learn.org/stable/}} library. The standard methods \lstinline{fit}, \lstinline{score} and \lstinline{predict} are used to train the model and test its accuracy. Additional metrics are calculated using \lstinline{predict_proba} to get the probability per input data point and custom methods. Classes and launch scripts are implemented for bot data generation, loading the external dataset and generating figures for visualization.
 
 
 \section{Summary}
 
-This work's concept explores why a system base on machine learning is best suited for the stated problem of bot detection. It proposes a simplified model to achieve better usability and execution speed compared to previous works. The proposed architecture shows how the required data can be collected from basic websites, representing a big range of possible applications. Results from previous works give great insights into what kind of data is best suited for the machine learning model.
+This work's concept explores why a system base on machine learning is best suited for the stated problem of bot detection. It proposes a simplified model to achieve better usability and execution speed compared to previous works. The proposed architecture shows how the required data can be collected from basic websites, representing a big range of possible applications. Insights from previous works are considered for what kind of data is best suited for the machine learning model which are subsequently defined.
 
 
 \chapter{Evaluation}
@@ -441,8 +437,8 @@ Before extracting the input features for the machine learning model, the website
 
 With the goal of measuring limitations and the scalability in terms of the amount of data being available, the number of data points per user session were limited. In contrast to offline analysis, where limited data would not be an issue, the fewer data points are needed in (close to) realtime analysis for a satisfactory classification the better to detect bots as quickly as possible. Especially machine learning based systems scale generally better the more input data is available. For example Iliou et al.'s result of $1.00$ AUC and $0.01$ FPR in their simple bot evaluation \cite{10.1145/3339252.3339267}, which is best comparable to this work's generated bot data, shows that near perfect performance can be achieved. Conversely a balance needs to be found between amount of data and performance.
 
-With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. As figure \ref{fig:user_dp_hist} shows, there are many cases where less datapoints than the limit are available. This results in lower values for features which calculate an absolute metric instead of a percentage or relative one, e.g. feature four and five described in \ref{concept_request_data}. These differences in absolute values can be easily learned and overfitted to by the machine learning model but don't represent actual distinct bot or human behavior.
-Another problem is the variability of available requests in a practical setting. As mentioned in \ref{concept_websites}, many websites are single-page applications where an initially loaded JavaScript bundle contains many website components such that less subsequent requests need to be made. Thus a worst-case scenario would be that only 2 requests are initially available. More commonly additional resources, such as images, css files or api data might be loaded but even in this case the initial requests would be the same between humans and bots as they are automatically performed by the browser and are independent of any interaction with the website itself. As a middle ground 10 data points are chosen for the remaining experiments. This amount of requests can be assumed to be available in almost any context.
+With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. As Figure \ref{fig:user_dp_hist} shows, there are many cases where less datapoints than the limit are available. This results in lower values for features which calculate an absolute metric instead of a percentage or relative one, e.g. feature four and five described in Section \ref{concept_request_data}. These differences in absolute values can be easily learned and overfitted to by the machine learning model but don't represent actual distinct bot or human behavior.
+Another problem is the variability of available requests in a practical setting. As mentioned in Section \ref{concept_websites}, many websites are single-page applications where an initially loaded JavaScript bundle contains many website components such that less subsequent requests need to be made. Thus a worst-case scenario would be that only 2 requests are initially available. More commonly additional resources, such as images, css files or api data might be loaded but even in this case the initial requests would be the same between humans and bots as they are automatically performed by the browser and are independent of any interaction with the website itself. As a middle ground 10 data points are chosen for the remaining experiments. This amount of requests can be assumed to be available in almost any context.
 
 Similarly the mouse data model performs in general better the more data is available (Table \ref{table:mouse_params_no_limit}). A big advantage of this approach is that more data points can potentially be aquired in a shorter amount of time compared to request data. For example, when sampling at $30$ events per second, it only takes $1.66s$ ($50$ samples) to capture the amount of data points needed to surpass the request data model's performance.
 
@@ -451,7 +447,7 @@ Similarly the mouse data model performs in general better the more data is avail
     \begin{center}
         \begin{tabular}{rrrrrr}
             \toprule
-            Data Points / User & Accuracy & Precision & Recall & AUC & Training Time \\
+            Data Points / User & Accuracy & Precision & Recall & AUC & Training Time (s) \\
             \midrule
             200 & 0.980 & 0.980 & 0.980 & 0.982 & 0.209 \\
             100 & 0.970 & 0.961 & 0.980 & 0.985 & 0.209 \\
@@ -475,7 +471,7 @@ Similarly the mouse data model performs in general better the more data is avail
     \begin{center}
         \begin{tabular}{rrrrrr}
             \toprule
-            Data Points / User & Accuracy & Precision & Recall & AUC & Training Time \\
+            Data Points / User & Accuracy & Precision & Recall & AUC & Training Time (s) \\
             \midrule
             No limit & 0.966 & 0.964 & 0.968 & 0.993 & 0.449 \\
             50 & 0.933 & 0.943 & 0.922 & 0.979 & 0.124 \\
@@ -565,7 +561,7 @@ The first direct comparison used all available human mouse data and the generate
     \begin{center}
         \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} rrrrr}
             \toprule
-            Scenario & Accuracy & Precision & Recall & AUC & Training Time \\
+            Scenario & Accuracy & Precision & Recall & AUC & Training Time (s) \\
             \midrule
             Basic mouse bot & 0.995 & 0.997 & 0.994 & 1.000 & 0.857 \\
             Advanced mouse bot & 0.966 & 0.962 & 0.970 & 0.994 & 1.293 \\
@@ -712,7 +708,6 @@ Ultimately the mouse dynamics approach cannot solve the problem of bot detection
   \printbibliography
 \end{raggedright}
 
-% Appendix
 \chapter*{Appendix}
 
 \section*{Source Code}
@@ -739,7 +734,13 @@ Ultimately the mouse dynamics approach cannot solve the problem of bot detection
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{screenshots/fmexp1_register.png}
     \caption{Registration section}
-    \label{screenshot:fmexp2}
+    \label{screenshot:fmexp1_register}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{screenshots/fmexp2_consent.png}
+    \caption{Registration section}
+    \label{screenshot:fmexp2_consent}
 \end{figure}
 
 \end{document}
