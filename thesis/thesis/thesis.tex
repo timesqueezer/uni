@@ -29,9 +29,9 @@
 \begin{document}
 
 % \title{On using privacy preseving machine learning for\\decentralized web bot detection}
-\title{On machine learning based bot detection using mouse dynamics and request metadata in a practical context}
+\title{On Machine Learning Based Bot Detection Using Mouse Dynamics and Request Metadata in a Practical Context}
 \author{Matz-Jona Radloff}
-% \date{01.01.2015} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
+\date{19.08.2022} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
                     %  diese Zeile aktivieren.
 
 
@@ -65,19 +65,19 @@
 
 \chapter*{Abstract}
 
-Malicious use of automated bots presents an increasing risk to applications in the web. Their detection represents an integral part of modern security system. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions. It utilizes biometric data in the form of pointer interactions. Compared to previous works this thesis focuses on real world applicability in both data collection and evaluation by additionally simplifying the machine learning model and collecting a dataset of matching and thus better comparable request and mouse data. The proposed system achieves 96.6\% accuracy when tested with this work's dataset and up to 99.7\% when incorporating an external dataset. It is also tunable for high execution speed, but compromises in performance need to be made.
+Malicious use of automated bots presents an increasing risk to applications on the internet. Their goals range from information gathering to denial of service attacks to fraud and many more. Bot detection represents an integral part of modern security systems. Existing solutions do either not perform well, are not accessible to many providers due to high cost, or disregard modern privacy  standards. This work aims to provide a proof-of-concept for a basic system that incorporates all of the above criterions. It utilizes request metadata and biometric data in the form of pointer interactions. Compared to previous works this thesis focuses on real world applicability in both data collection and evaluation by additionally simplifying the machine learning model and collecting a dataset of matching, and thus better comparable, request and mouse data. The proposed system achieves 96.6\% accuracy when tested with this work's dataset and up to 99.7\% when incorporating an external dataset. With some compromises in performance, it is also tunable for high execution speed.
 
 \tableofcontents
 
 \chapter{Introduction}
 
-The ability to identify the current partner in a communication system as a human or computer is desirable in many contexts. Bots can be used to achieve malicious goals which operators want to prohibit and can be grouped into the following categories. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials usually obtainend from a data breach. Data scrapers download the website information and can use it for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience. Imperva's 2022 Report\cite{BAD_BOT_REPORT2022} cites Account Takeover, Scraping and Scalping as the top three most common attack types.
+The ability to identify the current partner in a communication system as a human or computer is desirable in many contexts. Bots can be used to achieve malicious goals which operators want to prohibit and can be grouped into the following categories. DoS attacks aim to overload the target's infrastructure such that it becomes inaccessible for normal use. Carding and Credential stuffing refers to performing payment or login requests to find working credit card numbers and credentials which are, for instance, obtainend from a data breach. Data scrapers download website information and can use it for malicious purposes, e.g. damage SEO or violate copyrights. Content spam includes inserting malicious or polluting data on platforms that allow user generated content. Scalping or inventory hoarding of shopping items can artificially raise prices, damage brands, generate false market forces and create a bad customer experience. Imperva's 2022 Report\cite{BAD_BOT_REPORT2022} cites Account Takeover, Scraping and Scalping as the top three most common attack types.
 
-In this work, the term bot is referring to software that automatically performs HTTP(S) requests with the intent of harming a target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past years. In their yearly report, the Imperva Threat Research Lab\footnote{\url{https://www.imperva.com/blog/}} show that both the percentage of bot traffic in general and the absolute amount of malicious bot traffic have increased over time.\cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021,BAD_BOT_REPORT2022} For example 27.7\% of 2021's internet traffic was fraudulent and automatically generate compared to 25.6\% in 2020.
+In this work, the term bot is referring to software that automatically performs HTTP(S) requests with the intent of harming a target or reaching another malicous goal. While this threat is nothing new to the web the attack surface has grown significantly over the past years. In their yearly report, the Imperva Threat Research Lab\footnote{\url{https://www.imperva.com/blog/}} shows that both the percentage of bot traffic in general and the absolute amount of malicious bot traffic have increased over time.\cite{BAD_BOT_REPORT2020,BAD_BOT_REPORT2021,BAD_BOT_REPORT2022} For example 27.7\% of 2021's internet traffic was fraudulent and automatically generate compared to 25.6\% in 2020.
 
 Most of the above attacks need to trick a webserver and their application backends into performing the request as if it had been initiated by a human. Instead of combating the resulting issues separately, bot detection could potentially mitigate many at once.
 
-A complication in this problem space is the, often desired, requirement for non-malicious bots to be granted normal access. A prominent example are scraper bots used by search engines that need to request websites periodically to build their search indices. A common technique to exploit this requirement is trying to emulate known bot signatures from large search engines, e.g. Googlebot \cite{8421894}.
+A complication in this problem space is the, often desired, requirement for non-malicious bots to be granted normal access. A prominent example are scraper bots used by search engines that need to request websites periodically to build their search indices. A common technique to exploit this requirement is trying to emulate known bot signatures from large search engines, e.g. Googlebot \cite{8421894}. According to Imperva's 2022 report \cite{BAD_BOT_REPORT2022}, these "good" bots made up 14.6\% of 2021's internet traffic.
 
 Many website operators tend to use solutions that are easy to integrate. This requires embeding external software which collects user data and sends it to servers of the software vendors. Closed source software does not allow to determine what exactly happens to the user data and website operators open themselves to additional threats in case of a data breach. Depending on the operating countries of both the websites and software vendors, data privacy regulation might also not allow sharing user data at all or require the operator to document the data transfers in a very detailed and legally complicated way. For example, in countries falling under the GDPR \cite{GDPR} a comprehensive data protection documentation is required. Because of the above reasons it is desirable to either employ self-hosted software or use a solution that does not require user data transfers.
 
@@ -91,17 +91,11 @@ This work's main contributions are:
     \item Evaluating the proposed architecture's performance in scenarios which a typical deployment might encounter
 \end{itemize}
 
+This thesis is structured as follows. Chapter \ref{sec:requirements_and_related_work} presents the requirements for the bot detection system to be developed. It also outlines the progress previous works have already made in this context and describes its limitations. Chapter \ref{sec:method_concept} details the main concept and methods that are used. The user experiment, dataset acquisition, and bot data generation are introduced. The proposed machine learning systems and their different methods of feature extraction and preprocessing are described. In Chapter \ref{sec:eval} applicable research requestions are posed and their evaluation is performed. The results are shown, analyzed, and discussed afterwards. Finally Chapter \ref{sec:conclusion} summarizes the results and gives an outlook into possible future research options.
 
+
+\label{sec:requirements_and_related_work}
 \chapter{Requirements and Related Work}
-
-%\section{Proprietary Solutions}
-%\url{https://datadome.co/} \\
-%\url{https://www.perimeterx.com/products/bot-defender/} \\
-%\url{https://www.imperva.com/products/advanced-bot-protection-management/} \\
-%\url{https://www.fastly.com/products/cloud-security/bot-protection} \\
-%\url{https://www.cloudflare.com/products/bot-management/} \\
-%\url{https://developers.google.com/recaptcha/docs/v3} \\
-%\url{https://www.hcaptcha.com/} \\
 
 Depending on several factors a bot detection system can have many different requirements. These include for example:
 
@@ -111,10 +105,12 @@ Depending on several factors a bot detection system can have many different requ
     \item The need for immediate decisions because following actions depend on the actor being a bot or human, e.g. CAPTCHAs
 \end{itemize}
 
+This chapter outlines the concrete requirements for this work's goals and outlines previously published works on these topics.
+
 
 \section{Requirements}
 
-The main requirement of the proposed bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. In concrete terms, reliable in this context means a generally high accuracy. A low false positive rate is explicitely weighed higher than other metrics because accusing a human of being a bot and disrupting their usage of the application is considered worse than vice versa, where a bot might be falsely detected as a human. If the needed analysis cannot be run synchronously while the actor is performing actions, bots might be detected too late or some actions would need to wait for the detection system if they require a definite classification. This is why the system's execution speed is the next most important requirement.
+The main requirement of the proposed bot detection system is its performance including being reliable, having a low false positive rate and good execution speed. In concrete terms, reliable, in this context, means a generally high accuracy. A low false positive rate is explicitely weighed higher than other metrics because accusing a human of being a bot and disrupting their usage of the application is considered worse than vice versa, where a bot might be falsely detected as a human. If the needed analysis cannot be run synchronously while the actor is performing actions, bots might be detected too late or some actions would need to wait for the detection system if they require a definite classification. This is why the system's execution speed is the next most important requirement.
 
 If these factors are degraded by including other features, this work defines the overall value still lower as without. This work aims to verify previous works' results where mouse dynamics as one example of biometric data was used successfully to identify bots. Its performance is compared to a similar detection system which operates on request metadata only, representative of a non-biometric approach. Finally one goal is to reduce the system's complexity, increase its performance and test its applicability in a realistic environment.
 
@@ -149,11 +145,12 @@ A MLP-based neural network with a single hidden layer of 40 neurons was used for
 Due to the sheer size of the problem space in bot detection and human authentication scientific works need to limit their scope to generate any meaningful results. These limitations could be in the form of specific input data, methods or goals which result in compromises needing to being made in other parts. For example Iliou et al. \cite{10.1145/3339252.3339267} compare in great detail how different machine learning algorithms, their parameters and different input features perform on real world request metadata. But their poor performance for detecting advanced bots show that their findings might not be relevant when detecting such bots is desirable. Papadopoulos et. al \cite{PETS2021} limit their method to specific cases where mobile devices and data from their accelerometers and gyroscopes are used. This would not be applicable as soon as this data is not made available by the user or other devices are used. To bring the field of bot detection forward many different approaches need to be combined and also tested under real world conditions which this work aims to add to.
 
 
-\chapter{Request Metadata and Mouse Dynamics for Practical Bot Detection}
+\label{sec:method_concept}
+\chapter{Request Metadata and Mouse Dynamics for Bot Detection}
 
-The thesis explores how biometric data can potentially improve a machine learning system for bot detection. Compared to data that is only indirectly generated by a human, for example web requests metadata, biometric data contains more information that can be directly used to decide whether it originated from a bot or human. A big part of request data is redundant as it either does not change between different requests or clients, e.g. the "User-Agent" header, or can be easily faked. Illustrated by figure \ref{fig:user_mouse_heatmap}, human-generated mouse data contains many different movements which are hard to model mathematically and thus difficult for an attacker to imitate.
+The thesis explores how biometric data can potentially improve a machine learning system for bot detection. Compared to data that is only indirectly generated by a human, for example web requests metadata, biometric data contains more information that can be directly used to decide whether it originated from a bot or human. A big part of request data is redundant as it either does not change between different requests or clients, e.g. the "User-Agent" header, or can be easily faked. Illustrated by Figure \ref{fig:user_mouse_heatmap}, human-generated mouse data contains many different movements which are hard to model mathematically and thus difficult for an attacker to imitate.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \includegraphics[width=\textwidth]{figures/user_mouse_heatmap.png}
     \caption{29 Mouse movements captured from a human user}
     \label{fig:user_mouse_heatmap}
@@ -171,7 +168,7 @@ It is also shown that the requirement of good execution speed is met by integrat
 
 To realistically match request metadata and user mouse data a dataset is gathered from two websites in a user experiment. This way biases of different datasets are eliminated and the different systems' performances can be directly compared against.
 
-The websites have a basic blog-style structure, shown in screenshots \ref{screenshot:fmexp1} and \ref{screenshot:fmexp2}. They include different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
+The websites have a basic blog-style structure, shown in Figures \ref{screenshot:fmexp1} and \ref{screenshot:fmexp2}. They include different information sections and user registration features. Their web servers log all relevant data to extract the features required for the request data approach while a javascript library records mouse data and sends it to the site's backends for storage.
 
 While no suitible datasets exist that include both request and mouse data, datasets that contain real-world user mouse movement and interaction data are publicly available. For example the Balabit Mouse Dynamics Challenge dataset \cite{BALABIT_CHALLENGE} includes a few longer and several shorter sessions which are meant to be used for training and testing respectively.
 Antal et. al's dataset \cite{9111596} includes 21 users with around 20-30 sessions each. Their work compares their own dataset against the Balabit and ChaoShen datasets. In their scenario of detecting whether mouse data belongs to a specific user, the former corresponds to better but comparable results.
@@ -284,7 +281,7 @@ A user experiment was announced to all members of the University of Hamburg to g
 \label{concept_websites}
 \subsection{Websites}
 
-The structure and content mimic blog-style websites with login and register functionalities (see screenshot \ref{screenshot:fmexp1_register}). They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection (see screenshot \ref{screenshot:fmexp2_consent}). After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
+The structure and content mimic blog-style websites with login and register functionalities (see Figure \ref{screenshot:fmexp1_register}). They contain a landing page, an about page with additional information about the experiment and this thesis and a contact / imprint page. On first visit users get presented a dialog asking to confirm the data collection (see Figure \ref{screenshot:fmexp2_consent}). After registering or logging in a profile page is accessible where basic user information can be added or edited. The main part of both websites is a blog section containing randomly generated entries which can be viewed on an overview page or on detail pages which only show a single entry.
 All parts give opportunity for user input, similar to regular websites including many possible navigation paths and form interactions.
 
 One difficulty of recording both request and mouse data is that the former benefits from having as many requests per interaction as possible while full page reloads would restart the mouse data collection and might lose data. Usually websites would decide between a traditional approach, where URL changes would load a completely new page and fulfill the former requirement, and a SPA (single-page application) where only parts of the content are changed dynamically by JavaScript implementations which would allow mouse events to be recorded continuously.
@@ -404,17 +401,18 @@ For training and classification the implementation uses the RandomForestClassifi
 
 \section{Summary}
 
-This work's concept explores why a system base on machine learning is best suited for the stated problem of bot detection. It proposes a simplified model to achieve better usability and execution speed compared to previous works. The proposed architecture shows how the required data can be collected from basic websites, representing a big range of possible applications. Insights from previous works are considered for what kind of data is best suited for the machine learning model which are subsequently defined.
+This work's concept explores why a system base on machine learning is best suited for the stated problem of bot detection. It proposes a simplified model to achieve better usability and execution speed compared to previous works. The proposed architecture shows how the required data can be collected from basic websites, representing a big range of possible applications. Insights from previous works are considered for what kind of data is best suited for the machine learning model which are subsequently defined. Finally the concrete implementation is briefly outlined.
 
 
+\label{sec:eval}
 \chapter{Evaluation}
 
 To evaluate this work's results the following research questions are posed:
 
 \begin{itemize}
-    \item Does mouse dynamics data outperform request metadata?
-    \item What are the best parameters in this context?
-    \item Does the trained machine learning system generalize when comparing ddifferent datasets for training and testing?
+    \item How do the simple and advanced methods of bot data generation compare?
+    \item Does the trained machine learning model generalize to data from another website or external dataset?
+    \item How does mouse dynamics data perform compared to request metadata?
     \item How is the architectures real world applicability in terms of execution speed and performance?
 
 \end{itemize}
@@ -440,8 +438,7 @@ With the goal of measuring limitations and the scalability in terms of the amoun
 With less limitations the request data model's evaluation metrics show increasingly good performance. Table \ref{table:request_params_no_limit} shows the detailed results. There are however several problems with this seemingly good performance. As Figure \ref{fig:user_dp_hist} shows, there are many cases where less datapoints than the limit are available. This results in lower values for features which calculate an absolute metric instead of a percentage or relative one, e.g. feature four and five described in Section \ref{concept_request_data}. These differences in absolute values can be easily learned and overfitted to by the machine learning model but don't represent actual distinct bot or human behavior.
 Another problem is the variability of available requests in a practical setting. As mentioned in Section \ref{concept_websites}, many websites are single-page applications where an initially loaded JavaScript bundle contains many website components such that less subsequent requests need to be made. Thus a worst-case scenario would be that only 2 requests are initially available. More commonly additional resources, such as images, css files or api data might be loaded but even in this case the initial requests would be the same between humans and bots as they are automatically performed by the browser and are independent of any interaction with the website itself. As a middle ground 10 data points are chosen for the remaining experiments. This amount of requests can be assumed to be available in almost any context.
 
-Similarly the mouse data model performs in general better the more data is available (Table \ref{table:mouse_params_no_limit}). A big advantage of this approach is that more data points can potentially be aquired in a shorter amount of time compared to request data. For example, when sampling at $30$ events per second, it only takes $1.66s$ ($50$ samples) to capture the amount of data points needed to surpass the request data model's performance.
-
+Similarly the mouse data model performs generally better the more data is available. Table \ref{table:mouse_params_no_limit} lists the performance for different amounts of data points per user. A big advantage of this approach is that more data points can potentially be aquired in a shorter amount of time compared to request data. For example, when sampling at $30$ events per second, as this work's implementation does, it only takes $1.66s$ ($50$ samples) to capture the amount of data points needed to surpass the request data model's performance. When, for example, considering a potential application for a CAPTCHA, this time does not represent a significant disruption of most user interactions, e.g. filling in a registration form.
 
 \begin{table}[H]
     \begin{center}
@@ -466,7 +463,6 @@ Similarly the mouse data model performs in general better the more data is avail
     \label{table:request_params_no_limit}
 \end{table}
 
-
 \begin{table}[H]
     \begin{center}
         \begin{tabular}{rrrrrr}
@@ -488,7 +484,6 @@ Similarly the mouse data model performs in general better the more data is avail
     \label{table:mouse_params_no_limit}
 \end{table}
 
-
 \section{Model Hyperparameters and General Performance}
 
 To empirically determine the best Random Forest parameters both mouse and request data from the both experiment's websites and generated bots (same number of sessions as human users, advanced for mouse bot) were used to calculate the performance for combinations of the following parameters:
@@ -499,7 +494,7 @@ To empirically determine the best Random Forest parameters both mouse and reques
     \item Maximum tree depth (None, 1, 2, 3, 4, 6, 7)
 \end{enumerate}
 
-Table \ref{table:request_params} and \ref{table:mouse_params} show the $10$ best performing combinations for mouse  and request data. The data is sorted primarily by accuracy as the most important metric. The additional scores Precision, Recall, F1, AUC and the training time were computed as well. Their values of the top performing results lie close together except training time which is important in the context of applicability and is considered second most important. The different values for the number of estimators and the maximum number of features for split consideration perform very similarly. For request data, the chosen values for following experiments were chosen to be $100$ and $None$ respectively as their result had the same accuracy and AUC as the top result but its training time was significantly lower at $0.486s$. Analogously for the mouse data result, $200$ and $sqrt$ were chosen. All results have in common that no restriction to the decision trees' maximum depth is applied which is also the default value of scikit-learn's implementation. This is expected as the tree depth is directly correlated with the ability to classify multi-dimensional input data.
+Tables \ref{table:request_params} and \ref{table:mouse_params} show the $10$ best performing combinations for mouse  and request data. The data is sorted primarily by accuracy as the most important metric. The additional scores Precision, Recall, F1, AUC and the training time were computed as well. Their values of the top performing results lie close together except training time which is important in the context of applicability and is considered second most important. The different values for the number of estimators and the maximum number of features for split consideration perform very similarly. For request data, the chosen values for following experiments were chosen to be $100$ and $None$ respectively as their result had the same accuracy and AUC as the top result but its training time was significantly lower at $0.486s$. Analogously for the mouse data result, $200$ and $sqrt$ were chosen. All results have in common that no restriction to the decision trees' maximum depth is applied which is also the default value of scikit-learn's implementation. This is expected as the tree depth is directly correlated with the ability to classify multi-dimensional input data.
 
 These results also give a first look into the expected performance with the model based on request data, in general, performing worse compared to mouse data in terms of accuracy. In addition to the increase in accuracy of $5.6$ percentage points, the latter model's precision and AUC values are better too. These are directly related to a lower false positive rate which is especially important in this bot detection context.
 
@@ -549,13 +544,14 @@ These results also give a first look into the expected performance with the mode
     \label{table:mouse_params}
 \end{table}
 
-\section{Different Scenario Comparison}
+\section{Results}
 
-The following scenarios aim to evaluate the method of bot detection using mouse dynamics in different realistic contexts. Initially it is determined whether an advanced method of generating fake mouse data can be detected better or worse compared to a simple approach. Then both methods are separated and used for training and testing separately. Data from both experiment's websites are compared and used for training and testing separately too. Additionally a combination of both mouse and request data is compared against.
+The following scenarios aim to evaluate the method of bot detection using mouse dynamics in different realistic contexts and to answer the research questions. Initially it is determined whether an advanced method of generating fake mouse data can be detected better or worse compared to a simple approach. Data from both experiment's websites are then compared and used for training and testing separately. Next, the model's performance with an external dataset is evaluated. These results are compared to only using request metadata and additionally to a combination of both. Finally, the tradeoffs between execution speed and performance are determined.
 
-\subsection{Simple versus Advanced Mouse Data Performance}
 
-The first direct comparison used all available human mouse data and the generated simple and advanced mouse data respectively for both training and testing datasets. Table \ref{table:simple_vs_advanced_mouse} shows that the model performs better in every aspect and can be detected more reliably when using data generated by the simple bot. This is expected as the bots' linear movements are a uniquely identifying feature which result in very specific results for many input features. The model only correctly differenciated between a human and a bot $96.6\%$ of the time but still has a very high AUC. This results confusion matrix \ref{table:mouse_advanced_confusion} and ROC curve \ref{fig:mouse_advanced_roc} illustrate the low FPR which is one of the primary requirements.
+\subsection{How Do the Simple and Advanced Methods of Bot Data Generation Compare?}
+
+The first direct comparison used all available human mouse data and the generated simple and advanced mouse data respectively for both training and testing datasets. Table \ref{table:simple_vs_advanced_mouse} shows that the model performs better in every aspect and can be detected more reliably when using data generated by the simple bot. This is expected as the bots' linear movements are a uniquely identifying feature which result in very specific results for many input features. The model only correctly differenciated between a human and a bot $96.6\%$ of the time but still has a very high AUC. This results confusion matrix in Table \ref{table:mouse_advanced_confusion} and ROC curve in Figure \ref{fig:mouse_advanced_roc} illustrate the low FPR which is one of the primary requirements.
 
 \begin{table}[H]
     \begin{center}
@@ -568,7 +564,7 @@ The first direct comparison used all available human mouse data and the generate
             \bottomrule
         \end{tabular*}
     \end{center}
-    \caption{Model accuracy for different parameters (mouse data)}
+    \caption{Simple and Advanced Mouse Data Performance}
     \label{table:simple_vs_advanced_mouse}
 \end{table}
 
@@ -583,7 +579,7 @@ The first direct comparison used all available human mouse data and the generate
             \bottomrule
         \end{tabular*}
     \end{center}
-    \caption{Model accuracy for different parameters (mouse data)}
+    \caption{Simple and Advanced Mouse Data Confusion Matrix}
     \label{table:mouse_advanced_confusion}
 \end{table}
 
@@ -593,7 +589,7 @@ The first direct comparison used all available human mouse data and the generate
     \label{fig:mouse_advanced_roc}
 \end{figure}
 
-\subsection{Different Training and Test Sets}
+\subsection{Does the Trained Machine Learning Model Generalize to Data From Another Website or External Dataset?}
 
 The next experiment evaluates how well advanced bots can be detected when only training with basic mouse data and vice versa. All available human data was included in training. Table \ref{table:simple_vs_advanced_mouse_separate_train_test} shows that the model expectedly generalized poorly when training with basic bot data with an accuracy of only $52.29\%$ which is only slightly better than random guessing. Training with advanced bot data resulted in an increased accuracy of $76.9\%$ when trying to detect basic bots. The low recall value implies a high false negative rate and means that many bots remained undetected. These results can be explained by the different data generation methods.
 
@@ -612,7 +608,7 @@ The next experiment evaluates how well advanced bots can be detected when only t
     \label{table:simple_vs_advanced_mouse_separate_train_test}
 \end{table}
 
-It follows the more relevant comparison of training with one website's data and testing with the other's. \ref{table:website_mouse_compare}
+It follows the more relevant comparison of training with one website's data and testing with the other's in Table \ref{table:website_mouse_compare}.
 
 \begin{table}[H]
     \begin{center}
@@ -631,52 +627,38 @@ It follows the more relevant comparison of training with one website's data and 
 
 The first scenario has a $5.2\%$ higher accuracy of $96.6\%$ compared to training on the second website's data. This can be explained by the additional amount of user data collected from the first website. The second scenario's low precision also shows that not having enough data would compromise the required low False Positive Rate.
 
-\subsection{Combined Mouse and Request Data}
 
-In a real world application one might consider using both mouse- and request-data-based systems together in order to increase the overall performance. Because both data types from this work's user experiment can be matched and assigned to specific users, a direct comparison was conducted. The human and bot data was split at the user level into training and test sets to directly match each classifiers' result instead of at the input vector level. Table \ref shows that an overall accuracy of $96\%$ was calculated. This indicates that no significant improvement compared to using only mouse data was achieved. The precision and .
-
-No limit:
-TP 128
-FP 1
-TN 21
-FN 0
-FPR [0.         0.04545455 1.        ]
-TRP [0. 1. 1.]
-Accuracy 0.9933333333333333
-AUC 0.9772727272727273
-Precision 0.9922480620155039
-Recall 1.0
-
-Limit:
-
-TP 122
-FP 0
-TN 22
-FN 6
-FPR [0. 0. 1.]
-TRP [0.       0.953125 1.      ]
-Accuracy 0.96
-AUC 0.9765625
-Precision 1.0
-Recall 0.953125
-
-
-\section{Performance on External Dataset}
+\subsubsection{Performance on an External Dataset}
 
 To compare the performance to different real-world data, Antal et. al's dataset \cite{9111596} is used. Inputs from 21 users were collected during their normal computer activities on one desktop and 20 laptop devices. Both mice and touchpads were used. Their raw mouse movement and interaction data is preprocessed in a very similar way to the experiment's data. After conversion to the used model's format, the data is used as a large test set. For example "User1"'s 31 session files include $2.6M$ raw datapoints which are integrated into $64k$ input vectors. The whole dataset yielded $1.54M$ input vectors.
 
-For comparison the model is trained on data from both websites and the advanced bot data. When scoring the model with "User1"'s data as the test set, the model achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $0.9976$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance. Reversing the setup and using the external data for training confirms that more data increases the model's performance. Its accuracy increases to $99.71\%$ and the values for FPR, FNR to $0.55\%$ and $0.15\%$ respectively. The comparison to the whole DFL dataset results in the model achieving an accuracy of $83.03\%$ with a reduced False Positive Rate of $17.16\%$. Although the data is even more unbalanced, the performance is slightly better.
+For comparison the model is trained on data from both websites and the advanced bot data. When testing the model against the external dataset, it achieves $82.25\%$ accuracy. As the test data is heavily unbalanced, some evaluation metrics need to be considered cautiously. For example, an AUC of $0.9976$ seems to indicate very good performance but does not give any insight into how well the dataset's humans were detected as such. With "is bot" being the positive class, the False Positive Rate of $22.13\%$ and Precision of only $52.89\%$ better show the actual performance. Reversing the setup and using the external data for training confirms that more data increases the model's performance. Its accuracy increases to $99.71\%$ and the values for FPR, FNR to $0.55\%$ and $0.15\%$ respectively. The comparison to the whole DFL dataset results in the model achieving an accuracy of $83.03\%$ with a reduced False Positive Rate of $17.16\%$. Although the data is even more unbalanced, the performance is slightly better.
 
 
+\subsection{How does mouse dynamics data perform compared to request metadata?}
 
-%\begin{figure}[H]
-%    \includegraphics[width=\textwidth]{figures/roc_both_datasets_both_instances.png}
-%    \caption{ROC curves}
-%    \label{fig:roc_both_datasets_both_instances}
-%\end{figure}
+Confirming the hypothesis that a machine learning system using mouse dynamics outperforms one that uses request metdata, Tables \ref{table:request_params} and \ref{table:mouse_params} show the former's higher accuracy of 96.6\% compared to the latter's result of 91\%. Both methods have high AUC values of 0.994 and 0.973 respectively, indicating generally low negative rates. When evaluating these separately, the request data model has FPR and FNR values of 0.12 and 0.06 which means that it classifies more humans as bots compared to the opposite case. In a practical setting this would falsely identify roughly every eighth human user as a bot. In this regard, the mouse data model performs much better with FPR and FNR values of 0.0379 and 0.0297. Its false positive rate is still higher than the false negative rate but might, in absolute terms, be acceptable to be used in practice.
 
+\subsubsection{Combined Mouse and Request Data}
 
-\section{Execution Speed Performance}
+In a real world application one might consider using both mouse and request data-based systems together in order to increase the overall performance. Because both data types from this work's user experiment can be matched and assigned to specific users, a direct comparison was conducted. The human and bot data was split at the user level into training and test sets to directly match each classifiers' result instead of at the input vector level. Because this resulted in relatively few test samples being available, an additional split ratio of 0.2 was used. For each user, both predictions are calculated as probabilities and averaged to determine the final result. Table \ref{table:combined_performance} shows that overall accuracies of 96\% and 95\% were calculated. This indicates that no significant improvement compared to using only mouse data was achieved. The most valueable difference to using the data separately is that no false positive results are produced. While the false negative rates of 0.272 and 0.327 are very high in contrast to the separate cases, the low false positive rate and overall same performance are in favor of using the combined approach.
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular*}{\textwidth}{rrrrrrrrr @{\extracolsep{\fill}}}
+            \toprule
+            Test ratio & Accuracy & Precision & Recall & AUC & TP & FP & TN & FN \\
+            \midrule
+            0.1 & 0.960 & 1.0 & 0.953 & 0.976 & 122 & 0 & 22 & 6 \\
+            0.2 & 0.950 & 1.0 & 0.940 & 0.970 & 252 & 0 & 49 & 16 \\
+            \bottomrule
+        \end{tabular*}
+    \end{center}
+    \caption{Combined Mouse and Request Data Performance}
+    \label{table:combined_performance}
+\end{table}
+
+\subsection{How is the architectures real world applicability in terms of execution speed and performance?}
 
 The execution speed is measured by predicting a score after each request. This experiment only considers one user at a time which is why the actual accuracies differ from previous sections and are only meant to be compared in a relative manner. The human user having the most available datapoints and a correspondingly generated bot user is used. The total time, time without extracting the features and score are logged and averaged over multiple requests. These values are calculated for different amounts of previous data points which are incorporated. This is significant because the mouse features include many values which are accumulated over many data points. Figure \ref{fig:speed_per_dp_count} graphs the times and performance for the different numbers.
 
@@ -690,9 +672,9 @@ The measured data shows that by only considering $100$ previous data points the 
 A better method might be to separate the prediction system entirely from single requests and decide on a per-user basis asynchronously after enough samples have been collected whether to take any action against it or not.
 
 
-\chapter{Discussion and Conclusion}
+\section{Discussion}
 
-In the context of bot detection and the web in general, the method of attack and type of target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needed to make many assumptions in order to limit the scope and produce generalizable data.
+In the context of bot detection and the web in general, the methods of attack and type of a target(-website) can vary significantly and are changing constantly. This is one of the reasons that web security is an ongoing cat and mouse game and represents a practically unsolvable problem with many unkowns. This work needed to make many assumptions in order to limit the scope and produce generalizable data.
 
 One limitation is that this approach does only work for clients that use a pointer device, i.e. mouse, touchpad or touch screen. If this is not acceptable, a different method or other biometric data would additionally need to be used. This applies for example when screen readers, text-based browsers or automated clients should be supported. A compromise might be to use the pointer-based system to trigger additional security checks at critical actions, such as registering an account or posting content.
 
@@ -700,24 +682,42 @@ Another problem might be that this approach does not elimitate all user tracking
 
 Even the best-case accuracy of $>99\%$ might be not enough for some applications, especially if critical decisions depend on the system.
 
-The Evaluation shows that in general a bot detection system which incorporates pointer data can be considered for practical use. Its main performance criteria in the form of high accuracy and a low false positive rate are given but its actual value is dependend on the concrete usage, operation and performance needs. The requirement to be privacy-friendly is met by using a system based on machine learning which can be deployed by operators themselves and does not need to share any identifiable user data with third parties. Finally, good execution speed is not achieved in every case and does degrade the overall value of the proposed system. In practice, higher accuracy can be traded for higher execution speed. Additionally the system has many possibilities to be optimized and improved which would meet this requirement as well.
+\section{Summary}
 
-Ultimately the mouse dynamics approach cannot solve the problem of bot detection by itself and should not solely be relied upon but can definitely improve overall performance as part of a composite system.
+The Evaluation shows that the different machine learning systems perform very different depending on the choice of parameters and how much input data is available. Parameter values corresponding to the best results are determined and the tradeoff between available data amount and performance is outlined. The comparison of simple and advanced bot mouse data reveals that the simple method can be detected with almost perfect accuracy. The advanced method is able to fool the classifier, so that false values are generated.
+
+The main takeaways from using the available experiment data and the external dataset in different combinations separately for training and testing are that the model's learned knowledge is transferable to different data in general. When training on limited data, the system did only achieve an accuracy of 82.25\%. Using the much larger external dataset for training demonstrates that the availability of more training data is very valuable. This case resulted in an accuracy of 99.71\%.
+
+The question of how mouse dynamics performs compared to request metadata can be answered in that, overall, using mouse data results in better values of all relevant evaluation metrics. Combining both approaches does not increase the accuracy but results in lower false positive rates.
+
+The real world applicability was evaluated in terms of execution speed and the performance tradeoffs. In general, as long as enough data can be captured, the system's viability to be used in practice is still given. If the prediction time needs to be reduced such that user interactions are not Interrupted significantly, e.g. $27ms$, the accuracy drops to $93.67\%$. This might be high enough for some applications or multiple results could be accumulated.
+
+Lastly, shortcomings and limitations of the examined system are discussed. The biggest concern is that this approach would still only detect a subset of all possible bots, i.e. web based and using pointer or request data. Also, for applications where very high reliability and performance are required, the results are not sufficient to be practically used.
+
+\label{sec:conclusion}
+\chapter{Conclusion}
+
+The Evaluation shows that in general a bot detection system which incorporates pointer data can be considered for practical use. Its main performance criteria in the form of high accuracy and a low false positive rate are given but its actual value is dependend on the concrete usage, operation and performance needs. The requirement to be privacy-friendly is met by using a system based on machine learning which can be deployed by operators themselves and does not need to share any identifiable user data with third parties. Finally, good execution speed is not achieved in every case and does degrade the overall value of the proposed system. In practice, higher accuracy can be traded for higher execution speed. Additionally the system has many possibilities to be optimized and improved which would meet this requirement as well. Ultimately the mouse dynamics approach cannot solve the problem of bot detection by itself and should not solely be relied upon but can definitely improve overall performance as part of a composite system.
+
+Potential future works might want to consider more combinations of different approaches and their relative performance. Another direction would be an evaluation of whether training machine learning based bot detection systems directly in the browser is viable. This decentralized approach would result in lower computing cost for the operator and even better user privacy. More comparisons of state-of-the-art approaches in bot detection with different datasets would also bring the field forward. Additionally, better accessible and more public datasets for validation and training might be valuable.
 
 \begin{raggedright}
   \printbibliography
 \end{raggedright}
 
-\chapter*{Appendix}
 
-\section*{Source Code}
+\appendix
+
+\chapter{Appendix}
+
+\section{Source Code}
 
 \begin{itemize}
     \item Experiment Websites and Machine Learning Model: Github repository\footnote{\url{https://github.com/timesqueezer/fmexp}} and attached USB drive
     \item Thesis: Github repository\footnote{\url{https://github.com/timesqueezer/uni/thesis}}
 \end{itemize}
 
-\section*{Screenshots}
+\section{Screenshots}
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{screenshots/fmexp1.png}
@@ -742,5 +742,28 @@ Ultimately the mouse dynamics approach cannot solve the problem of bot detection
     \caption{Registration section}
     \label{screenshot:fmexp2_consent}
 \end{figure}
+
+\chapter*{Eidesstattliche Erklärung}
+
+\vspace{2cm}
+
+Hiermit versichere ich an Eides statt, dass ich die vorliegende Arbeit im
+Bachelorstudiengang Informatik selbstständig verfasst und keine
+anderen als die angegebenen Hilfsmittel – insbesondere keine im
+Quellenverzeichnis nicht benannten Internet-Quellen – benutzt habe.
+Alle Stellen, die wörtlich oder sinngemäß aus Veröffentlichungen
+entnommen wurden, sind als solche kenntlich gemacht. Ich versichere
+weiterhin, dass ich die Arbeit vorher nicht in einem anderen
+Prüfungsverfahren eingereicht habe und die eingereichte schriftliche
+Fassung der elektronischen Abgabe entspricht.
+
+\vspace{5cm}
+
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+
+\SignatureAndDate{Matz-Jona Radloff}
 
 \end{document}
