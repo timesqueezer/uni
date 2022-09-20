@@ -31,7 +31,7 @@
 % \title{On using privacy preseving machine learning for\\decentralized web bot detection}
 \title{On Machine Learning Based Bot Detection Using Mouse Dynamics and Request Metadata in a Practical Context}
 \author{Matz-Jona Radloff}
-\date{19.08.2022} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
+\date{18.08.2022} % Falls ein bestimmtes Datum eingesetzt werden soll, einfach
                     %  diese Zeile aktivieren.
 
 
@@ -272,7 +272,7 @@ In total, the 49 values make up the input vector that is computed for each mouse
 
 \subsection{Classification and Evaluation}
 
-The actual classification is performed by splitting the extracted feature data points into training and test sets. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is bot" label that the model uses to calculate its error while learning. In the testing phase, a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another metric used for comparing results because it provides a single and condensed numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861} Depending on the context, other useful metrics are precision and recall. Precision is the ratio of the true positives and all positively classified results. Recall is the ratio of true positives and all actually positive data points. As a high precision value is directly correlated with a low amount of false positives, it is considered more important in this work's context.
+The actual classification is performed by splitting the extracted feature data points into training and test sets. The partitions contain 90 and 10 percent of the data, respectively, with each data entry being assigned randomly. The training data also includes the "is-bot" label that the model uses to calculate its error while learning. In the testing phase, a predicted label is compared to the known value. The fraction of correct over the total number of predictions, i.e. accuracy is used as the primary evaluation metric. Additionally the False Positive Rate (FPR) and False Negative Rate (FNR) are computed which are the fraction of wrong guesses. The False Positive Rate is weighed higher because a prediction that a user is a bot has a qualitatively much greater impact than the opposite case. Plotting one against the other results in a Receiver operating characteristic (ROC) curve. The area below this curve (AUC) is another metric used for comparing results because it provides a single and condensed numerical value. When using normalized units, its concrete value represents the probability that the model will perform better when given a randomly selected positive and negative sample.\cite{FAWCETT2006861} Depending on the context, other useful metrics are precision and recall. Precision is the ratio of the true positives and all positively classified results. Recall is the ratio of true positives and all actually positive data points. As a high precision value is directly correlated with a low amount of false positives, it is considered more important in this work's context.
 
 \section{Experiment and Data Collection}
 
@@ -645,7 +645,7 @@ In a real world application one might consider using both mouse and request data
 
 \begin{table}[H]
     \begin{center}
-        \begin{tabular*}{\textwidth}{rrrrrrrrr @{\extracolsep{\fill}}}
+        \begin{tabular*}{\textwidth}{r @{\extracolsep{\fill}} rrrrrrrr}
             \toprule
             Test ratio & Accuracy & Precision & Recall & AUC & TP & FP & TN & FN \\
             \midrule
